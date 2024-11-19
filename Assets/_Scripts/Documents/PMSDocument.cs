@@ -3,11 +3,10 @@ using UnityEngine;
 
 public class PMSDocument : Document
 {
-    public PMSDocument(string name, Sprite photo) : base(name, photo)
-    { }
-    
     public override void Randomize(int maxRandomCount)
     {
+        base.Randomize(maxRandomCount);
+        
         var randomCount = _rnd.Next(0, maxRandomCount);
         for (UInt16 i = 0; i < randomCount; i++)
         {
