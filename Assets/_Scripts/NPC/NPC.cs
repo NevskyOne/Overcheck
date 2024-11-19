@@ -25,10 +25,12 @@ public class NPC : MonoBehaviour
     
     private string _name;
     private int _planet;
-    
+    private int _collectedDocs;
+    private int _docsCount = 1;
     
     private Random _rnd = new Random();
     private bool _origin;
+    private CheckState _checkState = CheckState.None;
     private TimeLines _timeLines;
     private DialogSystem _dialogSys;
     private NPCManager _npcManager;
@@ -43,6 +45,11 @@ public class NPC : MonoBehaviour
         _name = RandomParamSt.Names[_rnd.Next(0,RandomParamSt.Names.Length)];
         _photo = RandomParamSt.Photos[_rnd.Next(0,RandomParamSt.Photos.Length)];
         _planet = _rnd.Next(1,5);
+
+        if (_timeLines.WeekDate > 4)
+            _docsCount = 3;
+        else if (_timeLines.WeekDate > 2)
+            _docsCount = 2;
     }
 
     public void GiveDocs()
@@ -50,13 +57,13 @@ public class NPC : MonoBehaviour
         Document pp = null, iic = null;
         var pms = _npcManager.GiveDoc(_PMS, 1);
         pms.Initialize(_name, _photo, _planet);
-        if (_timeLines.WeekDate > 2)
+        if (_docsCount > 1)
         {
             iic = _npcManager.GiveDoc(_IIC, 1);
             iic.Initialize(_name, _photo, _planet);
         }
 
-        if (_timeLines.WeekDate > 4)
+        if (_docsCount > 2)
         {
             pp = _npcManager.GiveDoc(_PP, 1);
             pp.Initialize(_name, _photo, _planet);
@@ -83,7 +90,7 @@ public class NPC : MonoBehaviour
                     pp.Randomize(1);
                 pms.Randomize(1);
                 break;
-            case TimeLine.Scary:
+            case TimeLine.Father:
                 _origin = true;
                 break;
         }
@@ -94,21 +101,46 @@ public class NPC : MonoBehaviour
         if ((_origin && playerOrigin && playerGoal == _targetGoal) || (_origin == false && playerOrigin == false))
         {
             _timeLines.CorrectNPC += _cost;
+            _timeLines.ChangeTimeline(TimeLine.Void);
         }
         else if (_origin && playerOrigin)
         {
+            _timeLines.ChangeTimeline(TimeLine.Void);
             _timeLines.CorrectNPC += (uint)(_cost * 0.75f);
         }
         else
         {
             _timeLines.WrongNPC += _cost;
+            _timeLines.ChangeTimeline(TimeLine.Void, false);
+            if(_timeLine != TimeLine.Void)
+                _timeLines.ChangeTimeline(_timeLine);
         }
+
+        _checkState = playerOrigin ? CheckState.Correct : CheckState.Wrong;
     }
 
+    public void CollectDoc()
+    {
+        _collectedDocs += 1;
+    }
+    
     public void StartChat()
     {
-        _dialogSys.FragmentsStack = _fragments.ToList();
-        _dialogSys.PlayNext();
+
+        if (_checkState == CheckState.None)
+        {
+            _dialogSys.FragmentsStack = _fragments.ToList();
+            _dialogSys.PlayNext();
+        }
+        else if (_collectedDocs == _docsCount && _checkState == CheckState.Correct)
+        {
+            _dialogSys.PlayFragment(_endPassText);
+        }
+        else if (_collectedDocs == _docsCount && _checkState == CheckState.Wrong)
+        {
+            _dialogSys.PlayFragment(_endBackText);
+        }
+        _dialogSys.GoAfter = _checkState;
     }
     
 }

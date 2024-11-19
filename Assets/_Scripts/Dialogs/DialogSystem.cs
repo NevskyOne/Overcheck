@@ -18,6 +18,7 @@ public class DialogSystem : MonoBehaviour
     [Header("Object")] [SerializeField] private Transform _objHolder;
     
     public event Action ChatEnded;
+    public CheckState GoAfter;
     private NPCManager _npcManager;
 
     private void Start()
@@ -40,9 +41,14 @@ public class DialogSystem : MonoBehaviour
         else
         {
             EndChat();
+            if(GoAfter == CheckState.Correct)
+                _npcManager.GoTowards();
+            else if(GoAfter == CheckState.Wrong)
+                _npcManager.GoBack();
+            GoAfter = CheckState.None;
         }
     }
-    private void PlayFragment(DialogFragment fragment)
+    public void PlayFragment(DialogFragment fragment)
     {
         _textField.text = fragment.Text;
         ShowButtons(fragment.Buttons);

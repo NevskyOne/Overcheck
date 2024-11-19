@@ -40,6 +40,7 @@ public class NPCManager : MonoBehaviour
     }
 
     public void NPCGiveDocs() => _currentNPC.GetComponent<NPC>().GiveDocs();
+    public void NPCCollectDoc() => _currentNPC.GetComponent<NPC>().CollectDoc();
     public void NPCCheck(Goal playerGoal, bool playerOrigin) => _currentNPC.GetComponent<NPC>()
         .CheckCoast(playerGoal,playerOrigin);
     

@@ -5,11 +5,11 @@ public class PlayerData : MonoBehaviour
 {
     [SerializeField] private TMP_Text _moneyCount;
     
-    private uint _coins;
+    private int _coins;
 
-    public void ChageCoins(uint value, bool add = true)
+    public void ChageCoins(int value, bool add = true)
     {
-        _coins = add? _coins + value : _coins - value;
+        _coins = Mathf.Clamp(add? _coins + value : _coins - value, 0, 1000000000);
         _moneyCount.text = _coins.ToString();
     }
 }

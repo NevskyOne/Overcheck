@@ -1,3 +1,4 @@
+using System.Threading.Tasks;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -17,8 +18,9 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private Sprite _NPCSprite;
     [SerializeField] private Sprite _bedSprite;    
     [SerializeField] private Sprite _radioSprite;
-    [SerializeField] private Sprite _correctSprite;
-    [SerializeField] private Sprite _wrongSprite;
+    [SerializeField] private Texture2D _correctSprite;
+    [SerializeField] private Texture2D _wrongSprite;
+    [SerializeField] private Texture2D _backDocSprite;
     [SerializeField] private Sprite _UISprite;
 
     [Header("UI")] 
@@ -36,7 +38,7 @@ public class PlayerInteractions : MonoBehaviour
     private DialogSystem _dialogSystem;
     
     private bool _inDialog, _inTable, _isHolding;
-    private TableState _tableState = TableState.None;
+    private CheckState _tableState = CheckState.None;
     private Transform _currentDoc;
     
     private void Start()
@@ -67,24 +69,23 @@ public class PlayerInteractions : MonoBehaviour
                 _cursorImg.sprite = _bedSprite;
             else if (hit.transform.CompareTag("Radio"))
                 _cursorImg.sprite = _radioSprite;
-            else if (_inTable && hit.transform.CompareTag("Correct"))
-                _cursorImg.sprite = _correctSprite;
-            else if (_inTable && hit.transform.CompareTag("Wrong"))
-                _cursorImg.sprite = _wrongSprite;
-            else if (hit.transform.CompareTag("OpenUI")
-                     || hit.transform.CompareTag("NPCObject")
-                     || (!_inTable && hit.transform.CompareTag("Table"))
-                     || (_inTable && hit.transform.CompareTag("Document")))
+            // else if (_inTable && hit.transform.CompareTag("Correct"))
+            //     Cursor.SetCursor(_correctSprite, Vector2.zero, CursorMode.ForceSoftware);
+            // else if (_inTable && hit.transform.CompareTag("Wrong"))
+            //     Cursor.SetCursor(_wrongSprite, Vector2.zero, CursorMode.ForceSoftware);
+            // else if (_inTable && hit.transform.CompareTag("BackDoc"))
+                // Cursor.SetCursor(_backDocSprite, Vector2.zero, CursorMode.ForceSoftware);
+            else if (!hit.transform.CompareTag("Untagged"))
                 _cursorImg.sprite = _UISprite;
         }
 
-        if (_isHolding && _currentDoc && hit.transform)
+        if (_isHolding && _currentDoc && hit.transform && !hit.transform.CompareTag("Document"))
         {
             _currentDoc.localPosition = new Vector3(hit.point.x,hit.point.y + 0.4f,hit.point.z);
         }
     }
 
-    private void OnClick(InputAction.CallbackContext _)
+    private async void OnClick(InputAction.CallbackContext _)
     {
         if (_inDialog || 
             !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
@@ -120,30 +121,35 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (_inTable && transf.CompareTag("Correct"))
         {
-            _tableState = TableState.Correct;
+            _tableState = CheckState.Correct;
         }
         else if (_inTable && transf.CompareTag("Wrong"))
         {
-            _tableState = TableState.Wrong;
+            _tableState = CheckState.Wrong;
         }
         else if (_inTable && transf.CompareTag("Document"))
         {
-            if (_tableState == TableState.Correct && transf.TryGetComponent<PMSDocument>(out var _))
+            if (_tableState == CheckState.Correct && transf.TryGetComponent<PMSDocument>(out var _))
             {
-                Instantiate(_correctStamp, transf);
+                Instantiate(_correctStamp, transf.GetChild(0));
                 _npcMng.NPCCheck(Goal.Other,true);/////////Update
             }
-            else if (_tableState == TableState.Wrong && transf.TryGetComponent<PMSDocument>(out var _))
+            else if (_tableState == CheckState.Wrong && transf.TryGetComponent<PMSDocument>(out var _))
             {
-                Instantiate(_wrongStamp, transf);
+                Instantiate(_wrongStamp, transf.GetChild(0));
                 _npcMng.NPCCheck(Goal.Other,false);/////////Update
             }
             else
             {
                 _isHolding = true;
                 _currentDoc = transf;
-                _currentDoc.localPosition = new Vector3(_currentDoc.localPosition.x, _currentDoc.localPosition.y+0.5f, _currentDoc.localPosition.z);
+                _currentDoc.localPosition = new Vector3(_currentDoc.localPosition.x, _currentDoc.localPosition.y+0.4f, _currentDoc.localPosition.z);
             }
+        }
+        else if (_inTable && hit.transform.CompareTag("BackDoc"))
+        {
+            await Task.Delay(500);
+            _npcMng.NPCCollectDoc();
         }
         else if (_inTable && transf.CompareTag("Radio"))
         {
@@ -176,7 +182,7 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (_inTable)
         {
-            if (_tableState == TableState.None)
+            if (_tableState == CheckState.None)
             {
                 _inTable = false;
                 _camera.transform.parent = transform;
@@ -185,7 +191,7 @@ public class PlayerInteractions : MonoBehaviour
                 Focus();
             }
             else
-                _tableState = TableState.None;
+                _tableState = CheckState.None;
         }
         else
         {
@@ -228,7 +234,7 @@ public class PlayerInteractions : MonoBehaviour
     }
 }
 
-public enum TableState
+public enum CheckState
 {
     None,
     Wrong,
