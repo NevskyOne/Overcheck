@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = System.Random;
@@ -21,28 +22,43 @@ public class NPCManager : MonoBehaviour
     [SerializeField] private Transform _endPos;
 
     private Random _rnd = new Random();
-    private NavMeshAgent _currentNPC;
-    
+    private NPC _currentNPC;
+    private NavMeshAgent _currentAgent;
+
     private void Start()
     {
-        _currentNPC = Instantiate(_normalNPC[_rnd.Next(0, _normalNPC.Count)], _startPos.position, Quaternion.identity).GetComponent<NavMeshAgent>();
-        _currentNPC.SetDestination(_tablePos.position);
+        SpawnNPC();
     }
 
-    public void GoBack()
+    private void SpawnNPC()
     {
-        _currentNPC.SetDestination(_startPos.position);
+        _currentAgent = Instantiate(_normalNPC[_rnd.Next(0, _normalNPC.Count)], _startPos.position, Quaternion.identity).GetComponent<NavMeshAgent>();
+        _currentAgent.SetDestination(_tablePos.position);
+        _currentNPC = _currentAgent.GetComponent<NPC>();
+    }
+
+    public async void GoBack()
+    {
+        _currentAgent.SetDestination(_startPos.position);
+        await Task.Delay(3000);
+        Destroy(_currentNPC.gameObject);
+        await Task.Delay(1000);
+        SpawnNPC();
     }
     
-    public void GoTowards()
+    public async void GoTowards()
     {
-        _currentNPC.SetDestination(_endPos.position);
+        _currentAgent.SetDestination(_endPos.position);
+        await Task.Delay(3000);
+        Destroy(_currentNPC.gameObject);
+        await Task.Delay(1000);
+        SpawnNPC();
     }
 
-    public void NPCGiveDocs() => _currentNPC.GetComponent<NPC>().GiveDocs();
-    public void NPCCollectDoc() => _currentNPC.GetComponent<NPC>().CollectDoc();
-    public void NPCCheck(Goal playerGoal, bool playerOrigin) => _currentNPC.GetComponent<NPC>()
-        .CheckCoast(playerGoal,playerOrigin);
+    public void NPCSetGoal(int value) => _currentNPC.CurrentGoal = (Goal)value;
+    public void NPCGiveDocs() => _currentNPC.GiveDocs();
+    public void NPCCollectDoc() => _currentNPC.CollectDoc();
+    public void NPCCheck(bool playerOrigin) => _currentNPC.CheckCoast(playerOrigin);
     
     public Document GiveDoc(GameObject doc, uint pos)
     {

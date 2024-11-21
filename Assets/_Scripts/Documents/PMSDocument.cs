@@ -26,4 +26,9 @@ public class PMSDocument : Document
             }
         }
     }
+
+    public void SetGoal(int value)
+    {
+        _npcManager.NPCSetGoal(value);
+    }
 }

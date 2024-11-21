@@ -23,6 +23,8 @@ public class NPC : MonoBehaviour
     [SerializeField] private List<DialogFragment> _fragments = new();
     [SerializeField] private DialogFragment _endPassText, _endBackText;
     
+    public Goal CurrentGoal { get; set; }
+    
     private string _name;
     private int _planet;
     private int _collectedDocs;
@@ -31,6 +33,7 @@ public class NPC : MonoBehaviour
     private Random _rnd = new Random();
     private bool _origin;
     private CheckState _checkState = CheckState.None;
+    
     private TimeLines _timeLines;
     private DialogSystem _dialogSys;
     private NPCManager _npcManager;
@@ -40,7 +43,7 @@ public class NPC : MonoBehaviour
         _timeLines = FindFirstObjectByType<TimeLines>();
         _dialogSys = FindFirstObjectByType<DialogSystem>();
         _npcManager = FindFirstObjectByType<NPCManager>();
-        GetComponent<MeshFilter>().mesh = _models[_rnd.Next(0, 3)];
+        transform.GetChild(0).GetComponent<MeshFilter>().mesh = _models[_rnd.Next(0, 3)];
         
         _name = RandomParamSt.Names[_rnd.Next(0,RandomParamSt.Names.Length)];
         _photo = RandomParamSt.Photos[_rnd.Next(0,RandomParamSt.Photos.Length)];
@@ -72,7 +75,7 @@ public class NPC : MonoBehaviour
         switch (_timeLine)
         {
             case TimeLine.Void:
-                _origin = Convert.ToBoolean(_rnd.Next(0, 1));
+                _origin = Convert.ToBoolean(_rnd.Next(0, 2));
                 if (!_origin)
                 {
                     if (_timeLines.WeekDate > 2)
@@ -96,9 +99,9 @@ public class NPC : MonoBehaviour
         }
     }
 
-    public void CheckCoast(Goal playerGoal, bool playerOrigin)
+    public void CheckCoast(bool playerOrigin)
     {
-        if ((_origin && playerOrigin && playerGoal == _targetGoal) || (_origin == false && playerOrigin == false))
+        if ((_origin && playerOrigin && CurrentGoal == _targetGoal) || (_origin == false && playerOrigin == false))
         {
             _timeLines.CorrectNPC += _cost;
             _timeLines.ChangeTimeline(TimeLine.Void);
@@ -126,20 +129,19 @@ public class NPC : MonoBehaviour
     
     public void StartChat()
     {
-
         if (_checkState == CheckState.None)
         {
             _dialogSys.FragmentsStack = _fragments.ToList();
-            _dialogSys.PlayNext();
         }
         else if (_collectedDocs == _docsCount && _checkState == CheckState.Correct)
         {
-            _dialogSys.PlayFragment(_endPassText);
+            _dialogSys.FragmentsStack = new List<DialogFragment>{_endPassText};
         }
         else if (_collectedDocs == _docsCount && _checkState == CheckState.Wrong)
         {
-            _dialogSys.PlayFragment(_endBackText);
+            _dialogSys.FragmentsStack = new List<DialogFragment>{_endBackText};
         }
+        _dialogSys.PlayNext();
         _dialogSys.GoAfter = _checkState;
     }
     

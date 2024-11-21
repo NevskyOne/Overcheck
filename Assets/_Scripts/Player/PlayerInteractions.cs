@@ -1,5 +1,4 @@
-using System.Threading.Tasks;
-using Unity.VisualScripting;
+using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.UI;
@@ -10,6 +9,7 @@ public class PlayerInteractions : MonoBehaviour
     [Header("Settings")] 
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _clickMask;
+    [SerializeField] private LayerMask _docMask;
     
     [Header("Cursors")] 
     [SerializeField] private GameObject _cursor;
@@ -18,9 +18,6 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private Sprite _NPCSprite;
     [SerializeField] private Sprite _bedSprite;    
     [SerializeField] private Sprite _radioSprite;
-    [SerializeField] private Texture2D _correctSprite;
-    [SerializeField] private Texture2D _wrongSprite;
-    [SerializeField] private Texture2D _backDocSprite;
     [SerializeField] private Sprite _UISprite;
 
     [Header("UI")] 
@@ -30,6 +27,8 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private Transform _tableCamPos;
     [SerializeField] private GameObject _correctStamp;
     [SerializeField] private GameObject _wrongStamp;
+    [SerializeField] private GameObject _popupMenu;
+    [SerializeField] private TMP_Text _popupText;
     
     private PlayerInput _playerInput => GetComponent<PlayerInput>();
     private PlayerMovement _playerMove => GetComponent<PlayerMovement>();
@@ -40,11 +39,13 @@ public class PlayerInteractions : MonoBehaviour
     private bool _inDialog, _inTable, _isHolding;
     private CheckState _tableState = CheckState.None;
     private Transform _currentDoc;
+    private Quaternion _lastCamRot;
     
     private void Start()
     {
-        _playerInput.actions["Click"].started += OnClick;
+        _playerInput.actions["Click"].started += Click;
         _playerInput.actions["Click"].canceled += OnClickEnd;
+        _playerInput.actions["RightClick"].started += RightClick;
         _playerInput.actions["Space"].performed += Space;
         _playerInput.actions["Escape"].performed += Escape;
 
@@ -56,11 +57,15 @@ public class PlayerInteractions : MonoBehaviour
 
     private void Update()
     {
+        if(_inTable)
+            _popupMenu.gameObject.SetActive(false);
         RaycastHit hit = new ();
         if (_inDialog ||
             !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
                 out hit, 4, _clickMask))
+        {
             _cursorImg.sprite = _defaultSprite;
+        }
         else
         {
             if (hit.transform.CompareTag("NPC"))
@@ -69,28 +74,58 @@ public class PlayerInteractions : MonoBehaviour
                 _cursorImg.sprite = _bedSprite;
             else if (hit.transform.CompareTag("Radio"))
                 _cursorImg.sprite = _radioSprite;
-            // else if (_inTable && hit.transform.CompareTag("Correct"))
-            //     Cursor.SetCursor(_correctSprite, Vector2.zero, CursorMode.ForceSoftware);
-            // else if (_inTable && hit.transform.CompareTag("Wrong"))
-            //     Cursor.SetCursor(_wrongSprite, Vector2.zero, CursorMode.ForceSoftware);
-            // else if (_inTable && hit.transform.CompareTag("BackDoc"))
-                // Cursor.SetCursor(_backDocSprite, Vector2.zero, CursorMode.ForceSoftware);
+            else if (_inTable && hit.transform.CompareTag("Correct"))
+            {
+                _popupText.text = "Разрешить";
+                _popupMenu.gameObject.SetActive(true);
+            }
+            else if (_inTable && hit.transform.CompareTag("Wrong"))
+            {
+                _popupText.text = "Не пустить";
+                _popupMenu.gameObject.SetActive(true);
+            }
             else if (!hit.transform.CompareTag("Untagged"))
                 _cursorImg.sprite = _UISprite;
         }
 
-        if (_isHolding && _currentDoc && hit.transform && !hit.transform.CompareTag("Document"))
+        if (_isHolding && _currentDoc && hit.transform)
         {
-            _currentDoc.localPosition = new Vector3(hit.point.x,hit.point.y + 0.4f,hit.point.z);
+            _currentDoc.localPosition = new Vector3(hit.point.x,_currentDoc.localPosition.y,hit.point.z);
         }
     }
 
-    private async void OnClick(InputAction.CallbackContext _)
+    private void Click(InputAction.CallbackContext _)
     {
+        Transform transf;
+        if (_inTable && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+                out var hit, 4, _docMask))
+        {
+            transf = hit.transform;
+            if (_tableState == CheckState.Correct && transf.TryGetComponent<PMSDocument>(out var _))
+            {
+                Instantiate(_correctStamp, transf.GetChild(0).GetChild(0));
+                _npcMng.NPCCheck(true);/////////Update
+            }
+            else if (_tableState == CheckState.Wrong && transf.TryGetComponent<PMSDocument>(out var _))
+            {
+                Instantiate(_wrongStamp, transf.GetChild(0).GetChild(0));
+                _npcMng.NPCCheck(false);/////////Update
+            }
+            else
+            {
+                _isHolding = true;
+                _currentDoc = transf;
+                _currentDoc.GetComponent<Rigidbody>().useGravity = false;
+                _currentDoc.localPosition = new Vector3(_currentDoc.localPosition.x, hit.point.y+0.3f, _currentDoc.localPosition.z);
+            }
+        }
+        
         if (_inDialog || 
             !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-                out var hit, 4, _clickMask)) return;
-        var transf = hit.transform;
+                out var hit2, 4, _clickMask)) return;
+        
+        transf = hit2.transform;
+        
         if (transf.CompareTag("NPC"))
         {
             StopFocus();
@@ -114,6 +149,7 @@ public class PlayerInteractions : MonoBehaviour
         else if (!_inTable && transf.CompareTag("Table"))
         {
             StopFocus();
+            _lastCamRot = _camera.transform.localRotation;
             _camera.transform.parent = _tableCamPos;
             _camera.transform.localPosition = Vector3.zero;
             _camera.transform.localRotation = Quaternion.Euler(90,0,0);
@@ -127,32 +163,10 @@ public class PlayerInteractions : MonoBehaviour
         {
             _tableState = CheckState.Wrong;
         }
-        else if (_inTable && transf.CompareTag("Document"))
+        else if (transf.CompareTag("Radio"))
         {
-            if (_tableState == CheckState.Correct && transf.TryGetComponent<PMSDocument>(out var _))
-            {
-                Instantiate(_correctStamp, transf.GetChild(0));
-                _npcMng.NPCCheck(Goal.Other,true);/////////Update
-            }
-            else if (_tableState == CheckState.Wrong && transf.TryGetComponent<PMSDocument>(out var _))
-            {
-                Instantiate(_wrongStamp, transf.GetChild(0));
-                _npcMng.NPCCheck(Goal.Other,false);/////////Update
-            }
-            else
-            {
-                _isHolding = true;
-                _currentDoc = transf;
-                _currentDoc.localPosition = new Vector3(_currentDoc.localPosition.x, _currentDoc.localPosition.y+0.4f, _currentDoc.localPosition.z);
-            }
-        }
-        else if (_inTable && hit.transform.CompareTag("BackDoc"))
-        {
-            await Task.Delay(500);
-            _npcMng.NPCCollectDoc();
-        }
-        else if (_inTable && transf.CompareTag("Radio"))
-        {
+            var audio = transf.GetComponent<AudioSource>();
+            audio.mute = !audio.mute;       
         }
         else if (transf.CompareTag("OpenUI"))
         {
@@ -163,7 +177,20 @@ public class PlayerInteractions : MonoBehaviour
     private void OnClickEnd(InputAction.CallbackContext _)
     {
         _isHolding = false;
-        _currentDoc = null;
+        if (_currentDoc != null)
+        {
+            _currentDoc.GetComponent<Rigidbody>().useGravity = true;
+            _currentDoc = null;
+        }
+    }
+
+    private void RightClick(InputAction.CallbackContext _)
+    {
+        if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+                out var hit, 4, _clickMask) && hit.transform.CompareTag("Radio"))
+        {
+            hit.transform.GetComponent<Radio>().ChangeClip();
+        }
     }
 
     private void Space(InputAction.CallbackContext _) => NextFraze();
@@ -187,7 +214,7 @@ public class PlayerInteractions : MonoBehaviour
                 _inTable = false;
                 _camera.transform.parent = transform;
                 _camera.transform.localPosition = new Vector3(0, 0.64f, 0);
-                _camera.transform.localRotation = Quaternion.Euler(0, 0, 0);
+                _camera.transform.localRotation = _lastCamRot;
                 Focus();
             }
             else
@@ -222,7 +249,7 @@ public class PlayerInteractions : MonoBehaviour
         _cursor.SetActive(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _camera.cullingMask = LayerMask.GetMask("Default", "UI", "Clickable");
+        _camera.cullingMask = LayerMask.GetMask("Default", "UI", "Clickable", "Document");
     }
     
     public void StopFocus()

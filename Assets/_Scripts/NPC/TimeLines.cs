@@ -73,6 +73,10 @@ public class TimeLines : MonoBehaviour
         _additionalText.text = Additional.ToString();
         _totalText.text = ((int)(CorrectNPC + Additional) - (int)WrongNPC).ToString();
         _sleepUI.SetActive(true);
+
+        CorrectNPC = 0;
+        Additional = 0;
+        WrongNPC = 0;
         
         _playerInter.StopFocus();
     }

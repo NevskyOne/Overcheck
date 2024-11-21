@@ -13,9 +13,11 @@ public abstract class Document : MonoBehaviour
     protected bool _origin = true;
     protected int _paramCount = 2;
     protected Random _rnd = new Random();
+    protected NPCManager _npcManager;
 
     public virtual void Initialize(string name, Sprite photo, int planet)
     {
+        _npcManager = FindFirstObjectByType<NPCManager>();
         _name = RandomParamSt.Names[_rnd.Next(0,RandomParamSt.Names.Length)];
         _photo = photo;
 
