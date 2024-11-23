@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -6,11 +7,12 @@ using Random = System.Random;
 
 public class NPCManager : MonoBehaviour
 {
-    [Header("NPC")]
+    [Header("NPC")] 
+    [SerializeField] private List<DayNPC> _npcList = new(7);
     [SerializeField] private List<GameObject> _normalNPC;
     [SerializeField] private List<GameObject> _specialNPC;
-    [SerializeField] private List<GameObject> _educateNPC;
-
+    [SerializeField] private List<GameObject> _tutorialNPC;
+    
     [Header("DocsSpawn")] 
     [SerializeField] private Transform _pos1;
     [SerializeField] private Transform _pos2;
@@ -22,43 +24,64 @@ public class NPCManager : MonoBehaviour
     [SerializeField] private Transform _endPos;
 
     private Random _rnd = new Random();
-    private NPC _currentNPC;
+    public NPC CurrentNPC;
     private NavMeshAgent _currentAgent;
+    private int _weekDate => FindFirstObjectByType<TimeLines>().WeekDate;
+    private DayNPC _currentDay;
+    
+    public event Action OnNPCEnd;
 
-    private void Start()
+    public void StartDay()
     {
-        SpawnNPC();
+        _currentDay = _npcList[_weekDate];
+        SelectNPC();
+    }
+    
+    private void SelectNPC()
+    { 
+        if (_currentDay.TutorialNPC > 0)
+        {
+            SpawnNPC(_tutorialNPC);
+            _currentDay.TutorialNPC -= 1;
+        }
+        else if (_rnd.Next(0, 2) == 1 && _currentDay.SpecialNPC > 0)
+        {
+            SpawnNPC(_specialNPC);
+            _currentDay.SpecialNPC -= 1;
+        }
+        else if (_currentDay.NormalNPC > 0)
+        {
+            SpawnNPC(_normalNPC);
+            _currentDay.NormalNPC -= 1;
+        }
+        else
+            OnNPCEnd?.Invoke();
     }
 
-    private void SpawnNPC()
+    private void SpawnNPC(List<GameObject> npcList)
     {
-        _currentAgent = Instantiate(_normalNPC[_rnd.Next(0, _normalNPC.Count)], _startPos.position, Quaternion.identity).GetComponent<NavMeshAgent>();
+        _currentAgent = Instantiate(npcList[_rnd.Next(0, npcList.Count)], _startPos.position, Quaternion.identity).GetComponent<NavMeshAgent>();
         _currentAgent.SetDestination(_tablePos.position);
-        _currentNPC = _currentAgent.GetComponent<NPC>();
+        CurrentNPC = _currentAgent.GetComponent<NPC>();
     }
 
     public async void GoBack()
     {
         _currentAgent.SetDestination(_startPos.position);
-        await Task.Delay(3000);
-        Destroy(_currentNPC.gameObject);
-        await Task.Delay(1000);
-        SpawnNPC();
+        await Task.Delay(3500);
+        Destroy(CurrentNPC.gameObject);
+        await Task.Delay(_rnd.Next(2000, 7000));
+        SelectNPC();
     }
     
     public async void GoTowards()
     {
         _currentAgent.SetDestination(_endPos.position);
-        await Task.Delay(3000);
-        Destroy(_currentNPC.gameObject);
-        await Task.Delay(1000);
-        SpawnNPC();
+        await Task.Delay(3500);
+        Destroy(CurrentNPC.gameObject);
+        await Task.Delay(_rnd.Next(2000, 7000));
+        SelectNPC();
     }
-
-    public void NPCSetGoal(int value) => _currentNPC.CurrentGoal = (Goal)value;
-    public void NPCGiveDocs() => _currentNPC.GiveDocs();
-    public void NPCCollectDoc() => _currentNPC.CollectDoc();
-    public void NPCCheck(bool playerOrigin) => _currentNPC.CheckCoast(playerOrigin);
     
     public Document GiveDoc(GameObject doc, uint pos)
     {
@@ -70,4 +93,12 @@ public class NPCManager : MonoBehaviour
             _ => null
         };
     }
+}
+
+[Serializable]
+public struct DayNPC
+{
+    public uint NormalNPC;
+    public uint SpecialNPC;
+    public uint TutorialNPC;
 }

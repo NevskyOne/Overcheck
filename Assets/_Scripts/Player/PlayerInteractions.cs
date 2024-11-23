@@ -1,4 +1,5 @@
 using System;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -19,6 +20,7 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private Sprite _NPCSprite;
     [SerializeField] private Sprite _bedSprite;    
     [SerializeField] private Sprite _radioSprite;
+    [SerializeField] private Sprite _startSprite;
     [SerializeField] private Sprite _UISprite;
 
     [Header("UI")] 
@@ -34,13 +36,14 @@ public class PlayerInteractions : MonoBehaviour
     private PlayerInput _playerInput => GetComponent<PlayerInput>();
     private PlayerMovement _playerMove => GetComponent<PlayerMovement>();
     private TimeLines _timeLines => GetComponent<TimeLines>();
-    private NPCManager _npcMng;
-    private DialogSystem _dialogSystem;
-    
-    private bool _inDialog, _inTable, _isHolding;
+    private CameraManager _camManager => FindFirstObjectByType<CameraManager>();
+    private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
+    private DialogSystem _dialogSystem => FindFirstObjectByType<DialogSystem>();
+
+    private bool _inDialog, _inTable, _isHolding, _canSleep, _canStartDay = true;
     private CheckState _tableState = CheckState.None;
     private Transform _currentDoc;
-    private Quaternion _lastCamRot;
+    private Vector3 _lastCamRot;
 
     public event Action OnUIClick;
     
@@ -53,13 +56,23 @@ public class PlayerInteractions : MonoBehaviour
         _playerInput.actions["Escape"].performed += Escape;
 
         Focus();
-        _dialogSystem = FindFirstObjectByType<DialogSystem>();
-        _npcMng = FindFirstObjectByType<NPCManager>();
         _dialogSystem.ChatEnded += () => {_inDialog = false; Focus();};
+        _npcMng.OnNPCEnd += () => _canSleep = true;
+        
+        FindFirstObjectByType<TimeLines>().OnDayEnd += () =>
+        {
+            _canStartDay = true;
+            _lastCamRot = _camera.transform.localEulerAngles;
+            _camera.transform.parent = transform;
+            _camManager.Reset();
+            _camManager.TargetRot = _lastCamRot;
+        };
     }
 
     private void Update()
     {
+        if (Time.timeScale == 0) return;
+        
         if(_inTable)
             _popupMenu.gameObject.SetActive(false);
         RaycastHit hit = new ();
@@ -73,10 +86,12 @@ public class PlayerInteractions : MonoBehaviour
         {
             if (hit.transform.CompareTag("NPC"))
                 _cursorImg.sprite = _NPCSprite;
-            else if (hit.transform.CompareTag("Bed"))
+            else if (_canSleep && hit.transform.CompareTag("Bed"))
                 _cursorImg.sprite = _bedSprite;
             else if (hit.transform.CompareTag("Radio"))
                 _cursorImg.sprite = _radioSprite;
+            else if (_canStartDay && hit.transform.CompareTag("StartDay"))
+                _cursorImg.sprite = _startSprite;
             else if (_inTable && hit.transform.CompareTag("Correct"))
             {
                 _popupText.text = "Разрешить";
@@ -87,7 +102,7 @@ public class PlayerInteractions : MonoBehaviour
                 _popupText.text = "Не пустить";
                 _popupMenu.gameObject.SetActive(true);
             }
-            else if (!hit.transform.CompareTag("Untagged"))
+            else if (!hit.transform.CompareTag("Untagged") && ! hit.transform.CompareTag("Bed") && !hit.transform.CompareTag("StartDay"))
                 _cursorImg.sprite = _UISprite;
         }
 
@@ -97,8 +112,10 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
-    private void Click(InputAction.CallbackContext _)
+    private async void Click(InputAction.CallbackContext _)
     {
+        if (Time.timeScale == 0) return;
+        
         Transform transf;
         if (_inTable && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
                 out var hit, 4, _docMask))
@@ -106,20 +123,20 @@ public class PlayerInteractions : MonoBehaviour
             transf = hit.transform;
             if (_tableState == CheckState.Correct && transf.TryGetComponent<PMSDocument>(out var _))
             {
-                Instantiate(_correctStamp, transf.GetChild(0).GetChild(0));
-                _npcMng.NPCCheck(true);/////////Update
+                Instantiate(_correctStamp, transf.GetChild(0).GetChild(1));
+                _npcMng.CurrentNPC.Check(true);/////////Update
             }
             else if (_tableState == CheckState.Wrong && transf.TryGetComponent<PMSDocument>(out var _))
             {
-                Instantiate(_wrongStamp, transf.GetChild(0).GetChild(0));
-                _npcMng.NPCCheck(false);/////////Update
+                Instantiate(_wrongStamp, transf.GetChild(0).GetChild(1));
+                _npcMng.CurrentNPC.Check(false);/////////Update
             }
             else
             {
                 _isHolding = true;
                 _currentDoc = transf;
                 _currentDoc.GetComponent<Rigidbody>().useGravity = false;
-                _currentDoc.localPosition = new Vector3(_currentDoc.localPosition.x, hit.point.y+0.3f, _currentDoc.localPosition.z);
+                _currentDoc.localPosition = new Vector3(_currentDoc.localPosition.x, hit.point.y+0.2f, _currentDoc.localPosition.z);
             }
         }
         
@@ -143,19 +160,32 @@ public class PlayerInteractions : MonoBehaviour
             transf.localPosition = Vector3.zero;
             _rotateScript.EnableUI(transf.GetComponent<NPCObject>());
             _inDialog = true;
-            _camera.cullingMask = LayerMask.GetMask("UI", "Clickable");
+            _camera.cullingMask = LayerMask.GetMask("UI", "NPCObject");
         }
-        else if (transf.CompareTag("Bed"))
+        else if (_canSleep && transf.CompareTag("Bed"))
         {
+            StopFocus();
+            _canSleep = false;
+            _lastCamRot = _camera.transform.localEulerAngles;
+            _camera.transform.parent = transf;
+            _camManager.TargetPos = new Vector3(0, 0.8f,-0.4f);
+            _camManager.TargetRot = new Vector3(0,0,0);////////Update
+
+            await Task.Delay(2000);
             _timeLines.Sleep();
+        }
+        else if (_canStartDay && hit2.transform.CompareTag("StartDay"))
+        {
+            _npcMng.StartDay();
+            _canStartDay = false;
         }
         else if (!_inTable && transf.CompareTag("Table"))
         {
             StopFocus();
-            _lastCamRot = _camera.transform.localRotation;
+            _lastCamRot = _camera.transform.localEulerAngles;
             _camera.transform.parent = _tableCamPos;
-            _camera.transform.localPosition = Vector3.zero;
-            _camera.transform.localRotation = Quaternion.Euler(90,0,0);
+            _camManager.TargetPos = Vector3.zero;
+            _camManager.TargetRot = new Vector3(90,0,0);////////Update
             _inTable = true;
         }
         else if (_inTable && transf.CompareTag("Correct"))
@@ -217,8 +247,8 @@ public class PlayerInteractions : MonoBehaviour
             {
                 _inTable = false;
                 _camera.transform.parent = transform;
-                _camera.transform.localPosition = new Vector3(0, 0.64f, 0);
-                _camera.transform.localRotation = _lastCamRot;
+                _camManager.Reset();
+                _camManager.TargetRot = _lastCamRot;
                 Focus();
             }
             else
@@ -253,7 +283,7 @@ public class PlayerInteractions : MonoBehaviour
         _cursor.SetActive(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _camera.cullingMask = LayerMask.GetMask("Default", "UI", "Clickable", "Document");
+        _camera.cullingMask = LayerMask.GetMask("Default", "UI", "Clickable", "Document", "NPCObject");
     }
     
     public void StopFocus()

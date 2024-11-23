@@ -9,7 +9,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField][Range(0,1f)] private float _smoothTime;
     [SerializeField] private float _maxSpeed;
     [SerializeField] private Camera _cam;
-    
+    [SerializeField] private Vector2 rotationXLimits;
     [SerializeField][Range(0,1f)] private float _transitionTime;
     
     private PlayerInput _input;
@@ -46,13 +46,12 @@ public class PlayerMovement : MonoBehaviour
         var camAngles = _cam.transform.eulerAngles;
         _newRot = new Vector3(0, transform.eulerAngles.y + delta.x * MouseSens, 0);
         
-        _camRot = new Vector3(camAngles.x - delta.y * MouseSens,0, 0);
-        //_cam.transform.localRotation = Quaternion.Euler(Mathf.Clamp(_cam.transform.eulerAngles.x,-70f,70f), 0, 0);
+        _camRot = new Vector3(Mathf.Clamp(NormalizeAngle(camAngles.x - delta.y * MouseSens),
+            rotationXLimits.x, rotationXLimits.y),0, 0);
     }
 
     private void FixedUpdate()
     {
-        
         var delta = _input.actions["Move"].ReadValue<Vector2>();
         var direction = new Vector3(delta.x, 0, delta.y); // Вектор ввода
         direction = Quaternion.Euler(0, transform.eulerAngles.y, 0) * direction; // Учет поворота игрока
@@ -61,7 +60,14 @@ public class PlayerMovement : MonoBehaviour
         
         _cam.fieldOfView = Mathf.SmoothDamp(_cam.fieldOfView, _fov, ref _refTransition, _transitionTime);
 
-        transform.rotation = Quaternion.Euler(_newRot);
-        _cam.transform.localRotation = Quaternion.Euler(_camRot);
+        transform.eulerAngles = _newRot;
+        _cam.transform.localEulerAngles = _camRot;
+    }
+    
+    private float NormalizeAngle(float angle)
+    {
+        // Нормализация угла в диапазон [-180, 180]
+        angle = angle % 360;
+        return angle > 180 ? angle - 360 : angle;
     }
 }

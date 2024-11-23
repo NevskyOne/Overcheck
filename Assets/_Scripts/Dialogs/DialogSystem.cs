@@ -41,11 +41,6 @@ public class DialogSystem : MonoBehaviour
         else
         {
             EndChat();
-            if(GoAfter == CheckState.Correct)
-                _npcManager.GoTowards();
-            else if(GoAfter == CheckState.Wrong)
-                _npcManager.GoBack();
-            GoAfter = CheckState.None;
         }
     }
     public void PlayFragment(DialogFragment fragment)
@@ -54,7 +49,7 @@ public class DialogSystem : MonoBehaviour
         ShowButtons(fragment.Buttons);
         PlaceObj(fragment.Object);
         if(fragment.GiveDocs)
-            _npcManager.NPCGiveDocs();
+            _npcManager.CurrentNPC.GiveDocs();
     }
 
     private void ShowButtons(List<ButtonSt> buttons)
@@ -80,6 +75,13 @@ public class DialogSystem : MonoBehaviour
             Destroy(_buttonsHolder.GetChild(i).gameObject);
         }
         _dialogMenu.SetActive(false);
+        
+        if(GoAfter == CheckState.Correct)
+            _npcManager.GoTowards();
+        else if(GoAfter == CheckState.Wrong)
+            _npcManager.GoBack();
+        GoAfter = CheckState.None;
+        
         ChatEnded?.Invoke();
     }
 }

@@ -1,16 +1,13 @@
+
 using UnityEngine;
 
 public class OpenUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    private PlayerInteractions _playerInteract;
+    private void Start() => _playerInteract = FindFirstObjectByType<PlayerInteractions>();
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    private void OnEnable() => _playerInteract.OnUIClick += Open;
+    private void OnDisable() => _playerInteract.OnUIClick -= Open;
+    
+    private void Open(){}
 }

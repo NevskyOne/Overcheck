@@ -27,7 +27,7 @@ public class NPC : MonoBehaviour
     
     private string _name;
     private int _planet;
-    private int _collectedDocs;
+    private List<GameObject> _collectedDocs = new();
     private int _docsCount = 1;
     
     private Random _rnd = new Random();
@@ -62,13 +62,13 @@ public class NPC : MonoBehaviour
         pms.Initialize(_name, _photo, _planet);
         if (_docsCount > 1)
         {
-            iic = _npcManager.GiveDoc(_IIC, 1);
+            iic = _npcManager.GiveDoc(_IIC, 2);
             iic.Initialize(_name, _photo, _planet);
         }
 
         if (_docsCount > 2)
         {
-            pp = _npcManager.GiveDoc(_PP, 1);
+            pp = _npcManager.GiveDoc(_PP, 3);
             pp.Initialize(_name, _photo, _planet);
         }
 
@@ -78,18 +78,18 @@ public class NPC : MonoBehaviour
                 _origin = Convert.ToBoolean(_rnd.Next(0, 2));
                 if (!_origin)
                 {
-                    if (_timeLines.WeekDate > 2)
+                    if (_docsCount > 1)
                         iic.Randomize(1);
-                    if (_timeLines.WeekDate > 4)
+                    if (_docsCount > 2)
                         pp.Randomize(1);
                     pms.Randomize(1);
                 }
                 break;
             case TimeLine.Eternity:
                 _origin = false;
-                if (_timeLines.WeekDate > 2)
+                if (_docsCount > 1)
                     iic.Randomize(1);
-                if (_timeLines.WeekDate > 4)
+                if (_docsCount > 2)
                     pp.Randomize(1);
                 pms.Randomize(1);
                 break;
@@ -97,9 +97,10 @@ public class NPC : MonoBehaviour
                 _origin = true;
                 break;
         }
+        print(_origin);
     }
 
-    public void CheckCoast(bool playerOrigin)
+    public void Check(bool playerOrigin)
     {
         if ((_origin && playerOrigin && CurrentGoal == _targetGoal) || (_origin == false && playerOrigin == false))
         {
@@ -122,31 +123,41 @@ public class NPC : MonoBehaviour
         _checkState = playerOrigin ? CheckState.Correct : CheckState.Wrong;
     }
 
-    public void CollectDoc()
+    public void CollectDoc(GameObject doc, bool add = true)
     {
-        _collectedDocs += 1;
+        if(add)
+            _collectedDocs.Add(doc);
+        else
+            _collectedDocs.Remove(doc);
     }
     
     public void StartChat()
     {
-        if (_checkState == CheckState.None)
+        if (_collectedDocs.Count == _docsCount && _checkState == CheckState.Correct)
+        {
+            _dialogSys.FragmentsStack = new List<DialogFragment>{_endPassText};
+            foreach (var doc in _collectedDocs)
+                Destroy(doc);
+            _collectedDocs.Clear();
+            _dialogSys.GoAfter = _checkState;
+        }
+        else if (_collectedDocs.Count == _docsCount && _checkState == CheckState.Wrong)
+        {
+            _dialogSys.FragmentsStack = new List<DialogFragment>{_endBackText};
+            foreach (var doc in _collectedDocs)
+                Destroy(doc);
+            _collectedDocs.Clear();
+            _dialogSys.GoAfter = _checkState;
+        }
+        else
         {
             _dialogSys.FragmentsStack = _fragments.ToList();
         }
-        else if (_collectedDocs == _docsCount && _checkState == CheckState.Correct)
-        {
-            _dialogSys.FragmentsStack = new List<DialogFragment>{_endPassText};
-        }
-        else if (_collectedDocs == _docsCount && _checkState == CheckState.Wrong)
-        {
-            _dialogSys.FragmentsStack = new List<DialogFragment>{_endBackText};
-        }
         _dialogSys.PlayNext();
-        _dialogSys.GoAfter = _checkState;
+        
     }
     
 }
-
 
 public enum Planet
 {
