@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -40,6 +41,8 @@ public class PlayerInteractions : MonoBehaviour
     private CheckState _tableState = CheckState.None;
     private Transform _currentDoc;
     private Quaternion _lastCamRot;
+
+    public event Action OnUIClick;
     
     private void Start()
     {
@@ -165,11 +168,12 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (transf.CompareTag("Radio"))
         {
-            var audio = transf.GetComponent<AudioSource>();
-            audio.mute = !audio.mute;       
+            var audioSource = transf.GetComponent<AudioSource>();
+            audioSource.mute = !audioSource.mute;       
         }
         else if (transf.CompareTag("OpenUI"))
         {
+            OnUIClick?.Invoke();
         }
     }
     
