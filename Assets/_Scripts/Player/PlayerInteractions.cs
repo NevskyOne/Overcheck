@@ -40,12 +40,9 @@ public class PlayerInteractions : MonoBehaviour
     private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
     private DialogSystem _dialogSystem => FindFirstObjectByType<DialogSystem>();
 
-    private bool _inDialog, _inTable, _isHolding, _canSleep, _canStartDay = true;
+    private bool _inDialog, _inTable, _isHolding, _canSleep, _inUI, _canStartDay = true;
     private CheckState _tableState = CheckState.None;
     private Transform _currentDoc;
-    private Vector3 _lastCamRot;
-
-    public event Action OnUIClick;
     
     private void Start()
     {
@@ -62,10 +59,7 @@ public class PlayerInteractions : MonoBehaviour
         FindFirstObjectByType<TimeLines>().OnDayEnd += () =>
         {
             _canStartDay = true;
-            _lastCamRot = _camera.transform.localEulerAngles;
-            _camera.transform.parent = transform;
-            _camManager.Reset();
-            _camManager.TargetRot = _lastCamRot;
+            _camManager.ResetCamera();
         };
     }
 
@@ -124,12 +118,12 @@ public class PlayerInteractions : MonoBehaviour
             if (_tableState == CheckState.Correct && transf.TryGetComponent<PMSDocument>(out var _))
             {
                 Instantiate(_correctStamp, transf.GetChild(0).GetChild(1));
-                _npcMng.CurrentNPC.Check(true);/////////Update
+                _npcMng.CurrentNPC.Check(true);
             }
             else if (_tableState == CheckState.Wrong && transf.TryGetComponent<PMSDocument>(out var _))
             {
                 Instantiate(_wrongStamp, transf.GetChild(0).GetChild(1));
-                _npcMng.CurrentNPC.Check(false);/////////Update
+                _npcMng.CurrentNPC.Check(false);
             }
             else
             {
@@ -166,11 +160,9 @@ public class PlayerInteractions : MonoBehaviour
         {
             StopFocus();
             _canSleep = false;
-            _lastCamRot = _camera.transform.localEulerAngles;
-            _camera.transform.parent = transf;
-            _camManager.TargetPos = new Vector3(0, 0.8f,-0.4f);
-            _camManager.TargetRot = new Vector3(0,0,0);////////Update
-
+            var pos = transf.position;
+            _camManager.MoveToTarget(new Vector3(pos.x, pos.y + 0.8f,pos.z -0.4f),
+                new Vector3(0, -transform.eulerAngles.y, 0));
             await Task.Delay(2000);
             _timeLines.Sleep();
         }
@@ -182,10 +174,8 @@ public class PlayerInteractions : MonoBehaviour
         else if (!_inTable && transf.CompareTag("Table"))
         {
             StopFocus();
-            _lastCamRot = _camera.transform.localEulerAngles;
-            _camera.transform.parent = _tableCamPos;
-            _camManager.TargetPos = Vector3.zero;
-            _camManager.TargetRot = new Vector3(90,0,0);////////Update
+            _camManager.MoveToTarget(transf.GetChild(0).position,
+                new Vector3(90, -transform.eulerAngles.y, 0));
             _inTable = true;
         }
         else if (_inTable && transf.CompareTag("Correct"))
@@ -203,7 +193,9 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (transf.CompareTag("OpenUI"))
         {
-            OnUIClick?.Invoke();
+            StopFocus();
+            _inUI = true;
+            transf.GetComponent<OpenUI>().Open(transform.eulerAngles);
         }
     }
     
@@ -241,15 +233,17 @@ public class PlayerInteractions : MonoBehaviour
             _inDialog = false;
             _dialogSystem.EndChat();
         }
+        else if (_inUI)
+        {
+            _inUI = false;
+            _camManager.ResetCamera();
+        }
         else if (_inTable)
         {
             if (_tableState == CheckState.None)
             {
                 _inTable = false;
-                _camera.transform.parent = transform;
-                _camManager.Reset();
-                _camManager.TargetRot = _lastCamRot;
-                Focus();
+                _camManager.ResetCamera();
             }
             else
                 _tableState = CheckState.None;
@@ -288,10 +282,10 @@ public class PlayerInteractions : MonoBehaviour
     
     public void StopFocus()
     {
-        _playerMove.enabled = false;
-        _cursor.SetActive(false);
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
+        _cursor.SetActive(false);
+        _playerMove.enabled = false;
     }
 }
 
