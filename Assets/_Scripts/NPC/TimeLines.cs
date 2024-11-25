@@ -11,6 +11,7 @@ public class TimeLines : MonoBehaviour
     [Header("Days")]
     [SerializeField] private TMP_Text _dayCount;
     [SerializeField] private TMP_Text _monthCount;
+    [SerializeField] private TMP_Text _laptopTime;
     [Header("Sleep")]
     [SerializeField] private GameObject _sleepUI;
     [SerializeField] private TMP_Text _correctText;
@@ -40,8 +41,9 @@ public class TimeLines : MonoBehaviour
     
     private void Start()
     {
-        _dayCount.text = _date.ToString();
-        _monthCount.text = _month.ToString();
+        _dayCount.text = $"День:{_date}";
+        _monthCount.text = $"Месяц:{_month}";
+        _laptopTime.text = $"{_date}/{_month}/2144";
     }
 
     public void ChangeTimeline(TimeLine _timeLine, bool add = true)
@@ -67,7 +69,9 @@ public class TimeLines : MonoBehaviour
             _date = 1;
             _monthCount.text = _month.ToString();
         }
-        _dayCount.text = _date.ToString();
+        _dayCount.text = $"День:{_date}";
+        _monthCount.text = $"Месяц:{_month}";
+        _laptopTime.text = $"{_date}/{_month}/2144";
         
         OnDayEnd?.Invoke();
     }
@@ -83,10 +87,10 @@ public class TimeLines : MonoBehaviour
         }
         else
         {
-            _correctText.text = CorrectNPC.ToString();
-            _wrongText.text = WrongNPC.ToString();
-            _additionalText.text = Additional.ToString();
-            _totalText.text = ((int)(CorrectNPC + Additional) - (int)WrongNPC).ToString();
+            _correctText.text = $"Правильные:{CorrectNPC}";
+            _wrongText.text = $"Неверные:{WrongNPC}";
+            _additionalText.text = $"Дополнительные:{Additional}";
+            _totalText.text = $"Результат:{((int)(CorrectNPC + Additional) - (int)WrongNPC)}";
             _sleepUI.SetActive(true);
 
             CorrectNPC = 0;

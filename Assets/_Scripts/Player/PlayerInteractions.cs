@@ -160,9 +160,7 @@ public class PlayerInteractions : MonoBehaviour
         {
             StopFocus();
             _canSleep = false;
-            var pos = transf.position;
-            _camManager.MoveToTarget(new Vector3(pos.x, pos.y + 0.8f,pos.z -0.4f),
-                new Vector3(0, -transform.eulerAngles.y, 0));
+            transf.GetComponent<CamMove>().Move(transform.eulerAngles);
             await Task.Delay(2000);
             _timeLines.Sleep();
         }
@@ -174,8 +172,7 @@ public class PlayerInteractions : MonoBehaviour
         else if (!_inTable && transf.CompareTag("Table"))
         {
             StopFocus();
-            _camManager.MoveToTarget(transf.GetChild(0).position,
-                new Vector3(90, -transform.eulerAngles.y, 0));
+            transf.GetComponent<CamMove>().Move(transform.eulerAngles);
             _inTable = true;
         }
         else if (_inTable && transf.CompareTag("Correct"))
@@ -195,7 +192,7 @@ public class PlayerInteractions : MonoBehaviour
         {
             StopFocus();
             _inUI = true;
-            transf.GetComponent<OpenUI>().Open(transform.eulerAngles);
+            transf.GetComponent<CamMove>().Move(transform.eulerAngles);
         }
     }
     
