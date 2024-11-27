@@ -3,6 +3,7 @@ using UnityEngine;
 
 public class PMSDocument : Document
 {
+    
     public override void Randomize(int maxRandomCount)
     {
         base.Randomize(maxRandomCount);

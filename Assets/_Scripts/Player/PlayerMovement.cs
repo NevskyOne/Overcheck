@@ -1,10 +1,11 @@
+using _Scripts.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float MouseSens;
+    private float _mouseSens => SettingsUI.MouseSens;
     
     [SerializeField][Range(0,1f)] private float _smoothTime;
     [SerializeField] private float _maxSpeed;
@@ -44,9 +45,9 @@ public class PlayerMovement : MonoBehaviour
     {
         var delta = _input.actions["Look"].ReadValue<Vector2>();
         var camAngles = _cam.transform.eulerAngles;
-        _newRot = new Vector3(0, transform.eulerAngles.y + delta.x * MouseSens, 0);
+        _newRot = new Vector3(0, transform.eulerAngles.y + delta.x * _mouseSens, 0);
         
-        _camRot = new Vector3(Mathf.Clamp(NormalizeAngle(camAngles.x - delta.y * MouseSens),
+        _camRot = new Vector3(Mathf.Clamp(NormalizeAngle(camAngles.x - delta.y * _mouseSens),
             rotationXLimits.x, rotationXLimits.y),0, 0);
     }
 
@@ -66,7 +67,6 @@ public class PlayerMovement : MonoBehaviour
     
     private float NormalizeAngle(float angle)
     {
-        // Нормализация угла в диапазон [-180, 180]
         angle = angle % 360;
         return angle > 180 ? angle - 360 : angle;
     }

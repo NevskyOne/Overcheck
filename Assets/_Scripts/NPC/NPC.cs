@@ -31,7 +31,7 @@ public class NPC : MonoBehaviour
     private int _docsCount = 1;
     
     private Random _rnd = new Random();
-    private bool _origin;
+    private bool _origin, _isCriminal;
     private CheckState _checkState = CheckState.None;
     
     private TimeLines _timeLines;
@@ -43,15 +43,24 @@ public class NPC : MonoBehaviour
         _timeLines = FindFirstObjectByType<TimeLines>();
         _dialogSys = FindFirstObjectByType<DialogSystem>();
         _npcManager = FindFirstObjectByType<NPCManager>();
-        transform.GetChild(0).GetComponent<MeshFilter>().mesh = _models[_rnd.Next(0, 3)];
-        
-        _name = RandomParamSt.Names[_rnd.Next(0,RandomParamSt.Names.Length)];
+        transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = _models[_rnd.Next(0, 3)];
+
+        if (_rnd.Next(101) < _npcManager.CriminalChance)
+        {
+            _name = _npcManager.Criminals[_rnd.Next(0,_npcManager.Criminals.Count)];
+            _isCriminal = true;
+            _cost *= 2;
+            _origin = false;
+        }
+        else
+            _name = (RandomParamSt.Names.ToList().Except(_npcManager.Criminals)).ToList()
+                [_rnd.Next(0,RandomParamSt.Names.Length)];
         _photo = RandomParamSt.Photos[_rnd.Next(0,RandomParamSt.Photos.Length)];
         _planet = _rnd.Next(1,5);
 
-        if (_timeLines.WeekDate > 4)
+        if (_timeLines.WeekDate > 3)
             _docsCount = 3;
-        else if (_timeLines.WeekDate > 2)
+        else if (_timeLines.WeekDate > 1)
             _docsCount = 2;
     }
 
@@ -71,11 +80,11 @@ public class NPC : MonoBehaviour
             pp = _npcManager.GiveDoc(_PP, 3);
             pp.Initialize(_name, _photo, _planet);
         }
-
-        switch (_timeLine)
+        
+        if(!_isCriminal) switch (_timeLine)
         {
             case TimeLine.Void:
-                _origin = Convert.ToBoolean(_rnd.Next(0, 2));
+                _origin = _rnd.Next(2) == 1;
                 if (!_origin)
                 {
                     if (_docsCount > 1)

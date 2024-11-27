@@ -18,7 +18,7 @@ public abstract class Document : MonoBehaviour
     public virtual void Initialize(string name, Sprite photo, int planet)
     {
         _npcManager = FindFirstObjectByType<NPCManager>();
-        _name = RandomParamSt.Names[_rnd.Next(0,RandomParamSt.Names.Length)];
+        _name = name;
         _photo = photo;
 
         _nameText.text = _name;

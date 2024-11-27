@@ -66,9 +66,7 @@ public class PlayerInteractions : MonoBehaviour
     private void Update()
     {
         if (Time.timeScale == 0) return;
-        
-        if(_inTable)
-            _popupMenu.gameObject.SetActive(false);
+        _popupMenu.gameObject.SetActive(false);
         RaycastHit hit = new ();
         if (_inDialog ||
             !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
@@ -115,15 +113,14 @@ public class PlayerInteractions : MonoBehaviour
                 out var hit, 4, _docMask))
         {
             transf = hit.transform;
-            if (_tableState == CheckState.Correct && transf.TryGetComponent<PMSDocument>(out var _))
+            if (_tableState != CheckState.None 
+                && transf.CompareTag("PMS")
+                && transf.GetChild(0).GetChild(1).childCount == 0)
             {
-                Instantiate(_correctStamp, transf.GetChild(0).GetChild(1));
-                _npcMng.CurrentNPC.Check(true);
-            }
-            else if (_tableState == CheckState.Wrong && transf.TryGetComponent<PMSDocument>(out var _))
-            {
-                Instantiate(_wrongStamp, transf.GetChild(0).GetChild(1));
-                _npcMng.CurrentNPC.Check(false);
+                Instantiate(_tableState == CheckState.Correct? _correctStamp : _wrongStamp,
+                    transf.GetChild(0).GetChild(1));
+                _npcMng.CurrentNPC.Check(_tableState == CheckState.Correct);
+                _tableState = CheckState.None;
             }
             else
             {
@@ -228,6 +225,7 @@ public class PlayerInteractions : MonoBehaviour
         if (_inDialog)
         {
             _inDialog = false;
+            _rotateScript.DisableUI();
             _dialogSystem.EndChat();
         }
         else if (_inUI)

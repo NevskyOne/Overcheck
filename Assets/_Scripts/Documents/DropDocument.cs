@@ -2,12 +2,7 @@ using UnityEngine;
 
 public class DropDocument : MonoBehaviour
 {
-    private NPCManager _npcMng;
-
-    private void Start()
-    {
-        _npcMng = FindFirstObjectByType<NPCManager>();
-    }
+    private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
 
     public void OnCollisionEnter(Collision other)
     {

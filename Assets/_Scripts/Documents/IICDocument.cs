@@ -12,6 +12,7 @@ public class IICDocument : Document
     private int _healthClass;
     private int _ID;
     private Sprite _stamp;
+    private DataBase _dataBase => FindFirstObjectByType<DataBase>();
     
     public override void Initialize(string name, Sprite photo, int planet)
     {
@@ -25,6 +26,13 @@ public class IICDocument : Document
         _healthText.text = _healthClass.ToString();
         _IDText.text = _ID.ToString();
         _stampImage.sprite = _stamp;
+        
+        _dataBase.AddBear(new BearData
+        {
+            Name = _name,
+            Photo = _photo,
+            ID = (uint)_ID
+        });
     }
     
     public override void Randomize(int maxRandomCount)

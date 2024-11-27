@@ -8,6 +8,7 @@ using Random = System.Random;
 public class NPCManager : MonoBehaviour
 {
     [Header("NPC")] 
+    public uint CriminalChance;
     [SerializeField] private List<DayNPC> _npcList = new(7);
     [SerializeField] private List<GameObject> _normalNPC;
     [SerializeField] private List<GameObject> _specialNPC;
@@ -23,13 +24,24 @@ public class NPCManager : MonoBehaviour
     [SerializeField] private Transform _tablePos;
     [SerializeField] private Transform _endPos;
 
+    public NPC CurrentNPC {get; private set; }
+    public List<string> Criminals {get; private set; }
+    
     private Random _rnd = new Random();
-    public NPC CurrentNPC;
     private NavMeshAgent _currentAgent;
     private int _weekDate => FindFirstObjectByType<TimeLines>().WeekDate;
     private DayNPC _currentDay;
     
     public event Action OnNPCEnd;
+
+    private void Start()
+    {
+        var names = RandomParamSt.Names;
+        for (int i = 0; i < _rnd.Next(3, 5); )
+        {
+            Criminals.Add(names[_rnd.Next(names.Length)]);
+        }
+    }
 
     public void StartDay()
     {

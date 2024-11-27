@@ -1,4 +1,5 @@
 using System;
+using _Scripts.UI;
 using TMPro;
 using UnityEngine;
 
@@ -36,6 +37,7 @@ public class TimeLines : MonoBehaviour
     
     private PlayerData _playerData => GetComponent<PlayerData>();
     private PlayerInteractions _playerInter => GetComponent<PlayerInteractions>();
+    private DataBase _dataBase => FindFirstObjectByType<DataBase>();
     
     public event Action OnDayEnd;
     
@@ -73,6 +75,8 @@ public class TimeLines : MonoBehaviour
         _monthCount.text = $"Месяц:{_month}";
         _laptopTime.text = $"{_date}/{_month}/2144";
         
+        _dataBase.ClearData();
+        
         OnDayEnd?.Invoke();
     }
     
@@ -82,7 +86,26 @@ public class TimeLines : MonoBehaviour
         _playerData.ChageCoins((int)WrongNPC, false);
         if (WeekDate == _days - 1)
         {
-            _endText.text = _voidCounter > 2 ? "Хорошая Void" : "Плохая Void";
+            if (_fatherCounter > 4)
+            {
+                _endText.text = "Роботы";
+                SettingsUI.Robots = true;
+            }
+            else if (_eternityCounter > 4)
+            {
+                _endText.text = "Вечность";
+                SettingsUI.Eternity = true;
+            }
+            else if(_voidCounter > 4)
+            {
+                _endText.text = "Хорошая Void";
+                SettingsUI.GoodVoid = true;
+            }
+            else
+            {
+                _endText.text = "Плохая Void";
+                SettingsUI.BadVoid = true;
+            }
             _titleUI.SetActive(true);
         }
         else
