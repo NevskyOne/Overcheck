@@ -45,6 +45,7 @@ public class TimeLines : MonoBehaviour
     private void Start()
     {
         WeekDate = SettingsUI.CurrentDay;
+        _date += WeekDate;
         _dayCount.text = $"День:{_date}";
         _monthCount.text = $"Месяц:{_month}";
         _laptopTime.text = $"{_date}/{_month}/2144";

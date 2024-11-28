@@ -30,7 +30,7 @@ public class PPDocument : Document
             _curentMounth = FindFirstObjectByType<TimeLines>().Month;
 
             _startPlanet = (Planet)planet;
-            _endPlanet = Planet.Planet1;
+            _endPlanet = Planet.Медовия;
             _startDate = _rnd.Next(1, 28);
             _startMonth = _rnd.Next(1, _curentMounth);
             _endDate = _rnd.Next(1, 28);
@@ -80,12 +80,12 @@ public class PPDocument : Document
                     case 4:
                         var newPlanet = _startPlanet;
                         while (_startPlanet == newPlanet)
-                            newPlanet = (Planet) _rnd.Next(1,5);
+                            newPlanet = (Planet) _rnd.Next(1,8);
                         break;
                     case 5:
                         var newEndPlanet = _endPlanet;
-                        while (newEndPlanet == Planet.Planet1)
-                            newEndPlanet = (Planet) _rnd.Next(1,5);
+                        while (newEndPlanet == Planet.Медовия)
+                            newEndPlanet = (Planet) _rnd.Next(1,8);
                         break;
                 }
             }

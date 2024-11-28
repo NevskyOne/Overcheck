@@ -55,8 +55,9 @@ public class NPCManager : MonoBehaviour
     
     void Update()
     {
-        if (_isChecked && _currentAgent && _currentAgent.isStopped)
+        if (_isChecked && _currentAgent && _currentAgent.velocity.magnitude < 0.1f)
         {
+            
             SelectNPC();
             _isChecked = false;
         }
@@ -104,15 +105,17 @@ public class NPCManager : MonoBehaviour
         CurrentNPC = _currentAgent.GetComponent<NPC>();
     }
 
-    public void GoBack()
+    public async void GoBack()
     {
         _currentAgent.SetDestination(_startPos.position);
+        await Task.Delay(2000);
         _isChecked = true;
     }
     
-    public void GoTowards()
+    public async void GoTowards()
     {
         _currentAgent.SetDestination(_endPos.position);
+        await Task.Delay(2000);
         _isChecked = true;
     }
     

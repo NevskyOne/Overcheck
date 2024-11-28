@@ -43,7 +43,18 @@ public class NPC : MonoBehaviour
         _timeLines = FindFirstObjectByType<TimeLines>();
         _dialogSys = FindFirstObjectByType<DialogSystem>();
         _npcManager = FindFirstObjectByType<NPCManager>();
-        transform.GetChild(0).GetChild(1).GetComponent<SkinnedMeshRenderer>().sharedMesh = _models[_rnd.Next(0, 3)];
+
+        var renderer = transform.GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        renderer.sharedMesh = _models[_rnd.Next(0, 3)];
+        int randomHat = _rnd.Next(0, 4);
+        if(randomHat < 3)
+            renderer.SetBlendShapeWeight(randomHat, 100);
+        int randomCount = _rnd.Next(0, 5);
+        if (randomCount > 0)
+        {
+            for (var i = 0; i < randomCount; i++)
+                renderer.SetBlendShapeWeight(_rnd.Next(3,7), 100);
+        }
 
         if (_rnd.Next(101) < _npcManager.CriminalChance)
         {
@@ -53,14 +64,16 @@ public class NPC : MonoBehaviour
             _origin = false;
         }
         else
-            _name = (RandomParamSt.Names.Except(_npcManager.Criminals)).ToList()
-                [_rnd.Next(0,RandomParamSt.Names.Count)];
-        _photo = RandomParamSt.Photos[_rnd.Next(0,RandomParamSt.Photos.Count)];
-        _planet = _rnd.Next(1,5);
+        {
+            var newList = (RandomParamSt.Names.Except(_npcManager.Criminals)).ToList();
+            _name = newList[_rnd.Next(0, newList.Count)];
+        }
+        
+        _planet = _rnd.Next(1,8);
 
         if (_timeLines.WeekDate > 3)
             _docsCount = 3;
-        else if (_timeLines.WeekDate > 1)
+        else if (_timeLines.WeekDate > -1)
             _docsCount = 2;
     }
 
@@ -169,14 +182,7 @@ public class NPC : MonoBehaviour
     
 }
 
-public enum Planet
-{
-    Planet1,
-    Planet2,
-    Planet3,
-    Planet4,
-    Planet5
-}
+
 
 public enum Goal
 {
