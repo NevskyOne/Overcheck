@@ -8,13 +8,18 @@ namespace _Scripts.UI
     {
         [Header("Settings")]
         [SerializeField] private AudioMixer _mixer;
-        [Header("UI")]
+        [Header("SettingsUI")]
         [SerializeField] private Switcher _graphics;
         [SerializeField] private Switcher _vfx;
         [SerializeField] private Slider _sound;
         [SerializeField] private Slider _music;
         [SerializeField] private Slider _radio;
         [SerializeField] private Slider _mouseSens;
+        [Header("EndingsUI")] 
+        [SerializeField] private GameObject _goodVoidImg;
+        [SerializeField] private GameObject _badVoidImg;
+        [SerializeField] private GameObject _eternityImg;
+        [SerializeField] private GameObject _robotsImg;
         
         public static int Graphics
         {
@@ -26,17 +31,20 @@ namespace _Scripts.UI
             get { return PlayerPrefs.GetInt("VFXOn") == 1; }
             set { PlayerPrefs.SetInt("VFXOn", value? 1 : 0); }
         }
-        public static float Sound
+
+        private static float Sound
         {
             get { return PlayerPrefs.GetFloat("Sound"); }
             set { PlayerPrefs.SetFloat("Sound", value); }
         }
-        public static float Music
+
+        private static float Music
         {
             get { return PlayerPrefs.GetFloat("Music"); }
             set { PlayerPrefs.SetFloat("Music", value); }
         }
-        public static float Radio
+
+        private static float Radio
         {
             get { return PlayerPrefs.GetFloat("Radio"); }
             set { PlayerPrefs.SetFloat("Radio", value); }
@@ -51,22 +59,22 @@ namespace _Scripts.UI
         public static bool GoodVoid
         {
             get { return PlayerPrefs.GetInt("GoodVoid") == 1; }
-            set { PlayerPrefs.SetInt("GoodVoid", value? 1 : 0); }
+            set { PlayerPrefs.SetInt("GoodVoid", 1); }
         }
         public static bool BadVoid
         {
             get { return PlayerPrefs.GetInt("BadVoid") == 1; }
-            set { PlayerPrefs.SetInt("BadVoid", value? 1 : 0); }
+            set { PlayerPrefs.SetInt("BadVoid", 1); }
         }
         public static bool Eternity
         {
             get { return PlayerPrefs.GetInt("Eternity") == 1; }
-            set { PlayerPrefs.SetInt("Eternity", value? 1 : 0); }
+            set { PlayerPrefs.SetInt("Eternity", 1); }
         }
         public static bool Robots
         {
             get { return PlayerPrefs.GetInt("Robots") == 1; }
-            set { PlayerPrefs.SetInt("Robots", value? 1 : 0); }
+            set { PlayerPrefs.SetInt("Robots", 1); }
         }
         public static int CurrentDay
         {
@@ -82,10 +90,29 @@ namespace _Scripts.UI
             _music.value = Music;
             _radio.value = Radio;
             _mouseSens.value = MouseSens;
+            
+            if(GoodVoid) _goodVoidImg.SetActive(true);
+            if(BadVoid) _badVoidImg.SetActive(true);
+            if(Eternity) _eternityImg.SetActive(true);
+            if(Robots) _robotsImg.SetActive(true);
         }
 
-        public void ChangeVolume(float value) => _mixer.SetFloat("Master", Mathf.Log10(value) * 20f); 
-        public void ChangeMusic(float value) => _mixer.SetFloat("Music", Mathf.Log10(value) * 20f); 
-        public void ChangeRadio(float value) => _mixer.SetFloat("Radio", Mathf.Log10(value) * 20f); 
+        public void ChangeVolume(float value)
+        {
+            _mixer.SetFloat("Master", Mathf.Log10(value) * 20f);
+            Sound = value;
+        }
+
+        public void ChangeMusic(float value)
+        {
+            _mixer.SetFloat("Music", Mathf.Log10(value) * 20f);
+            Music = value;
+        }
+
+        public void ChangeRadio(float value)
+        {
+            _mixer.SetFloat("Radio", Mathf.Log10(value) * 20f);
+            Radio = value;
+        }
     }
 }

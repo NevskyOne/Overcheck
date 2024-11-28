@@ -256,7 +256,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 6422843541657574848}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1424219897087428296}
+        m_TargetAssemblyTypeName: LoadManager, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &309932598990366124
 GameObject:
   m_ObjectHideFlags: 0
@@ -695,7 +707,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 4710258317233853567}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1424219897087428296}
+        m_TargetAssemblyTypeName: LoadManager, Assembly-CSharp
+        m_MethodName: QuitGame
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &564659038721429206
 GameObject:
   m_ObjectHideFlags: 0
@@ -861,18 +885,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8044909200139171785}
-        m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
-        m_MethodName: set_Radio
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 8044909200139171785}
         m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
         m_MethodName: ChangeRadio
@@ -3560,7 +3572,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &2695250556655669483
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3608,7 +3620,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: af19b810ad81d8741ba1583f72a9d93c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1fe5a7887d4d25c448821b998ec50d9e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -5265,18 +5277,6 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 8044909200139171785}
         m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
-        m_MethodName: set_Sound
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 8044909200139171785}
-        m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 0
         m_Arguments:
@@ -5319,8 +5319,8 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 8179237617339727947}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.44444445, y: 0}
-  m_AnchorMax: {x: 0.44444445, y: 1}
+  m_AnchorMin: {x: 0.35777777, y: 0}
+  m_AnchorMax: {x: 0.35777777, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 40, y: -20}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -5765,18 +5765,6 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8044909200139171785}
-        m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
-        m_MethodName: set_Music
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 8044909200139171785}
         m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
         m_MethodName: ChangeMusic
@@ -6922,6 +6910,7 @@ GameObject:
   - component: {fileID: 4235840525352529990}
   - component: {fileID: 5225597548366831812}
   - component: {fileID: 6263675664116548623}
+  - component: {fileID: 1424219897087428296}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -7019,6 +7008,18 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &1424219897087428296
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4485714143017424538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fb9713f6bd640098b5b600e2d462a4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &4531116097849603784
 GameObject:
   m_ObjectHideFlags: 0
@@ -8809,7 +8810,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &956933720481659545
 RectTransform:
   m_ObjectHideFlags: 0
@@ -8857,7 +8858,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: af19b810ad81d8741ba1583f72a9d93c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1fe5a7887d4d25c448821b998ec50d9e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -11641,7 +11642,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 7040359760591033552}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 4451351722585378168}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &6807799122523187276
 GameObject:
   m_ObjectHideFlags: 0
@@ -14072,7 +14085,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6520096192542621213
 RectTransform:
   m_ObjectHideFlags: 0
@@ -14120,7 +14133,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: af19b810ad81d8741ba1583f72a9d93c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1fe5a7887d4d25c448821b998ec50d9e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1
@@ -14714,6 +14727,10 @@ MonoBehaviour:
   _music: {fileID: 18285453400917935}
   _radio: {fileID: 8166517692498235650}
   _mouseSens: {fileID: 4337853170284560316}
+  _goodVoidImg: {fileID: 2257776192952756548}
+  _badVoidImg: {fileID: 9088132595407215369}
+  _eternityImg: {fileID: 7859194131965282738}
+  _robotsImg: {fileID: 5354541478508629269}
 --- !u!1 &8238771435186460313
 GameObject:
   m_ObjectHideFlags: 0
@@ -15132,7 +15149,7 @@ RectTransform:
   m_Father: {fileID: 3871108645605253359}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.44444445, y: 1}
+  m_AnchorMax: {x: 0.35777777, y: 1}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -15617,7 +15634,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 924428965413739310}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1424219897087428296}
+        m_TargetAssemblyTypeName: LoadManager, Assembly-CSharp
+        m_MethodName: StartGame
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
 --- !u!1 &8798904062582844758
 GameObject:
   m_ObjectHideFlags: 0
@@ -16058,7 +16087,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &757425499574166406
 RectTransform:
   m_ObjectHideFlags: 0
@@ -16106,7 +16135,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: af19b810ad81d8741ba1583f72a9d93c, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1fe5a7887d4d25c448821b998ec50d9e, type: 3}
   m_Type: 0
   m_PreserveAspect: 1
   m_FillCenter: 1

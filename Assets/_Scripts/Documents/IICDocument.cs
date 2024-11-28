@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -46,14 +48,12 @@ public class IICDocument : Document
             switch (randomParam)
             {
                 case 0:
-                    var newName = _name;
-                    while (_name == newName)
-                        newName = RandomParamSt.Names[_rnd.Next(0,RandomParamSt.Names.Length)];
+                    _name = (RandomParamSt.Names.Except(new List<string>{_name})).ToList()
+                        [_rnd.Next(0,RandomParamSt.Names.Count)];
                     break;
                 case 1:
-                    var newPhoto = _photo;
-                    while (_photo == newPhoto)
-                        newPhoto = RandomParamSt.Photos[_rnd.Next(0,RandomParamSt.Photos.Length)];
+                    _photo = (RandomParamSt.Photos.Except(new List<Sprite>{_photo})).ToList()
+                        [_rnd.Next(0,RandomParamSt.Photos.Count)];
                     break;
                 case 2:
                     _healthClass = _rnd.Next(1,3);
@@ -62,9 +62,8 @@ public class IICDocument : Document
                     _ID = _rnd.Next(10000,99999);
                     break;
                 case 4:
-                    var newStamp = _stamp;
-                    while (_stamp == newStamp)
-                        newStamp = RandomParamSt.Stamps[_rnd.Next(0,RandomParamSt.Stamps.Length)];
+                    _stamp = (RandomParamSt.Stamps.Except(new List<Sprite>{_stamp})).ToList()
+                        [_rnd.Next(0,RandomParamSt.Stamps.Count)];
                     break;
             }
         }

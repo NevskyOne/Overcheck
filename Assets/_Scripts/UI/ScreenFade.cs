@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
@@ -5,8 +6,10 @@ using UnityEngine.UI;
 public class ScreenFade : MonoBehaviour
 {
     [SerializeField] private float _fadeSpeed;
-    
-    IEnumerator Start()
+
+    private void OnEnable() => StartCoroutine(StartFade());
+
+    private IEnumerator StartFade()
     {
         Image img = GetComponent<Image>();
         Color color = img.color;

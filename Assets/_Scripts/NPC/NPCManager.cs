@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using TMPro;
 using UnityEngine;
 using UnityEngine.AI;
 using Random = System.Random;
@@ -24,22 +26,39 @@ public class NPCManager : MonoBehaviour
     [SerializeField] private Transform _tablePos;
     [SerializeField] private Transform _endPos;
 
+    [Header("UI")] 
+    [SerializeField] private Transform _criminalHolder;
+
     public NPC CurrentNPC {get; private set; }
-    public List<string> Criminals {get; private set; }
+    public List<string> Criminals { get; } = new();
     
+
     private Random _rnd = new Random();
     private NavMeshAgent _currentAgent;
     private int _weekDate => FindFirstObjectByType<TimeLines>().WeekDate;
     private DayNPC _currentDay;
+    private bool _isChecked;
     
     public event Action OnNPCEnd;
+    
 
     private void Start()
     {
-        var names = RandomParamSt.Names;
-        for (int i = 0; i < _rnd.Next(3, 5); )
+        var names = RandomParamSt.Names.ToList();
+        for (int i = 0; i < _rnd.Next(3, 5); i++)
         {
-            Criminals.Add(names[_rnd.Next(names.Length)]);
+            name = names[_rnd.Next(names.Count)];
+            Criminals.Add(name);
+            names.Remove(name);
+        }
+    }
+    
+    void Update()
+    {
+        if (_isChecked && _currentAgent && _currentAgent.isStopped)
+        {
+            SelectNPC();
+            _isChecked = false;
         }
     }
 
@@ -47,10 +66,18 @@ public class NPCManager : MonoBehaviour
     {
         _currentDay = _npcList[_weekDate];
         SelectNPC();
+        int i = 0;
+        foreach (var criminal in Criminals)
+        {
+            _criminalHolder.GetChild(i).GetComponent<TMP_Text>().text = criminal;
+            i++;
+        }
     }
     
-    private void SelectNPC()
+    private async void SelectNPC()
     { 
+        if(CurrentNPC) Destroy(CurrentNPC.gameObject);
+        await Task.Delay(_rnd.Next(2000, 7000));
         if (_currentDay.TutorialNPC > 0)
         {
             SpawnNPC(_tutorialNPC);
@@ -77,22 +104,16 @@ public class NPCManager : MonoBehaviour
         CurrentNPC = _currentAgent.GetComponent<NPC>();
     }
 
-    public async void GoBack()
+    public void GoBack()
     {
         _currentAgent.SetDestination(_startPos.position);
-        await Task.Delay(3500);
-        Destroy(CurrentNPC.gameObject);
-        await Task.Delay(_rnd.Next(2000, 7000));
-        SelectNPC();
+        _isChecked = true;
     }
     
-    public async void GoTowards()
+    public void GoTowards()
     {
         _currentAgent.SetDestination(_endPos.position);
-        await Task.Delay(3500);
-        Destroy(CurrentNPC.gameObject);
-        await Task.Delay(_rnd.Next(2000, 7000));
-        SelectNPC();
+        _isChecked = true;
     }
     
     public Document GiveDoc(GameObject doc, uint pos)

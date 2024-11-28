@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class PMSDocument : Document
@@ -15,14 +17,12 @@ public class PMSDocument : Document
             switch (randomParam)
             {
                 case 0:
-                    var newName = _name;
-                    while (_name == newName)
-                        newName = RandomParamSt.Names[_rnd.Next(0,RandomParamSt.Names.Length)];
+                    _name = (RandomParamSt.Names.Except(new List<string>{_name})).ToList()
+                        [_rnd.Next(0,RandomParamSt.Names.Count)];
                     break;
                 case 1:
-                    var newPhoto = _photo;
-                    while (_photo == newPhoto)
-                        newPhoto = RandomParamSt.Photos[_rnd.Next(0,RandomParamSt.Photos.Length)];
+                    _photo = (RandomParamSt.Photos.Except(new List<Sprite>{_photo})).ToList()
+                        [_rnd.Next(0,RandomParamSt.Photos.Count)];
                     break;
             }
         }

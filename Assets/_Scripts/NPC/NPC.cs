@@ -53,9 +53,9 @@ public class NPC : MonoBehaviour
             _origin = false;
         }
         else
-            _name = (RandomParamSt.Names.ToList().Except(_npcManager.Criminals)).ToList()
-                [_rnd.Next(0,RandomParamSt.Names.Length)];
-        _photo = RandomParamSt.Photos[_rnd.Next(0,RandomParamSt.Photos.Length)];
+            _name = (RandomParamSt.Names.Except(_npcManager.Criminals)).ToList()
+                [_rnd.Next(0,RandomParamSt.Names.Count)];
+        _photo = RandomParamSt.Photos[_rnd.Next(0,RandomParamSt.Photos.Count)];
         _planet = _rnd.Next(1,5);
 
         if (_timeLines.WeekDate > 3)
@@ -106,6 +106,7 @@ public class NPC : MonoBehaviour
                 _origin = true;
                 break;
         }
+        print(_isCriminal);
         print(_origin);
     }
 
