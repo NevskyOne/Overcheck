@@ -26,11 +26,12 @@ public class NPCImageGenerator : MonoBehaviour
 
         foreach (var model in npcModels)
         {
+            matIndex = 1;
             foreach (var material in Materials)
             {
                 // Применяем текстуру
                 GetComponent<Renderer>().material = material;
-                GetComponent<MeshFilter>().mesh = model;
+                GetComponent<SkinnedMeshRenderer>().sharedMesh = model;
                     
 
                 // Ждём кадр, чтобы камера обновила отображение

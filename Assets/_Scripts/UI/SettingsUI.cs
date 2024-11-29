@@ -81,6 +81,11 @@ namespace _Scripts.UI
             get { return PlayerPrefs.GetInt("CurrentDay"); }
             set { PlayerPrefs.SetInt("CurrentDay", value); }
         }
+        public static int RobotsCount
+        {
+            get { return PlayerPrefs.GetInt("RobotsCount"); }
+            set { PlayerPrefs.SetInt("RobotsCount", value); }
+        }
         
         public void Start()
         {

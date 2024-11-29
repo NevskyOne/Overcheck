@@ -54,9 +54,9 @@ public class PlayerInteractions : MonoBehaviour
 
         Focus();
         _dialogSystem.ChatEnded += () => {_inDialog = false; Focus();};
-        _npcMng.OnNPCEnd += () => _canSleep = true;
+        NPCManager.OnNPCEnd += () => _canSleep = true;
         
-        FindFirstObjectByType<TimeLines>().OnDayEnd += () =>
+        TimeLines.OnDayEnd += () =>
         {
             _canStartDay = true;
             _camManager.ResetCamera();
@@ -115,10 +115,10 @@ public class PlayerInteractions : MonoBehaviour
             transf = hit.transform;
             if (_tableState != CheckState.None 
                 && transf.CompareTag("PMS")
-                && transf.GetChild(0).GetChild(1).childCount == 0)
+                && transf.GetChild(0).GetChild(0).childCount == 0)
             {
                 Instantiate(_tableState == CheckState.Correct? _correctStamp : _wrongStamp,
-                    transf.GetChild(0).GetChild(1));
+                    transf.GetChild(0).GetChild(0));
                 _npcMng.CurrentNPC.Check(_tableState == CheckState.Correct);
                 _tableState = CheckState.None;
             }
