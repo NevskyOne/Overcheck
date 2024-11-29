@@ -214,6 +214,7 @@ public class PlayerInteractions : MonoBehaviour
     }
 
     private void Space(InputAction.CallbackContext _) => NextFraze();
+    public void ResetButton() => _canStartDay = true;
     
     public void NextFraze()
     {

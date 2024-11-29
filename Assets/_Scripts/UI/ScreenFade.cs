@@ -31,7 +31,7 @@ public class ScreenFade : MonoBehaviour
         img.color = color;
         while (color.a > 0f)
         {
-            color.a += _fadeSpeed * Time.deltaTime;
+            color.a -= _fadeSpeed * Time.deltaTime;
             img.color = color;
             yield return null;
         }

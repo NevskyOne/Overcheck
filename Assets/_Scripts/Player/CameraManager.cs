@@ -5,7 +5,7 @@ public class CameraManager : MonoBehaviour
 {
     [SerializeField] private float moveDuration = 1f;
 
-    private Vector3 initialLocalPosition;
+    private Vector3 initialLocalPosition = new Vector3(0,0.64f,0);
     private Vector3 initialLocalEulerAngles;
     private Vector3 positionVelocity;
     private Vector3 rotationVelocity;
@@ -16,7 +16,6 @@ public class CameraManager : MonoBehaviour
 
     private void Start()
     {
-        initialLocalPosition = transform.localPosition;
         initialLocalEulerAngles = transform.localEulerAngles;
         _playerInter = FindFirstObjectByType<PlayerInteractions>();
     }

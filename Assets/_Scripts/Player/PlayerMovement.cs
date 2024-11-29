@@ -1,3 +1,4 @@
+using System;
 using _Scripts.UI;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -18,17 +19,26 @@ public class PlayerMovement : MonoBehaviour
     private Vector3 _velocity = Vector3.zero;
     private float _speed, _fov = 60, _refTransition;
     
-    private void Start()
+    private void Awake()
     {
         _input = gameObject.GetComponent<PlayerInput>();
-        
-        _input.actions["Look"].performed += Look;
-        _input.actions["Sprint"].started += StartSprint;
-        _input.actions["Sprint"].canceled += StopSprint;
-        
         _speed = _maxSpeed;
     }
 
+    private void OnEnable()
+    {
+        _input.actions["Look"].performed += Look;
+        _input.actions["Sprint"].started += StartSprint;
+        _input.actions["Sprint"].canceled += StopSprint;
+    }
+
+    private void OnDisable()
+    {
+        _input.actions["Look"].performed -= Look;
+        _input.actions["Sprint"].started -= StartSprint;
+        _input.actions["Sprint"].canceled -= StopSprint;
+    }
+    
     private void StartSprint(InputAction.CallbackContext _)
     {
         _speed = _maxSpeed * 1.5f;

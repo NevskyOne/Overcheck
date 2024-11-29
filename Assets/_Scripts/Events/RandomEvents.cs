@@ -29,6 +29,7 @@ public class RandomEvents : MonoBehaviour
     private Coroutine _autoLoseRoutine;
     private GameObject _puzzleObj, _currentRobot;
     private CameraManager _cameraMng => _player.GetComponentInChildren<CameraManager>();
+    private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
     private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
 
     public static event Action OnLose, OnDone;
@@ -41,24 +42,25 @@ public class RandomEvents : MonoBehaviour
     private void OnEventStart()
     {
         _redSreen.gameObject.SetActive(true);
+
         switch (_rnd.Next(3))
         {
             case 0:
                 _wires.SetActive(true);
                 _puzzleObj = _wires;
-                if (_rnd.Next(1, 101) < (SettingsUI.RobotsCount ^ 2))
+                if (_rnd.Next(1, 101) <= (Math.Pow(SettingsUI.RobotsCount,2)))
                     _currentRobot = Instantiate(_robotPrefab, _wiresPos[_rnd.Next(_wiresPos.Count)]);
                 break;
             case 1:
                 _gears.SetActive(true);
                 _puzzleObj = _gears;
-                if (_rnd.Next(1, 101) < (SettingsUI.RobotsCount ^ 2))
+                if (_rnd.Next(1, 101) <= (Math.Pow(SettingsUI.RobotsCount,2)))
                     _currentRobot = Instantiate(_robotPrefab, _gearsPos[_rnd.Next(_gearsPos.Count)]);
                 break;
             case 2:
                 _meteorites.SetActive(true);
                 _puzzleObj = _meteorites;
-                if (_rnd.Next(1, 101) < (SettingsUI.RobotsCount ^ 2))
+                if (_rnd.Next(1, 101) <= (Math.Pow(SettingsUI.RobotsCount,2)))
                     _currentRobot = Instantiate(_robotPrefab, _meteoritesPos[_rnd.Next(_meteoritesPos.Count)]);
                 break;
         }
@@ -91,14 +93,15 @@ public class RandomEvents : MonoBehaviour
             StopCoroutine(_autoLoseRoutine);
         
         _blackSreen.gameObject.SetActive(true);
-        await Task.Delay(2000);
+        await Task.Delay(3500);
+        _puzzleObj.SetActive(false);
         _cameraMng.ResetCamera();
         _player.position = _bedPos;
         if(_currentRobot) 
             Destroy(_currentRobot);
         
-        await Task.Delay(100);
-        
+        await Task.Delay(1000);
+        _playerInter.ResetButton();
         StartCoroutine(_blackSreen.EndFade());
         StartCoroutine(_redSreen.EndFade());
     }

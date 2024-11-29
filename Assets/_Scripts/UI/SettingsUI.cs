@@ -89,6 +89,7 @@ namespace _Scripts.UI
         
         public void Start()
         {
+            SettingsUI.RobotsCount = 10;
             _graphics.UpdateUI(Graphics);
             _vfx.UpdateUI(VFXOn? 1 : 0);
             _sound.value = Sound;

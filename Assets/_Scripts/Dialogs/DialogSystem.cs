@@ -18,6 +18,8 @@ public class DialogSystem : MonoBehaviour
     [Header("Object")] [SerializeField] private Transform _objHolder;
     
     private PlayerMovement _playerMovement => FindFirstObjectByType<PlayerMovement>();
+    private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
+    private CameraManager _cameraMng =>  FindFirstObjectByType<CameraManager>();
     public event Action ChatEnded;
     public CheckState GoAfter;
     private NPCManager _npcManager;
@@ -33,6 +35,7 @@ public class DialogSystem : MonoBehaviour
         {
             _playerMovement.enabled = false;
             _dialogMenu.SetActive(true);
+            _playerInter.StopFocus();
             for (var i = 0; i < _buttonsHolder.childCount; i++ )    
             {
                 Destroy(_buttonsHolder.GetChild(i).gameObject);
@@ -66,13 +69,15 @@ public class DialogSystem : MonoBehaviour
     
     private void PlaceObj(GameObject obj)
     {
-        if(obj != null) Instantiate(obj, _objHolder);
+        if(obj) Instantiate(obj, _objHolder);
     }
 
     public void EndChat()
     {
         _playerMovement.enabled = true;
         FragmentsStack.Clear();
+        _playerInter.Focus();
+        _cameraMng.ResetCamera();
         for (var i = 0; i < _buttonsHolder.childCount; i++ )    
         {
             Destroy(_buttonsHolder.GetChild(i).gameObject);

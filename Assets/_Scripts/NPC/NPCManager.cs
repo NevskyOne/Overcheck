@@ -49,9 +49,9 @@ public class NPCManager : MonoBehaviour
         var names = RandomParamSt.Names.ToList();
         for (int i = 0; i < _rnd.Next(3, 5); i++)
         {
-            name = names[_rnd.Next(names.Count)];
-            _criminals.Add(name);
-            names.Remove(name);
+            var bearName = names[_rnd.Next(names.Count)];
+            _criminals.Add(bearName);
+            names.Remove(bearName);
         }
 
         ChangedCriminals = _criminals;
