@@ -22,7 +22,7 @@ public class APIManager
         var getPlayersListRequest = await SendRequest(getPlayersListRequestRaw);
         await SendLog("Проверка сущетсвует ли игрок. ", playerName, new Dictionary<string, int>());
         
-        var response = JsonConvert.DeserializeObject<PlayerResponse[]>(getPlayersListRequest.downloadHandler.text);
+        var response = JsonConvert.DeserializeObject<ObjectResponse[]>(getPlayersListRequest.downloadHandler.text);
         var playersList = new Dictionary<string, Dictionary<string, int>>();
         
         foreach (var player in response)
@@ -45,7 +45,8 @@ public class APIManager
     {
         var request = CreateRequest($"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{playerName}/");
         var rawResponse = await SendRequest(request);
-        var response = JsonConvert.DeserializeObject<PlayerResponse>(rawResponse.downloadHandler.text);
+        var response = JsonConvert.DeserializeObject<ObjectResponse>(rawResponse.downloadHandler.text);
+        await SendLog($"Игрок {playerName} получает текущие ресурсы.", playerName, response.resources);
         return response.resources[COINS];
     }
     
@@ -56,6 +57,32 @@ public class APIManager
         var request = CreateRequest($"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{playerName}/", RequestType.PUT, updatedRes);
         await SendRequest(request);
         await SendLog($"Ресурсы игрока: {playerName}, были изменены. ", playerName, res);
+    }
+
+    public async Task<Dictionary<string, int>> GetShop(string playerName)
+    {
+        var request = CreateRequest($"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{playerName}/shops/");
+        var rawResponse = await SendRequest(request);
+        var response = JsonConvert.DeserializeObject<ObjectResponse[]>(rawResponse.downloadHandler.text);
+        var list = new Dictionary<string, Dictionary<string, int>>();
+        
+        foreach (var objectResponse in response)
+        {
+            var name = objectResponse.name;
+            var res = objectResponse.resources;
+            list.Add(name, res);
+        }
+
+        await SendShopLog($"Игрок {playerName} получает текущий магазин. ", playerName, list[SHOP_NAME]);
+
+        return list[SHOP_NAME];
+    }
+
+    public async void ChangeShop(string playerName, Dictionary<string, int> shop)
+    {
+        var request = CreateRequest($"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{playerName}/shops/{SHOP_NAME}/", RequestType.PUT, shop);
+        await SendRequest(request);
+        await SendShopLog($"Магазин игрока {playerName} был изменен: {shop}", playerName, shop);
     }
     
     private async Task RegisterPlayer(string playerName)

@@ -5,6 +5,8 @@
     public const string PIGGY_BANK = "piggy_bank";
     public const string HAPPY_HONEY = "happy_honey";
     public const string HONORARY_CORPORATION = "honorary_corporation";
+
+    public const string PLAYER_NAME_PLAYERPREFS_KEY = "PlayerNamePlayerPrefsKey";
 }
 
 public enum ToolName

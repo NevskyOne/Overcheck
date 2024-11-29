@@ -1980,6 +1980,7 @@ MonoBehaviour:
   - {fileID: 8300000, guid: a44b83fe4c5b9134aa1c1f21d21af2ff, type: 3}
   - {fileID: 8300000, guid: 355e1b63e6106954ab78d8c1df10a429, type: 3}
   _source: {fileID: 283207947}
+  _strangeWave: 0
 --- !u!82 &283207947
 AudioSource:
   m_ObjectHideFlags: 0
@@ -3636,6 +3637,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CriminalChance: 10
+  _eventChance: 0
   _npcList:
   - NormalNPC: 1
     SpecialNPC: 0
@@ -4230,6 +4232,9 @@ GameObject:
   m_Component:
   - component: {fileID: 598895840}
   - component: {fileID: 598895841}
+  - component: {fileID: 598895843}
+  - component: {fileID: 598895842}
+  - component: {fileID: 598895844}
   m_Layer: 0
   m_Name: API
   m_TagString: Untagged
@@ -4264,6 +4269,51 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1e44aeafe1d540fb8fa22c6c4cb443e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _shop: {fileID: 598895843}
+  _toolBase: {fileID: 598895842}
+--- !u!114 &598895842
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598895838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 44f1e6d4a7bd4a868d9de1641f8dc6ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _toolName: 0
+  _price: 3
+--- !u!114 &598895843
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598895838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 620349df3f74499a8c95048961c4444a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _tools:
+  - {fileID: 598895842}
+--- !u!114 &598895844
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 598895838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9be411a0ec774940993a1c72fc4be009, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _authorizationPanel: {fileID: 0}
+  _authorizationInputField: {fileID: 0}
+  _playerName: Almik123
 --- !u!1 &640550627
 GameObject:
   m_ObjectHideFlags: 0
@@ -7932,6 +7982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fadeSpeed: 2
+  _maxValue: 0
 --- !u!1 &1713596731
 GameObject:
   m_ObjectHideFlags: 0
