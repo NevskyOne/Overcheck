@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -17,7 +16,7 @@ public class NPC : MonoBehaviour
     
     [Header("Valuable")]
     [SerializeField] private uint _cost;
-    [SerializeField] private TimeLine _timeLine;
+    public TimeLine NPCTimeLine;
     
     [Header("Text")]
     [SerializeField] private List<DialogFragment> _fragments = new();
@@ -58,14 +57,15 @@ public class NPC : MonoBehaviour
 
         if (_rnd.Next(101) < _npcManager.CriminalChance)
         {
-            _name = _npcManager.Criminals[_rnd.Next(0,_npcManager.Criminals.Count)];
+            _name = _npcManager.ChangedCriminals[_rnd.Next(0,_npcManager.ChangedCriminals.Count)];
             _isCriminal = true;
             _cost *= 2;
             _origin = false;
+            _npcManager.ChangedCriminals.Remove(_name);
         }
         else
         {
-            var newList = (RandomParamSt.Names.Except(_npcManager.Criminals)).ToList();
+            var newList = (RandomParamSt.Names.Except(_npcManager.ChangedCriminals)).ToList();
             _name = newList[_rnd.Next(0, newList.Count)];
         }
         
@@ -94,7 +94,7 @@ public class NPC : MonoBehaviour
             pp.Initialize(_name, _photo, _planet);
         }
         
-        if(!_isCriminal) switch (_timeLine)
+        if(!_isCriminal) switch (NPCTimeLine)
         {
             case TimeLine.Void:
                 _origin = _rnd.Next(2) == 1;
@@ -115,7 +115,7 @@ public class NPC : MonoBehaviour
                     pp.Randomize(1);
                 pms.Randomize(1);
                 break;
-            case TimeLine.Father:
+            case TimeLine.Robots:
                 _origin = true;
                 break;
         }
@@ -139,8 +139,8 @@ public class NPC : MonoBehaviour
         {
             _timeLines.WrongNPC += _cost;
             _timeLines.ChangeTimeline(TimeLine.Void, false);
-            if(_timeLine != TimeLine.Void)
-                _timeLines.ChangeTimeline(_timeLine);
+            if(NPCTimeLine != TimeLine.Void)
+                _timeLines.ChangeTimeline(NPCTimeLine);
         }
 
         _checkState = playerOrigin ? CheckState.Correct : CheckState.Wrong;

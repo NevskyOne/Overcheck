@@ -17,6 +17,7 @@ public class DialogSystem : MonoBehaviour
 
     [Header("Object")] [SerializeField] private Transform _objHolder;
     
+    private PlayerMovement _playerMovement => FindFirstObjectByType<PlayerMovement>();
     public event Action ChatEnded;
     public CheckState GoAfter;
     private NPCManager _npcManager;
@@ -30,6 +31,7 @@ public class DialogSystem : MonoBehaviour
     {
         if (FragmentsStack.Count > 0)
         {
+            _playerMovement.enabled = false;
             _dialogMenu.SetActive(true);
             for (var i = 0; i < _buttonsHolder.childCount; i++ )    
             {
@@ -69,6 +71,7 @@ public class DialogSystem : MonoBehaviour
 
     public void EndChat()
     {
+        _playerMovement.enabled = true;
         FragmentsStack.Clear();
         for (var i = 0; i < _buttonsHolder.childCount; i++ )    
         {

@@ -54,9 +54,9 @@ public class PlayerInteractions : MonoBehaviour
 
         Focus();
         _dialogSystem.ChatEnded += () => {_inDialog = false; Focus();};
-        _npcMng.OnNPCEnd += () => _canSleep = true;
+        NPCManager.OnNPCEnd += () => _canSleep = true;
         
-        FindFirstObjectByType<TimeLines>().OnDayEnd += () =>
+        TimeLines.OnDayEnd += () =>
         {
             _canStartDay = true;
             _camManager.ResetCamera();

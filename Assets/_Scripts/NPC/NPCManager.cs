@@ -9,8 +9,10 @@ using Random = System.Random;
 
 public class NPCManager : MonoBehaviour
 {
-    [Header("NPC")] 
+    [Header("Randomnes")] 
     public uint CriminalChance;
+    [SerializeField] private uint _eventChance;
+    [Header("NPC")] 
     [SerializeField] private List<DayNPC> _npcList = new(7);
     [SerializeField] private List<GameObject> _normalNPC;
     [SerializeField] private List<GameObject> _specialNPC;
@@ -30,8 +32,8 @@ public class NPCManager : MonoBehaviour
     [SerializeField] private Transform _criminalHolder;
 
     public NPC CurrentNPC {get; private set; }
-    public List<string> Criminals { get; } = new();
-    
+    private List<string> _criminals  = new();
+    public List<string> ChangedCriminals { get; private set; } = new();
 
     private Random _rnd = new Random();
     private NavMeshAgent _currentAgent;
@@ -39,7 +41,7 @@ public class NPCManager : MonoBehaviour
     private DayNPC _currentDay;
     private bool _isChecked;
     
-    public event Action OnNPCEnd;
+    public static event Action OnNPCEnd, RandomEvent, EternityCheck;
     
 
     private void Start()
@@ -48,9 +50,12 @@ public class NPCManager : MonoBehaviour
         for (int i = 0; i < _rnd.Next(3, 5); i++)
         {
             name = names[_rnd.Next(names.Count)];
-            Criminals.Add(name);
+            _criminals.Add(name);
             names.Remove(name);
         }
+
+        ChangedCriminals = _criminals;
+        RandomEvents.OnLose += ResetDay;
     }
     
     void Update()
@@ -65,37 +70,49 @@ public class NPCManager : MonoBehaviour
 
     public void StartDay()
     {
+        _criminals = ChangedCriminals;
         _currentDay = _npcList[_weekDate];
         SelectNPC();
         int i = 0;
-        foreach (var criminal in Criminals)
+        foreach (var criminal in _criminals)
         {
             _criminalHolder.GetChild(i).GetComponent<TMP_Text>().text = criminal;
             i++;
         }
     }
-    
-    private async void SelectNPC()
+
+    public void ResetDay()
+    {
+        ChangedCriminals = _criminals;
+        _currentDay = _npcList[_weekDate];
+    }
+
+    public void SelectNPC(bool eventEnabled = true)
     { 
         if(CurrentNPC) Destroy(CurrentNPC.gameObject);
-        await Task.Delay(_rnd.Next(2000, 7000));
-        if (_currentDay.TutorialNPC > 0)
-        {
-            SpawnNPC(_tutorialNPC);
-            _currentDay.TutorialNPC -= 1;
-        }
-        else if (_rnd.Next(0, 2) == 1 && _currentDay.SpecialNPC > 0)
-        {
-            SpawnNPC(_specialNPC);
-            _currentDay.SpecialNPC -= 1;
-        }
-        else if (_currentDay.NormalNPC > 0)
-        {
-            SpawnNPC(_normalNPC);
-            _currentDay.NormalNPC -= 1;
-        }
+        
+        if(eventEnabled && _rnd.Next(0,101) < _eventChance && (_currentDay.TutorialNPC > 0 || _currentDay.SpecialNPC > 0 || _currentDay.NormalNPC > 0))
+           RandomEvent?.Invoke();
         else
-            OnNPCEnd?.Invoke();
+        {
+            if (_currentDay.TutorialNPC > 0)
+            {
+                SpawnNPC(_tutorialNPC);
+                _currentDay.TutorialNPC -= 1;
+            }
+            else if (_rnd.Next(2) == 1 && _currentDay.SpecialNPC > 0)
+            {
+                SpawnNPC(_specialNPC);
+                _currentDay.SpecialNPC -= 1;
+            }
+            else if (_currentDay.NormalNPC > 0)
+            {
+                SpawnNPC(_normalNPC);
+                _currentDay.NormalNPC -= 1;
+            }
+            else
+                OnNPCEnd?.Invoke();
+        }
     }
 
     private void SpawnNPC(List<GameObject> npcList)
@@ -107,15 +124,19 @@ public class NPCManager : MonoBehaviour
 
     public async void GoBack()
     {
+        if(CurrentNPC.NPCTimeLine == TimeLine.Eternity)
+            EternityCheck?.Invoke();
         _currentAgent.SetDestination(_startPos.position);
-        await Task.Delay(2000);
+        await Task.Delay(_rnd.Next(2000, 7000));
         _isChecked = true;
     }
     
     public async void GoTowards()
     {
+        if(CurrentNPC.NPCTimeLine == TimeLine.Eternity)
+            EternityCheck?.Invoke();
         _currentAgent.SetDestination(_endPos.position);
-        await Task.Delay(2000);
+        await Task.Delay(_rnd.Next(2000, 7000));
         _isChecked = true;
     }
     

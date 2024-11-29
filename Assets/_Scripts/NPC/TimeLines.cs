@@ -33,14 +33,13 @@ public class TimeLines : MonoBehaviour
     public uint WrongNPC { get; set; }
     public uint Additional { get; set; }
 
-    private uint _voidCounter;
-    private uint _eternityCounter;
-    private uint _fatherCounter;
+    private uint _voidCounter,_eternityCounter,_robotsCounter;
+    private uint _voidTemp, _eternityTemp, _robotsTemp;
 
     private PlayerData _playerData => GetComponent<PlayerData>();
     private DataBase _dataBase => FindFirstObjectByType<DataBase>();
 
-    public event Action OnDayEnd;
+    public static event Action OnDayEnd;
 
     private void Start()
     {
@@ -49,6 +48,8 @@ public class TimeLines : MonoBehaviour
         _dayCount.text = $"День:{_date}";
         _monthCount.text = $"Месяц:{_month}";
         _laptopTime.text = $"{_date}/{_month}/2144";
+        
+        RandomEvents.OnLose += ResetDay;
     }
 
     public void ChangeTimeline(TimeLine timeLine, bool add = true)
@@ -56,13 +57,14 @@ public class TimeLines : MonoBehaviour
         switch (timeLine)
         {
             case TimeLine.Void:
-                _voidCounter = add ? _voidCounter + 1 : _voidCounter - 1;
+                _voidTemp = add ? _voidTemp + 1 : _voidTemp - 1;
                 break;
             case TimeLine.Eternity:
-                _eternityCounter = add ? _eternityCounter + 1 : _eternityCounter - 1;
+                _eternityTemp = add ? _eternityTemp + 1 : _eternityTemp - 1;
                 break;
-            case TimeLine.Father:
-                _fatherCounter = add ? _fatherCounter + 1 : _fatherCounter - 1;
+            case TimeLine.Robots:
+                SettingsUI.RobotsCount += 1;
+                _robotsTemp = add ? _robotsTemp + 1 : _robotsTemp - 1;
                 break;
         }
     }
@@ -87,15 +89,30 @@ public class TimeLines : MonoBehaviour
         _dataBase.ClearData();
 
         OnDayEnd?.Invoke();
+        
     }
 
+    public void ResetDay()
+    {
+        _robotsTemp = 0;
+        _eternityTemp = 0;
+        _voidTemp = 0;
+        CorrectNPC = 0;
+        WrongNPC = 0;
+        Additional = 0;
+    }
+    
     public async void Sleep()
     {
         _playerData.ChageCoins((int)(CorrectNPC + Additional));
         _playerData.ChageCoins((int)WrongNPC, false);
+
+        _robotsCounter = _robotsTemp;
+        _eternityCounter = _eternityTemp;
+        _voidCounter = _voidTemp;
         if (WeekDate == _days - 1)
         {
-            if (_fatherCounter > 4)
+            if (_robotsCounter > 4)
             {
                 _endText.text = "Роботы";
                 SettingsUI.Robots = true;
@@ -140,5 +157,5 @@ public enum TimeLine
 {
     Void,
     Eternity,
-    Father
+    Robots
 }
