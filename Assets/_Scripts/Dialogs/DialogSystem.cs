@@ -33,7 +33,6 @@ public class DialogSystem : MonoBehaviour
     {
         if (FragmentsStack.Count > 0)
         {
-            _playerMovement.enabled = false;
             _dialogMenu.SetActive(true);
             _playerInter.StopFocus();
             for (var i = 0; i < _buttonsHolder.childCount; i++ )    
@@ -77,7 +76,8 @@ public class DialogSystem : MonoBehaviour
         _playerMovement.enabled = true;
         FragmentsStack.Clear();
         _playerInter.Focus();
-        _cameraMng.ResetCamera();
+        if(_cameraMng.transform.localPosition != new Vector3(0,0.64f,0))
+            _cameraMng.ResetCamera();
         for (var i = 0; i < _buttonsHolder.childCount; i++ )    
         {
             Destroy(_buttonsHolder.GetChild(i).gameObject);

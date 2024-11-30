@@ -139,8 +139,6 @@ public class PlayerInteractions : MonoBehaviour
         
         if (transf.CompareTag("NPC"))
         {
-            StopFocus();
-
             transf.GetComponent<NPC>().StartChat();
             _inDialog = true;
         }
