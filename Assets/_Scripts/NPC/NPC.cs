@@ -23,6 +23,8 @@ public class NPC : MonoBehaviour
     [SerializeField] private DialogFragment _endPassText, _endBackText;
     
     public Goal CurrentGoal { get; set; }
+    public bool FaceChanged { get; set; }
+    public bool IsCriminal  { get; private set; }
     
     private string _name;
     private int _planet;
@@ -30,35 +32,31 @@ public class NPC : MonoBehaviour
     private int _docsCount = 1;
     
     private Random _rnd = new Random();
-    private bool _origin, _isCriminal;
+    private bool _origin;
     private CheckState _checkState = CheckState.None;
     
-    private TimeLines _timeLines;
-    private DialogSystem _dialogSys;
-    private NPCManager _npcManager;
+    private TimeLines _timeLines => FindFirstObjectByType<TimeLines>();
+    private DialogSystem _dialogSys => FindFirstObjectByType<DialogSystem>();
+    private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
     
     private void Start()
     {
-        _timeLines = FindFirstObjectByType<TimeLines>();
-        _dialogSys = FindFirstObjectByType<DialogSystem>();
-        _npcManager = FindFirstObjectByType<NPCManager>();
-
-        var renderer = transform.GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
-        renderer.sharedMesh = _models[_rnd.Next(0, 3)];
+        var meshRenderer = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        meshRenderer.sharedMesh = _models[_rnd.Next(0, 3)];
         int randomHat = _rnd.Next(0, 4);
         if(randomHat < 3)
-            renderer.SetBlendShapeWeight(randomHat, 100);
+            meshRenderer.SetBlendShapeWeight(randomHat, 100);
         int randomCount = _rnd.Next(0, 5);
         if (randomCount > 0)
         {
             for (var i = 0; i < randomCount; i++)
-                renderer.SetBlendShapeWeight(_rnd.Next(3,7), 100);
+                meshRenderer.SetBlendShapeWeight(_rnd.Next(3,7), 100);
         }
 
         if (_rnd.Next(101) < _npcManager.CriminalChance)
         {
             _name = _npcManager.ChangedCriminals[_rnd.Next(0,_npcManager.ChangedCriminals.Count)];
-            _isCriminal = true;
+            IsCriminal = true;
             _cost *= 2;
             _origin = false;
             _npcManager.ChangedCriminals.Remove(_name);
@@ -94,7 +92,7 @@ public class NPC : MonoBehaviour
             pp.Initialize(_name, _photo, _planet);
         }
         
-        if(!_isCriminal) switch (NPCTimeLine)
+        if(!IsCriminal) switch (NPCTimeLine)
         {
             case TimeLine.Void:
                 _origin = _rnd.Next(2) == 1;
@@ -119,7 +117,7 @@ public class NPC : MonoBehaviour
                 _origin = true;
                 break;
         }
-        print(_isCriminal);
+        print(IsCriminal);
         print(_origin);
     }
 

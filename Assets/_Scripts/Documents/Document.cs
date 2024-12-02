@@ -14,6 +14,8 @@ public abstract class Document : MonoBehaviour
     protected int _paramCount = 2;
     protected Random _rnd = new Random();
     protected NPCManager _npcManager;
+    
+    
 
     public virtual void Initialize(string name, Sprite photo, int planet)
     {
@@ -29,4 +31,6 @@ public abstract class Document : MonoBehaviour
     {
         _origin = false;
     }
+
+    protected void OnFaceChanging() => NPCManager.CurrentNPC.FaceChanged = true;
 }

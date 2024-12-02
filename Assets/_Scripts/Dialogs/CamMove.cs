@@ -11,6 +11,6 @@ public class CamMove : MonoBehaviour
     
     public void Move(Vector3 playerRot)
     {
-        _cameraMng.MoveToTarget(_camPos.position,_camRot - playerRot);
+        _cameraMng.MoveToTarget(_camPos.position,_camRot + new Vector3(0,90,0) - playerRot );
     }
 }

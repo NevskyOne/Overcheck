@@ -885,8 +885,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8044909200139171785}
-        m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
+      - m_Target: {fileID: 2520316139476239747}
+        m_TargetAssemblyTypeName: SettingsUI, Assembly-CSharp
         m_MethodName: ChangeRadio
         m_Mode: 0
         m_Arguments:
@@ -5189,8 +5189,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8044909200139171785}
-        m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
+      - m_Target: {fileID: 2520316139476239747}
+        m_TargetAssemblyTypeName: SettingsUI, Assembly-CSharp
         m_MethodName: ChangeVolume
         m_Mode: 0
         m_Arguments:
@@ -5679,8 +5679,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8044909200139171785}
-        m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
+      - m_Target: {fileID: 2520316139476239747}
+        m_TargetAssemblyTypeName: SettingsUI, Assembly-CSharp
         m_MethodName: ChangeMusic
         m_Mode: 0
         m_Arguments:
@@ -6825,6 +6825,7 @@ GameObject:
   - component: {fileID: 5225597548366831812}
   - component: {fileID: 6263675664116548623}
   - component: {fileID: 1424219897087428296}
+  - component: {fileID: 2520316139476239747}
   m_Layer: 5
   m_Name: Canvas
   m_TagString: Untagged
@@ -6934,6 +6935,29 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fb9713f6bd640098b5b600e2d462a4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2520316139476239747
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4485714143017424538}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddb2c7449c004451a29a52d1306ca622, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _mixer: {fileID: 24100000, guid: b771fdba882c6d348adf66144b553b1d, type: 2}
+  _graphics: {fileID: 2643908609174571616}
+  _vfx: {fileID: 6586400417681287297}
+  _sound: {fileID: 2367127223063116008}
+  _music: {fileID: 18285453400917935}
+  _radio: {fileID: 8166517692498235650}
+  _mouseSens: {fileID: 4337853170284560316}
+  _goodVoidImg: {fileID: 2257776192952756548}
+  _badVoidImg: {fileID: 9088132595407215369}
+  _eternityImg: {fileID: 7859194131965282738}
+  _robotsImg: {fileID: 5354541478508629269}
 --- !u!1 &4531116097849603784
 GameObject:
   m_ObjectHideFlags: 0
@@ -7003,7 +7027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camPos: {fileID: 6527166269192241867}
-  _camRot: {x: 1, y: -90, z: 0}
+  _camRot: {x: 14, y: 106, z: 0}
 --- !u!1 &4543881266825687855
 GameObject:
   m_ObjectHideFlags: 0
@@ -10188,8 +10212,8 @@ MonoBehaviour:
   m_OnValueChanged:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8044909200139171785}
-        m_TargetAssemblyTypeName: _Scripts.UI.SettingsUI, Assembly-CSharp
+      - m_Target: {fileID: 2520316139476239747}
+        m_TargetAssemblyTypeName: SettingsUI, Assembly-CSharp
         m_MethodName: set_MouseSens
         m_Mode: 0
         m_Arguments:
@@ -14492,7 +14516,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5408558633224451996}
-  - component: {fileID: 8044909200139171785}
   m_Layer: 5
   m_Name: SettingsWindow
   m_TagString: Untagged
@@ -14534,29 +14557,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &8044909200139171785
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8212835724602646369}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ddb2c7449c004451a29a52d1306ca622, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _mixer: {fileID: 24100000, guid: b771fdba882c6d348adf66144b553b1d, type: 2}
-  _graphics: {fileID: 2643908609174571616}
-  _vfx: {fileID: 6586400417681287297}
-  _sound: {fileID: 2367127223063116008}
-  _music: {fileID: 18285453400917935}
-  _radio: {fileID: 8166517692498235650}
-  _mouseSens: {fileID: 4337853170284560316}
-  _goodVoidImg: {fileID: 2257776192952756548}
-  _badVoidImg: {fileID: 9088132595407215369}
-  _eternityImg: {fileID: 7859194131965282738}
-  _robotsImg: {fileID: 5354541478508629269}
 --- !u!1 &8238771435186460313
 GameObject:
   m_ObjectHideFlags: 0

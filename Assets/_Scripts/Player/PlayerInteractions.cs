@@ -119,7 +119,7 @@ public class PlayerInteractions : MonoBehaviour
             {
                 Instantiate(_tableState == CheckState.Correct? _correctStamp : _wrongStamp,
                     transf.GetChild(0).GetChild(0));
-                _npcMng.CurrentNPC.Check(_tableState == CheckState.Correct);
+                NPCManager.CurrentNPC.Check(_tableState == CheckState.Correct);
                 _tableState = CheckState.None;
             }
             else
@@ -181,7 +181,8 @@ public class PlayerInteractions : MonoBehaviour
         else if (transf.CompareTag("Radio"))
         {
             var audioSource = transf.GetComponent<AudioSource>();
-            audioSource.mute = !audioSource.mute;       
+            audioSource.mute = !audioSource.mute;
+            transf.GetComponent<Radio>().RadioMat.color = audioSource.mute ? Color.red : Color.green;
         }
         else if (transf.CompareTag("OpenUI"))
         {

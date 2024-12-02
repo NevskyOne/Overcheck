@@ -26,6 +26,7 @@ public class TimeLines : MonoBehaviour
     [SerializeField] private TMP_Text _endText;
 
     public int WeekDate { get; private set; }
+    public static float MoneyFactor { get; set; } = 1;
     public int Date => _date;
     public int Month => _month;
 
@@ -104,6 +105,8 @@ public class TimeLines : MonoBehaviour
     
     public async void Sleep()
     {
+        CorrectNPC = (uint)(CorrectNPC * MoneyFactor);
+        Additional = (uint)(Additional * MoneyFactor);
         _playerData.ChageCoins((int)(CorrectNPC + Additional));
         _playerData.ChageCoins((int)WrongNPC, false);
 

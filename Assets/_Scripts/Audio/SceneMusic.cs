@@ -10,8 +10,8 @@ public class SceneMusic : MonoBehaviour
     [SerializeField] private AudioClip _wiresMusic, _gearMusic, _meteoriteMusic;
     
     
-    private MusicState _state;
-    public static MusicState State { get; set; }
+    private MusicState _state = MusicState.Wires;
+    public static MusicState State { get; set; } = MusicState.Normal;
     
     private Random _rnd = new Random();
 
@@ -35,6 +35,7 @@ public class SceneMusic : MonoBehaviour
                     _source.clip = _meteoriteMusic;
                     break;
             }
+            _source.Play();
         }
     }
 }

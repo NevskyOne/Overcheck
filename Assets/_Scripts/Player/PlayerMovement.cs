@@ -1,28 +1,34 @@
-using System;
-using _Scripts.UI;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Random = System.Random;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
-    private float _mouseSens => SettingsUI.MouseSens;
-    
+    [Header("Settings")]
     [SerializeField][Range(0,1f)] private float _smoothTime;
-    [SerializeField] private float _maxSpeed;
-    [SerializeField] private Camera _cam;
-    [SerializeField] private Vector2 rotationXLimits;
     [SerializeField][Range(0,1f)] private float _transitionTime;
+    [SerializeField] private float _maxSpeed;
+    [SerializeField] [Range(0, 2f)] private float _zRotation;
+    [SerializeField] [Range(0, 10f)] private float _rotateDelay;
+    [SerializeField] private Vector2 rotationXLimits;
+    [Header("Objects")]
+    [SerializeField] private Camera _cam;
     
     private PlayerInput _input;
     private Vector3 _newPos, _newRot, _camRot;
     private Vector3 _velocity = Vector3.zero;
-    private float _speed, _fov = 60, _refTransition;
+    private float _speed, _fov = 60, _refTransition, _refZRotate;
+    
+    private Random _rnd = new Random();
+    private float _mouseSens => SettingsUI.MouseSens;
     
     private void Awake()
     {
         _input = gameObject.GetComponent<PlayerInput>();
         _speed = _maxSpeed;
+        StartCoroutine(Shake());
     }
 
     private void OnEnable()
@@ -58,7 +64,7 @@ public class PlayerMovement : MonoBehaviour
         _newRot = new Vector3(0, transform.eulerAngles.y + delta.x * _mouseSens, 0);
         
         _camRot = new Vector3(Mathf.Clamp(NormalizeAngle(camAngles.x - delta.y * _mouseSens),
-            rotationXLimits.x, rotationXLimits.y),0, 0);
+            rotationXLimits.x, rotationXLimits.y),0, camAngles.z);
     }
 
     private void FixedUpdate()
@@ -74,10 +80,26 @@ public class PlayerMovement : MonoBehaviour
         transform.eulerAngles = _newRot;
         _cam.transform.localEulerAngles = _camRot;
     }
+
+    private IEnumerator Shake()
+    {
+        float nextRot = 0f;
+        while (true)
+        {
+            nextRot = _rnd.Next(2) == 1 ? _velocity.magnitude * _zRotation : -_velocity.magnitude * _zRotation;
+            while (Mathf.Abs(_camRot.z - nextRot) > 0.1f)
+            {
+                _camRot.z = Mathf.SmoothDamp(_camRot.z, nextRot, ref _refZRotate, _rotateDelay);
+                yield return new WaitForFixedUpdate();
+            }
+
+            yield return new WaitForSeconds(_rotateDelay);
+        }
+    }
     
     private float NormalizeAngle(float angle)
     {
-        angle = angle % 360;
+        angle %= 360;
         return angle > 180 ? angle - 360 : angle;
     }
 }
