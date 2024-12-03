@@ -9,7 +9,7 @@ public class APIController : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.T))
         {
-            _shop.BuyTool(_toolBase);
+            _shop.BuyTool(_toolBase.ToolName);
         }
         
         if (Input.GetKeyDown(KeyCode.Y))
