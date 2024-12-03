@@ -1,34 +1,33 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Random = System.Random;
+
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
+    [Header("Shake Settings")]
+    [SerializeField][Range(0,5f)] private float shakeAmplitude = 0.1f; 
+    [SerializeField][Range(0,5f)] private float shakeFrequency = 5f;
     [Header("Settings")]
     [SerializeField][Range(0,1f)] private float _smoothTime;
     [SerializeField][Range(0,1f)] private float _transitionTime;
     [SerializeField] private float _maxSpeed;
-    [SerializeField] [Range(0, 2f)] private float _zRotation;
-    [SerializeField] [Range(0, 10f)] private float _rotateDelay;
     [SerializeField] private Vector2 rotationXLimits;
     [Header("Objects")]
     [SerializeField] private Camera _cam;
     
-    private PlayerInput _input;
+    private PlayerInput _input => GetComponent<PlayerInput>();
+    private PlayerSFX _sfx => GetComponent<PlayerSFX>();
+    private Effects _fx => FindFirstObjectByType<Effects>();
     private Vector3 _newPos, _newRot, _camRot;
     private Vector3 _velocity = Vector3.zero;
     private float _speed, _fov = 60, _refTransition, _refZRotate;
     
-    private Random _rnd = new Random();
     private float _mouseSens => SettingsUI.MouseSens;
     
     private void Awake()
     {
-        _input = gameObject.GetComponent<PlayerInput>();
         _speed = _maxSpeed;
-        StartCoroutine(Shake());
     }
 
     private void OnEnable()
@@ -49,12 +48,16 @@ public class PlayerMovement : MonoBehaviour
     {
         _speed = _maxSpeed * 1.5f;
         _fov = 75;
+        _sfx.PlayBreath();
+        StartCoroutine(_fx.ChangeChromatic(1));
     }
     
     private void StopSprint(InputAction.CallbackContext _)
     {
         _speed = _maxSpeed;
         _fov = 60;
+        _sfx.PlayBreath(false);
+        StartCoroutine(_fx.ChangeChromatic(0.1f));
     }
     
     private void Look(InputAction.CallbackContext _)
@@ -77,24 +80,26 @@ public class PlayerMovement : MonoBehaviour
         
         _cam.fieldOfView = Mathf.SmoothDamp(_cam.fieldOfView, _fov, ref _refTransition, _transitionTime);
 
+        ApplyShake(_velocity.magnitude);
         transform.eulerAngles = _newRot;
         _cam.transform.localEulerAngles = _camRot;
+        
     }
 
-    private IEnumerator Shake()
+    private void ApplyShake(float movementSpeed)
     {
-        float nextRot = 0f;
-        while (true)
+        if (movementSpeed > 0.1f)
         {
-            nextRot = _rnd.Next(2) == 1 ? _velocity.magnitude * _zRotation : -_velocity.magnitude * _zRotation;
-            while (Mathf.Abs(_camRot.z - nextRot) > 0.1f)
-            {
-                _camRot.z = Mathf.SmoothDamp(_camRot.z, nextRot, ref _refZRotate, _rotateDelay);
-                yield return new WaitForFixedUpdate();
-            }
-
-            yield return new WaitForSeconds(_rotateDelay);
+            float shakeAmount = Mathf.Sin(Time.time * shakeFrequency * Mathf.PI * 2) * shakeAmplitude;
+            _camRot.z = shakeAmount;
+            _sfx.PlayFeet();
         }
+        else
+        {
+            _camRot.z = 0f;
+            _sfx.PlayFeet(false);
+        }
+
     }
     
     private float NormalizeAngle(float angle)

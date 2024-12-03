@@ -272,7 +272,7 @@ public class PlayerInteractions : MonoBehaviour
         _cursor.SetActive(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _camera.cullingMask = LayerMask.GetMask("Default", "UI", "Clickable", "Document", "NPCObject");
+        _camera.cullingMask = LayerMask.GetMask("Default", "UI", "Clickable", "Document", "NPCObject", "Doors");
     }
     
     public void StopFocus()
