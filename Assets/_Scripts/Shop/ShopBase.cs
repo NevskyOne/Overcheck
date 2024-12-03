@@ -8,16 +8,24 @@ public class ShopBase : MonoBehaviour
     private List<ToolBase> _activeTools = new();
     private List<ToolBase> _activeToolsToAdd = new();
     private List<ToolBase> _activeToolsToRemove = new();
-    
-    private void Start()
+
+    public async void InitializePlayerShop()
     {
         TimeLines.OnDayEnd += OnDayEnd;
-        InitializePlayerShop();
-    }
+        
+        var shop = await APIManager.Instance.GetShop(Bootstrap.Instance.PlayerName);
 
-    private async void InitializePlayerShop()
-    {
-        await APIManager.Instance.GetShop(Bootstrap.Instance.PlayerName);
+        if (shop != null)
+        {
+            foreach (var tool in shop)
+            {
+                if (tool.Value == 0)
+                {
+                    var toolToAdd = Instantiate(GetTool(tool.Key));
+                    _activeTools.Add(toolToAdd);
+                }
+            }
+        }
     }
 
     private void OnDayEnd()

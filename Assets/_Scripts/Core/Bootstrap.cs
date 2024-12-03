@@ -1,17 +1,21 @@
-﻿using TMPro;
+﻿using System;
+using TMPro;
+using Unity.Burst.CompilerServices;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Bootstrap : MonoBehaviour
 {
     [SerializeField] private GameObject _authorizationPanel;
+    [SerializeField] private GameObject _menuPanel;
     [SerializeField] private TMP_InputField _authorizationInputField;
     
     public static Bootstrap Instance { get; private set; }
-    public bool IsAuthorizated => _isAuthorizated;
     public string PlayerName => _playerName;
 
+    private ShopBase _playerShopBase;
     private bool _isAuthorizated;
-    [SerializeField] private string _playerName;
+    private string _playerName;
     
     private void Awake()
     {
@@ -21,29 +25,60 @@ public class Bootstrap : MonoBehaviour
             Destroy(gameObject);
         
         DontDestroyOnLoad(gameObject);
+
+        APIManager.Instance.OnAuthEnd += OnAuthCompleted;
+        SceneManager.activeSceneChanged += OnActiveSceneChanged; 
         
-        //TryGetPlayerName();
+        TryGetPlayerName();
+    }
+
+    private void OnActiveSceneChanged(Scene oldScene, Scene newScene)
+    {
+        if (newScene.name == Constants.GAMEPLAY_SCENE_NAME)
+        {
+            _playerShopBase = FindFirstObjectByType<ShopBase>();
+            _playerShopBase.InitializePlayerShop();
+        }
     }
 
     private async void TryGetPlayerName()
     {
-        var playerName = PlayerPrefs.GetString(Constants.PLAYER_NAME_PLAYERPREFS_KEY);
-        if (string.IsNullOrEmpty(playerName))
-            _authorizationPanel.SetActive(true);
-        else
+        try
         {
-            await APIManager.Instance.Authorization(playerName);
-            _isAuthorizated = true;
-            _playerName = playerName;
+            var playerName = PlayerPrefs.GetString(Constants.PLAYER_NAME_PLAYERPREFS_KEY);
+            if (string.IsNullOrEmpty(playerName))
+            {
+                _authorizationPanel.SetActive(true);
+                _menuPanel.SetActive(false);
+            }
+            else
+                await APIManager.Instance.Authorization(playerName);
         }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
+    }
+
+    private void OnAuthCompleted(AuthorizationResponse response)
+    {
+        _isAuthorizated = true;
+        _playerName = response.Name;
+        _authorizationPanel.SetActive(false);
+        _menuPanel.SetActive(true);
     }
 
     public async void Auth()
     {
-        var playerName = _authorizationInputField.text;
-        PlayerPrefs.SetString(Constants.PLAYER_NAME_PLAYERPREFS_KEY, playerName);
-        await APIManager.Instance.Authorization(playerName);
-        _isAuthorizated = true;
-        _playerName = playerName;
+        try
+        {
+            var playerName = _authorizationInputField.text;
+            PlayerPrefs.SetString(Constants.PLAYER_NAME_PLAYERPREFS_KEY, playerName);
+            await APIManager.Instance.Authorization(playerName);
+        }
+        catch (Exception e)
+        {
+            Debug.Log(e);
+        }
     }
 }
