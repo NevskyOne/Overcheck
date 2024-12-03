@@ -23,6 +23,7 @@ public class PMSDocument : Document
                 case 1:
                     _photo = (RandomParamSt.Photos.Except(new List<Sprite>{_photo})).ToList()
                         [_rnd.Next(0,RandomParamSt.Photos.Count)];
+                    OnFaceChanging();
                     break;
             }
         }
@@ -30,6 +31,6 @@ public class PMSDocument : Document
 
     public void SetGoal(int value)
     {
-        _npcManager.CurrentNPC.CurrentGoal = (Goal)value;
+        NPCManager.CurrentNPC.CurrentGoal = (Goal)value;
     }
 }

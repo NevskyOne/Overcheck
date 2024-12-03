@@ -54,6 +54,7 @@ public class IICDocument : Document
                 case 1:
                     _photo = (RandomParamSt.Photos.Except(new List<Sprite>{_photo})).ToList()
                         [_rnd.Next(0,RandomParamSt.Photos.Count)];
+                    OnFaceChanging();
                     break;
                 case 2:
                     _healthClass = _rnd.Next(1,3);

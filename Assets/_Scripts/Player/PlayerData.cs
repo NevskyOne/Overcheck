@@ -1,15 +1,18 @@
+using _Scripts.UI;
 using TMPro;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _moneyCount;
-    
-    private int _coins;
+    [SerializeField] private TMP_Text _honeyCombsText;
 
-    public void ChageCoins(int value, bool add = true)
+    private int _honeyCombs;
+
+    public async void ChageCoins(int value, bool add = true)
     {
-        _coins = Mathf.Clamp(add? _coins + value : _coins - value, 0, 1000000000);
-        _moneyCount.text = _coins.ToString();
+        var _serverValue = await APIManager.Instance.GetCoins(Bootstrap.Instance.PlayerName);
+        _honeyCombs = Mathf.Clamp(add? _serverValue + value : _serverValue - value, 0, 1000000000);
+        
+        APIManager.Instance.ChangeCoins(SettingsUI.PlayerName, _honeyCombs);
     }
 }

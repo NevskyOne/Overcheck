@@ -15,17 +15,19 @@ public class Robot : MonoBehaviour
     {
         if (sbj.CompareTag("Player"))
         {
+            GetComponent<Collider>().enabled = false;
             sbj.transform.LookAt(transform);
             _input.enabled = false;
             
             var fragment = new DialogFragment
-                { Text = RandomParamSt.RobotsReplics[_rnd.Next(RandomParamSt.RobotsReplics.Count)]};
+                { Text = RandomParamSt.RobotsReplics[_rnd.Next(RandomParamSt.RobotsReplics.Count)], Buttons = new()};
             _dialogSystem.FragmentsStack = new() { fragment };
             _dialogSystem.PlayNext();
             
             await Task.Delay(3000);
             _dialogSystem.EndChat();
             _events.Lose();
+
             _input.enabled = true;
         }
     }
