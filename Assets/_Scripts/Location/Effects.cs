@@ -11,11 +11,9 @@ public class Effects : MonoBehaviour
     public IEnumerator ChangeChromatic(float value)
     {
         if (!_profile.TryGet<ChromaticAberration>(out var chromatic)) yield break;
-        while (Mathf.Approximately(chromatic.intensity.value, value))
+        while (Mathf.Abs(chromatic.intensity.value - value) > 0.04f)
         {
             var chValue = chromatic.intensity.value;
-            
-            
             chromatic.intensity.Override(chValue < value ? chValue + 0.05f : chValue - 0.05f);
             yield return new WaitForSeconds(0.05f);
         }

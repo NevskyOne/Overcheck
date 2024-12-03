@@ -16,7 +16,7 @@ public class PlayerSFX : MonoBehaviour
     { 
         if(flag && !_feetSource.isPlaying)
             _feetSource.Play();
-        else if(_feetSource.isPlaying)
+        else if(!flag && _feetSource.isPlaying)
             _feetSource.Stop();
     }
 }
