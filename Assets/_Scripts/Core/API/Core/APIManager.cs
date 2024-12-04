@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Threading.Tasks;
@@ -7,16 +8,18 @@ using UnityEngine.Networking;
 
 public class APIManager
 {
+    public event Action<AuthorizationResponse> OnAuthEnd;
+    
     private static APIManager _instance;
     public static APIManager Instance => _instance ??= new APIManager();
-
-    private APIManager() { }
     
     private const string UUID = "a035437c-0e73-48c3-9d62-2da4ed3298eb";
     private const string COINS = "coins";
     private const string SHOP_NAME = "shop_base";
 
-    public async Task<AuthorizationResponse> Authorization(string playerName)
+    private APIManager() { }
+    
+    public async Task Authorization(string playerName)
     {
         var getPlayersListRequestRaw = CreateRequest($"https://2025.nti-gamedev.ru/api/games/{UUID}/players/");
         var getPlayersListRequest = await SendRequest(getPlayersListRequestRaw);
@@ -35,10 +38,11 @@ public class APIManager
         if (!playersList.ContainsKey(playerName))
         {
             await RegisterPlayer(playerName);
-            return new AuthorizationResponse(playerName, false);
+            OnAuthEnd?.Invoke(new AuthorizationResponse(playerName, false));
+            return;
         }
-
-        return new AuthorizationResponse(playerName, true);
+        
+        OnAuthEnd?.Invoke(new AuthorizationResponse(playerName, true));
     }
     
     public async Task<int> GetCoins(string playerName)

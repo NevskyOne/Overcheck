@@ -7,6 +7,8 @@
     public const string HONORARY_CORPORATION = "honorary_corporation";
 
     public const string PLAYER_NAME_PLAYERPREFS_KEY = "PlayerNamePlayerPrefsKey";
+    
+    public const string GAMEPLAY_SCENE_NAME = "MainScene";
 }
 
 public enum ToolName
