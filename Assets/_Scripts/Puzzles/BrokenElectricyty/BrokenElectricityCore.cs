@@ -1,23 +1,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BrokenElectricityCore : MonoBehaviour
+public class BrokenElectricityCore : Puzzle
 {
-    [SerializeField] private GameObject _puzzleSolvedIndicator;
     [SerializeField] private List<FormulaSO> _formulas = new();
     [SerializeField] private List<BrokenElectricityStartBtn> _startBtns = new();
     [SerializeField] private List<BrokenElectricityEndBtn> _endBtns = new();
-    
-    private RandomEvents _randomEvents;
-    private bool _isPuzzleSolved = false;
 
-    private void Start()
+    public override void StartPuzzle()
     {
-        _randomEvents = FindFirstObjectByType<RandomEvents>();
-    }
-    
-    public void StartPuzzle()
-    {
+        if (_isPuzzleSolved) return;
+        
         var endBtns = _endBtns;
         var formulas = _formulas;
         
@@ -55,16 +48,16 @@ public class BrokenElectricityCore : MonoBehaviour
         }
 
         if (!isSolved)
-        {
-            foreach (var b in _startBtns)
-            {
-                b.Reset();
-            }
-        }
+            LosePuzzle();
         else
+            SolvePuzzle();
+    }
+
+    protected override void LosePuzzle()
+    {
+        foreach (var b in _startBtns)
         {
-            _isPuzzleSolved = true;
-            _randomEvents.OnEventEnd();
+            b.Reset();
         }
     }
 }
