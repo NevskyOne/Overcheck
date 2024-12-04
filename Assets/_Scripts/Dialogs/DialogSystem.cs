@@ -82,8 +82,7 @@ public class DialogSystem : MonoBehaviour
         _playerMovement.enabled = true;
         FragmentsStack.Clear();
         _playerInter.Focus();
-        if(_cameraMng.transform.localPosition != new Vector3(0,0.64f,0))
-            _cameraMng.ResetCamera();
+        
         for (var i = 0; i < _buttonsHolder.childCount; i++ )    
         {
             Destroy(_buttonsHolder.GetChild(i).gameObject);
@@ -150,7 +149,7 @@ public class DialogSystem : MonoBehaviour
         // Плавное увеличение символа
         while (elapsedTime < duration)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.fixedDeltaTime;
             float scale = Mathf.Lerp(1f, sizeMultiplier, elapsedTime / duration);
 
             // Применяем масштабирование только к текущему символу
@@ -162,7 +161,7 @@ public class DialogSystem : MonoBehaviour
 
             _textField.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         // Финальный вид

@@ -42,6 +42,10 @@ public class PlayerMovement : MonoBehaviour
         _input.actions["Look"].performed -= Look;
         _input.actions["Sprint"].started -= StartSprint;
         _input.actions["Sprint"].canceled -= StopSprint;
+        
+        StartCoroutine(_fx.ChangeChromatic(0.1f));
+        _sfx.PlayBreath(false);
+        _sfx.PlayFeet(false);
     }
     
     private void StartSprint(InputAction.CallbackContext _)
@@ -90,13 +94,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (movementSpeed > 0.1f)
         {
-            float shakeAmount = Mathf.Sin(Time.time * shakeFrequency * Mathf.PI * 2) * shakeAmplitude;
-            _camRot.z = shakeAmount;
+            float shakeAmount = 0.7f + Mathf.Cos(Time.time * shakeFrequency * Mathf.PI * 2) * shakeAmplitude;
+            _cam.transform.localPosition = new Vector3(0,shakeAmount,0);
             _sfx.PlayFeet();
         }
         else
         {
-            _camRot.z = 0f;
+            _cam.transform.localPosition = Vector3.Lerp(_cam.transform.localPosition,new Vector3(0,0.7f,0), Time.deltaTime);
             _sfx.PlayFeet(false);
         }
 

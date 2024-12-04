@@ -35,7 +35,7 @@ namespace _Scripts.UI
             else if(_value < 0)
                 _value = _values.Count - 1;
             UpdateUI(_value);
-            SettingsUI.VFXOn = _value == 1;
+            SettingsUI.ChangeVFX(_value == 1);
         }
     }
 }

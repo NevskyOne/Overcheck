@@ -8,8 +8,8 @@ public class SceneMusic : MonoBehaviour
     [SerializeField] private AudioSource _source;
     [SerializeField] private List<AudioClip> _calmMusic;
     [SerializeField] private AudioClip _wiresMusic, _gearMusic, _meteoriteMusic;
-    
-    
+
+    private CrossfadeAudiosource _crossfade => GetComponent<CrossfadeAudiosource>();
     private MusicState _state = MusicState.Wires;
     public static MusicState State { get; set; } = MusicState.Normal;
     
@@ -23,18 +23,26 @@ public class SceneMusic : MonoBehaviour
             switch (_state)
             {
                 case MusicState.Normal:
-                    _source.clip = _calmMusic[_rnd.Next(3)];
+                    _crossfade.Fade(_calmMusic[_rnd.Next(3)], 1);
+                    _source.loop = false;
                     break;
                 case MusicState.Wires:
-                    _source.clip = _wiresMusic;
+                    _crossfade.Fade(_wiresMusic, 1);
+                    _source.loop = true;
                     break;
                 case MusicState.Gears:
-                    _source.clip = _gearMusic;
+                    _crossfade.Fade(_gearMusic, 1);
+                    _source.loop = true;
                     break;
                 case MusicState.Meteorites:
-                    _source.clip = _meteoriteMusic;
+                    _crossfade.Fade(_meteoriteMusic, 1);
+                    _source.loop = true;
                     break;
             }
+        }
+        else if (!_source.isPlaying && State == MusicState.Normal)
+        {
+            _source.clip = _calmMusic[_rnd.Next(3)];
             _source.Play();
         }
     }

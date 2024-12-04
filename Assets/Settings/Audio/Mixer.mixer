@@ -81,7 +81,13 @@ AudioMixerController:
   m_SuspendThreshold: -80
   m_EnableSuspend: 1
   m_UpdateMode: 0
-  m_ExposedParameters: []
+  m_ExposedParameters:
+  - guid: 61393905a07b74c4f9722c855f8c0210
+    name: Master
+  - guid: 8b124405c2406cc43a597d25924f1228
+    name: Music
+  - guid: c74b1abcc77ba964d9c475140b1587a3
+    name: Radio
   m_AudioMixerGroupViews:
   - guids:
     - f3b833a50c4063e40b223c8cdce02930
@@ -136,4 +142,9 @@ AudioMixerSnapshotController:
   m_SnapshotID: 8c241dd8c92e93b4d8ee7197f56a0316
   m_FloatValues:
     61393905a07b74c4f9722c855f8c0210: -0.02577656
-  m_TransitionOverrides: {}
+    d18539d8f86b27649808f10f553b8064: 20000
+    1d98cd89f10257b46b018a949a038812: 0.1
+    f39f13ef1214e6f4ebd591bbc1edb8dd: 100000
+  m_TransitionOverrides:
+    8b124405c2406cc43a597d25924f1228: 2
+    61393905a07b74c4f9722c855f8c0210: 2
