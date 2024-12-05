@@ -36,8 +36,7 @@ public class TimeLines : MonoBehaviour
 
     private uint _voidCounter,_eternityCounter,_robotsCounter;
     private uint _voidTemp, _eternityTemp, _robotsTemp;
-
-    private PlayerData _playerData => GetComponent<PlayerData>();
+    
     private DataBase _dataBase => FindFirstObjectByType<DataBase>();
 
     public static event Action OnDayEnd;
@@ -48,7 +47,7 @@ public class TimeLines : MonoBehaviour
         _date += WeekDate;
         _dayCount.text = $"День:{_date}";
         _monthCount.text = $"Месяц:{_month}";
-        _laptopTime.text = $"{_date}/{_month}/2144";
+        _laptopTime.text = $"{_date}/{_month}";
         
         RandomEvents.OnLose += ResetDay;
     }
@@ -107,8 +106,8 @@ public class TimeLines : MonoBehaviour
     {
         CorrectNPC = (uint)(CorrectNPC * MoneyFactor);
         Additional = (uint)(Additional * MoneyFactor);
-        _playerData.ChageCoins((int)(CorrectNPC + Additional));
-        _playerData.ChageCoins((int)WrongNPC, false);
+        PlayerData.ChangeCoins((int)(CorrectNPC + Additional));
+        PlayerData.ChangeCoins((int)WrongNPC, false);
 
         _robotsCounter = _robotsTemp;
         _eternityCounter = _eternityTemp;

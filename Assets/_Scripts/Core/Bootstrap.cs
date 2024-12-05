@@ -9,6 +9,7 @@ public class Bootstrap : MonoBehaviour
     [SerializeField] private GameObject _authorizationPanel;
     [SerializeField] private GameObject _menuPanel;
     [SerializeField] private TMP_InputField _authorizationInputField;
+    [SerializeField] private TMP_Text _playerText;
     
     public static Bootstrap Instance { get; private set; }
     public string PlayerName => _playerName;
@@ -52,7 +53,10 @@ public class Bootstrap : MonoBehaviour
                 _menuPanel.SetActive(false);
             }
             else
+            {
                 await APIManager.Instance.Authorization(playerName);
+                _playerText.text = _playerName;
+            }
         }
         catch (Exception e)
         {
@@ -75,6 +79,8 @@ public class Bootstrap : MonoBehaviour
             var playerName = _authorizationInputField.text;
             PlayerPrefs.SetString(Constants.PLAYER_NAME_PLAYERPREFS_KEY, playerName);
             await APIManager.Instance.Authorization(playerName);
+            
+            _playerText.text = _playerName;
         }
         catch (Exception e)
         {

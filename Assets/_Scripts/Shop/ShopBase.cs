@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class ShopBase : MonoBehaviour
 {
-    [SerializeField] private List<ToolBase> _tools = new();
-
+    [SerializeField] private List<ToolBase> _shopTools = new();
+    [SerializeField] private bool _needToActivate;
+    [SerializeField] private List<GameObject> _tools = new();
+    
     private List<ToolBase> _activeTools = new();
     private List<ToolBase> _activeToolsToAdd = new();
     private List<ToolBase> _activeToolsToRemove = new();
@@ -21,8 +23,10 @@ public class ShopBase : MonoBehaviour
             {
                 if (tool.Value == 0)
                 {
-                    var toolToAdd = Instantiate(GetTool(tool.Key));
+                    var toolToAdd = _shopTools[tool.Value];
                     _activeTools.Add(toolToAdd);
+                    if(_needToActivate)
+                        _tools[tool.Value].SetActive(true);
                 }
             }
         }
@@ -34,8 +38,8 @@ public class ShopBase : MonoBehaviour
         {
             foreach (var tool in _activeToolsToAdd)
             {
-                var toolToAdd = Instantiate(tool);
-                _activeTools.Add(toolToAdd);
+                _tools[tool.Index].SetActive(true);
+                _activeTools.Add(tool);
             }
             
             _activeToolsToAdd.Clear();
@@ -45,9 +49,8 @@ public class ShopBase : MonoBehaviour
         {
             foreach (var tool in _activeToolsToRemove)
             {
-                var toolToRemove = _activeTools.Find(tool => true);
-                _activeTools.Remove(toolToRemove);
-                Destroy(toolToRemove.gameObject);
+                _activeTools.Remove(tool);
+                _tools[tool.Index].SetActive(false);
             }
 
             _activeToolsToRemove.Clear();
@@ -67,7 +70,7 @@ public class ShopBase : MonoBehaviour
         if (coins >= price)
         {
             shop[toolToBuy] = 0;
-            APIManager.Instance.ChangeCoins(playerName, coins - price);
+            PlayerData.ChangeCoins(price, false);
             APIManager.Instance.ChangeShop(playerName, shop);
         }
         
@@ -77,7 +80,6 @@ public class ShopBase : MonoBehaviour
     public async void SellTool(string toolToSell)
     {
         var playerName = Bootstrap.Instance.PlayerName;
-        var coins = await APIManager.Instance.GetCoins(playerName);
         var tool = GetTool(toolToSell);
         var price = tool.Price;
         var shop = await APIManager.Instance.GetShop(playerName);
@@ -85,7 +87,7 @@ public class ShopBase : MonoBehaviour
         if (shop[toolToSell] == 1) return;
         
         shop[toolToSell] = 1;
-        APIManager.Instance.ChangeCoins(playerName, coins + price);
+        PlayerData.ChangeCoins(price);
         APIManager.Instance.ChangeShop(playerName, shop);
         
         _activeToolsToRemove.Add(tool);
@@ -93,7 +95,7 @@ public class ShopBase : MonoBehaviour
 
     private ToolBase GetTool(string toolName)
     {
-        foreach (var tool in _tools)
+        foreach (var tool in _shopTools)
         {
             if (tool.ToolName == toolName)
                 return tool;
