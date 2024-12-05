@@ -18,10 +18,10 @@ MonoBehaviour:
     m_Value: 0
   threshold:
     m_OverrideState: 1
-    m_Value: 0.79
+    m_Value: 0.98
   intensity:
     m_OverrideState: 1
-    m_Value: 5.11
+    m_Value: 5
   scatter:
     m_OverrideState: 1
     m_Value: 0.38
@@ -30,7 +30,7 @@ MonoBehaviour:
     m_Value: 65472
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.53504044, g: 0.4575472, b: 1, a: 1}
+    m_Value: {r: 0.7762852, g: 0.740566, b: 1, a: 1}
   highQualityFiltering:
     m_OverrideState: 1
     m_Value: 1
@@ -62,18 +62,18 @@ MonoBehaviour:
   active: 1
   color:
     m_OverrideState: 1
-    m_Value: {r: 0.18355934, g: 0, b: 0.6415094, a: 1}
+    m_Value: {r: 0.17303266, g: 0, b: 0.6037736, a: 1}
   center:
     m_OverrideState: 0
     m_Value: {x: 0.5, y: 0.5}
   intensity:
     m_OverrideState: 1
-    m_Value: 0.33
+    m_Value: 0.41
   smoothness:
     m_OverrideState: 0
     m_Value: 0.2
   rounded:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 0
 --- !u!114 &-2762312921096034678
 MonoBehaviour:
@@ -93,10 +93,10 @@ MonoBehaviour:
     m_Value: {x: 0.825618, y: 0.9135504, z: 1, w: 0}
   gamma:
     m_OverrideState: 1
-    m_Value: {x: 0.9279018, y: 0.93615687, z: 1, w: 0.10771992}
+    m_Value: {x: 0.89459676, y: 0.9147967, z: 1, w: 0.10771992}
   gain:
-    m_OverrideState: 0
-    m_Value: {x: 1, y: 0.876052, z: 0.8622572, w: 0}
+    m_OverrideState: 1
+    m_Value: {x: 1, y: 0.9637789, z: 0.7984135, w: 0}
 --- !u!114 &11400000
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -110,53 +110,13 @@ MonoBehaviour:
   m_Name: SampleSceneProfile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: 849379129802519247}
   - {fileID: -7893295128165547882}
   - {fileID: -3357603926938260329}
   - {fileID: 7957730700180659536}
   - {fileID: 2839745814526860591}
   - {fileID: 2026526143475561841}
   - {fileID: -2762312921096034678}
---- !u!114 &849379129802519247
-MonoBehaviour:
-  m_ObjectHideFlags: 3
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 97c23e3b12dc18c42a140437e53d3951, type: 3}
-  m_Name: Tonemapping
-  m_EditorClassIdentifier: 
-  active: 1
-  mode:
-    m_OverrideState: 1
-    m_Value: 0
-  neutralHDRRangeReductionMode:
-    m_OverrideState: 0
-    m_Value: 2
-  acesPreset:
-    m_OverrideState: 0
-    m_Value: 3
-  hueShiftAmount:
-    m_OverrideState: 0
-    m_Value: 0
-  detectPaperWhite:
-    m_OverrideState: 1
-    m_Value: 0
-  paperWhite:
-    m_OverrideState: 1
-    m_Value: 234
-  detectBrightnessLimits:
-    m_OverrideState: 1
-    m_Value: 1
-  minNits:
-    m_OverrideState: 1
-    m_Value: 0.005
-  maxNits:
-    m_OverrideState: 1
-    m_Value: 647
+  - {fileID: 7157411128793656294}
 --- !u!114 &2026526143475561841
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -206,7 +166,74 @@ MonoBehaviour:
     m_Value: 0
   saturation:
     m_OverrideState: 1
+    m_Value: 15
+--- !u!114 &7157411128793656294
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06437c1ff663d574d9447842ba0a72e4, type: 3}
+  m_Name: ScreenSpaceLensFlare
+  m_EditorClassIdentifier: 
+  active: 1
+  intensity:
+    m_OverrideState: 1
+    m_Value: 0.06
+  tintColor:
+    m_OverrideState: 0
+    m_Value: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
+  bloomMip:
+    m_OverrideState: 0
+    m_Value: 2
+  firstFlareIntensity:
+    m_OverrideState: 1
     m_Value: 1
+  secondaryFlareIntensity:
+    m_OverrideState: 1
+    m_Value: 1
+  warpedFlareIntensity:
+    m_OverrideState: 0
+    m_Value: 1
+  warpedFlareScale:
+    m_OverrideState: 0
+    m_Value: {x: 1, y: 1}
+  samples:
+    m_OverrideState: 1
+    m_Value: 3
+  sampleDimmer:
+    m_OverrideState: 1
+    m_Value: 0.5
+  vignetteEffect:
+    m_OverrideState: 0
+    m_Value: 1
+  startingPosition:
+    m_OverrideState: 0
+    m_Value: 1.25
+  scale:
+    m_OverrideState: 1
+    m_Value: 1.5
+  streaksIntensity:
+    m_OverrideState: 1
+    m_Value: 1
+  streaksLength:
+    m_OverrideState: 1
+    m_Value: 0.248
+  streaksOrientation:
+    m_OverrideState: 0
+    m_Value: 0.6
+  streaksThreshold:
+    m_OverrideState: 0
+    m_Value: 0.25
+  resolution:
+    m_OverrideState: 0
+    m_Value: 4
+  chromaticAbberationIntensity:
+    m_OverrideState: 1
+    m_Value: 0.637
 --- !u!114 &7957730700180659536
 MonoBehaviour:
   m_ObjectHideFlags: 3

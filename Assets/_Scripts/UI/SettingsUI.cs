@@ -125,5 +125,13 @@ public class SettingsUI : MonoBehaviour
         _mixer.SetFloat("Radio", Mathf.Log10(value) * 20f);
         Radio = value;
     }
+
+    public static void ChangeVFX(bool value)
+    {
+        VFXOn = value;
+        PlayerInteractions.DefaultMask = value
+            ? LayerMask.GetMask("Default", "UI", "Clickable", "Document", "NPCObject", "Doors", "VFX")
+            : LayerMask.GetMask("Default", "UI", "Clickable", "Document", "NPCObject", "Doors");
+    }
 }
 

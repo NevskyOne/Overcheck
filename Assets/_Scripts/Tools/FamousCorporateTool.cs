@@ -1,4 +1,4 @@
-public class FamousCorporateTool : ToolBase
+public class FamousCorporateTool : Tool
 {
     private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
     private void OnEnable()

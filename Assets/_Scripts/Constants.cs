@@ -1,10 +1,10 @@
 ﻿public class Constants
 {
-    public const string FACE_SCANNER = "face_caner";
-    public const string ANTI_CRIME_SYSTEM = "anti_crime_system";
-    public const string PIGGY_BANK = "piggy_bank";
-    public const string HAPPY_HONEY = "happy_honey";
-    public const string HONORARY_CORPORATION = "honorary_corporation";
+    public const string FACE_SCANNER = "FaceScaner";
+    public const string ANTI_CRIME_SYSTEM = "AntiCriminal";
+    public const string PIGGY_BANK = "BearBank";
+    public const string HAPPY_HONEY = "LuckyHoney";
+    public const string HONORARY_CORPORATION = "FamousWorker";
 
     public const string PLAYER_NAME_PLAYERPREFS_KEY = "PlayerNamePlayerPrefsKey";
     
@@ -13,9 +13,9 @@
 
 public enum ToolName
 {
-    face_caner,
-    anti_crime_system,
-    piggy_bank,
-    happy_honey,
-    honorary_corporation
+    FaceScaner,
+    AntiCriminal,
+    BearBank,
+    LuckyHoney,
+    FamousWorker
 }

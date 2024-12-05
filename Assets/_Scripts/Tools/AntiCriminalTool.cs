@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.UI;
 
-public class AntiCriminalTool : ToolBase
+public class AntiCriminalTool : Tool
 {
     [SerializeField] private Image _image;
     [SerializeField] private Sprite _correct;

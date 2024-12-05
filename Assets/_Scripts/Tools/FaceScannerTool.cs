@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 
-public class FaceScannerTool : ToolBase
+public class FaceScannerTool : Tool
 {
     [SerializeField] private Image _image;
     [SerializeField] private Sprite _correct;

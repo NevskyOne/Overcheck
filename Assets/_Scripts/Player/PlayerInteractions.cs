@@ -32,6 +32,8 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private GameObject _wrongStamp;
     [SerializeField] private GameObject _popupMenu;
     [SerializeField] private TMP_Text _popupText;
+
+    public static LayerMask DefaultMask;
     
     private PlayerInput _playerInput => GetComponent<PlayerInput>();
     private PlayerMovement _playerMove => GetComponent<PlayerMovement>();
@@ -46,6 +48,8 @@ public class PlayerInteractions : MonoBehaviour
     
     private void Start()
     {
+        SettingsUI.ChangeVFX(SettingsUI.VFXOn);
+        
         _playerInput.actions["Click"].started += Click;
         _playerInput.actions["Click"].canceled += OnClickEnd;
         _playerInput.actions["RightClick"].started += RightClick;
@@ -137,7 +141,7 @@ public class PlayerInteractions : MonoBehaviour
         
         transf = hit2.transform;
         
-        if (transf.CompareTag("NPC"))
+        if (!_inTable && transf.CompareTag("NPC"))
         {
             transf.GetComponent<NPC>().StartChat();
             _inDialog = true;
@@ -212,13 +216,15 @@ public class PlayerInteractions : MonoBehaviour
         }
     }
 
-    private void Space(InputAction.CallbackContext _) => NextFraze();
+    private void Space(InputAction.CallbackContext _)
+    {
+        if(_inDialog)
+            _dialogSystem.PlayNext();
+    }
+
     public void ResetButton() => _canStartDay = true;
     
-    public void NextFraze()
-    {
-        _dialogSystem.PlayNext();
-    }
+
 
     private void Escape(InputAction.CallbackContext _)
     {
@@ -235,13 +241,9 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (_inTable)
         {
-            if (_tableState == CheckState.None)
-            {
-                _inTable = false;
-                _camManager.ResetCamera();
-            }
-            else
-                _tableState = CheckState.None;
+            _inTable = false;
+            _camManager.ResetCamera();
+            _tableState = CheckState.None;
         }
         else
         {
@@ -272,7 +274,7 @@ public class PlayerInteractions : MonoBehaviour
         _cursor.SetActive(true);
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _camera.cullingMask = LayerMask.GetMask("Default", "UI", "Clickable", "Document", "NPCObject");
+        _camera.cullingMask = DefaultMask;
     }
     
     public void StopFocus()
