@@ -1512,9 +1512,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2069559050847242409}
-    - targetCorrespondingSourceObject: {fileID: 3141286051710766574, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
-      insertIndex: 1
-      addedObject: {fileID: 4087659465042157022}
     - targetCorrespondingSourceObject: {fileID: 430108200687226393, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1161488162577963390}
@@ -2242,47 +2239,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3371011907246390677, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
   m_PrefabInstance: {fileID: 5178877077689759533}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7802211778049374915 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3141286051710766574, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
-  m_PrefabInstance: {fileID: 5178877077689759533}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &4087659465042157022
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7802211778049374915}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9b78a20ccd494067a6e4d02e004c4394, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  npcModels:
-  - {fileID: 733791404547379991, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
-  - {fileID: -1736645332260882939, guid: cfe3594a69271884c958dce8dab034de, type: 3}
-  - {fileID: 823453533345074304, guid: 4ee5f5f9aaaccbb47b41e24cc050a39e, type: 3}
-  - {fileID: 8088842760900868372, guid: aeba18bede16ce4499b8e8bcb2fa7b76, type: 3}
-  - {fileID: 6650871490764013093, guid: 3240079afa4945d4bb4b34205be6b72a, type: 3}
-  - {fileID: -642143859752673928, guid: 6547323cff82bc740a72fe528c174ba0, type: 3}
-  - {fileID: 5885520868810902055, guid: 410baf9ab30a7e2418321a42781bf955, type: 3}
-  - {fileID: 6378839434369556974, guid: c6e9e9997e6aedc4ba4689f2195daa6d, type: 3}
-  - {fileID: -3285483475569211141, guid: 0a4f37d69ee22cc429385a55dccfc0e3, type: 3}
-  - {fileID: -629272308168860060, guid: 47d1832103bcea84598b8451b86e0396, type: 3}
-  Materials:
-  - {fileID: 2100000, guid: 3dde05f63eac5214d861eb7621fdfeee, type: 2}
-  - {fileID: 2100000, guid: bc25f75bdd26425488a08ffce827ea77, type: 2}
-  - {fileID: 2100000, guid: 4d50c9b18065f6e43b5997ee6e174279, type: 2}
-  - {fileID: 2100000, guid: f81dc9d290b81e746900594339000928, type: 2}
-  - {fileID: 2100000, guid: ce2576d4a965154478c76875ad64233e, type: 2}
-  - {fileID: 2100000, guid: 6d9df28e73b5f754485396d89efa94f1, type: 2}
-  - {fileID: 2100000, guid: 1c6f4f6de7eb24d498dede319ff5fc65, type: 2}
-  - {fileID: 2100000, guid: 0a67a8f31b081844492a386a2df9abf7, type: 2}
-  - {fileID: 2100000, guid: 53ab5eb16419c1446a79e6943c572b2f, type: 2}
-  - {fileID: 2100000, guid: e1f69ffa0a9101e43b84c091c51828b5, type: 2}
-  captureCamera: {fileID: 0}
-  savePath: Assets/Resources/BearPhotos
 --- !u!4 &7879664685486915644 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3063890353527404305, guid: f289e4564edec6e45a312cb6bc225873, type: 3}

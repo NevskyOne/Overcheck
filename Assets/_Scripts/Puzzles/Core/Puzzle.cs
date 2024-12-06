@@ -8,6 +8,7 @@ public abstract class Puzzle : MonoBehaviour
     private void Start()
     {
         _randomEvents = FindFirstObjectByType<RandomEvents>();
+        StartPuzzle();
     }
     
     public abstract void StartPuzzle();

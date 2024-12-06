@@ -8,7 +8,7 @@ public class BrokenElectricityStartBtn : MonoBehaviour, IPointerDownHandler, IDr
 {
     [SerializeField] private TMP_Text _formulaText;
     [SerializeField] private LineRenderer _wireLine;
-
+    [SerializeField] private float _zPos = 0.985f;
     public event Action OnEndDragEvent;
 
     public bool IsConnected => _isConnected;
@@ -16,25 +16,16 @@ public class BrokenElectricityStartBtn : MonoBehaviour, IPointerDownHandler, IDr
 
     private BrokenElectricityEndBtn _endBtn;
     private FormulaSO _formula;
-    private Vector3 _startDragPosition;
     private Vector3 _currentMousePosition;
-    private bool _isDragging = false;
-    private bool _isSolved = false;
-    private bool _isConnected = false;
+    private bool _isDragging;
+    private bool _isSolved;
+    private bool _isConnected;
 
     private void Start()
     {
-        if (_wireLine == null)
-        {
-            _wireLine = gameObject.AddComponent<LineRenderer>();
-            _wireLine.startWidth = 0.05f;
-            _wireLine.endWidth = 0.01f;
-            _wireLine.positionCount = 2;
-        }
-
-        _startDragPosition = transform.position;
-        _wireLine.SetPosition(0, _startDragPosition);
-        _wireLine.SetPosition(1, _startDragPosition);
+        
+        _wireLine.SetPosition(0, Vector3.zero);
+        _wireLine.SetPosition(1, Vector3.zero);
     }
 
     public void SetProperties(BrokenElectricityEndBtn endBtn, FormulaSO formula)
@@ -51,9 +42,7 @@ public class BrokenElectricityStartBtn : MonoBehaviour, IPointerDownHandler, IDr
         if (_isSolved || _isConnected) return;
         
         _isDragging = true;
-        _startDragPosition = transform.position;
-        _wireLine.SetPosition(0, _startDragPosition);
-        _wireLine.SetPosition(1, _startDragPosition);
+        _wireLine.SetPosition(1, GetMouseWorldPosition());
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -61,9 +50,9 @@ public class BrokenElectricityStartBtn : MonoBehaviour, IPointerDownHandler, IDr
         if (!_isDragging) return;
 
         if (_isSolved || _isConnected) return;
-
-        _currentMousePosition = GetMouseWorldPosition();
-        _wireLine.SetPosition(1, _currentMousePosition);
+        
+        _wireLine.SetPosition(1, GetMouseWorldPosition());
+        
     }
 
     public void OnPointerUp(PointerEventData eventData)
@@ -76,8 +65,10 @@ public class BrokenElectricityStartBtn : MonoBehaviour, IPointerDownHandler, IDr
         if (hitObject != null && hitObject.TryGetComponent(out BrokenElectricityEndBtn endBtn))
         {
             Debug.Log("Соединение успешно!");
-            _wireLine.SetPosition(1, hitObject.transform.position);
+            _wireLine.SetPosition(1, _wireLine.transform.InverseTransformPoint(endBtn.LinePos.position));
+            endBtn.VFX.SetActive(true);
             _isConnected = true;
+            
             if (endBtn.Formula == _endBtn.Formula)
                 _isSolved = true;
         }
@@ -88,7 +79,7 @@ public class BrokenElectricityStartBtn : MonoBehaviour, IPointerDownHandler, IDr
     public void Reset()
     {
         Debug.Log("Соединение не удалось.");
-        _wireLine.SetPosition(1, _startDragPosition);
+        _wireLine.SetPosition(1, Vector3.zero);
         _isSolved = false;
         _isConnected = false;
     }
@@ -96,8 +87,11 @@ public class BrokenElectricityStartBtn : MonoBehaviour, IPointerDownHandler, IDr
     private Vector3 GetMouseWorldPosition()
     {
         var mousePosition = Input.mousePosition;
-        mousePosition.z = Camera.main.nearClipPlane;
-        return Camera.main.ScreenToWorldPoint(mousePosition);
+        mousePosition.z = _zPos;
+        
+        var worldPos = Camera.main.ScreenToWorldPoint(mousePosition);
+        var localPos = _wireLine.transform.InverseTransformPoint(worldPos);
+        return new Vector3(localPos.x, localPos.y, 0);
     }
 
     private GameObject GetObjectUnderMouse()

@@ -2,7 +2,6 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using _Scripts.UI;
 using Random = System.Random;
 using UnityEngine;
 
