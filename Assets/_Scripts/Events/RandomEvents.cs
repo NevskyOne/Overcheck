@@ -82,6 +82,8 @@ public class RandomEvents : MonoBehaviour
         StartCoroutine(_redSreen.EndFade());
         _npcMng.SelectNPC(false);
         
+        SceneMusic.State = MusicState.Normal;
+        
         OnDone?.Invoke();
     }
 
@@ -106,6 +108,7 @@ public class RandomEvents : MonoBehaviour
             Destroy(_currentRobot);
         
         await Task.Delay(1000);
+        SceneMusic.State = MusicState.Normal;
         _playerInter.ResetButton();
         StartCoroutine(_blackSreen.EndFade());
         StartCoroutine(_redSreen.EndFade());

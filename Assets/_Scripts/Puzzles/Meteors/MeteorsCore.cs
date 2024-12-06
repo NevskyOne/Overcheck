@@ -73,6 +73,7 @@ public class MeteorsCore : Puzzle
 
     protected override void LosePuzzle()
     {
+        base.LosePuzzle();
         foreach (Transform meteor in _meteorsParent)
         {
             Destroy(meteor.gameObject);

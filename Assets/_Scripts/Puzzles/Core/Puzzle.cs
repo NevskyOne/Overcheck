@@ -3,7 +3,7 @@
 public abstract class Puzzle : MonoBehaviour
 {
     private RandomEvents _randomEvents;
-    protected bool _isPuzzleSolved = false;
+    protected bool _isPuzzleSolved;
 
     private void OnEnable()
     {
@@ -12,12 +12,16 @@ public abstract class Puzzle : MonoBehaviour
     }
     
     public abstract void StartPuzzle();
-    protected abstract void LosePuzzle();
+
+    protected virtual void LosePuzzle()
+    {
+        _isPuzzleSolved = false;
+        _randomEvents.Lose();
+    }
 
     protected virtual void SolvePuzzle()
     {
-        //_isPuzzleSolved = true;
-        //_randomEvents.OnEventEnd();
-        Debug.Log("Головоломка решена!");
+        _isPuzzleSolved = true;
+        _randomEvents.OnEventEnd();
     }
 }

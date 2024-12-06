@@ -62,6 +62,7 @@ public class BrokenElectricityCore : Puzzle
 
     protected override void LosePuzzle()
     {
+        base.LosePuzzle();
         foreach (var b in _startBtns)
         {
             b.Reset();
