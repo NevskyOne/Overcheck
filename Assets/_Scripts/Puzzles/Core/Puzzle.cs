@@ -5,7 +5,7 @@ public abstract class Puzzle : MonoBehaviour
     private RandomEvents _randomEvents;
     protected bool _isPuzzleSolved = false;
 
-    private void Start()
+    private void OnEnable()
     {
         _randomEvents = FindFirstObjectByType<RandomEvents>();
         StartPuzzle();

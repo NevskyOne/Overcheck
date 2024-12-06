@@ -10,7 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 38792329dadc4cf3a8c2b0b95f6424ab, type: 3}
-  m_Name: NewFormula
+  m_Name: NewFormula 2
   m_EditorClassIdentifier: 
-  _firstPart: s
-  _secondPart: v*t
+  _firstPart: "F(\u0442)"
+  _secondPart: m*g
