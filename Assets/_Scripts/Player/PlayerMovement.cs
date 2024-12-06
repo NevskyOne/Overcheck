@@ -35,6 +35,7 @@ public class PlayerMovement : MonoBehaviour
         _input.actions["Look"].performed += Look;
         _input.actions["Sprint"].started += StartSprint;
         _input.actions["Sprint"].canceled += StopSprint;
+        StartCoroutine(_fx.ChangeChromatic(0.05f));
     }
 
     private void OnDisable()
@@ -43,7 +44,7 @@ public class PlayerMovement : MonoBehaviour
         _input.actions["Sprint"].started -= StartSprint;
         _input.actions["Sprint"].canceled -= StopSprint;
         
-        StartCoroutine(_fx.ChangeChromatic(0.1f));
+        StartCoroutine(_fx.ChangeChromatic(0.05f));
         _sfx.PlayBreath(false);
         _sfx.PlayFeet(false);
     }
@@ -53,7 +54,7 @@ public class PlayerMovement : MonoBehaviour
         _speed = _maxSpeed * 1.5f;
         _fov = 75;
         _sfx.PlayBreath();
-        StartCoroutine(_fx.ChangeChromatic(1));
+        StartCoroutine(_fx.ChangeChromatic(0.5f));
     }
     
     private void StopSprint(InputAction.CallbackContext _)
@@ -61,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
         _speed = _maxSpeed;
         _fov = 60;
         _sfx.PlayBreath(false);
-        StartCoroutine(_fx.ChangeChromatic(0.1f));
+        StartCoroutine(_fx.ChangeChromatic(0.05f));
     }
     
     private void Look(InputAction.CallbackContext _)

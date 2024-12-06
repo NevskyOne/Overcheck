@@ -166,13 +166,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4568354858123837730, guid: 260aad0fe85395a43beb3da6f2cb0c35, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4871821194950111000, guid: 260aad0fe85395a43beb3da6f2cb0c35, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: b161a678b7c832b4e9766471a402bc8b, type: 2}
+    - target: {fileID: 5285693651076766612, guid: 260aad0fe85395a43beb3da6f2cb0c35, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 9178155007998355382, guid: 260aad0fe85395a43beb3da6f2cb0c35, type: 3}
       propertyPath: m_Name
       value: NPC
+      objectReference: {fileID: 0}
+    - target: {fileID: 9178155007998355382, guid: 260aad0fe85395a43beb3da6f2cb0c35, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -6006,6 +6018,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Levitation
       objectReference: {fileID: 0}
+    - target: {fileID: 8476449805214742689, guid: 73c12fb88f929af4694851ef9f8c5eb5, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6022,6 +6038,10 @@ PrefabInstance:
     - target: {fileID: 1262611080229969502, guid: 0187f563fe9782e4da65d1e1459c57cd, type: 3}
       propertyPath: m_Name
       value: Meteorite
+      objectReference: {fileID: 0}
+    - target: {fileID: 1262611080229969502, guid: 0187f563fe9782e4da65d1e1459c57cd, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5491920417193567286, guid: 0187f563fe9782e4da65d1e1459c57cd, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6079,6 +6099,10 @@ PrefabInstance:
     - target: {fileID: 162555473854860386, guid: 7724fd04c6dc77c408014eab9d2bb08e, type: 3}
       propertyPath: m_Name
       value: StampCheck
+      objectReference: {fileID: 0}
+    - target: {fileID: 162555473854860386, guid: 7724fd04c6dc77c408014eab9d2bb08e, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1961851183738368532, guid: 7724fd04c6dc77c408014eab9d2bb08e, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6185,6 +6209,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: StampCross
       objectReference: {fileID: 0}
+    - target: {fileID: 5527708895671825019, guid: bd31546d5a95eee428a895342d3399e3, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6201,6 +6229,10 @@ PrefabInstance:
     - target: {fileID: 4644804969689932259, guid: 5dd6b18d53c8e6d4cb408f2e21162f36, type: 3}
       propertyPath: m_Name
       value: Gears
+      objectReference: {fileID: 0}
+    - target: {fileID: 4644804969689932259, guid: 5dd6b18d53c8e6d4cb408f2e21162f36, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4862234800174191653, guid: 5dd6b18d53c8e6d4cb408f2e21162f36, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6299,6 +6331,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIClick
       objectReference: {fileID: 0}
+    - target: {fileID: 6744152697436821872, guid: 15d796cfc873f2647bf0a5cc4c31706f, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6356,6 +6392,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Boom
       objectReference: {fileID: 0}
+    - target: {fileID: 2345002455188363356, guid: fda5fc99866058342a3cb8798df06f54, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6372,6 +6412,10 @@ PrefabInstance:
     - target: {fileID: 241087593819683521, guid: 6b2b579af9cd0b64fb97df5c94b5f8d4, type: 3}
       propertyPath: m_Name
       value: Wires
+      objectReference: {fileID: 0}
+    - target: {fileID: 241087593819683521, guid: 6b2b579af9cd0b64fb97df5c94b5f8d4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1144455217652349133, guid: 6b2b579af9cd0b64fb97df5c94b5f8d4, type: 3}
       propertyPath: m_LocalPosition.x
@@ -6469,6 +6513,10 @@ PrefabInstance:
     - target: {fileID: 8973602071245910132, guid: 614d9133266bbcb4b8b9572c5129aee6, type: 3}
       propertyPath: m_Name
       value: Radio
+      objectReference: {fileID: 0}
+    - target: {fileID: 8973602071245910132, guid: 614d9133266bbcb4b8b9572c5129aee6, type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

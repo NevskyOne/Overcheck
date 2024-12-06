@@ -79,6 +79,8 @@ public class DialogSystem : MonoBehaviour
 
     public void EndChat()
     {
+        _npcManager.SetNPCTalking(false);
+        
         _playerMovement.enabled = true;
         FragmentsStack.Clear();
         _playerInter.Focus();

@@ -5,8 +5,12 @@ using Random = System.Random;
 
 public class NPC : MonoBehaviour
 {
+    [Header("Visual")]
+    [SerializeField] private bool _canRanomize = true;
     [SerializeField] private Mesh[] _models;
-    
+    [Header("Text")]
+    public TimeLine NPCTimeLine;
+    [SerializeField] private int _dialogCount;
     [Header("Docs")]
     [SerializeField] private Sprite _photo;
     [SerializeField] private Goal _targetGoal;
@@ -16,11 +20,7 @@ public class NPC : MonoBehaviour
     
     [Header("Valuable")]
     [SerializeField] private uint _cost;
-    public TimeLine NPCTimeLine;
     
-    [Header("Text")]
-    [SerializeField] private List<DialogFragment> _fragments = new();
-    [SerializeField] private DialogFragment _endPassText, _endBackText;
     
     public Goal CurrentGoal { get; set; }
     public bool FaceChanged { get; set; }
@@ -30,6 +30,9 @@ public class NPC : MonoBehaviour
     private int _planet;
     private List<GameObject> _collectedDocs = new();
     private int _docsCount = 1;
+    
+    private List<DialogFragment> _fragments = new();
+    private DialogFragment _endPassText, _endBackText;
     
     private Random _rnd = new Random();
     private bool _origin;
@@ -41,16 +44,24 @@ public class NPC : MonoBehaviour
     
     private void Start()
     {
-        var meshRenderer = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
-        meshRenderer.sharedMesh = _models[_rnd.Next(0, 3)];
-        int randomHat = _rnd.Next(0, 4);
-        if(randomHat < 3)
-            meshRenderer.SetBlendShapeWeight(randomHat, 100);
-        int randomCount = _rnd.Next(0, 5);
-        if (randomCount > 0)
+
+        _fragments = DialogParser.ParsedFragments[_dialogCount];
+        _endPassText = DialogParser.PassFragmenst[_dialogCount];
+        _endBackText = DialogParser.NotPassFragmenst[_dialogCount];
+        
+        if (_canRanomize)
         {
-            for (var i = 0; i < randomCount; i++)
-                meshRenderer.SetBlendShapeWeight(_rnd.Next(3,7), 100);
+            var meshRenderer = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
+            meshRenderer.sharedMesh = _models[_rnd.Next(0, 3)];
+            int randomHat = _rnd.Next(0, 4);
+            if (randomHat < 3)
+                meshRenderer.SetBlendShapeWeight(randomHat, 100);
+            int randomCount = _rnd.Next(0, 5);
+            if (randomCount > 0)
+            {
+                for (var i = 0; i < randomCount; i++)
+                    meshRenderer.SetBlendShapeWeight(_rnd.Next(3, 7), 100);
+            }
         }
 
         if (_rnd.Next(101) < _npcManager.CriminalChance)

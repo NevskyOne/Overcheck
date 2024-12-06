@@ -92,6 +92,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 199d8aa87fcf8964c84f29cdd59a1a48, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _canRanomize: 1
   _models:
   - {fileID: 733791404547379991, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
   - {fileID: -1736645332260882939, guid: cfe3594a69271884c958dce8dab034de, type: 3}
@@ -103,35 +104,14 @@ MonoBehaviour:
   - {fileID: 6378839434369556974, guid: c6e9e9997e6aedc4ba4689f2195daa6d, type: 3}
   - {fileID: -3285483475569211141, guid: 0a4f37d69ee22cc429385a55dccfc0e3, type: 3}
   - {fileID: -629272308168860060, guid: 47d1832103bcea84598b8451b86e0396, type: 3}
+  NPCTimeLine: 0
+  _dialogCount: 1
   _photo: {fileID: 21300000, guid: cf839f35f489dce4382cc2fab8bfd927, type: 3}
   _targetGoal: 0
   _PMS: {fileID: 762431528694896407, guid: 174e46dc922f18e47a57b124a80f9271, type: 3}
   _IIC: {fileID: 762431528694896407, guid: 67dd1bec75363b84ab720f69594907dd, type: 3}
   _PP: {fileID: 762431528694896407, guid: b4ba7a8bde8198d4681eb5d0dccc9fd0, type: 3}
-  _cost: 30
-  NPCTimeLine: 0
-  _fragments:
-  - Text: "\u041F\u0440\u0438\u0432\u0435\u0442! \u041A\u0430\u043A \u0442\u0432\u043E\u0438
-      \u0434\u0435\u043B\u0430? \u041A\u0443\u0434\u0430 \u0441\u043F\u0435\u0448\u0438\u0448\u044C?"
-    GiveDocs: 0
-    Object: {fileID: 0}
-    Buttons:
-    - Text: "\u0414\u0430\u0439\u0442\u0435 \u0432\u0430\u0448\u0438 \u0434\u043E\u043A\u0443\u043C\u0435\u043D\u0442\u044B."
-      Fragments:
-      - Text: "\u0425\u043E\u0440\u043E\u0448\u043E"
-        GiveDocs: 1
-        Object: {fileID: 7620680275443892341, guid: e4747ea048973584e89bbd678eb1d0bb, type: 3}
-        Buttons: []
-  _endPassText:
-    Text: "\u0415\u0441"
-    GiveDocs: 0
-    Object: {fileID: 0}
-    Buttons: []
-  _endBackText:
-    Text: "\u0414\u043E\u0434\u043E\u0434\u043E"
-    GiveDocs: 0
-    Object: {fileID: 0}
-    Buttons: []
+  _cost: 1
 --- !u!195 &47357776550331533
 NavMeshAgent:
   m_ObjectHideFlags: 0

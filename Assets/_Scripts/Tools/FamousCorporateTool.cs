@@ -9,7 +9,7 @@ public class FamousCorporateTool : Tool
             _npcManager.NpcList[i] = new ()
             {
                 NormalNPC = day.NormalNPC,
-                SpecialNPC = day.SpecialNPC + 1,
+                EternityNPC = day.EternityNPC + 1,
                 TutorialNPC = day.TutorialNPC
             };
         }
