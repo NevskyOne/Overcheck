@@ -15,7 +15,9 @@ public class NPCManager : MonoBehaviour
     [Header("NPC")] 
     public List<DayNPC> NpcList = new(7);
     [SerializeField] private List<GameObject> _normalNPC;
-    [SerializeField] private List<GameObject> _specialNPC;
+    [SerializeField] private List<GameObject> _eternityNPC;
+    [SerializeField] private List<GameObject> _agentsNPC;
+    [SerializeField] private List<GameObject> _robotsNPC;
     [SerializeField] private List<GameObject> _tutorialNPC;
     
     [Header("DocsSpawn")] 
@@ -99,15 +101,18 @@ public class NPCManager : MonoBehaviour
 
     public void SetNPCTalking(bool talking = true)
     {
-        _npcAnim.IsTalking = talking;
+        if(_npcAnim)
+            _npcAnim.IsTalking = talking;
     }
 
     public void SelectNPC(bool eventEnabled = true)
     { 
         if(CurrentNPC) Destroy(CurrentNPC.gameObject);
-        
-        if(eventEnabled && _rnd.Next(0,101) < (SettingsUI.RobotsCount ^ 2 + EventChance) && (_currentDay.TutorialNPC > 0 || _currentDay.SpecialNPC > 0 || _currentDay.NormalNPC > 0))
-           RandomEvent?.Invoke();
+        var randomSpecial = _rnd.Next(3);
+        if(eventEnabled && _rnd.Next(0,101) < ((SettingsUI.RobotsCount ^ 2) * 2 + EventChance) &&
+           (_currentDay.TutorialNPC > 0 || _currentDay.EternityNPC > 0 ||
+            _currentDay.AgentNPC > 0 || _currentDay.RobotsNPC > 0 || _currentDay.NormalNPC > 0))
+            RandomEvent?.Invoke();
         else
         {
             if (_currentDay.TutorialNPC > 0)
@@ -115,10 +120,20 @@ public class NPCManager : MonoBehaviour
                 SpawnNPC(_tutorialNPC);
                 _currentDay.TutorialNPC -= 1;
             }
-            else if (_rnd.Next(2) == 1 && _currentDay.SpecialNPC > 0)
+            else if (randomSpecial == 0 && _currentDay.EternityNPC > 0)
             {
-                SpawnNPC(_specialNPC);
-                _currentDay.SpecialNPC -= 1;
+                SpawnNPC(_eternityNPC);
+                _currentDay.EternityNPC -= 1;
+            }
+            else if (randomSpecial == 1 && _currentDay.AgentNPC > 0)
+            {
+                SpawnNPC(_agentsNPC);
+                _currentDay.AgentNPC -= 1;
+            }
+            else if (randomSpecial == 2 && _currentDay.RobotsNPC > 0)
+            {
+                SpawnNPC(_robotsNPC);
+                _currentDay.RobotsNPC -= 1;
             }
             else if (_currentDay.NormalNPC > 0)
             {
@@ -183,6 +198,8 @@ public class NPCManager : MonoBehaviour
 public struct DayNPC
 {
     public uint NormalNPC;
-    public uint SpecialNPC;
+    public uint EternityNPC;
+    public uint AgentNPC;
+    public uint RobotsNPC;
     public uint TutorialNPC;
 }
