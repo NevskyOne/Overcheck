@@ -161,9 +161,10 @@ public class APIManager
     {
         if (_haveInternetConnection)
         {
-            var request = CreateRequest($"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{playerName}/shops/{SHOP_NAME}/", RequestType.PUT, shop);
+            var res = new Dictionary<string, Dictionary<string, int>> { { "resources", shop } };
+            var request = CreateRequest($"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{playerName}/shops/{SHOP_NAME}/", RequestType.PUT, res);
             await SendRequest(request);
-            await SendShopLog($"Магазин игрока {playerName} был изменен: {shop}", playerName, shop);
+            await SendShopLog($"Магазин игрока {playerName} был изменен: {res}", playerName, shop);
         }
         else
         {

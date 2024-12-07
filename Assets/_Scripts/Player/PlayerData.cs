@@ -14,7 +14,7 @@ public class PlayerData : MonoBehaviour
     {
         _onMoneyChange += () =>
         {
-            _honeyCombsText.text = PlayerData.HoneyCombs.ToString();
+            //_honeyCombsText.text = PlayerData.HoneyCombs.ToString();
         };
     }
 

@@ -76,9 +76,9 @@ public class ShopBase : MonoBehaviour
         if (coins >= price)
         {
             shop[toolToBuy] = 0;
-            PlayerData.ChangeCoins(price, false);
             APIManager.Instance.ChangeShop(playerName, shop);
             tool.Buyed();
+            PlayerData.ChangeCoins(price, false);
         }
         
         _activeToolsToAdd.Add(tool);
@@ -94,9 +94,9 @@ public class ShopBase : MonoBehaviour
         if (shop[toolToSell] == 1) return;
         
         shop[toolToSell] = 1;
-        PlayerData.ChangeCoins(price);
         APIManager.Instance.ChangeShop(playerName, shop);
         tool.Sold();
+        PlayerData.ChangeCoins(price);
         
         _activeToolsToRemove.Add(tool);
     }
