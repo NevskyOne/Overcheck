@@ -21,7 +21,6 @@ public class RandomEvents : MonoBehaviour
     [SerializeField] private List<Transform> _gearsPos;
     [SerializeField] private List<Transform> _meteoritesPos;
     [Header("UI")] 
-    [SerializeField] private ScreenFade _redSreen;
     [SerializeField] private ScreenFade _blackSreen;
     
     private Random _rnd = new Random();
@@ -30,17 +29,19 @@ public class RandomEvents : MonoBehaviour
     private CameraManager _cameraMng => _player.GetComponentInChildren<CameraManager>();
     private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
     private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
+    private Effects _fx => FindFirstObjectByType<Effects>();
 
     public static event Action OnLose, OnDone;
     
     private void Start()
     {
         NPCManager.RandomEvent += OnEventStart;
+        StartCoroutine(_fx.ChangeGamma());
     }
 
     private void OnEventStart()
     {
-        _redSreen.gameObject.SetActive(true);
+        StartCoroutine(_fx.ChangeGamma(true));
 
         switch (_rnd.Next(3))
         {
@@ -79,7 +80,7 @@ public class RandomEvents : MonoBehaviour
         if(_currentRobot) Destroy(_currentRobot);
         _puzzleObj.SetActive(false);
         
-        StartCoroutine(_redSreen.EndFade());
+        StartCoroutine(_fx.ChangeGamma());
         _npcMng.SelectNPC(false);
         
         SceneMusic.State = MusicState.Normal;
@@ -107,10 +108,12 @@ public class RandomEvents : MonoBehaviour
         if(_currentRobot) 
             Destroy(_currentRobot);
         
+        StartCoroutine(_fx.ChangeGamma());
+        
         await Task.Delay(1000);
         SceneMusic.State = MusicState.Normal;
         _playerInter.ResetButton();
         StartCoroutine(_blackSreen.EndFade());
-        StartCoroutine(_redSreen.EndFade());
+        
     }
 }

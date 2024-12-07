@@ -32,7 +32,9 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private GameObject _wrongStamp;
     [SerializeField] private GameObject _popupMenu;
     [SerializeField] private TMP_Text _popupText;
-
+    [Header("Other")]
+    [SerializeField] private Material _buttonMaterial;
+    
     public static LayerMask DefaultMask;
     
     private PlayerInput _playerInput => GetComponent<PlayerInput>();
@@ -64,7 +66,9 @@ public class PlayerInteractions : MonoBehaviour
         {
             _canStartDay = true;
             _camManager.ResetCamera();
+            _buttonMaterial.color = Color.green;
         };
+        _buttonMaterial.color = Color.green;
     }
 
     private void Update()
@@ -167,6 +171,7 @@ public class PlayerInteractions : MonoBehaviour
         {
             _npcMng.StartDay();
             _canStartDay = false;
+            _buttonMaterial.color = Color.gray;
         }
         else if (!_inTable && transf.CompareTag("Table"))
         {

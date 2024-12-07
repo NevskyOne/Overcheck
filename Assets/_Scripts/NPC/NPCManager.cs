@@ -88,7 +88,7 @@ public class NPCManager : MonoBehaviour
         int i = 0;
         foreach (var criminal in _criminals)
         {
-            _criminalHolder.GetChild(i).GetComponent<TMP_Text>().text = criminal;
+            _criminalHolder.GetChild(i).GetChild(1).GetComponent<TMP_Text>().text = criminal;
             i++;
         }
     }

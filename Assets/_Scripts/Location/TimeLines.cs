@@ -142,10 +142,10 @@ public class TimeLines : MonoBehaviour
         }
         else
         {
-            _correctText.text = $"Правильные:{CorrectNPC}";
-            _wrongText.text = $"Неверные:{WrongNPC}";
-            _additionalText.text = $"Дополнительные:{Additional}";
-            _totalText.text = $"Результат:{(int)(CorrectNPC + Additional) - (int)WrongNPC}";
+            _correctText.text = $"{CorrectNPC}";
+            _wrongText.text = $"{WrongNPC}";
+            _additionalText.text = $"{Additional}";
+            _totalText.text = $"{PlayerData.HoneyCombs}";
             _sleepUI.SetActive(true);
 
             CorrectNPC = 0;
