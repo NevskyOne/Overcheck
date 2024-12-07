@@ -23,10 +23,7 @@ public class APIManager
     
     private APIManager()
     {
-        if (Application.internetReachability == NetworkReachability.NotReachable)
-            _haveInternetConnection = false;
-        else
-            _haveInternetConnection = true;
+        _haveInternetConnection = Application.internetReachability != NetworkReachability.NotReachable;
     }
     
     public async Task Authorization(string playerName)
@@ -44,7 +41,8 @@ public class APIManager
             {
                 var name = player.name;
                 var res = player.resources;
-                playersList.Add(name, res);
+                if (name != "Dukfunduk")
+                    playersList.Add(name, res);
             }
 
             if (!playersList.ContainsKey(playerName))
@@ -70,7 +68,7 @@ public class APIManager
                     { Constants.HAPPY_HONEY, 1 },
                     { Constants.HONORARY_CORPORATION, 1 }
                 };
-
+        
                 _currentCoins = 0;
                 
                 var serializedShop = JsonConvert.SerializeObject(_currentShop);
@@ -81,9 +79,22 @@ public class APIManager
             }
             else
             {
-                var serializedShop = PlayerPrefs.GetString(SHOP_NAME);
                 _currentCoins = PlayerPrefs.GetInt(COINS);
-                _currentShop = JsonConvert.DeserializeObject<Dictionary<string, int>>(serializedShop);
+                var serializedShop = PlayerPrefs.GetString(SHOP_NAME);
+                
+                if (!string.IsNullOrEmpty(serializedShop))
+                    _currentShop = JsonConvert.DeserializeObject<Dictionary<string, int>>(serializedShop);
+                else
+                {
+                    _currentShop = new Dictionary<string, int>
+                    {
+                        { Constants.FACE_SCANNER, 1 },
+                        { Constants.ANTI_CRIME_SYSTEM, 1 },
+                        { Constants.PIGGY_BANK, 1 },
+                        { Constants.HAPPY_HONEY, 1 },
+                        { Constants.HONORARY_CORPORATION, 1 }
+                    };
+                }
             }
             
             OnAuthEnd?.Invoke(new AuthorizationResponse(playerName, false));
@@ -100,8 +111,8 @@ public class APIManager
             await SendLog($"Игрок {playerName} получает текущие ресурсы.", playerName, response.resources);
             return response.resources[COINS];
         }
-        else
-            return _currentCoins;
+
+        return _currentCoins;
     }
     
     public async void ChangeCoins(string playerName, int newCoinsCount)
@@ -115,7 +126,11 @@ public class APIManager
             await SendLog($"Ресурсы игрока: {playerName}, были изменены. ", playerName, res);
         }
         else
+        {
             _currentCoins = newCoinsCount;
+            PlayerPrefs.SetInt(COINS, _currentCoins);
+            PlayerPrefs.Save();
+        }
     }
 
     public async Task<Dictionary<string, int>> GetShop(string playerName)
@@ -138,8 +153,8 @@ public class APIManager
 
             return list[SHOP_NAME];
         }
-        else 
-            return _currentShop;
+
+        return _currentShop;
     }
 
     public async void ChangeShop(string playerName, Dictionary<string, int> shop)
@@ -150,18 +165,22 @@ public class APIManager
             await SendRequest(request);
             await SendShopLog($"Магазин игрока {playerName} был изменен: {shop}", playerName, shop);
         }
-        else 
+        else
+        {
             _currentShop = shop;
+            var serializedShop = JsonConvert.SerializeObject(_currentShop);
+            PlayerPrefs.SetString(SHOP_NAME, serializedShop);
+            PlayerPrefs.Save();
+        }
     }
     
     private async Task RegisterPlayer(string playerName)
     {
-        var res = new Dictionary<string, int> { { COINS, 0 } };
-        
-        var registerPlayerObject = new RegisterPlayerRequest { name = playerName, resources =  res };
+        var newRes = new Dictionary<string, int> { { COINS, 0 } };
+        var registerPlayerObject = new RegisterPlayerRequest { name = playerName, resources =  newRes };
         var registerRequest = CreateRequest($"https://2025.nti-gamedev.ru/api/games/{UUID}/players/", RequestType.POST, registerPlayerObject);
         await SendRequest(registerRequest);
-        await SendLog($"Игрок, {playerName}, зарегистирован. ", playerName, res);
+        await SendLog($"Игрок, {playerName}, зарегистирован. ", playerName, newRes);
 
         var shop = new Dictionary<string, int>
         {
@@ -222,11 +241,18 @@ public class APIManager
 
         return request;
     }
+
+    public async Task DeletePlayer(string playerName)
+    {
+        var request = CreateRequest($"https://2025.nti-gamedev.ru/api/games/{UUID}/players/{playerName}/", RequestType.DELETE);
+        await SendRequest(request);
+    }
 }
 
 public enum RequestType
 {
     GET,
     POST,
-    PUT
+    PUT,
+    DELETE
 }

@@ -18,10 +18,8 @@ public class Bootstrap : MonoBehaviour
     private bool _isAuthorizated;
     private string _playerName;
     
-    private void Awake()
+    private async void Awake()
     {
-        PlayerPrefs.DeleteAll();
-        
         if (Instance == null)
             Instance = this;
         else
@@ -30,7 +28,7 @@ public class Bootstrap : MonoBehaviour
         DontDestroyOnLoad(gameObject);
 
         APIManager.Instance.OnAuthEnd += OnAuthCompleted;
-        SceneManager.activeSceneChanged += OnActiveSceneChanged; 
+        SceneManager.activeSceneChanged += OnActiveSceneChanged;
         
         TryGetPlayerName();
     }
