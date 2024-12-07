@@ -1,5 +1,6 @@
 ﻿using System;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Meteor : MonoBehaviour
 {
@@ -28,7 +29,10 @@ public class Meteor : MonoBehaviour
     
     public void OnClick()
     {
+        transform.GetChild(0).gameObject.SetActive(true);
+        GetComponent<Image>().enabled = false;
         OnDestroyMeteor?.Invoke();
-        Destroy(gameObject);
+        this.enabled = false;
+        Destroy(gameObject, 2f);
     }
 }

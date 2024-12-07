@@ -21,11 +21,6 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private GameObject _eternityImg;
     [SerializeField] private GameObject _robotsImg;
     
-    public static string PlayerName
-    {
-        get { return PlayerPrefs.GetString("PlayerName"); }
-        set { PlayerPrefs.SetString("PlayerName", value);}
-    }
     
     public static int Graphics
     {

@@ -1,6 +1,8 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 public class MeteorsCore : Puzzle
 {
@@ -16,18 +18,24 @@ public class MeteorsCore : Puzzle
     [Header("Enviroment")]
     [SerializeField] private List<Transform> _spawnpoints = new();
     [SerializeField] private Transform _stationTransform;
+    [SerializeField] private Transform _targetTransform;
     [SerializeField] private int _maxStationHealth;
-
-    [SerializeField] private GameObject _restartButton;
+    [SerializeField] private float _zPos = 0.985f;
+    
     
     private int _meteorsDestroyed;
     private int _meteorsToWinCount;
     private int _currentStationHealth;
 
+    private void Update()
+    {
+        _targetTransform.localPosition = GetMouseWorldPosition();
+    }
+
     public override void StartPuzzle()
     {
         if (_isPuzzleSolved) return;
-        
+        _meteorsDestroyed = 0;
         _currentStationHealth = _maxStationHealth;
         _meteorsToWinCount = Random.Range(_meteorsToWinCountMin, _meteorsToWinCountMax);
         
@@ -40,17 +48,17 @@ public class MeteorsCore : Puzzle
         {
             yield return new WaitForSeconds(Random.Range(_meteorsSpawnRateMin, _meteorsSpawnRateMax));
             var spawnpoint = _spawnpoints[Random.Range(0, _spawnpoints.Count)];
-            var newMeteor = Instantiate(_meteorsPrefabs[Random.Range(0, _meteorsPrefabs.Count)], spawnpoint.position, Quaternion.identity, _meteorsParent);
-            newMeteor.GetComponent<Meteor>().SetProperties(_stationTransform, _meteorsSpeed);
-            newMeteor.GetComponent<Meteor>().OnDestroyMeteor += OnDestroyMeteor;
-            newMeteor.GetComponent<Meteor>().OnKickStation += OnKickStation;
+            var newMeteor = Instantiate(_meteorsPrefabs[Random.Range(0, _meteorsPrefabs.Count)], spawnpoint.position, Quaternion.identity, _meteorsParent).GetComponent<Meteor>();
+            newMeteor.SetProperties(_stationTransform, _meteorsSpeed);
+            newMeteor.OnDestroyMeteor += OnDestroyMeteor;
+            newMeteor.OnKickStation += OnKickStation;
         }
     }
 
     private void OnDestroyMeteor()
     {
+        _targetTransform.GetChild(0).gameObject.SetActive(true);
         _meteorsDestroyed++;
-        
         if (_meteorsDestroyed >= _meteorsToWinCount)
             SolvePuzzle();
     }
@@ -65,6 +73,7 @@ public class MeteorsCore : Puzzle
 
     protected override void LosePuzzle()
     {
+        base.LosePuzzle();
         foreach (Transform meteor in _meteorsParent)
         {
             Destroy(meteor.gameObject);
@@ -74,8 +83,6 @@ public class MeteorsCore : Puzzle
         
         _meteorsDestroyed = 0;
         _currentStationHealth = _maxStationHealth;
-        
-        _restartButton.SetActive(true);
     }
 
     protected override void SolvePuzzle()
@@ -88,15 +95,24 @@ public class MeteorsCore : Puzzle
         {
             Destroy(meteor.gameObject);
         }
-        
-        _restartButton.SetActive(true);
     }
 
     public void Miss()
     {
+        _targetTransform.GetChild(0).gameObject.SetActive(true);
         _currentStationHealth--;
         
         if (_currentStationHealth <= 0)
             LosePuzzle();
+    }
+    
+    private Vector3 GetMouseWorldPosition()
+    {
+        var mousePosition = Input.mousePosition;
+        mousePosition.z = _zPos;
+        
+        var worldPos = Camera.main.ScreenToWorldPoint(mousePosition);
+        var localPos = transform.InverseTransformPoint(worldPos);
+        return new Vector3(localPos.x, localPos.y, 0);
     }
 }
