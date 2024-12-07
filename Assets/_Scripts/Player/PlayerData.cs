@@ -14,7 +14,7 @@ public class PlayerData : MonoBehaviour
     {
         _onMoneyChange += () =>
         {
-            _honeyCombsText.text = PlayerData.HoneyCombs.ToString();
+            //_honeyCombsText.text = PlayerData.HoneyCombs.ToString();
         };
     }
 
@@ -23,7 +23,7 @@ public class PlayerData : MonoBehaviour
         var _serverValue = await APIManager.Instance.GetCoins(Bootstrap.Instance.PlayerName);
         HoneyCombs = Mathf.Clamp(add? _serverValue + value : _serverValue - value, 0, 1000000000);
         
-        APIManager.Instance.ChangeCoins(SettingsUI.PlayerName, HoneyCombs);
+        APIManager.Instance.ChangeCoins(Bootstrap.Instance.PlayerName, HoneyCombs);
         _onMoneyChange?.Invoke();
     }
     

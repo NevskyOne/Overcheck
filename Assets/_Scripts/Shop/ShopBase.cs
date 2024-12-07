@@ -16,6 +16,7 @@ public class ShopBase : MonoBehaviour
         TimeLines.OnDayEnd += OnDayEnd;
         
         var shop = await APIManager.Instance.GetShop(Bootstrap.Instance.PlayerName);
+        APIManager.Instance.ChangeCoins(Bootstrap.Instance.PlayerName, 100);
 
         if (shop != null)
         {
@@ -70,8 +71,8 @@ public class ShopBase : MonoBehaviour
         if (coins >= price)
         {
             shop[toolToBuy] = 0;
-            PlayerData.ChangeCoins(price, false);
             APIManager.Instance.ChangeShop(playerName, shop);
+            PlayerData.ChangeCoins(price, false);
         }
         
         _activeToolsToAdd.Add(tool);
@@ -87,8 +88,8 @@ public class ShopBase : MonoBehaviour
         if (shop[toolToSell] == 1) return;
         
         shop[toolToSell] = 1;
-        PlayerData.ChangeCoins(price);
         APIManager.Instance.ChangeShop(playerName, shop);
+        PlayerData.ChangeCoins(price);
         
         _activeToolsToRemove.Add(tool);
     }

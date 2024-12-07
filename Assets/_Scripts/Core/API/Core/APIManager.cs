@@ -49,6 +49,7 @@ public class APIManager
             {
                 await RegisterPlayer(playerName);
                 OnAuthEnd?.Invoke(new AuthorizationResponse(playerName, false));
+                Debug.LogError("Player doesnt exist");
                 return;
             }
 
