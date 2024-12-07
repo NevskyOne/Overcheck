@@ -8,7 +8,7 @@
 
     public const string PLAYER_NAME_PLAYERPREFS_KEY = "PlayerNamePlayerPrefsKey";
     
-    public const string GAMEPLAY_SCENE_NAME = "MainScene";
+    public const string GAMEPLAY_SCENE_NAME = "MainSceneFInal";
 }
 
 public enum ToolName

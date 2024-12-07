@@ -20,6 +20,8 @@ public class Bootstrap : MonoBehaviour
     
     private void Awake()
     {
+        PlayerPrefs.DeleteAll();
+        
         if (Instance == null)
             Instance = this;
         else
@@ -86,5 +88,7 @@ public class Bootstrap : MonoBehaviour
         {
             Debug.Log(e);
         }
+        
+        PlayerPrefs.Save();
     }
 }
