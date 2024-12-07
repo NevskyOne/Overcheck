@@ -10,7 +10,7 @@ public class AntiCriminalTool : Tool
     
     private void OnEnable()
     {
-        NPCManager.NPCAtTable += () =>
+        NPCManager.OnGiveDocs += () =>
         {
             _image.sprite = NPCManager.CurrentNPC.IsCriminal ? _wrong : _correct;
             _image.color = new Color(_image.color.r, _image.color.g, _image.color.b, 1);

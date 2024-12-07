@@ -50,6 +50,7 @@ public class TimeLines : MonoBehaviour
         _laptopTime.text = $"{_date}/{_month}";
         
         RandomEvents.OnLose += ResetDay;
+        OnDayEnd?.Invoke();
     }
 
     public void ChangeTimeline(TimeLine timeLine, bool add = true)
@@ -121,7 +122,7 @@ public class TimeLines : MonoBehaviour
             }
             else if (_eternityCounter > 4)
             {
-                _endText.text = "Вечность";
+                _endText.text = "Этернити";
                 SettingsUI.Eternity = true;
             }
             else if (_voidCounter > 4)

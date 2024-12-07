@@ -15,7 +15,8 @@ public class MeteorsCore : Puzzle
     [SerializeField] private int _meteorsToWinCountMin;
     [SerializeField] private int _meteorsToWinCountMax;
 
-    [Header("Enviroment")]
+    [Header("Enviroment")] 
+    [SerializeField] private GameObject _startButton;
     [SerializeField] private List<Transform> _spawnpoints = new();
     [SerializeField] private Transform _stationTransform;
     [SerializeField] private Transform _targetTransform;
@@ -27,14 +28,23 @@ public class MeteorsCore : Puzzle
     private int _meteorsToWinCount;
     private int _currentStationHealth;
 
+    private bool _isActive;
+    
     private void Update()
     {
-        _targetTransform.localPosition = GetMouseWorldPosition();
+        if(_isActive)
+            _targetTransform.localPosition = GetMouseWorldPosition();
     }
 
     public override void StartPuzzle()
     {
+        _startButton.SetActive(true);
+        _isActive = false;
+    }
+    public void ActivatePuzzle()
+    {
         if (_isPuzzleSolved) return;
+        _isActive = true;
         _meteorsDestroyed = 0;
         _currentStationHealth = _maxStationHealth;
         _meteorsToWinCount = Random.Range(_meteorsToWinCountMin, _meteorsToWinCountMax);

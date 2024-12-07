@@ -6,14 +6,12 @@ using Random = System.Random;
 public class NPC : MonoBehaviour
 {
     [Header("Visual")]
-    [SerializeField] private bool _canRanomize = true;
     [SerializeField] private Mesh[] _models;
+    [SerializeField] private Material[] _materials;
+    [SerializeField] private Material[] _acesMaterials;
     [Header("Text")]
     public TimeLine NPCTimeLine;
-    [SerializeField] private int _dialogCount;
     [Header("Docs")]
-    [SerializeField] private Sprite _photo;
-    [SerializeField] private Goal _targetGoal;
     [SerializeField] private GameObject _PMS;
     [SerializeField] private GameObject _IIC;
     [SerializeField] private GameObject _PP;
@@ -21,11 +19,10 @@ public class NPC : MonoBehaviour
     [Header("Valuable")]
     [SerializeField] private uint _cost;
     
-    
-    public Goal CurrentGoal { get; set; }
     public bool FaceChanged { get; set; }
     public bool IsCriminal  { get; private set; }
     
+    private Sprite _photo;
     private string _name;
     private int _planet;
     private List<GameObject> _collectedDocs = new();
@@ -35,7 +32,7 @@ public class NPC : MonoBehaviour
     private DialogFragment _endPassText, _endBackText;
     
     private Random _rnd = new Random();
-    private bool _origin;
+    private bool _origin, _docsGiven;
     private CheckState _checkState = CheckState.None;
     
     private TimeLines _timeLines => FindFirstObjectByType<TimeLines>();
@@ -44,25 +41,36 @@ public class NPC : MonoBehaviour
     
     private void Start()
     {
-
-        _fragments = DialogParser.ParsedFragments[_dialogCount];
-        _endPassText = DialogParser.PassFragmenst[_dialogCount];
-        _endBackText = DialogParser.NotPassFragmenst[_dialogCount];
+        var randomDialog = _rnd.Next(DialogParser.ParsedFragments.Count);
+        _fragments = DialogParser.ParsedFragments[randomDialog];
+        _endPassText = DialogParser.PassFragmenst[randomDialog];
+        _endBackText = DialogParser.NotPassFragmenst[randomDialog];
         
-        if (_canRanomize)
+
+        var meshRenderer = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        var randomModel = _rnd.Next(0, 10);
+        meshRenderer.sharedMesh = _models[randomModel];
+
+        var randomMat = _rnd.Next(0, _materials.Length);
+        meshRenderer.SetMaterials(new()
         {
-            var meshRenderer = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
-            meshRenderer.sharedMesh = _models[_rnd.Next(0, 3)];
-            int randomHat = _rnd.Next(0, 4);
-            if (randomHat < 3)
-                meshRenderer.SetBlendShapeWeight(randomHat, 100);
-            int randomCount = _rnd.Next(0, 5);
-            if (randomCount > 0)
-            {
-                for (var i = 0; i < randomCount; i++)
-                    meshRenderer.SetBlendShapeWeight(_rnd.Next(3, 7), 100);
-            }
+            _materials[randomMat],
+            _materials[randomMat],
+            _acesMaterials[_rnd.Next(0, _acesMaterials.Length)]
+        });
+
+        _photo = RandomParamSt.Photos[(randomModel+1) * 10 + (int)Mathf.Ceil((randomMat+1)/3f)];
+        
+        int randomHat = _rnd.Next(0, 4);
+        if (randomHat < 3)
+            meshRenderer.SetBlendShapeWeight(randomHat, 100);
+        int randomCount = _rnd.Next(0, 5);
+        if (randomCount > 0)
+        {
+            for (var i = 0; i < randomCount; i++)
+                meshRenderer.SetBlendShapeWeight(_rnd.Next(3, 7), 100);
         }
+    
 
         if (_rnd.Next(101) < _npcManager.CriminalChance)
         {
@@ -88,6 +96,9 @@ public class NPC : MonoBehaviour
 
     public void GiveDocs()
     {
+        if (_docsGiven) return;
+        _docsGiven = true;
+        
         Document pp = null, iic = null;
         var pms = _npcManager.GiveDoc(_PMS, 1);
         pms.Initialize(_name, _photo, _planet);
@@ -128,21 +139,17 @@ public class NPC : MonoBehaviour
                 _origin = true;
                 break;
         }
-        print(IsCriminal);
-        print(_origin);
+        print("IsCriminal " + IsCriminal);
+        print("FaceChanged " + FaceChanged);
+        print("Origin " + _origin);
     }
 
     public void Check(bool playerOrigin)
     {
-        if ((_origin && playerOrigin && CurrentGoal == _targetGoal) || (_origin == false && playerOrigin == false))
+        if (_origin == playerOrigin)
         {
+            _timeLines.ChangeTimeline(TimeLine.Void);
             _timeLines.CorrectNPC += _cost;
-            _timeLines.ChangeTimeline(TimeLine.Void);
-        }
-        else if (_origin && playerOrigin)
-        {
-            _timeLines.ChangeTimeline(TimeLine.Void);
-            _timeLines.CorrectNPC += (uint)(_cost * 0.75f);
         }
         else
         {
@@ -191,12 +198,3 @@ public class NPC : MonoBehaviour
     
 }
 
-
-
-public enum Goal
-{
-    Work,
-    Family,
-    Vacation,
-    Other
-}

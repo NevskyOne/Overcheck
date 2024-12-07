@@ -40,7 +40,7 @@ public class CameraManager : MonoBehaviour
     {
         float elapsedTime = 0f;
 
-        while (elapsedTime < moveDuration + 0.8f)
+        while (elapsedTime < moveDuration + 0.4f)
         {
             elapsedTime += Time.deltaTime;
 
@@ -67,7 +67,7 @@ public class CameraManager : MonoBehaviour
     {
         float elapsedTime = 0f;
 
-        while (elapsedTime < moveDuration + 2)
+        while (elapsedTime < moveDuration + 1.5f)
         {
             elapsedTime += Time.deltaTime;
 

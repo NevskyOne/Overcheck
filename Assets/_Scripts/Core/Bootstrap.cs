@@ -1,6 +1,5 @@
 ﻿using System;
 using TMPro;
-using Unity.Burst.CompilerServices;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -31,6 +30,7 @@ public class Bootstrap : MonoBehaviour
         SceneManager.activeSceneChanged += OnActiveSceneChanged;
         
         TryGetPlayerName();
+        
     }
 
     private void OnActiveSceneChanged(Scene oldScene, Scene newScene)
@@ -39,6 +39,7 @@ public class Bootstrap : MonoBehaviour
         {
             _playerShopBase = FindFirstObjectByType<ShopBase>();
             _playerShopBase.InitializePlayerShop();
+            PlayerData.InitializeCoins();
         }
     }
 
@@ -56,6 +57,7 @@ public class Bootstrap : MonoBehaviour
             {
                 await APIManager.Instance.Authorization(playerName);
                 _playerText.text = _playerName;
+                PlayerData.InitializeCoins();
             }
         }
         catch (Exception e)

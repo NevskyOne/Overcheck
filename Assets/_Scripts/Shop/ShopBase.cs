@@ -13,23 +13,29 @@ public class ShopBase : MonoBehaviour
 
     public async void InitializePlayerShop()
     {
-        TimeLines.OnDayEnd += OnDayEnd;
-        
         var shop = await APIManager.Instance.GetShop(Bootstrap.Instance.PlayerName);
 
         if (shop != null)
         {
+            int index = 0;
             foreach (var tool in shop)
             {
                 if (tool.Value == 0)
                 {
+                    print("FindValue");
                     var toolToAdd = _shopTools[tool.Value];
                     _activeTools.Add(toolToAdd);
-                    if(_needToActivate)
-                        _tools[tool.Value].SetActive(true);
+                    toolToAdd.Buyed();
+                    if (_needToActivate)
+                    {
+                        _tools[index].SetActive(true);
+                        print("Activate");
+                    }
                 }
+                index++;
             }
         }
+        TimeLines.OnDayEnd += OnDayEnd;
     }
 
     private void OnDayEnd()
@@ -72,6 +78,7 @@ public class ShopBase : MonoBehaviour
             shop[toolToBuy] = 0;
             PlayerData.ChangeCoins(price, false);
             APIManager.Instance.ChangeShop(playerName, shop);
+            tool.Buyed();
         }
         
         _activeToolsToAdd.Add(tool);
@@ -89,6 +96,7 @@ public class ShopBase : MonoBehaviour
         shop[toolToSell] = 1;
         PlayerData.ChangeCoins(price);
         APIManager.Instance.ChangeShop(playerName, shop);
+        tool.Sold();
         
         _activeToolsToRemove.Add(tool);
     }

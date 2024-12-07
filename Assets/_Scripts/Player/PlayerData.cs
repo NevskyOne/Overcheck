@@ -18,6 +18,12 @@ public class PlayerData : MonoBehaviour
         };
     }
 
+    public static async void InitializeCoins()
+    {
+        HoneyCombs = await APIManager.Instance.GetCoins(Bootstrap.Instance.PlayerName);
+        _onMoneyChange?.Invoke();
+    }
+
     public static async void ChangeCoins(int value, bool add = true)
     {
         var _serverValue = await APIManager.Instance.GetCoins(Bootstrap.Instance.PlayerName);
