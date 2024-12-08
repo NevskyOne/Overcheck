@@ -41,7 +41,7 @@ public class APIManager
             {
                 var name = player.name;
                 var res = player.resources;
-                if (name != "Dukfunduk")
+                if (name != "Dukfunduk" && name != "DukFunduk")
                     playersList.Add(name, res);
             }
 
