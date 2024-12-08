@@ -46,7 +46,7 @@ public class NPCManager : MonoBehaviour
     private DayNPC _currentDay;
     private bool _isChecked, _toTable;
     
-    public static event Action OnNPCEnd, RandomEvent, EternityCheck, NPCAtTable, OnNPCCheck;
+    public static event Action OnNPCEnd, RandomEvent, EternityCheck, NPCAtTable, OnNPCCheck,OnGiveDocs;
     
 
     private void Start()
@@ -75,7 +75,7 @@ public class NPCManager : MonoBehaviour
         else if (_toTable)
         {
             NPCAtTable?.Invoke();
-            _npcAnim.TurnRight();
+            StartCoroutine( _npcAnim.TurnRight());
             _toTable = false;
         }
     }
@@ -157,7 +157,7 @@ public class NPCManager : MonoBehaviour
 
     public async void GoBack()
     {
-        _npcAnim.TurnRight();
+        StartCoroutine( _npcAnim.TurnRight());
         
         OnNPCCheck?.Invoke();
         if(CurrentNPC.NPCTimeLine == TimeLine.Eternity)
@@ -170,7 +170,7 @@ public class NPCManager : MonoBehaviour
     
     public async void GoTowards()
     {
-        _npcAnim.TurnLeft();
+        StartCoroutine(_npcAnim.TurnLeft());
         
         OnNPCCheck?.Invoke();
         if(CurrentNPC.NPCTimeLine == TimeLine.Eternity)
@@ -183,6 +183,7 @@ public class NPCManager : MonoBehaviour
     
     public Document GiveDoc(GameObject doc, uint pos)
     {
+        OnGiveDocs?.Invoke();
         return pos switch
         {
             1 => Instantiate(doc, _pos1.position, Quaternion.Euler(0,90,0))

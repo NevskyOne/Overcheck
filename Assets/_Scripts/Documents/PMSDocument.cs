@@ -29,8 +29,4 @@ public class PMSDocument : Document
         }
     }
 
-    public void SetGoal(int value)
-    {
-        NPCManager.CurrentNPC.CurrentGoal = (Goal)value;
-    }
 }

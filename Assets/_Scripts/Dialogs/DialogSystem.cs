@@ -10,8 +10,9 @@ public class DialogSystem : MonoBehaviour
 
     [Header("Animation")]
     [SerializeField] private float _letterDelay = 0.1f;
-    [SerializeField] private float _sizeIncreaseDuration = 0.3f;
-    [SerializeField] private float _sizeMultiplier = 1.5f;
+    [SerializeField] private float _startFontSize = 10f;
+    [SerializeField] private float _endFontSize = 30f;
+    [SerializeField] private float _growDuration = 0.5f; 
     [Header("Text")]
     [SerializeField] private GameObject _dialogMenu;
     [SerializeField] private TMP_Text _textField;
@@ -24,26 +25,35 @@ public class DialogSystem : MonoBehaviour
     
     private PlayerMovement _playerMovement => FindFirstObjectByType<PlayerMovement>();
     private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
-    private CameraManager _cameraMng =>  FindFirstObjectByType<CameraManager>();
     private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
-
-    private Coroutine _printRoutine;
+    
+    private string _currentLine = "";
     
     public event Action ChatEnded;
     public CheckState GoAfter;
 
     public void PlayNext()
     {
-        if (FragmentsStack.Count > 0)
+        if (_currentLine != "" && _textField.text != _currentLine)
         {
+            StopAllCoroutines();
+            _textField.text = "";
+            _textField.text = _currentLine;
+            _npcManager.SetNPCTalking(false);
+        }
+        else if (FragmentsStack.Count > 0)
+        {
+            _npcManager.SetNPCTalking();
             _dialogMenu.SetActive(true);
             _playerInter.StopFocus();
             for (var i = 0; i < _buttonsHolder.childCount; i++ )    
             {
-                Destroy(_buttonsHolder.GetChild(i).gameObject);
+                Destroy(_buttonsHolder.GetChild(0).gameObject);
             }
             PlayFragment(FragmentsStack[0]);
+            _currentLine = FragmentsStack[0].Text;
             FragmentsStack.RemoveAt(0);
+            
         }
         else
         {
@@ -52,14 +62,15 @@ public class DialogSystem : MonoBehaviour
     }
     public void PlayFragment(DialogFragment fragment)
     {
-        if(_printRoutine != null)
-            StopCoroutine(_printRoutine);
-        _printRoutine = StartCoroutine(PrintRoutine(fragment.Text));
-        
-        ShowButtons(fragment.Buttons);
+        StartCoroutine(AnimateText(fragment.Text));
+
+        ShowButtons(new (fragment.Buttons));
         PlaceObj(fragment.Object);
-        if(fragment.GiveDocs)
+        if (fragment.GiveDocs)
+        {
             NPCManager.CurrentNPC.GiveDocs();
+        }
+        
     }
 
     private void ShowButtons(List<ButtonSt> buttons)
@@ -67,7 +78,7 @@ public class DialogSystem : MonoBehaviour
         foreach (var btn in buttons)
         {
             var _newButton =Instantiate(_buttonPrefab, _buttonsHolder);
-            var component = _newButton.AddComponent<DialogButton>();
+            var component = _newButton.GetComponent<DialogButton>();
             component.ButtonFields = btn;
         }
     }
@@ -79,6 +90,8 @@ public class DialogSystem : MonoBehaviour
 
     public void EndChat()
     {
+        StopAllCoroutines();
+        _currentLine = "";
         _npcManager.SetNPCTalking(false);
         
         _playerMovement.enabled = true;
@@ -100,80 +113,59 @@ public class DialogSystem : MonoBehaviour
         ChatEnded?.Invoke();
     }
 
-    private IEnumerator PrintRoutine(string text)
+    private IEnumerator AnimateText(string textToDisplay)
     {
-        _npcManager.SetNPCTalking();
-        _textField.text = text; // Устанавливаем текст
-        _textField.ForceMeshUpdate(); // Обновляем данные для вершин
+        // Пустой массив для построения текста
+        char[] displayedText = new char[textToDisplay.Length];
+        for (int i = 0; i < displayedText.Length; i++) displayedText[i] = ' ';
 
-        TMP_TextInfo textInfo = _textField.textInfo;
-
-        // Скрываем весь текст через альфу
-        var colors = textInfo.meshInfo[0].colors32; // Цвета вершин текста
-        for (int i = 0; i < textInfo.characterCount; i++)
+        for (int i = 0; i < textToDisplay.Length; i++)
         {
-            if (textInfo.characterInfo[i].isVisible)
-            {
-                int vertexIndex = textInfo.characterInfo[i].vertexIndex;
-                for (int j = 0; j < 4; j++)
-                {
-                    colors[vertexIndex + j].a = 0; // Прозрачность
-                }
-            }
-        }
-        _textField.UpdateVertexData(TMP_VertexDataUpdateFlags.Colors32);
+            // Добавляем символ в массив и запускаем анимацию увеличения
+            displayedText[i] = textToDisplay[i];
+            StartCoroutine(AnimateCharacterSize(displayedText, i));
 
-        // Последовательно отображаем символы
-        for (int i = 0; i < textInfo.characterCount; i++)
-        {
-            if (!textInfo.characterInfo[i].isVisible) continue; // Пропускаем невидимые символы (например, пробелы)
-
-            yield return StartCoroutine(AnimateSingleLetter( i, _sizeIncreaseDuration, _sizeMultiplier));
-
+            // Задержка перед добавлением следующего символа
             yield return new WaitForSeconds(_letterDelay);
         }
-        _npcManager.SetNPCTalking(false);
     }
-    
-    private IEnumerator AnimateSingleLetter(int charIndex, float duration, float sizeMultiplier)
+
+    private IEnumerator AnimateCharacterSize(char[] displayedText, int charIndex)
     {
-        TMP_TextInfo textInfo = _textField.textInfo;
-
-        // Получаем информацию о вершинах текущего символа
-        Vector3[] vertices = textInfo.meshInfo[textInfo.characterInfo[charIndex].materialReferenceIndex].vertices;
-        Color32[] colors = textInfo.meshInfo[textInfo.characterInfo[charIndex].materialReferenceIndex].colors32;
-
-        int vertexIndex = textInfo.characterInfo[charIndex].vertexIndex;
-        Vector3 charMidBasline = (vertices[vertexIndex] + vertices[vertexIndex + 2]) / 2;
-
         float elapsedTime = 0f;
 
-        // Плавное увеличение символа
-        while (elapsedTime < duration)
+        while (elapsedTime < _growDuration)
         {
-            elapsedTime += Time.fixedDeltaTime;
-            float scale = Mathf.Lerp(1f, sizeMultiplier, elapsedTime / duration);
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / _growDuration);
 
-            // Применяем масштабирование только к текущему символу
-            for (int j = 0; j < 4; j++)
+            // Формируем строку с увеличением только текущего символа
+            string modifiedText = "";
+            for (int i = 0; i < displayedText.Length; i++)
             {
-                vertices[vertexIndex + j] = charMidBasline + (vertices[vertexIndex + j] - charMidBasline) * scale;
-                colors[vertexIndex + j].a = (byte)Mathf.Lerp(0, 255, elapsedTime / duration); // Прозрачность
+                if (i == charIndex && displayedText[i] != ' ')
+                {
+                    // Увеличиваем текущий символ
+                    modifiedText += $"<size={(int)Mathf.Lerp(_startFontSize, _endFontSize, t)}>{displayedText[i]}</size>";
+                }
+                else if (displayedText[i] != ' ')
+                {
+                    // Остальные символы остаются неизменными
+                    modifiedText += $"<size={_endFontSize}>{displayedText[i]}</size>";
+                }
+                else
+                {
+                    // Добавляем пустое место для символов, которые ещё не появились
+                    modifiedText += " ";
+                }
             }
 
-            _textField.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
-
-            yield return new WaitForFixedUpdate();
+            // Обновляем текст
+            _textField.text = modifiedText;
+            yield return null;
         }
+        
 
-        // Финальный вид
-        for (int j = 0; j < 4; j++)
-        {
-            vertices[vertexIndex + j] = charMidBasline + (vertices[vertexIndex + j] - charMidBasline) * sizeMultiplier;
-            colors[vertexIndex + j].a = 255; // Полная непрозрачность
-        }
-
-        _textField.UpdateVertexData(TMP_VertexDataUpdateFlags.All);
-
+        _textField.text = _currentLine;
     }
 }

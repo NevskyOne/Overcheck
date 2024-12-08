@@ -11,6 +11,9 @@ public class ToolBase : MonoBehaviour
     [SerializeField][TextArea] private string _description;
     [SerializeField] private GameObject _infoObj;
     [SerializeField] private TMP_Text _infoText;
+    [Header("Buttons")]
+    [SerializeField] private GameObject BuyButton;
+    [SerializeField] private GameObject SellButton;
 
     public string ToolName => _toolName.ToString();
     public int Price => _price;
@@ -20,5 +23,17 @@ public class ToolBase : MonoBehaviour
     {
         _infoText.text = _description;
         _infoObj.SetActive(true);
+    }
+
+    public void Buyed()
+    {
+        BuyButton.SetActive(false);
+        SellButton.SetActive(true);
+    }
+    
+    public void Sold()
+    {
+        BuyButton.SetActive(true);
+        SellButton.SetActive(false);
     }
 }

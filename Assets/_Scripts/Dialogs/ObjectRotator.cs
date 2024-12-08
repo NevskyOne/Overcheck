@@ -51,7 +51,8 @@ public class DragRotate : MonoBehaviour
     public void DisableUI()
     {
         _worldCanvas.SetActive(false);
-        Destroy(_targetTransform.gameObject);
+        if(_targetTransform)
+            Destroy(_targetTransform.gameObject);
         enabled = false;
     }
     

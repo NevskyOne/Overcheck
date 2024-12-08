@@ -18,7 +18,7 @@ public class APIManager
     private const string SHOP_NAME = "shop_base";
     
     private Dictionary<string, int> _currentShop = new();
-    private bool _haveInternetConnection;
+    private bool _haveInternetConnection = true;
     private int _currentCoins;
     
     private APIManager()
