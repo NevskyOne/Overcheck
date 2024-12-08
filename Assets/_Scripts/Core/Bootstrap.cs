@@ -19,6 +19,8 @@ public class Bootstrap : MonoBehaviour
     
     private async void Awake()
     {
+        //PlayerPrefs.DeleteAll();
+        
         if (Instance == null)
             Instance = this;
         else
@@ -30,7 +32,6 @@ public class Bootstrap : MonoBehaviour
         SceneManager.activeSceneChanged += OnActiveSceneChanged;
         
         TryGetPlayerName();
-        
     }
 
     private void OnActiveSceneChanged(Scene oldScene, Scene newScene)

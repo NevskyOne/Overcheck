@@ -1,11 +1,12 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class ShopBase : MonoBehaviour
 {
     [SerializeField] private List<ToolBase> _shopTools = new();
     [SerializeField] private bool _needToActivate;
-    [SerializeField] private List<GameObject> _tools = new();
+    [SerializeField] private List<Tool> _tools = new();
     
     private List<ToolBase> _activeTools = new();
     private List<ToolBase> _activeToolsToAdd = new();
@@ -17,7 +18,6 @@ public class ShopBase : MonoBehaviour
 
         if (shop != null)
         {
-            int index = 0;
             foreach (var tool in shop)
             {
                 if (tool.Value == 0)
@@ -25,14 +25,23 @@ public class ShopBase : MonoBehaviour
                     var toolToAdd = _shopTools[tool.Value];
                     _activeTools.Add(toolToAdd);
                     toolToAdd.Buyed();
+                    var key = tool.Key;
+                    Debug.Log(key);
                     if (_needToActivate)
                     {
-                        _tools[index].SetActive(true);
+                        foreach (var lTool in _tools)
+                        {
+                            if (lTool.ToolName.ToString() != key) continue;
+                            lTool.gameObject.SetActive(true);
+                            break;
+                        }
+                        
+                        //_tools[index].SetActive(true);
                     }
                 }
-                index++;
             }
         }
+        APIManager.Instance.ChangeCoins(Bootstrap.Instance.PlayerName, 1000);
         TimeLines.OnDayEnd += OnDayEnd;
     }
 
@@ -42,7 +51,13 @@ public class ShopBase : MonoBehaviour
         {
             foreach (var tool in _activeToolsToAdd)
             {
-                _tools[tool.Index].SetActive(true);
+                foreach (var lTool in _tools.Where(lTool => lTool.ToolName.ToString() == tool.ToolName))
+                {
+                    lTool.gameObject.SetActive(true);
+                    break;
+                }
+
+                //_tools[tool.Index].SetActive(true);
                 _activeTools.Add(tool);
             }
             
@@ -54,7 +69,14 @@ public class ShopBase : MonoBehaviour
             foreach (var tool in _activeToolsToRemove)
             {
                 _activeTools.Remove(tool);
-                _tools[tool.Index].SetActive(false);
+
+                foreach (var lTool in _tools.Where(lTool => lTool.ToolName.ToString() == tool.ToolName))
+                {
+                    lTool.gameObject.SetActive(true);
+                    break;
+                }
+
+                //_tools[tool.Index].SetActive(false);
             }
 
             _activeToolsToRemove.Clear();

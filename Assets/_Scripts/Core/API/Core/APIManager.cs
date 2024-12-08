@@ -41,7 +41,7 @@ public class APIManager
             {
                 var name = player.name;
                 var res = player.resources;
-                if (name != "Dukfunduk")
+                if (name != "Dukfunduk" && name != "DukFunduk")
                     playersList.Add(name, res);
             }
 
@@ -51,6 +51,8 @@ public class APIManager
                 OnAuthEnd?.Invoke(new AuthorizationResponse(playerName, false));
                 return;
             }
+            
+            Debug.Log(playersList[playerName]);
 
             OnAuthEnd?.Invoke(new AuthorizationResponse(playerName, true));
         }
