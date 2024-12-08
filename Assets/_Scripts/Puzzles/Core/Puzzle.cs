@@ -21,7 +21,7 @@ public abstract class Puzzle : MonoBehaviour
 
     protected virtual void SolvePuzzle()
     {
-        _isPuzzleSolved = true;
+        _isPuzzleSolved = false;
         _randomEvents.OnEventEnd();
     }
 }

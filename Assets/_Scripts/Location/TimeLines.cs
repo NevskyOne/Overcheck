@@ -63,10 +63,6 @@ public class TimeLines : MonoBehaviour
             case TimeLine.Eternity:
                 _eternityTemp = add ? _eternityTemp + 1 : _eternityTemp - 1;
                 break;
-            case TimeLine.Robots:
-                SettingsUI.RobotsCount += 1;
-                _robotsTemp = add ? _robotsTemp + 1 : _robotsTemp - 1;
-                break;
         }
     }
 
@@ -115,12 +111,7 @@ public class TimeLines : MonoBehaviour
         _voidCounter = _voidTemp;
         if (WeekDate == _days - 1)
         {
-            if (_robotsCounter > 4)
-            {
-                _endText.text = "Роботы";
-                SettingsUI.Robots = true;
-            }
-            else if (_eternityCounter > 4)
+            if (_eternityCounter > 4)
             {
                 _endText.text = "Этернити";
                 SettingsUI.Eternity = true;
@@ -138,8 +129,6 @@ public class TimeLines : MonoBehaviour
 
             SettingsUI.CurrentDay = 0;
             _titleUI.SetActive(true);
-            await Task.Delay(2000);
-            LoadManager.LoadScene(0);
         }
         else
         {
@@ -160,5 +149,6 @@ public enum TimeLine
 {
     Void,
     Eternity,
-    Robots
+    Robots,
+    Tutorial
 }

@@ -12,8 +12,8 @@ public class Gear : MonoBehaviour, IDragHandler, IEndDragHandler
     private Node _currentNode;
     private Vector2 _startPos;
 
-    private GearPuzzlePreset _preset => transform.parent.parent.GetComponent<GearPuzzlePreset>();
-    private GearPuzzle _gears => transform.parent.parent.parent.GetComponent<GearPuzzle>();
+    private GearPuzzlePreset _preset => transform.parent.parent.parent.parent.GetComponent<GearPuzzlePreset>();
+    private GearPuzzle _gears => _preset.transform.parent.GetComponent<GearPuzzle>();
 
     public Node CurrentNode => _currentNode;
     public int Size => _size;

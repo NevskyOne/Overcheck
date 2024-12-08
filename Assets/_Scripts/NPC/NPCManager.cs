@@ -49,7 +49,7 @@ public class NPCManager : MonoBehaviour
     public static event Action OnNPCEnd, RandomEvent, EternityCheck, NPCAtTable, OnNPCCheck,OnGiveDocs;
     
 
-    private void Start()
+    private  void Start()
     {
         var names = RandomParamSt.Names.ToList();
         for (int i = 0; i < _rnd.Next(3, 5); i++)
@@ -61,6 +61,30 @@ public class NPCManager : MonoBehaviour
 
         ChangedCriminals = _criminals;
         RandomEvents.OnLose += ResetDay;
+        TimeLines.OnDayEnd += () =>
+        {
+            if (_currentDay.TutorialNPC > 0)
+            {
+                int index = 0;
+                switch (_weekDate)
+                {
+                    case 2:
+                        index = 1;
+                        break;
+                    case 4:
+                        index = 4;
+                        break;
+                }
+
+                _currentAgent = Instantiate(_tutorialNPC[index], _startPos.position, Quaternion.identity)
+                    .GetComponent<NavMeshAgent>();
+                _currentDay.TutorialNPC -= 1;
+                _currentAgent.SetDestination(_tablePos.position);
+                CurrentNPC = _currentAgent.GetComponent<NPC>();
+                _npcAnim = CurrentNPC.GetComponent<NPCAnim>();
+                _toTable = true;
+            }
+        };
     }
     
     void Update()
@@ -109,18 +133,14 @@ public class NPCManager : MonoBehaviour
     { 
         if(CurrentNPC) Destroy(CurrentNPC.gameObject);
         var randomSpecial = _rnd.Next(3);
-        if(eventEnabled && _rnd.Next(0,101) < ((SettingsUI.RobotsCount ^ 2) * 2 + EventChance) &&
+        if(eventEnabled && _rnd.Next(0,101) < (EventChance) &&
            (_currentDay.TutorialNPC > 0 || _currentDay.EternityNPC > 0 ||
             _currentDay.AgentNPC > 0 || _currentDay.RobotsNPC > 0 || _currentDay.NormalNPC > 0))
             RandomEvent?.Invoke();
         else
         {
-            if (_currentDay.TutorialNPC > 0)
-            {
-                SpawnNPC(_tutorialNPC);
-                _currentDay.TutorialNPC -= 1;
-            }
-            else if (randomSpecial == 0 && _currentDay.EternityNPC > 0)
+            
+            if (randomSpecial == 0 && _currentDay.EternityNPC > 0)
             {
                 SpawnNPC(_eternityNPC);
                 _currentDay.EternityNPC -= 1;

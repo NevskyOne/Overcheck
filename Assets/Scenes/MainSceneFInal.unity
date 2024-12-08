@@ -6784,7 +6784,7 @@ MonoBehaviour:
     EternityNPC: 0
     AgentNPC: 0
     RobotsNPC: 0
-    TutorialNPC: 0
+    TutorialNPC: 1
   - NormalNPC: 5
     EternityNPC: 0
     AgentNPC: 0
@@ -6794,7 +6794,7 @@ MonoBehaviour:
     EternityNPC: 0
     AgentNPC: 0
     RobotsNPC: 0
-    TutorialNPC: 0
+    TutorialNPC: 1
   - NormalNPC: 6
     EternityNPC: 0
     AgentNPC: 0
@@ -6804,7 +6804,7 @@ MonoBehaviour:
     EternityNPC: 0
     AgentNPC: 0
     RobotsNPC: 0
-    TutorialNPC: 0
+    TutorialNPC: 1
   - NormalNPC: 7
     EternityNPC: 0
     AgentNPC: 0
@@ -6820,7 +6820,10 @@ MonoBehaviour:
   _eternityNPC: []
   _agentsNPC: []
   _robotsNPC: []
-  _tutorialNPC: []
+  _tutorialNPC:
+  - {fileID: 9178155007998355382, guid: cc583facbcf317142aac6fa4728a2143, type: 3}
+  - {fileID: 9178155007998355382, guid: 59760d3c07b32df478882ef9f0ed6839, type: 3}
+  - {fileID: 9178155007998355382, guid: 7be6751a1da675148ab3efe8494cb565, type: 3}
   _pos1: {fileID: 572791744}
   _pos2: {fileID: 2002182317}
   _pos3: {fileID: 808526322}
@@ -8460,7 +8463,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde4beed4cc54a3bb511844c78490a25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _puzzleTime: 500
+  _puzzleTime: 120
   _player: {fileID: 727866458}
   _bedPos: {x: -9, y: 1, z: 2.757}
   _wires: {fileID: 1476509654}
@@ -24290,7 +24293,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac563942f1304ef09c96a7f953e0f8fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sourceText: {fileID: 4900000, guid: a2a07265a084aea4ba2a5af66bc50b82, type: 3}
+  sourceText: {fileID: 4900000, guid: 5ec4c23cd736aec46986b1212e1f1568, type: 3}
 --- !u!4 &1855221965
 Transform:
   m_ObjectHideFlags: 0
@@ -25640,7 +25643,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.36552304, y: 0.637476}
   m_AnchorMax: {x: 0.63261926, y: 0.7855581}
-  m_AnchoredPosition: {x: 1.7833557, y: 0}
+  m_AnchoredPosition: {x: 1.7833252, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &2002027958

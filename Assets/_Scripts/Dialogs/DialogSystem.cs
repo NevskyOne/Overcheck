@@ -66,6 +66,10 @@ public class DialogSystem : MonoBehaviour
 
         ShowButtons(new (fragment.Buttons));
         PlaceObj(fragment.Object);
+        if (fragment.GoAfter)
+        {
+            GoAfter = CheckState.Correct;
+        }
         if (fragment.GiveDocs)
         {
             NPCManager.CurrentNPC.GiveDocs();

@@ -18,7 +18,7 @@ public class NPC : MonoBehaviour
     
     [Header("Valuable")]
     [SerializeField] private uint _cost;
-    
+    [SerializeField] private List<DialogFragment> _tutorDialog = new();
     public bool FaceChanged { get; set; }
     public bool IsCriminal  { get; private set; }
     
@@ -72,6 +72,10 @@ public class NPC : MonoBehaviour
                     meshRenderer.SetBlendShapeWeight(_rnd.Next(3, 7), 100);
             }
         }
+        else if (NPCTimeLine == TimeLine.Tutorial)
+        {
+            _fragments = _tutorDialog;
+        }
 
 
         if (_rnd.Next(101) < _npcManager.CriminalChance)
@@ -90,7 +94,7 @@ public class NPC : MonoBehaviour
         
         _planet = _rnd.Next(1,5);
 
-        if (_timeLines.WeekDate > -1)
+        if (_timeLines.WeekDate > 3)
             _docsCount = 3;
         else if (_timeLines.WeekDate > 1)
             _docsCount = 2;

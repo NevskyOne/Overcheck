@@ -48,7 +48,7 @@ public class RandomEvents : MonoBehaviour
             case 0:
                 _wires.SetActive(true);
                 _puzzleObj = _wires;
-                if (_rnd.Next(1, 101) <= (Math.Pow(SettingsUI.RobotsCount,2)))
+                if (_rnd.Next(1, 101) <= (Math.Pow(7,2)))
                     _currentRobot = Instantiate(_robotPrefab, _wiresPos[_rnd.Next(_wiresPos.Count)]);
 
                 SceneMusic.State = MusicState.Wires;
@@ -56,7 +56,7 @@ public class RandomEvents : MonoBehaviour
             case 1:
                 _gears.SetActive(true);
                 _puzzleObj = _gears;
-                if (_rnd.Next(1, 101) <= (Math.Pow(SettingsUI.RobotsCount,2)))
+                if (_rnd.Next(1, 101) <= (Math.Pow(7,2)))
                     _currentRobot = Instantiate(_robotPrefab, _gearsPos[_rnd.Next(_gearsPos.Count)]);
                 
                 SceneMusic.State = MusicState.Gears;
@@ -64,7 +64,7 @@ public class RandomEvents : MonoBehaviour
             case 2:
                 _meteorites.SetActive(true);
                 _puzzleObj = _meteorites;
-                if (_rnd.Next(1, 101) <= (Math.Pow(SettingsUI.RobotsCount,2)))
+                if (_rnd.Next(1, 101) <= (Math.Pow(7,2)))
                     _currentRobot = Instantiate(_robotPrefab, _meteoritesPos[_rnd.Next(_meteoritesPos.Count)]);
                 
                 SceneMusic.State = MusicState.Meteorites;

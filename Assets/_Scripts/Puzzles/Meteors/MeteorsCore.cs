@@ -99,14 +99,15 @@ public class MeteorsCore : Puzzle
 
     protected override void SolvePuzzle()
     {
-        base.SolvePuzzle();
         
+        _isPuzzleSolved = true;
         StopAllCoroutines();
         
         foreach (Transform meteor in _meteorsParent)
         {
             Destroy(meteor.gameObject);
         }
+        base.SolvePuzzle();
     }
 
     public void Miss()
