@@ -51,6 +51,8 @@ public class APIManager
                 OnAuthEnd?.Invoke(new AuthorizationResponse(playerName, false));
                 return;
             }
+            
+            Debug.Log(playersList[playerName]);
 
             OnAuthEnd?.Invoke(new AuthorizationResponse(playerName, true));
         }
