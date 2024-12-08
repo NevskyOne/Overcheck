@@ -22,14 +22,12 @@ public class ShopBase : MonoBehaviour
             {
                 if (tool.Value == 0)
                 {
-                    print("FindValue");
                     var toolToAdd = _shopTools[tool.Value];
                     _activeTools.Add(toolToAdd);
                     toolToAdd.Buyed();
                     if (_needToActivate)
                     {
                         _tools[index].SetActive(true);
-                        print("Activate");
                     }
                 }
                 index++;

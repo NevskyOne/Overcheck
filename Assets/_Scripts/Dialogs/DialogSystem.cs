@@ -27,7 +27,7 @@ public class DialogSystem : MonoBehaviour
     private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
     private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
     
-    private string _currentLine;
+    private string _currentLine = "";
     
     public event Action ChatEnded;
     public CheckState GoAfter;
@@ -39,14 +39,16 @@ public class DialogSystem : MonoBehaviour
             StopAllCoroutines();
             _textField.text = "";
             _textField.text = _currentLine;
+            _npcManager.SetNPCTalking(false);
         }
         else if (FragmentsStack.Count > 0)
         {
+            _npcManager.SetNPCTalking();
             _dialogMenu.SetActive(true);
             _playerInter.StopFocus();
             for (var i = 0; i < _buttonsHolder.childCount; i++ )    
             {
-                Destroy(_buttonsHolder.GetChild(i).gameObject);
+                Destroy(_buttonsHolder.GetChild(0).gameObject);
             }
             PlayFragment(FragmentsStack[0]);
             _currentLine = FragmentsStack[0].Text;
@@ -60,10 +62,9 @@ public class DialogSystem : MonoBehaviour
     }
     public void PlayFragment(DialogFragment fragment)
     {
-        
         StartCoroutine(AnimateText(fragment.Text));
 
-        ShowButtons(fragment.Buttons);
+        ShowButtons(new (fragment.Buttons));
         PlaceObj(fragment.Object);
         if (fragment.GiveDocs)
         {
@@ -77,7 +78,7 @@ public class DialogSystem : MonoBehaviour
         foreach (var btn in buttons)
         {
             var _newButton =Instantiate(_buttonPrefab, _buttonsHolder);
-            var component = _newButton.AddComponent<DialogButton>();
+            var component = _newButton.GetComponent<DialogButton>();
             component.ButtonFields = btn;
         }
     }

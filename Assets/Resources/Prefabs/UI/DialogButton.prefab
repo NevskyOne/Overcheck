@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 720539985107395589}
   - component: {fileID: 2772209700766325565}
   - component: {fileID: 1072770323232741817}
+  - component: {fileID: 5018002425076319481}
   m_Layer: 5
   m_Name: DialogButton
   m_TagString: Untagged
@@ -120,7 +121,34 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2772209700766325565}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5018002425076319481}
+        m_TargetAssemblyTypeName: DialogButton, Assembly-CSharp
+        m_MethodName: Click
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5018002425076319481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2567111635036230834}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76463db371a59514c8e8eb69b23b894a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonFields:
+    Text: 
+    Fragments: []
 --- !u!1 &4158603752075159660
 GameObject:
   m_ObjectHideFlags: 0
@@ -251,7 +279,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 6.2861633, y: 4.4901104, z: 4.4901276, w: 3.592102}
+  m_margin: {x: 6.2861633, y: 4.4901104, z: 4.4901276, w: 6.049162}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0

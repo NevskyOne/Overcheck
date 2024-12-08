@@ -14,10 +14,10 @@ public class DialogButton : MonoBehaviour
     {
         GetComponentInChildren<TMP_Text>().text = ButtonFields.Text;
         _dialogSys = FindFirstObjectByType<DialogSystem>();
-        GetComponent<Button>().onClick.AddListener(OnClick);
+        
     }
 
-    private void OnClick()
+    public void Click()
     {
         _dialogSys.FragmentsStack = ButtonFields.Fragments;
         _dialogSys.PlayNext();
