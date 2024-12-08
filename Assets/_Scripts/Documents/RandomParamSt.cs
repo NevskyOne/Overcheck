@@ -9,21 +9,15 @@ public struct RandomParamSt
     public static readonly List<Sprite> Photos = Resources.LoadAll<Sprite>("BearPhotos").ToList();
     public static readonly List<Sprite> Stamps = new()
     {
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
-        Resources.Load<Sprite>("Sprites/BearPhotos/pig"),
+        Resources.Load<Sprite>("Sprites/Planets/Medovia"),
+        Resources.Load<Sprite>("Sprites/Planets/Medvezhegol"),
+        Resources.Load<Sprite>("Sprites/Planets/Ursa"),
+        Resources.Load<Sprite>("Sprites/Planets/Arctos"),
+        Resources.Load<Sprite>("Sprites/Planets/Polaris"),
     };
 }
 
 public enum Planet
 {
-    Медовия, Медвежегол, Урса, Бореалис, Гризлиум, Арктос, Полярис, Когтярус, Стелларис
+    Медовия, Медвежегол, Урса, Арктос, Полярис
 }

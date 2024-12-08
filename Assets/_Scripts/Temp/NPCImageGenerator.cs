@@ -9,6 +9,9 @@ public class NPCImageGenerator : MonoBehaviour
     public Camera captureCamera;  // Камера для скриншотов
     public string savePath = "Assets/Resources/NPCPhotos"; // Путь сохранения
 
+    private SkinnedMeshRenderer _skinnedMeshRenderer => GetComponent<SkinnedMeshRenderer>();
+    private Renderer _renderer => GetComponent<Renderer>();
+    
     private void Start()
     {
         StartCoroutine(GeneratePhotos());
@@ -21,17 +24,18 @@ public class NPCImageGenerator : MonoBehaviour
             Directory.CreateDirectory(savePath);
         }
 
-        int modelIndex = 1;
-        int matIndex = 1;
+        int modelIndex = 5;
+        int matIndex = 0;
 
         foreach (var model in npcModels)
         {
-            matIndex = 1;
+            matIndex = 0;
             foreach (var material in Materials)
             {
                 // Применяем текстуру
-                GetComponent<Renderer>().material = material;
-                GetComponent<SkinnedMeshRenderer>().sharedMesh = model;
+                _skinnedMeshRenderer.sharedMesh = model;
+                _skinnedMeshRenderer.SetMaterials(new(){material,material});
+                
                     
 
                 // Ждём кадр, чтобы камера обновила отображение

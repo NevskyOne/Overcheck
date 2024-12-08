@@ -12,6 +12,7 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private Camera _camera;
     [SerializeField] private LayerMask _clickMask;
     [SerializeField] private LayerMask _docMask;
+    [SerializeField] private LayerMask _docPlace;
     [Header("CamMoves")]
     [SerializeField] private CamMove _tableMove;
     [SerializeField] private CamMove _leftScreenMove;
@@ -50,7 +51,7 @@ public class PlayerInteractions : MonoBehaviour
 
     private bool  _isHolding, _canSleep, _canStartDay = true;
     private CheckState _tableState = CheckState.None;
-    private PlayerState _playerState = PlayerState.None;
+    public static PlayerState PlayerState { get; set; } = PlayerState.None;
     private Transform _currentDoc;
 
     private void Start()
@@ -64,7 +65,7 @@ public class PlayerInteractions : MonoBehaviour
         _playerInput.actions["Escape"].performed += Escape;
         
         Focus();
-        _dialogSystem.ChatEnded += () => {_playerState = PlayerState.None; Focus();};
+        _dialogSystem.ChatEnded += () => {PlayerState = PlayerState.None; Focus();};
         NPCManager.OnNPCEnd += () => _canSleep = true;
         
         TimeLines.OnDayEnd += () =>
@@ -98,38 +99,38 @@ public class PlayerInteractions : MonoBehaviour
         }
 
         var delta = _playerInput.actions["Move"].ReadValue<Vector2>();
-        switch (_playerState)
+        switch (PlayerState)
         {
             case PlayerState.Table when delta.x < 0:
                 _leftScreenMove.Move(transform.eulerAngles);
-                _playerState = PlayerState.LeftScreen;
+                PlayerState = PlayerState.LeftScreen;
                 break;
             case PlayerState.Table when delta.x > 0:
                 _rightScreenMove.Move(transform.eulerAngles);
-                _playerState = PlayerState.RightScreen;
+                PlayerState = PlayerState.RightScreen;
                 break;
             case PlayerState.LeftScreen when delta is { y: < 0, x: 0 }:
                 _tableMove.Move(transform.eulerAngles);
-                _playerState = PlayerState.Table;
+                PlayerState = PlayerState.Table;
                 break;
             case PlayerState.LeftScreen when delta is { x: > 0, y: 0 }:
                 _rightScreenMove.Move(transform.eulerAngles);
-                _playerState = PlayerState.RightScreen;
+                PlayerState = PlayerState.RightScreen;
                 break;
             case PlayerState.RightScreen when delta is { x: < 0, y: 0 }:
                 _leftScreenMove.Move(transform.eulerAngles);
-                _playerState = PlayerState.LeftScreen;
+                PlayerState = PlayerState.LeftScreen;
                 break;
             case PlayerState.RightScreen when delta is { y: < 0, x: 0 }:
                 _tableMove.Move(transform.eulerAngles);
-                _playerState = PlayerState.Table;
+                PlayerState = PlayerState.Table;
                 break;
         }
         
         _popupMenu.gameObject.SetActive(false);
-        RaycastHit hit = new ();
+        RaycastHit hit = new (), hit2 = new();
         
-        if (_playerState == PlayerState.Dialog || !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+        if (PlayerState == PlayerState.Dialog || !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
                 out hit, 3, _clickMask))
         {
             _cursorImg.sprite = _defaultSprite;
@@ -144,12 +145,12 @@ public class PlayerInteractions : MonoBehaviour
                 _cursorImg.sprite = _radioSprite;
             else if (_canStartDay && hit.transform.CompareTag("StartDay"))
                 _cursorImg.sprite = _startSprite;
-            else if (_playerState == PlayerState.Table && hit.transform.CompareTag("Correct"))
+            else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Correct"))
             {
                 _popupText.text = "Разрешить";
                 _popupMenu.gameObject.SetActive(true);
             }
-            else if (_playerState == PlayerState.Table && hit.transform.CompareTag("Wrong"))
+            else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Wrong"))
             {
                 _popupText.text = "Не пустить";
                 _popupMenu.gameObject.SetActive(true);
@@ -158,18 +159,19 @@ public class PlayerInteractions : MonoBehaviour
                 _cursorImg.sprite = _UISprite;
         }
 
-        if (_isHolding && _currentDoc && hit.transform)
+        if (_isHolding && _currentDoc && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+                out hit2, 3,_docPlace))
         {
-            _currentDoc.localPosition = new Vector3(hit.point.x,_currentDoc.localPosition.y,hit.point.z);
+            _currentDoc.localPosition = new Vector3(hit2.point.x,_currentDoc.localPosition.y,hit2.point.z);
         }
     }
 
     private async void Click(InputAction.CallbackContext _)
     {
-        if (Time.timeScale == 0 || _playerState == PlayerState.Dialog) return;
+        if (Time.timeScale == 0 || PlayerState == PlayerState.Dialog) return;
         
         Transform transf;
-        if (_playerState == PlayerState.Table && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+        if (PlayerState == PlayerState.Table && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
                 out var hit, 3, _docMask))
         {
             transf = hit.transform;
@@ -196,18 +198,18 @@ public class PlayerInteractions : MonoBehaviour
         
         transf = hit2.transform;
         
-        if (_playerState == PlayerState.None && transf.CompareTag("NPC"))
+        if (PlayerState == PlayerState.None && transf.CompareTag("NPC"))
         {
             transf.GetComponent<NPC>().StartChat();
-            _playerState = PlayerState.Dialog;
+            PlayerState = PlayerState.Dialog;
         }
-        else if (_playerState == PlayerState.None && transf.CompareTag("NPCObject"))
+        else if (PlayerState == PlayerState.None && transf.CompareTag("NPCObject"))
         {
             StopFocus();
             transf.SetParent(_objectHolder);
             transf.localPosition = Vector3.zero;
             _rotateScript.EnableUI(transf.GetComponent<NPCObject>());
-            _playerState = PlayerState.UI;
+            PlayerState = PlayerState.UI;
             _camera.cullingMask = LayerMask.GetMask("UI", "NPCObject");
         }
         else if (_canSleep && transf.CompareTag("Bed"))
@@ -227,17 +229,17 @@ public class PlayerInteractions : MonoBehaviour
             _canStartDay = false;
             _buttonMaterial.color = Color.gray;
         }
-        else if (_playerState == PlayerState.None && transf.CompareTag("Table"))
+        else if (PlayerState == PlayerState.None && transf.CompareTag("Table"))
         {
             StopFocus();
             _tableMove.Move(transform.eulerAngles);
-            _playerState = PlayerState.Table;
+            PlayerState = PlayerState.Table;
         }
-        else if (_playerState == PlayerState.Table && transf.CompareTag("Correct"))
+        else if (PlayerState == PlayerState.Table && transf.CompareTag("Correct"))
         {
             _tableState = CheckState.Correct;
         }
-        else if (_playerState == PlayerState.Table && transf.CompareTag("Wrong"))
+        else if (PlayerState == PlayerState.Table && transf.CompareTag("Wrong"))
         {
             _tableState = CheckState.Wrong;
         }
@@ -247,10 +249,15 @@ public class PlayerInteractions : MonoBehaviour
             audioSource.mute = !audioSource.mute;
             transf.GetComponent<Radio>().RadioMat.color = audioSource.mute ? Color.red : Color.green;
         }
-        else if (transf.CompareTag("OpenUI"))
+        else if (PlayerState == PlayerState.None && transf.CompareTag("OpenUI"))
         {
             StopFocus();
-            _playerState = PlayerState.UI;
+            if(transf.name == "Criminals")
+                PlayerState = PlayerState.LeftScreen;
+            else if(transf.name == "Tablet")
+                PlayerState = PlayerState.RightScreen;
+            else
+                PlayerState = PlayerState.UI;
             transf.GetComponent<CamMove>().Move(transform.eulerAngles);
         }
     }
@@ -277,7 +284,7 @@ public class PlayerInteractions : MonoBehaviour
 
     private void Space(InputAction.CallbackContext _)
     {
-        if(_playerState == PlayerState.Dialog)
+        if(PlayerState == PlayerState.Dialog)
             _dialogSystem.PlayNext();
     }
 
@@ -287,17 +294,17 @@ public class PlayerInteractions : MonoBehaviour
 
     private void Escape(InputAction.CallbackContext _)
     {
-        if (_playerState == PlayerState.Dialog)
+        if (PlayerState == PlayerState.Dialog)
         {
             _dialogSystem.EndChat();
-            _playerState = PlayerState.None;
+            PlayerState = PlayerState.None;
         }
-        else if (_playerState is PlayerState.UI or PlayerState.LeftScreen or PlayerState.RightScreen)
+        else if (PlayerState is PlayerState.UI or PlayerState.LeftScreen or PlayerState.RightScreen)
         {
             _rotateScript.DisableUI();
             _camManager.ResetCamera();
         }
-        else if (_playerState == PlayerState.Table)
+        else if (PlayerState == PlayerState.Table)
         {
             _camManager.ResetCamera();
             _tableState = CheckState.None;
@@ -326,7 +333,7 @@ public class PlayerInteractions : MonoBehaviour
 
     public void Focus()
     {
-        _playerState = PlayerState.None;
+        PlayerState = PlayerState.None;
         _playerMove.enabled = true;
         _cursor.SetActive(true);
         Cursor.visible = false;

@@ -58,7 +58,9 @@ public class MeteorsCore : Puzzle
         {
             yield return new WaitForSeconds(Random.Range(_meteorsSpawnRateMin, _meteorsSpawnRateMax));
             var spawnpoint = _spawnpoints[Random.Range(0, _spawnpoints.Count)];
-            var newMeteor = Instantiate(_meteorsPrefabs[Random.Range(0, _meteorsPrefabs.Count)], spawnpoint.position, Quaternion.identity, _meteorsParent).GetComponent<Meteor>();
+            var newMeteor = Instantiate(_meteorsPrefabs[Random.Range(0, _meteorsPrefabs.Count)], spawnpoint.position, Quaternion.Euler(0,0,0), _meteorsParent).GetComponent<Meteor>();
+            newMeteor.transform.localRotation = Quaternion.Euler(0, 0, 0);
+            newMeteor.transform.localPosition = spawnpoint.localPosition;
             newMeteor.SetProperties(_stationTransform, _meteorsSpeed);
             newMeteor.OnDestroyMeteor += OnDestroyMeteor;
             newMeteor.OnKickStation += OnKickStation;
@@ -109,6 +111,8 @@ public class MeteorsCore : Puzzle
 
     public void Miss()
     {
+        if(!_isActive) return;
+        
         _targetTransform.GetChild(0).gameObject.SetActive(true);
         _currentStationHealth--;
         

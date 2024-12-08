@@ -41,36 +41,38 @@ public class NPC : MonoBehaviour
     
     private void Start()
     {
-        var randomDialog = _rnd.Next(DialogParser.ParsedFragments.Count);
-        _fragments = DialogParser.ParsedFragments[randomDialog];
-        _endPassText = DialogParser.PassFragmenst[randomDialog];
-        _endBackText = DialogParser.NotPassFragmenst[randomDialog];
-        
-
-        var meshRenderer = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
-        var randomModel = _rnd.Next(0, 10);
-        meshRenderer.sharedMesh = _models[randomModel];
-
-        var randomMat = _rnd.Next(0, _materials.Length);
-        meshRenderer.SetMaterials(new()
+        if (NPCTimeLine == TimeLine.Void)
         {
-            _materials[randomMat],
-            _materials[randomMat],
-            _acesMaterials[_rnd.Next(0, _acesMaterials.Length)]
-        });
+            var randomDialog = _rnd.Next(DialogParser.ParsedFragments.Count);
+            _fragments = DialogParser.ParsedFragments[randomDialog];
+            _endPassText = DialogParser.PassFragmenst[randomDialog];
+            _endBackText = DialogParser.NotPassFragmenst[randomDialog];
 
-        _photo = RandomParamSt.Photos[(randomModel+1) * 10 + (int)Mathf.Ceil((randomMat+1)/3f)];
-        
-        int randomHat = _rnd.Next(0, 4);
-        if (randomHat < 3)
-            meshRenderer.SetBlendShapeWeight(randomHat, 100);
-        int randomCount = _rnd.Next(0, 5);
-        if (randomCount > 0)
-        {
-            for (var i = 0; i < randomCount; i++)
-                meshRenderer.SetBlendShapeWeight(_rnd.Next(3, 7), 100);
+
+            var meshRenderer = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
+            var randomModel = _rnd.Next(0, 10);
+            meshRenderer.sharedMesh = _models[randomModel];
+
+            var randomMat = _rnd.Next(0, _materials.Length);
+            meshRenderer.SetMaterials(new()
+            {
+                _materials[randomMat],
+                _materials[randomMat],
+                _acesMaterials[_rnd.Next(0, _acesMaterials.Length)]
+            });
+            _photo = RandomParamSt.Photos[(randomModel) * 10 + (int)Mathf.Ceil((randomMat + 1) / 3f) - 1];
+
+            int randomHat = _rnd.Next(0, 4);
+            if (randomHat < 3)
+                meshRenderer.SetBlendShapeWeight(randomHat, 100);
+            int randomCount = _rnd.Next(0, 5);
+            if (randomCount > 0)
+            {
+                for (var i = 0; i < randomCount; i++)
+                    meshRenderer.SetBlendShapeWeight(_rnd.Next(3, 7), 100);
+            }
         }
-    
+
 
         if (_rnd.Next(101) < _npcManager.CriminalChance)
         {
@@ -86,11 +88,11 @@ public class NPC : MonoBehaviour
             _name = newList[_rnd.Next(0, newList.Count)];
         }
         
-        _planet = _rnd.Next(1,8);
+        _planet = _rnd.Next(1,5);
 
-        if (_timeLines.WeekDate > 3)
+        if (_timeLines.WeekDate > -1)
             _docsCount = 3;
-        else if (_timeLines.WeekDate > -1)
+        else if (_timeLines.WeekDate > 1)
             _docsCount = 2;
     }
 
@@ -120,20 +122,16 @@ public class NPC : MonoBehaviour
                 _origin = _rnd.Next(2) == 1;
                 if (!_origin)
                 {
-                    if (_docsCount > 1)
-                        iic.Randomize(1);
-                    if (_docsCount > 2)
-                        pp.Randomize(1);
-                    pms.Randomize(1);
+                    iic?.Randomize(2);
+                    pp?.Randomize(2);
+                    pms.Randomize(2);
                 }
                 break;
             case TimeLine.Eternity:
                 _origin = false;
-                if (_docsCount > 1)
-                    iic.Randomize(1);
-                if (_docsCount > 2)
-                    pp.Randomize(1);
-                pms.Randomize(1);
+                iic?.Randomize(2);
+                pp?.Randomize(2);
+                pms.Randomize(2);
                 break;
             case TimeLine.Robots:
                 _origin = true;

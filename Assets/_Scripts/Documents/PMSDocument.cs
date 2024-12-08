@@ -27,6 +27,8 @@ public class PMSDocument : Document
                     break;
             }
         }
+        _nameText.text = _name;
+        _photoImage.sprite = _photo;
     }
 
 }

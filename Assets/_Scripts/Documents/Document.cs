@@ -5,8 +5,8 @@ using Random = System.Random;
 
 public abstract class Document : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _nameText;
-    [SerializeField] private Image _photoImage;
+    [SerializeField] protected TMP_Text _nameText;
+    [SerializeField] protected Image _photoImage;
     
     protected string _name;
     protected Sprite _photo;

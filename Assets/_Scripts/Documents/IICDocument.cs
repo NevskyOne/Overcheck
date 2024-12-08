@@ -68,5 +68,10 @@ public class IICDocument : Document
                     break;
             }
         }
+        _nameText.text = _name;
+        _photoImage.sprite = _photo;
+        _healthText.text = _healthClass.ToString();
+        _IDText.text = _ID.ToString();
+        _stampImage.sprite = _stamp;
     }
 }

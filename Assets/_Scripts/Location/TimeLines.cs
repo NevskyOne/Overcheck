@@ -125,7 +125,7 @@ public class TimeLines : MonoBehaviour
                 _endText.text = "Этернити";
                 SettingsUI.Eternity = true;
             }
-            else if (_voidCounter > 4)
+            else if (_voidCounter > 20)
             {
                 _endText.text = "Хорошая Void";
                 SettingsUI.GoodVoid = true;

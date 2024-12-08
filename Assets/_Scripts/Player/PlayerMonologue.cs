@@ -30,5 +30,6 @@ public class PlayerMonologue : MonoBehaviour
         _dialogSystem.FragmentsStack = new(){
             new DialogFragment { Text = list[_rnd.Next(list.Count)], Buttons = new()}};
         _dialogSystem.PlayNext();
+        PlayerInteractions.PlayerState = PlayerState.Dialog;
     }
 }
