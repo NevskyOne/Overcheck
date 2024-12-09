@@ -349,6 +349,7 @@ GameObject:
   - component: {fileID: 52439246}
   - component: {fileID: 52439251}
   - component: {fileID: 52439252}
+  - component: {fileID: 52439253}
   m_Layer: 6
   m_Name: Table
   m_TagString: Table
@@ -375,8 +376,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.3985174, y: 1, z: 0.87163085}
-  m_Center: {x: -0.058361404, y: 0, z: -0.25556144}
+  m_Size: {x: 0.3985174, y: 0.9642775, z: 0.87163085}
+  m_Center: {x: -0.058361404, y: -0.017861307, z: -0.25556144}
 --- !u!4 &52439249
 Transform:
   m_ObjectHideFlags: 0
@@ -432,8 +433,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.38457063, y: 0.99317086, z: 0.19486356}
-  m_Center: {x: -0.060881414, y: -0.0034145662, z: 0.6418795}
+  m_Size: {x: 0.38457063, y: 0.97076464, z: 0.19486362}
+  m_Center: {x: -0.060881414, y: -0.014617737, z: 0.64187956}
 --- !u!65 &52439252
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -453,8 +454,29 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.2762206, y: 0.9821628, z: 0.40528795}
-  m_Center: {x: -0.0067063174, y: -0.008918661, z: 0.35838363}
+  m_Size: {x: 0.2762206, y: 0.9621405, z: 0.40528798}
+  m_Center: {x: -0.0067063174, y: -0.01892982, z: 0.35838366}
+--- !u!65 &52439253
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 52439245}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.11443341, y: 0.029440816, z: 0.6627233}
+  m_Center: {x: 0.08587115, y: 0.46803847, z: 0.032106813}
 --- !u!1001 &55010478
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -5085,7 +5107,7 @@ Transform:
   m_GameObject: {fileID: 342371665}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 5.61, y: -0.23, z: -2.48}
+  m_LocalPosition: {x: 5.61, y: -1.1, z: -2.48}
   m_LocalScale: {x: 1.43, y: 1.43, z: 1.43}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -5541,8 +5563,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.10980664, y: 0.054534014, z: 0.45429265}
-  m_Center: {x: -0.1977938, y: 0.47273326, z: -0.0669696}
+  m_Size: {x: 0.114010684, y: 0.020027086, z: 0.45429277}
+  m_Center: {x: -0.19569184, y: 0.44708407, z: -0.066969626}
 --- !u!1 &385109241
 GameObject:
   m_ObjectHideFlags: 0
@@ -6778,7 +6800,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CriminalChance: 10
-  EventChance: 10
+  EventChance: 35
   NpcList:
   - NormalNPC: 4
     EternityNPC: 0
@@ -8464,6 +8486,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _puzzleTime: 120
+  _cost: 4
   _player: {fileID: 727866458}
   _bedPos: {x: -9, y: 1, z: 2.757}
   _wires: {fileID: 1476509654}
@@ -11599,17 +11622,17 @@ BoxCollider:
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 128
   m_ExcludeLayers:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 8063
   m_LayerOverridePriority: 0
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.14210646, y: 1, z: 2.5859878}
-  m_Center: {x: 0.14868045, y: 0, z: -0.4457726}
+  m_Size: {x: 0.1526742, y: 4.266393, z: 2.5859878}
+  m_Center: {x: 0.14518559, y: 1.4354897, z: -0.4457726}
 --- !u!1 &832575517
 GameObject:
   m_ObjectHideFlags: 0
@@ -14737,8 +14760,8 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 0.27425852, y: 0.054534014, z: 0.63351274}
-  m_Center: {x: -0.0032021874, y: 0.47273326, z: 0.022640826}
+  m_Size: {x: 0.27425852, y: 0.025882863, z: 0.63351274}
+  m_Center: {x: -0.0032021874, y: 0.44592357, z: 0.022640826}
 --- !u!1 &1124717925
 GameObject:
   m_ObjectHideFlags: 0
@@ -15693,11 +15716,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3443588936403200415, guid: ac2b3e6893362404cad17546a7375d36, type: 3}
       propertyPath: _zPos
-      value: 0.3
+      value: 0.3588
       objectReference: {fileID: 0}
     - target: {fileID: 3668219570272916279, guid: ac2b3e6893362404cad17546a7375d36, type: 3}
       propertyPath: _zPos
-      value: 0.3
+      value: 0.3588
       objectReference: {fileID: 0}
     - target: {fileID: 3738895118816752932, guid: ac2b3e6893362404cad17546a7375d36, type: 3}
       propertyPath: m_SizeDelta.y
@@ -16053,11 +16076,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8370076074485353385, guid: ac2b3e6893362404cad17546a7375d36, type: 3}
       propertyPath: _zPos
-      value: 0.3
+      value: 0.3588
       objectReference: {fileID: 0}
     - target: {fileID: 8415956223913445547, guid: ac2b3e6893362404cad17546a7375d36, type: 3}
       propertyPath: _zPos
-      value: 0.3
+      value: 0.3588
       objectReference: {fileID: 0}
     - target: {fileID: 8436628418884453531, guid: ac2b3e6893362404cad17546a7375d36, type: 3}
       propertyPath: m_Spacing
@@ -16069,7 +16092,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8589605424373423316, guid: ac2b3e6893362404cad17546a7375d36, type: 3}
       propertyPath: _zPos
-      value: 0.3
+      value: 0.3588
       objectReference: {fileID: 0}
     - target: {fileID: 8594599636974138423, guid: ac2b3e6893362404cad17546a7375d36, type: 3}
       propertyPath: m_LocalScale.x
@@ -21130,9 +21153,9 @@ MonoBehaviour:
   m_HorizontalAlignment: 1
   m_VerticalAlignment: 256
   m_textAlignment: 65535
-  m_characterSpacing: 20
-  m_wordSpacing: 0
-  m_lineSpacing: 30
+  m_characterSpacing: 3
+  m_wordSpacing: -15
+  m_lineSpacing: 20
   m_lineSpacingMax: 0
   m_paragraphSpacing: 0
   m_charWidthMaxAdj: 0
@@ -21142,7 +21165,7 @@ MonoBehaviour:
   m_linkedTextComponent: {fileID: 0}
   parentLinkedComponent: {fileID: 0}
   m_enableKerning: 0
-  m_ActiveFontFeatures: 6e72656b
+  m_ActiveFontFeatures: 6e72656b6167696c6b72616d6b6d6b6d
   m_enableExtraPadding: 0
   checkPaddingRequired: 0
   m_isRichText: 1
@@ -24512,9 +24535,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   FragmentsStack: []
   _letterDelay: 0.003
-  _startFontSize: 2
+  _startFontSize: 0
   _endFontSize: 35
-  _growDuration: 0.05
+  _growDuration: 0.06
   _dialogMenu: {fileID: 740797656}
   _textField: {fileID: 1644667850}
   _buttonPrefab: {fileID: 2567111635036230834, guid: 357bf7fb1b38e984397f97259c676169, type: 3}
@@ -26393,6 +26416,10 @@ PrefabInstance:
     - target: {fileID: 992333084267608498, guid: 614d9133266bbcb4b8b9572c5129aee6, type: 3}
       propertyPath: InitialModule.startSize.scalar
       value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2881021656828977194, guid: 614d9133266bbcb4b8b9572c5129aee6, type: 3}
+      propertyPath: m_Volume
+      value: 0.6
       objectReference: {fileID: 0}
     - target: {fileID: 8109129717965654090, guid: 614d9133266bbcb4b8b9572c5129aee6, type: 3}
       propertyPath: m_LocalPosition.x

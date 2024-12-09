@@ -30,7 +30,7 @@ public class NPCAnim : MonoBehaviour
     {
         var targetRot = 90;
         
-        while (!Mathf.Approximately(transform.localEulerAngles.y, targetRot))
+        while (transform && !Mathf.Approximately(transform.localEulerAngles.y, targetRot))
         {
             transform.localEulerAngles = new Vector3(0,Mathf.LerpAngle(transform.localEulerAngles.y, targetRot, 0.1f),0);
             yield return null;
@@ -42,7 +42,7 @@ public class NPCAnim : MonoBehaviour
     {
         var targetRot = -90;
         
-        while (!Mathf.Approximately(transform.localEulerAngles.y, targetRot))
+        while (transform && !Mathf.Approximately(transform.localEulerAngles.y, targetRot))
         {
             transform.localEulerAngles = new Vector3(0,Mathf.LerpAngle(transform.localEulerAngles.y, targetRot, 0.1f),0);
             yield return null;

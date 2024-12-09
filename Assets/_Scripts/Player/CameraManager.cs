@@ -38,6 +38,7 @@ public class CameraManager : MonoBehaviour
 
     private IEnumerator LocalSmoothMove(Vector3 targetPosition, Vector3 targetEulerAngles)
     {
+        StopCoroutine(nameof(SmoothMove));
         float elapsedTime = 0f;
 
         while (elapsedTime < moveDuration + 0.4f)
@@ -65,6 +66,7 @@ public class CameraManager : MonoBehaviour
     
     private IEnumerator SmoothMove(Vector3 targetPosition, Vector3 targetEulerAngles)
     {
+        StopCoroutine(nameof(LocalSmoothMove));
         float elapsedTime = 0f;
 
         while (elapsedTime < moveDuration + 1.5f)

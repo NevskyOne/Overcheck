@@ -46,7 +46,7 @@ public class NPCManager : MonoBehaviour
     private DayNPC _currentDay;
     private bool _isChecked, _toTable;
     
-    public static event Action OnNPCEnd, RandomEvent, EternityCheck, NPCAtTable, OnNPCCheck,OnGiveDocs;
+    public static event Action OnNPCEnd, RandomEvent, EternityCheck, OnNPCCheck,OnGiveDocs;
     
 
     private  void Start()
@@ -58,31 +58,22 @@ public class NPCManager : MonoBehaviour
             _criminals.Add(bearName);
             names.Remove(bearName);
         }
-
+        
         ChangedCriminals = _criminals;
         RandomEvents.OnLose += ResetDay;
+
+        if (_weekDate == 0)
+        {
+            SpawnNPC(new() { _tutorialNPC[0] });
+            _tutorialNPC.Remove(_tutorialNPC[0]);
+        }
+
         TimeLines.OnDayEnd += () =>
         {
             if (_currentDay.TutorialNPC > 0)
             {
-                int index = 0;
-                switch (_weekDate)
-                {
-                    case 2:
-                        index = 1;
-                        break;
-                    case 4:
-                        index = 4;
-                        break;
-                }
-
-                _currentAgent = Instantiate(_tutorialNPC[index], _startPos.position, Quaternion.identity)
-                    .GetComponent<NavMeshAgent>();
-                _currentDay.TutorialNPC -= 1;
-                _currentAgent.SetDestination(_tablePos.position);
-                CurrentNPC = _currentAgent.GetComponent<NPC>();
-                _npcAnim = CurrentNPC.GetComponent<NPCAnim>();
-                _toTable = true;
+                SpawnNPC(new() { _tutorialNPC[0] });
+                _tutorialNPC.Remove(_tutorialNPC[0]);
             }
         };
     }
@@ -98,7 +89,6 @@ public class NPCManager : MonoBehaviour
 
         else if (_toTable)
         {
-            NPCAtTable?.Invoke();
             StartCoroutine( _npcAnim.TurnRight());
             _toTable = false;
         }

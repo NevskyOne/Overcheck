@@ -2,12 +2,12 @@ using UnityEngine;
 
 public class DropDocument : MonoBehaviour
 {
-    public void OnCollisionEnter(Collision other)
+    public void OnTriggerEnter(Collider other)
     {
         if (!other.transform.CompareTag("BackDoc")) return;
         NPCManager.CurrentNPC.CollectDoc(gameObject);
     }
-    public void OnCollisionExit(Collision other)
+    public void OnTriggerExit(Collider other)
     {
         if (!other.transform.CompareTag("BackDoc")) return;
         NPCManager.CurrentNPC.CollectDoc(gameObject, false);

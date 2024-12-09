@@ -70,9 +70,8 @@ public class PlayerInteractions : MonoBehaviour
         
         TimeLines.OnDayEnd += () =>
         {
-            _canStartDay = true;
             _camManager.ResetCamera();
-            _buttonMaterial.color = Color.green;
+            ResetButton();
             transform.GetChild(1).gameObject.SetActive(true);
         };
         _buttonMaterial.color = Color.green;
@@ -288,7 +287,11 @@ public class PlayerInteractions : MonoBehaviour
             _dialogSystem.PlayNext();
     }
 
-    public void ResetButton() => _canStartDay = true;
+    public void ResetButton()
+    {
+        _canStartDay = true;
+        _buttonMaterial.color = Color.green;
+    }
     
 
 
@@ -333,6 +336,7 @@ public class PlayerInteractions : MonoBehaviour
 
     public void Focus()
     {
+        if(PlayerState == PlayerState.Dialog) return;
         PlayerState = PlayerState.None;
         _playerMove.enabled = true;
         _cursor.SetActive(true);

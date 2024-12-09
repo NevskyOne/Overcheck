@@ -46,10 +46,7 @@ public class DialogSystem : MonoBehaviour
             _npcManager.SetNPCTalking();
             _dialogMenu.SetActive(true);
             _playerInter.StopFocus();
-            for (var i = 0; i < _buttonsHolder.childCount; i++ )    
-            {
-                Destroy(_buttonsHolder.GetChild(0).gameObject);
-            }
+            
             PlayFragment(FragmentsStack[0]);
             _currentLine = FragmentsStack[0].Text;
             FragmentsStack.RemoveAt(0);
@@ -63,8 +60,12 @@ public class DialogSystem : MonoBehaviour
     public void PlayFragment(DialogFragment fragment)
     {
         StartCoroutine(AnimateText(fragment.Text));
-
-        ShowButtons(new (fragment.Buttons));
+        foreach (Transform child in _buttonsHolder)
+        {
+            Destroy(child.gameObject);
+        }
+        if(fragment.Buttons.Count > 0)
+            ShowButtons(new (fragment.Buttons));
         PlaceObj(fragment.Object);
         if (fragment.GoAfter)
         {
@@ -132,6 +133,7 @@ public class DialogSystem : MonoBehaviour
             // Задержка перед добавлением следующего символа
             yield return new WaitForSeconds(_letterDelay);
         }
+        _npcManager.SetNPCTalking(false);
     }
 
     private IEnumerator AnimateCharacterSize(char[] displayedText, int charIndex)

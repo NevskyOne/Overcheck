@@ -18,12 +18,12 @@ public class APIManager
     private const string SHOP_NAME = "shop_base";
     
     private Dictionary<string, int> _currentShop = new();
-    private bool _haveInternetConnection = true;
+    private bool _haveInternetConnection = false;
     private int _currentCoins;
     
     private APIManager()
     {
-        _haveInternetConnection = Application.internetReachability != NetworkReachability.NotReachable;
+       // _haveInternetConnection = Application.internetReachability != NetworkReachability.NotReachable;
     }
     
     public async Task Authorization(string playerName)

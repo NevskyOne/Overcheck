@@ -1,6 +1,4 @@
 using System;
-using System.Threading.Tasks;
-using _Scripts.UI;
 using TMPro;
 using UnityEngine;
 
@@ -30,9 +28,9 @@ public class TimeLines : MonoBehaviour
     public int Date => _date;
     public int Month => _month;
 
-    public uint CorrectNPC { get; set; }
-    public uint WrongNPC { get; set; }
-    public uint Additional { get; set; }
+    public static uint CorrectNPC { get; set; }
+    public static uint WrongNPC { get; set; }
+    public static uint Additional { get; set; }
 
     private uint _voidCounter,_eternityCounter,_robotsCounter;
     private uint _voidTemp, _eternityTemp, _robotsTemp;
@@ -99,7 +97,7 @@ public class TimeLines : MonoBehaviour
         Additional = 0;
     }
     
-    public async void Sleep()
+    public void Sleep()
     {
         CorrectNPC = (uint)(CorrectNPC * MoneyFactor);
         Additional = (uint)(Additional * MoneyFactor);

@@ -151,11 +151,11 @@ public class NPC : MonoBehaviour
         if (_origin == playerOrigin)
         {
             _timeLines.ChangeTimeline(TimeLine.Void);
-            _timeLines.CorrectNPC += _cost;
+            TimeLines.CorrectNPC += _cost;
         }
         else
         {
-            _timeLines.WrongNPC += _cost;
+            TimeLines.WrongNPC += _cost;
             _timeLines.ChangeTimeline(TimeLine.Void, false);
             if(NPCTimeLine != TimeLine.Void)
                 _timeLines.ChangeTimeline(NPCTimeLine);
@@ -190,7 +190,7 @@ public class NPC : MonoBehaviour
             _collectedDocs.Clear();
             _dialogSys.GoAfter = _checkState;
         }
-        else
+        else if(_checkState == CheckState.None)
         {
             _dialogSys.FragmentsStack = _fragments.ToList();
         }

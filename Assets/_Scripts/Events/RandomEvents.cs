@@ -9,6 +9,7 @@ public class RandomEvents : MonoBehaviour
 {
     [Header("EventSettings")] 
     [SerializeField] private uint _puzzleTime;
+    [SerializeField] private uint _cost = 4;
     [SerializeField] private Transform _player;
     [SerializeField] private Vector3 _bedPos;
     [Header("Puzzle")]
@@ -84,7 +85,7 @@ public class RandomEvents : MonoBehaviour
         _npcMng.SelectNPC(false);
         
         SceneMusic.State = MusicState.Normal;
-        
+        TimeLines.Additional += _cost;
         OnDone?.Invoke();
     }
 

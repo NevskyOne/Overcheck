@@ -39,7 +39,7 @@ public class DataBase : MonoBehaviour
     {
         var newObj = Instantiate(_bearPrefab, _spawnPrefab).transform;
         newObj.GetChild(0).GetComponent<TMP_Text>().text = bearData.Name;
-        newObj.GetChild(1).GetComponent<Image>().sprite = bearData.Photo;
+        newObj.GetChild(1).GetChild(0).GetComponent<Image>().sprite = bearData.Photo;
         newObj.GetChild(2).GetComponent<TMP_Text>().text = bearData.ID.ToString();
     }
 }
