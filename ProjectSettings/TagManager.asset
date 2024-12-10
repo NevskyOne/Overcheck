@@ -16,6 +16,7 @@ TagManager:
   - NPCObject
   - StartDay
   - PMS
+  - PlayerName
   layers:
   - Default
   - TransparentFX
@@ -52,6 +53,9 @@ TagManager:
   m_SortingLayers:
   - name: Default
     uniqueID: 0
+    locked: 0
+  - name: Click
+    uniqueID: 2678422841
     locked: 0
   m_RenderingLayers:
   - Default

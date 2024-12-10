@@ -74,6 +74,7 @@ public class NPCManager : MonoBehaviour
             {
                 SpawnNPC(new() { _tutorialNPC[0] });
                 _tutorialNPC.Remove(_tutorialNPC[0]);
+                _isChecked = true;
             }
         };
     }

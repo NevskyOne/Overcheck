@@ -16,6 +16,8 @@ public class GearPuzzle : Puzzle
 
     public void CheckPuzzle()
     {
+        _currentPreset.ResetGears();
+        Destroy(_currentPreset.gameObject);
         SolvePuzzle();
     }
 }

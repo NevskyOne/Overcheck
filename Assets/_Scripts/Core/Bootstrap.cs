@@ -39,6 +39,9 @@ public class Bootstrap : MonoBehaviour
         if (newScene.name == Constants.GAMEPLAY_SCENE_NAME)
         {
             _playerShopBase = FindFirstObjectByType<ShopBase>();
+            _playerText = GameObject.FindWithTag("PlayerName").GetComponent<TMP_Text>();
+            _playerText.text = _playerName;
+            
             _playerShopBase.InitializePlayerShop();
             PlayerData.InitializeCoins();
         }

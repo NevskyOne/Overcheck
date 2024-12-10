@@ -12,20 +12,25 @@ public class Gear : MonoBehaviour, IDragHandler, IEndDragHandler
     private Node _currentNode;
     private Vector2 _startPos;
 
-    private GearPuzzlePreset _preset => transform.parent.parent.parent.parent.GetComponent<GearPuzzlePreset>();
-    private GearPuzzle _gears => _preset.transform.parent.GetComponent<GearPuzzle>();
-
+    private GearPuzzlePreset _preset;
+    private GearPuzzle _gears;
+    private Transform _scrollTransform;
+    
     public Node CurrentNode => _currentNode;
     public int Size => _size;
 
     public void Init(Canvas canvas)
     {
         _canvas = canvas;
-        _startPos = transform.localPosition;
+        _startPos = new Vector2(260,transform.localPosition.y);
+        _scrollTransform = transform.parent;
+        _gears = canvas.GetComponent<GearPuzzle>();
+        _preset = _gears.transform.GetComponentInChildren<GearPuzzlePreset>();
     }
 
     public void ResetPos()
     {
+        transform.SetParent(_scrollTransform);
         transform.localPosition = _startPos;
         if (_currentNode != null)
         {
@@ -36,6 +41,7 @@ public class Gear : MonoBehaviour, IDragHandler, IEndDragHandler
     
     public void OnDrag(PointerEventData eventData)
     {
+        transform.SetParent(_gears.transform);
         transform.localPosition = GetMouseWorldPosition();
         if (_currentNode != null)
         {
@@ -50,6 +56,7 @@ public class Gear : MonoBehaviour, IDragHandler, IEndDragHandler
 
         if (hoveredObject == null)
         {
+            transform.SetParent(_scrollTransform);
             transform.localPosition = _startPos;
             return;
         }
@@ -58,6 +65,7 @@ public class Gear : MonoBehaviour, IDragHandler, IEndDragHandler
         {
             if (node.IsAsigned)
             {
+                transform.SetParent(_scrollTransform);
                 transform.localPosition = _startPos;
                 return;
             }
@@ -66,14 +74,17 @@ public class Gear : MonoBehaviour, IDragHandler, IEndDragHandler
             transform.position = node.transform.position;
             _currentNode = node;
             _currentNode.Asign();
-            
+            transform.GetChild(0).gameObject.SetActive(true);
             if (_preset.IsCorrect())
             {
                 _gears.CheckPuzzle();
             }
         }
         else
+        {
+            transform.SetParent(_scrollTransform);
             transform.localPosition = _startPos;
+        }
     }
     
     private Vector3 GetMouseWorldPosition()

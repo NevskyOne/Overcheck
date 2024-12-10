@@ -33,7 +33,7 @@ public class GearPuzzlePreset : MonoBehaviour
 
         if (allSigned && !result)
         {
-            foreach (var gear in _gears) gear.ResetPos();
+            ResetGears();
         }
         return result;
     }

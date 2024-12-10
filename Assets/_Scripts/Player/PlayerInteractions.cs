@@ -73,6 +73,7 @@ public class PlayerInteractions : MonoBehaviour
             _camManager.ResetCamera();
             ResetButton();
             transform.GetChild(1).gameObject.SetActive(true);
+            PlayerState = PlayerState.Dialog;
         };
         _buttonMaterial.color = Color.green;
     }
@@ -218,7 +219,7 @@ public class PlayerInteractions : MonoBehaviour
             transf.GetComponent<CamMove>().Move(transform.eulerAngles);
             
             transform.GetChild(1).gameObject.SetActive(false);
-                
+            PlayerState = PlayerState.Sleep;
             await Task.Delay(2000);
             _timeLines.Sleep();
         }
@@ -312,7 +313,7 @@ public class PlayerInteractions : MonoBehaviour
             _camManager.ResetCamera();
             _tableState = CheckState.None;
         }
-        else
+        else if (PlayerState == PlayerState.None)
         {
             PauseGame();
         }
@@ -368,5 +369,6 @@ public enum PlayerState
     Table,
     LeftScreen,
     RightScreen,
-    UI
+    UI,
+    Sleep
 }

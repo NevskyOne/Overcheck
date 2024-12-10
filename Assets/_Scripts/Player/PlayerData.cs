@@ -12,9 +12,10 @@ public class PlayerData : MonoBehaviour
 
     private void Start()
     {
+        _honeyCombsText.text = PlayerData.HoneyCombs.ToString();
         _onMoneyChange += () =>
         {
-            //_honeyCombsText.text = PlayerData.HoneyCombs.ToString();
+            _honeyCombsText.text = PlayerData.HoneyCombs.ToString();
         };
     }
 

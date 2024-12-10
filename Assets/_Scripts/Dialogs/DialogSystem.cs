@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class DialogSystem : MonoBehaviour
 {
@@ -22,7 +23,7 @@ public class DialogSystem : MonoBehaviour
     [SerializeField] private Transform _buttonsHolder;
 
     [Header("Object")] [SerializeField] private Transform _objHolder;
-    
+    [Header("Audio")] [SerializeField] private AudioSource _source;
     private PlayerMovement _playerMovement => FindFirstObjectByType<PlayerMovement>();
     private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
     private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
@@ -40,6 +41,7 @@ public class DialogSystem : MonoBehaviour
             _textField.text = "";
             _textField.text = _currentLine;
             _npcManager.SetNPCTalking(false);
+            _source.mute = true;
         }
         else if (FragmentsStack.Count > 0)
         {
@@ -60,12 +62,14 @@ public class DialogSystem : MonoBehaviour
     public void PlayFragment(DialogFragment fragment)
     {
         StartCoroutine(AnimateText(fragment.Text));
+        _source.mute = false;
         foreach (Transform child in _buttonsHolder)
         {
             Destroy(child.gameObject);
         }
         if(fragment.Buttons.Count > 0)
             ShowButtons(new (fragment.Buttons));
+        
         PlaceObj(fragment.Object);
         if (fragment.GoAfter)
         {
@@ -98,6 +102,7 @@ public class DialogSystem : MonoBehaviour
         StopAllCoroutines();
         _currentLine = "";
         _npcManager.SetNPCTalking(false);
+        _source.mute = true;
         
         _playerMovement.enabled = true;
         FragmentsStack.Clear();
@@ -134,6 +139,7 @@ public class DialogSystem : MonoBehaviour
             yield return new WaitForSeconds(_letterDelay);
         }
         _npcManager.SetNPCTalking(false);
+        _source.mute = true;
     }
 
     private IEnumerator AnimateCharacterSize(char[] displayedText, int charIndex)
