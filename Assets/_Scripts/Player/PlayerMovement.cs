@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -24,6 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private float _speed, _fov = 60, _refTransition, _refZRotate;
     
     private float _mouseSens => SettingsUI.MouseSens;
+
+    public static event Action OnRun, OnRunEnd;
     
     private void Awake()
     {
@@ -54,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         _speed = _maxSpeed * 1.5f;
         _fov = 75;
         _sfx.PlayBreath();
+        OnRun?.Invoke();
         StartCoroutine(_fx.ChangeChromatic(0.5f));
     }
     
@@ -62,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         _speed = _maxSpeed;
         _fov = 60;
         _sfx.PlayBreath(false);
+        OnRunEnd?.Invoke();
         StartCoroutine(_fx.ChangeChromatic(0.05f));
     }
     
