@@ -1,14 +1,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = System.Random;
 
 public class NPC : MonoBehaviour
 {
-    [Header("Visual")]
-    [SerializeField] private Mesh[] _models;
-    [SerializeField] private Material[] _materials;
-    [SerializeField] private Material[] _acesMaterials;
     [Header("Text")]
     public TimeLine NPCTimeLine;
     [Header("Docs")]
@@ -18,20 +13,19 @@ public class NPC : MonoBehaviour
     
     [Header("Valuable")]
     [SerializeField] private uint _cost;
-    [SerializeField] private List<DialogFragment> _tutorDialog = new();
+
     public bool FaceChanged { get; set; }
     public bool IsCriminal  { get; private set; }
+    public Sprite Photo { get; set; }
     
-    private Sprite _photo;
     private string _name;
     private int _planet;
     private List<GameObject> _collectedDocs = new();
     private int _docsCount = 1;
     
-    private List<DialogFragment> _fragments = new();
+    public List<DialogFragment> Fragments { get; set; }= new();
     private DialogFragment _endPassText, _endBackText;
     
-    private Random _rnd = new Random();
     private bool _origin, _docsGiven;
     private CheckState _checkState = CheckState.None;
     
@@ -43,44 +37,16 @@ public class NPC : MonoBehaviour
     {
         if (NPCTimeLine == TimeLine.Void)
         {
-            var randomDialog = _rnd.Next(DialogParser.ParsedFragments.Count);
-            _fragments = DialogParser.ParsedFragments[randomDialog];
-            _endPassText = DialogParser.PassFragmenst[randomDialog];
-            _endBackText = DialogParser.NotPassFragmenst[randomDialog];
-
-
-            var meshRenderer = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
-            var randomModel = _rnd.Next(0, 10);
-            meshRenderer.sharedMesh = _models[randomModel];
-
-            var randomMat = _rnd.Next(0, _materials.Length);
-            meshRenderer.SetMaterials(new()
-            {
-                _materials[randomMat],
-                _materials[randomMat],
-                _acesMaterials[_rnd.Next(0, _acesMaterials.Length)]
-            });
-            _photo = RandomParamSt.Photos[(randomModel) * 10 + (int)Mathf.Ceil((randomMat + 1) / 3f) - 1];
-
-            int randomHat = _rnd.Next(0, 4);
-            if (randomHat < 3)
-                meshRenderer.SetBlendShapeWeight(randomHat, 100);
-            int randomCount = _rnd.Next(0, 5);
-            if (randomCount > 0)
-            {
-                for (var i = 0; i < randomCount; i++)
-                    meshRenderer.SetBlendShapeWeight(_rnd.Next(3, 7), 100);
-            }
-        }
-        else if (NPCTimeLine == TimeLine.Tutorial)
-        {
-            _fragments = _tutorDialog;
+            var randomDialog = Random.Range(0,RandomParamSt.NormalConfigs.Count);
+            Fragments = RandomParamSt.NormalConfigs[randomDialog].Fragments;
+            _endPassText = RandomParamSt.NormalConfigs[randomDialog].GoFragment;
+            _endBackText = RandomParamSt.NormalConfigs[randomDialog].BackFragment;
         }
 
 
-        if (_rnd.Next(101) < _npcManager.CriminalChance)
+        if (Random.Range(0,101) < _npcManager.CriminalChance)
         {
-            _name = _npcManager.ChangedCriminals[_rnd.Next(0,_npcManager.ChangedCriminals.Count)];
+            _name = _npcManager.ChangedCriminals[Random.Range(0,_npcManager.ChangedCriminals.Count)];
             IsCriminal = true;
             _cost *= 2;
             _origin = false;
@@ -89,10 +55,10 @@ public class NPC : MonoBehaviour
         else
         {
             var newList = (RandomParamSt.Names.Except(_npcManager.ChangedCriminals)).ToList();
-            _name = newList[_rnd.Next(0, newList.Count)];
+            _name = newList[Random.Range(0, newList.Count)];
         }
         
-        _planet = _rnd.Next(1,5);
+        _planet = Random.Range(1,5);
 
         if (_timeLines.WeekDate > 3)
             _docsCount = 3;
@@ -107,23 +73,23 @@ public class NPC : MonoBehaviour
         
         Document pp = null, iic = null;
         var pms = _npcManager.GiveDoc(_PMS, 1);
-        pms.Initialize(_name, _photo, _planet);
+        pms.Initialize(_name, Photo, _planet);
         if (_docsCount > 1)
         {
             iic = _npcManager.GiveDoc(_IIC, 2);
-            iic.Initialize(_name, _photo, _planet);
+            iic.Initialize(_name, Photo, _planet);
         }
 
         if (_docsCount > 2)
         {
             pp = _npcManager.GiveDoc(_PP, 3);
-            pp.Initialize(_name, _photo, _planet);
+            pp.Initialize(_name, Photo, _planet);
         }
         
         if(!IsCriminal) switch (NPCTimeLine)
         {
             case TimeLine.Void:
-                _origin = _rnd.Next(2) == 1;
+                _origin = Random.Range(0,2) == 1;
                 if (!_origin)
                 {
                     iic?.Randomize(2);
@@ -192,7 +158,7 @@ public class NPC : MonoBehaviour
         }
         else if(_checkState == CheckState.None)
         {
-            _dialogSys.FragmentsStack = _fragments.ToList();
+            _dialogSys.FragmentsStack = Fragments.ToList();
         }
         _dialogSys.PlayNext();
         

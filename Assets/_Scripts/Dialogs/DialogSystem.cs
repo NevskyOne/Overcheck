@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
-using UnityEngine.Audio;
 
 public class DialogSystem : MonoBehaviour
 {
@@ -17,13 +16,11 @@ public class DialogSystem : MonoBehaviour
     [Header("Text")]
     [SerializeField] private GameObject _dialogMenu;
     [SerializeField] private TMP_Text _textField;
-
     [Header("Buttons")] 
     [SerializeField] private GameObject _buttonPrefab;
     [SerializeField] private Transform _buttonsHolder;
-
-    [Header("Object")] [SerializeField] private Transform _objHolder;
     [Header("Audio")] [SerializeField] private AudioSource _source;
+    
     private PlayerMovement _playerMovement => FindFirstObjectByType<PlayerMovement>();
     private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
     private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
@@ -70,16 +67,10 @@ public class DialogSystem : MonoBehaviour
         if(fragment.Buttons.Count > 0)
             ShowButtons(new (fragment.Buttons));
         
-        PlaceObj(fragment.Object);
-        if (fragment.GoAfter)
+        foreach (var action in fragment.Actions)
         {
-            GoAfter = CheckState.Correct;
+            action?.DoAction();
         }
-        if (fragment.GiveDocs)
-        {
-            NPCManager.CurrentNPC.GiveDocs();
-        }
-        
     }
 
     private void ShowButtons(List<ButtonSt> buttons)
@@ -90,11 +81,6 @@ public class DialogSystem : MonoBehaviour
             var component = _newButton.GetComponent<DialogButton>();
             component.ButtonFields = btn;
         }
-    }
-    
-    private void PlaceObj(GameObject obj)
-    {
-        if(obj) Instantiate(obj, _objHolder);
     }
 
     public void EndChat()
@@ -176,7 +162,6 @@ public class DialogSystem : MonoBehaviour
             _textField.text = modifiedText;
             yield return null;
         }
-        
 
         _textField.text = _currentLine;
     }

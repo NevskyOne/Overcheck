@@ -6,8 +6,6 @@ using UnityEngine;
 public struct DialogFragment
 {
     [TextArea] public string Text;
-    public bool GiveDocs;
-    public bool GoAfter;
-    public GameObject Object;
+    [SerializeReference,SerializeReferenceButton] public List<IDialogAction> Actions;
     public List<ButtonSt> Buttons;
 }

@@ -1,7 +1,6 @@
-using System;
+
 using System.Collections;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -95,14 +94,19 @@ public class Robot : MonoBehaviour
 
     private IEnumerator ColorRoutine()
     {
+        var intensity = 0f;
         while (_state == RobotState.Normal)
         {
-            var intensity = 0f;
-            if (Random.Range(0, 2) == 1)
-                intensity =  Mathf.Pow(2,1.4f);
-            _material.SetColor(FresnelColor,
-                new Color(_statColor.r*intensity,_statColor.g*intensity,_statColor.b*intensity));     
             yield return new WaitForSeconds(Random.Range(2,5));
+            var targetIntensivity =  Random.Range(0, 2) == 1? Mathf.Pow(2,1.4f):0;
+            while (!Mathf.Approximately(intensity, targetIntensivity))
+            {
+                intensity = Mathf.Lerp(intensity, targetIntensivity, Time.fixedDeltaTime);
+                _material.SetColor(FresnelColor,
+                    new Color(_statColor.r * intensity, _statColor.g * intensity, _statColor.b * intensity));
+                yield return new WaitForFixedUpdate();
+            }
+            
         }
     }
     

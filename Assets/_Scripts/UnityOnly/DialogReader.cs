@@ -1,25 +1,31 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor;
 
 
 public class DialogParser : MonoBehaviour
 {
-    public TextAsset sourceText;
-    public static List<List<DialogFragment>> ParsedFragments = new ();
-    public static List<DialogFragment> PassFragmenst = new ();
-    public static List<DialogFragment> NotPassFragmenst = new ();
+    [SerializeField] private TextAsset _sourceText;
+    [SerializeField] private string _savePath;
 
     void Start()
     {
-        var dialogs = sourceText.text.Split('/');
+        var dialogs = _sourceText.text.Split('/');
+        int index = 0;
         foreach (var dialog in dialogs)
         {
+            var config = ScriptableObject.CreateInstance<DialogConfig>();
             var mainText = dialog.Split("(Фраза пропуска)")[0];
-            ParsedFragments.Add(ParseDialog(mainText));
+            config.Fragments = ParseDialog(mainText);
             var ending = dialog.Split("(Фраза пропуска)")[1];
-            PassFragmenst.Add(ParseDialog(ending.Split("(Фраза не допуска)")[0])[0]);
-            NotPassFragmenst.Add(ParseDialog(ending.Split("(Фраза не допуска)")[1])[0]);
+            config.GoFragment = ParseDialog(ending.Split("(Фраза не допуска)")[0])[0];
+            config.BackFragment = ParseDialog(ending.Split("(Фраза не допуска)")[1])[0];
+
+            AssetDatabase.CreateAsset(config, $"{_savePath}/{index}.asset");
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            index++;
         }
     }
 
@@ -76,7 +82,6 @@ public class DialogParser : MonoBehaviour
                 {
                     DialogFragment newFrag = new DialogFragment {
                         Text = "",
-                        GiveDocs = false,
                         Buttons = new List<ButtonSt>()
                     };
                     currentLevelFragments.Add(newFrag);
@@ -114,7 +119,7 @@ public class DialogParser : MonoBehaviour
                 DialogFragment newFrag = new DialogFragment
                 {
                     Text = content,
-                    GiveDocs = isGiveDocs,
+                    Actions = new(){isGiveDocs? new GiveDocs(): null},
                     Buttons = new List<ButtonSt>()
                 };
                 currentLevelFragments.Add(newFrag);

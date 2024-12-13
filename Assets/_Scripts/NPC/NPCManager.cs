@@ -43,6 +43,7 @@ public class NPCManager : MonoBehaviour
     private NPCAnim _npcAnim;
     
     private int _weekDate => FindFirstObjectByType<TimeLines>().WeekDate;
+    private NPCRandomizer _randomizer => GetComponent<NPCRandomizer>();
     private DayNPC _currentDay;
     private bool _isChecked, _toTable;
     
@@ -66,6 +67,7 @@ public class NPCManager : MonoBehaviour
         {
             SpawnNPC(new() { _tutorialNPC[0] });
             _tutorialNPC.Remove(_tutorialNPC[0]);
+            CurrentNPC.Fragments = RandomParamSt.TutorialConfigs[0].Fragments;
         }
 
         TimeLines.OnDayEnd += () =>
@@ -74,7 +76,7 @@ public class NPCManager : MonoBehaviour
             {
                 SpawnNPC(new() { _tutorialNPC[0] });
                 _tutorialNPC.Remove(_tutorialNPC[0]);
-                _isChecked = true;
+                CurrentNPC.Fragments = RandomParamSt.TutorialConfigs[_weekDate == 2 ? 1 : 2].Fragments;
             }
         };
     }
@@ -150,6 +152,7 @@ public class NPCManager : MonoBehaviour
             {
                 SpawnNPC(_normalNPC);
                 _currentDay.NormalNPC -= 1;
+                _randomizer.Randomize(CurrentNPC.transform);
             }
             else
                 OnNPCEnd?.Invoke();
