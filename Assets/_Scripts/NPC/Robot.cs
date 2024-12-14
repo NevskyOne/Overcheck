@@ -1,6 +1,8 @@
 
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
@@ -25,6 +27,8 @@ public class Robot : MonoBehaviour
     private PlayerInput _input => FindFirstObjectByType<PlayerInput>();
     private RandomEvents _events => FindFirstObjectByType<RandomEvents>();
     private NavMeshAgent _agent => GetComponent<NavMeshAgent>();
+    private AudioSource _source => GetComponent<AudioSource>();
+    private NPCAnim _animator => GetComponent<NPCAnim>();
 
     private RobotState _state = RobotState.Normal;
     private bool _isAgentStop, _isTargeting;
@@ -34,6 +38,7 @@ public class Robot : MonoBehaviour
     private void Start()
     {
         StartCoroutine(WalkRoutine());
+        _source.Play();
         
         _defaultSpeed = _agent.speed;
         _defaultAcceleration = _agent.acceleration;
@@ -41,6 +46,8 @@ public class Robot : MonoBehaviour
         
         PlayerMovement.OnRun += () =>
         {
+            _source.pitch = 2f;
+            _animator.SpeedFactor = 2f;
             _isTargeting = true;
             _state = RobotState.Hunt;
             _agent.speed = _huntSpeed;
@@ -48,6 +55,7 @@ public class Robot : MonoBehaviour
         };
         PlayerMovement.OnRunEnd += () =>
         {
+            _source.pitch = 1f;
             _isTargeting = false;
         };
     }
@@ -59,6 +67,7 @@ public class Robot : MonoBehaviour
             _isAgentStop = true;
             if (_state == RobotState.Hunt)
             {
+                _animator.SpeedFactor = 1f;
                 _state = RobotState.Normal;
                 _agent.speed = _defaultSpeed;
                 _agent.acceleration = _defaultAcceleration;
@@ -80,7 +89,7 @@ public class Robot : MonoBehaviour
         while (_state == RobotState.Normal)
         {
             _agent.SetDestination(_positions[currentPos].position);
-            forward = forward == Random.Range(0, 100) < 90;
+            forward =  Random.Range(0, 100) < 10? !forward : forward;
             if (forward && currentPos == _positions.Count - 1)
                 currentPos = -1;
             else if(!forward && currentPos == 0)
@@ -98,8 +107,8 @@ public class Robot : MonoBehaviour
         while (_state == RobotState.Normal)
         {
             yield return new WaitForSeconds(Random.Range(2,5));
-            var targetIntensivity =  Random.Range(0, 2) == 1? Mathf.Pow(2,1.4f):0;
-            while (!Mathf.Approximately(intensity, targetIntensivity))
+            var targetIntensivity =  Random.Range(0, 2) == 1?1:0;
+            while (Math.Abs(intensity - targetIntensivity) > 0.01f)
             {
                 intensity = Mathf.Lerp(intensity, targetIntensivity, Time.fixedDeltaTime);
                 _material.SetColor(FresnelColor,
@@ -109,27 +118,37 @@ public class Robot : MonoBehaviour
             
         }
     }
-    
-    // public async void OnTriggerEnter(Collider sbj)
-    // {
-    //     if (sbj.CompareTag("Player"))
-    //     {
-    //         GetComponent<Collider>().enabled = false;
-    //         sbj.transform.LookAt(transform);
-    //         _input.enabled = false;
-    //         
-    //         var fragment = new DialogFragment
-    //             { Text = RandomParamSt.RobotsReplics[Random.Range(0,RandomParamSt.RobotsReplics.Count)], Buttons = new()};
-    //         _dialogSystem.FragmentsStack = new() { fragment };
-    //         _dialogSystem.PlayNext();
-    //         
-    //         await Task.Delay(3000);
-    //         _dialogSystem.EndChat();
-    //         _events.Lose();
-    //
-    //         _input.enabled = true;
-    //     }
-    // }
+
+    private void OnDisable()
+    {
+        _material.SetColor(FresnelColor, _statColor);
+    }
+
+    public async void OnTriggerEnter(Collider sbj)
+    {
+        if (sbj.CompareTag("Player"))
+        {
+            _source.Stop();
+            _isTargeting = false;
+            _state = RobotState.Attack;
+            GetComponent<Collider>().enabled = false;
+            sbj.transform.LookAt(transform);
+            _input.enabled = false;
+            
+            // var fragment = new DialogFragment
+            //     { Text = RandomParamSt.RobotsReplics[Random.Range(0,RandomParamSt.RobotsReplics.Count)], Buttons = new()};
+            // _dialogSystem.FragmentsStack = new() { fragment };
+            // _dialogSystem.PlayNext();
+            
+            await Task.Delay(3000);
+            // _dialogSystem.EndChat();
+            // _events.Lose();
+            transform.position = _positions[0].position;
+            _state = RobotState.Normal;
+            _input.enabled = true;
+            _source.Play();
+        }
+    }
 }
 
 public enum RobotState

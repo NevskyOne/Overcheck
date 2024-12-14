@@ -1,0 +1,17 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!221 &22100000
+AnimatorOverrideController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: HorrorBear
+  m_Controller: {fileID: 9100000, guid: 3efbaa5000c13ba4a8481efb6672b876, type: 2}
+  m_Clips:
+  - m_OriginalClip: {fileID: -887982601649841707, guid: 70e6b0693e78b2743b8db4a137af41df, type: 3}
+    m_OverrideClip: {fileID: -887982601649841707, guid: 70e6b0693e78b2743b8db4a137af41df, type: 3}
+  - m_OriginalClip: {fileID: -887982601649841707, guid: 1bf3fe23314137e4ab14d7578d01bc28, type: 3}
+    m_OverrideClip: {fileID: -887982601649841707, guid: 1bf3fe23314137e4ab14d7578d01bc28, type: 3}
+  - m_OriginalClip: {fileID: -887982601649841707, guid: a40be822b18edfe42ab851e87578ebbb, type: 3}
+    m_OverrideClip: {fileID: -887982601649841707, guid: e806f37094c129641aa0d637a364d3cf, type: 3}

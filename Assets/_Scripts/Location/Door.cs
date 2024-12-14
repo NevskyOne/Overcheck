@@ -8,14 +8,14 @@ public class Door : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player") && !other.CompareTag("HoloBear")) return;
         _animator.SetBool(_open, true);
         _source.Play();
     }
     
     private void OnTriggerExit(Collider other)
     {
-        if (!other.CompareTag("Player")) return;
+        if (!other.CompareTag("Player")&& !other.CompareTag("HoloBear")) return;
         _animator.SetBool(_open, false);
         _source.Play();
     }
