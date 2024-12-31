@@ -17,11 +17,7 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private Slider _sfx;
     [SerializeField] private Slider _mouseSens;
     [Header("EndingsUI")] 
-    [SerializeField] private GameObject _goodVoidImg;
-    [SerializeField] private GameObject _badVoidImg;
-    [SerializeField] private GameObject _eternityImg;
-    [SerializeField] private GameObject _robotsImg;
-    
+    [SerializeField] private GameObject[] _endings;
     
     public static int Graphics
     {
@@ -63,25 +59,20 @@ public class SettingsUI : MonoBehaviour
         set { PlayerPrefs.SetFloat("MouseSens", value); PlayerPrefs.Save();}
     }
 
-    public static bool GoodVoid
+    public static bool FirstEnding
     {
-        get { return PlayerPrefs.GetInt("GoodVoid") == 1; }
-        set { PlayerPrefs.SetInt("GoodVoid", 1); PlayerPrefs.Save();}
+        get { return PlayerPrefs.GetInt("Ending1") == 1; }
+        set { PlayerPrefs.SetInt("Ending1", 1); PlayerPrefs.Save();}
     }
-    public static bool BadVoid
+    public static bool SecondEnding
     {
-        get { return PlayerPrefs.GetInt("BadVoid") == 1; }
-        set { PlayerPrefs.SetInt("BadVoid", 1); PlayerPrefs.Save();}
+        get { return PlayerPrefs.GetInt("Ending2") == 1; }
+        set { PlayerPrefs.SetInt("Ending2", 1); PlayerPrefs.Save();}
     }
-    public static bool Eternity
+    public static bool ThirdEnding
     {
-        get { return PlayerPrefs.GetInt("Eternity") == 1; }
-        set { PlayerPrefs.SetInt("Eternity", 1); PlayerPrefs.Save();}
-    }
-    public static bool Robots
-    {
-        get { return PlayerPrefs.GetInt("Robots") == 1; }
-        set { PlayerPrefs.SetInt("Robots", 1); PlayerPrefs.Save();}
+        get { return PlayerPrefs.GetInt("Ending3") == 1; }
+        set { PlayerPrefs.SetInt("Ending3", 1); PlayerPrefs.Save();}
     }
     public static int CurrentDay
     {
@@ -117,10 +108,9 @@ public class SettingsUI : MonoBehaviour
             _mouseSens.value = MouseSens;
         }
 
-        if(GoodVoid) _goodVoidImg.SetActive(true);
-        if(BadVoid) _badVoidImg.SetActive(true);
-        if(Eternity) _eternityImg.SetActive(true);
-        if(Robots) _robotsImg.SetActive(true);
+        if(FirstEnding) _endings[0].SetActive(true);
+        if(SecondEnding) _endings[1].SetActive(true);
+        if(ThirdEnding) _endings[2].SetActive(true);
     }
 
     public void ChangeVolume(float value)

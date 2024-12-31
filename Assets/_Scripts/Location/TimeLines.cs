@@ -32,8 +32,8 @@ public class TimeLines : MonoBehaviour
     public static uint WrongNPC { get; set; }
     public static uint Additional { get; set; }
 
-    private uint _voidCounter,_eternityCounter,_robotsCounter;
-    private uint _voidTemp, _eternityTemp, _robotsTemp;
+    private uint _voidCounter,_eternityCounter;
+    private uint _voidTemp, _eternityTemp;
     
     private DataBase _dataBase => FindFirstObjectByType<DataBase>();
 
@@ -89,7 +89,6 @@ public class TimeLines : MonoBehaviour
 
     public void ResetDay()
     {
-        _robotsTemp = 0;
         _eternityTemp = 0;
         _voidTemp = 0;
         CorrectNPC = 0;
@@ -103,26 +102,25 @@ public class TimeLines : MonoBehaviour
         Additional = (uint)(Additional * MoneyFactor);
         PlayerData.ChangeCoins((int)(CorrectNPC + Additional));
         PlayerData.ChangeCoins((int)WrongNPC, false);
-
-        _robotsCounter = _robotsTemp;
+        
         _eternityCounter = _eternityTemp;
         _voidCounter = _voidTemp;
         if (WeekDate == _days - 1)
         {
             if (_eternityCounter > 4)
             {
-                _endText.text = "Этернити";
-                SettingsUI.Eternity = true;
+                _endText.text = "Поздравляем, агент Орион! Мы ждем вас";
+                SettingsUI.FirstEnding = true;
             }
             else if (_voidCounter > 20)
             {
-                _endText.text = "Хорошая Void";
-                SettingsUI.GoodVoid = true;
+                _endText.text = "Вы повышены";
+                SettingsUI.SecondEnding = true;
             }
             else
             {
-                _endText.text = "Плохая Void";
-                SettingsUI.BadVoid = true;
+                _endText.text = "Вы уволены";
+                SettingsUI.ThirdEnding = true;
             }
 
             SettingsUI.CurrentDay = 0;

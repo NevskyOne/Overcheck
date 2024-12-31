@@ -44,8 +44,10 @@ public class NPCManager : MonoBehaviour
     
     private int _weekDate => FindFirstObjectByType<TimeLines>().WeekDate;
     private NPCRandomizer _randomizer => GetComponent<NPCRandomizer>();
+    private StartButton _button => FindFirstObjectByType<StartButton>();
+    
     private DayNPC _currentDay;
-    private bool _isChecked, _toTable;
+    private bool _isChecked, _toTable, _isTutored;
     
     public static event Action OnNPCEnd, RandomEvent, EternityCheck, OnNPCCheck,OnGiveDocs;
     
@@ -63,21 +65,25 @@ public class NPCManager : MonoBehaviour
         ChangedCriminals = _criminals;
         RandomEvents.OnLose += ResetDay;
 
-        if (_weekDate == 0)
-        {
-            SpawnNPC(new() { _tutorialNPC[0] });
-            _tutorialNPC.Remove(_tutorialNPC[0]);
-            CurrentNPC.Fragments = RandomParamSt.TutorialConfigs[0].Fragments;
-        }
+
 
         TimeLines.OnDayEnd += () =>
         {
+            _currentDay = NpcList[_weekDate];
             if (_currentDay.TutorialNPC > 0)
             {
                 SpawnNPC(new() { _tutorialNPC[0] });
                 _tutorialNPC.Remove(_tutorialNPC[0]);
-                CurrentNPC.Fragments = RandomParamSt.TutorialConfigs[_weekDate == 2 ? 1 : 2].Fragments;
+                CurrentNPC.Fragments = _weekDate switch
+                {
+                    0 => RandomParamSt.TutorialConfigs[0].Fragments,
+                    1 => RandomParamSt.TutorialConfigs[1].Fragments,
+                    3 => RandomParamSt.TutorialConfigs[2].Fragments,
+                    _ => CurrentNPC.Fragments
+                };
             }
+            else
+                _button.Enabled = true;
         };
     }
     
@@ -86,7 +92,14 @@ public class NPCManager : MonoBehaviour
         if (!_currentAgent || !(_currentAgent.velocity.magnitude < 0.1f)) return;
         if (_isChecked)
         {
-            SelectNPC();
+            if(_isTutored)
+                SelectNPC();
+            else
+            {
+                _button.Enabled = true;
+                _isTutored = true;
+            }
+
             _isChecked = false;
         }
 
@@ -191,6 +204,8 @@ public class NPCManager : MonoBehaviour
             EternityCheck?.Invoke();
         
         _currentAgent.SetDestination(_endPos.position);
+        print("GoTowards");
+            
         await Task.Delay(10000);
         _isChecked = true;
     }

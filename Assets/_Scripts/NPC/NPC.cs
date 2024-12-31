@@ -60,9 +60,9 @@ public class NPC : MonoBehaviour
         
         _planet = Random.Range(1,5);
 
-        if (_timeLines.WeekDate > 3)
+        if (_timeLines.WeekDate > 2)
             _docsCount = 3;
-        else if (_timeLines.WeekDate > 1)
+        else if (_timeLines.WeekDate > 0)
             _docsCount = 2;
     }
 

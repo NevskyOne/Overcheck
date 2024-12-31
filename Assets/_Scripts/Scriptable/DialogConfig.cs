@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,4 +8,5 @@ public class DialogConfig : ScriptableObject
     public List<DialogFragment> Fragments;
     public DialogFragment GoFragment;
     public DialogFragment BackFragment;
+    
 }

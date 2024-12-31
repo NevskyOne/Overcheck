@@ -4,5 +4,5 @@ using System;
 public class GiveDocs : IDialogAction
 {
     public void DoAction() => NPCManager.CurrentNPC.GiveDocs();
-    
+    public void AfterAction(){}
 }

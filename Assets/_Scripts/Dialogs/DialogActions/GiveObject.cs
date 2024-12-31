@@ -10,4 +10,5 @@ public class GiveObject : IDialogAction
     {
         Object.Instantiate(_object, Object.FindFirstObjectByType<DragRotate>().transform);
     }
+    public void AfterAction(){}
 }

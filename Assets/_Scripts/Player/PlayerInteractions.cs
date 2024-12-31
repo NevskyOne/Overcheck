@@ -36,7 +36,6 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private GameObject _popupMenu;
     [SerializeField] private TMP_Text _popupText;
     [Header("Buttons")]
-    [SerializeField] private Material _buttonMaterial;
     [SerializeField] private Material _corectMaterial;
     [SerializeField] private Material _wrongMaterial;
     
@@ -45,11 +44,12 @@ public class PlayerInteractions : MonoBehaviour
     private PlayerInput _playerInput => GetComponent<PlayerInput>();
     private PlayerMovement _playerMove => GetComponent<PlayerMovement>();
     private TimeLines _timeLines => GetComponent<TimeLines>();
+    private StartButton _button => FindFirstObjectByType<StartButton>();
     private CameraManager _camManager => FindFirstObjectByType<CameraManager>();
     private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
     private DialogSystem _dialogSystem => FindFirstObjectByType<DialogSystem>();
 
-    private bool  _isHolding, _canSleep, _canStartDay = true;
+    private bool  _isHolding, _canSleep;
     private CheckState _tableState = CheckState.None;
     public static PlayerState PlayerState { get; set; } = PlayerState.None;
     private Transform _currentDoc;
@@ -71,11 +71,9 @@ public class PlayerInteractions : MonoBehaviour
         TimeLines.OnDayEnd += () =>
         {
             _camManager.ResetCamera();
-            ResetButton();
             transform.GetChild(1).gameObject.SetActive(true);
             PlayerState = PlayerState.Dialog;
         };
-        _buttonMaterial.color = Color.green;
     }
 
     private void Update()
@@ -143,7 +141,7 @@ public class PlayerInteractions : MonoBehaviour
                 _cursorImg.sprite = _bedSprite;
             else if (hit.transform.CompareTag("Radio"))
                 _cursorImg.sprite = _radioSprite;
-            else if (_canStartDay && hit.transform.CompareTag("StartDay"))
+            else if (_button.Enabled && hit.transform.CompareTag("StartDay"))
                 _cursorImg.sprite = _startSprite;
             else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Correct"))
             {
@@ -223,11 +221,10 @@ public class PlayerInteractions : MonoBehaviour
             await Task.Delay(2000);
             _timeLines.Sleep();
         }
-        else if (_canStartDay && hit2.transform.CompareTag("StartDay"))
+        else if (_button.Enabled && hit2.transform.CompareTag("StartDay"))
         {
             _npcMng.StartDay();
-            _canStartDay = false;
-            _buttonMaterial.color = Color.gray;
+            _button.Enabled = false;
         }
         else if (PlayerState == PlayerState.None && transf.CompareTag("Table"))
         {
@@ -287,14 +284,6 @@ public class PlayerInteractions : MonoBehaviour
         if(PlayerState == PlayerState.Dialog)
             _dialogSystem.PlayNext();
     }
-
-    public void ResetButton()
-    {
-        _canStartDay = true;
-        _buttonMaterial.color = Color.green;
-    }
-    
-
 
     private void Escape(InputAction.CallbackContext _)
     {

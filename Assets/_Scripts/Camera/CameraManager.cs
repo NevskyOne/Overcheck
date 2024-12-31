@@ -11,7 +11,7 @@ public class CameraManager : MonoBehaviour
     private Vector3 rotationVelocity;
     private float currentLocalXRotation;
 
-    private Coroutine currentCoroutine;
+    private Coroutine _currentCoroutine, _currentRotateRoutine;
     private PlayerInteractions _playerInter;
 
     private void Start()
@@ -20,23 +20,27 @@ public class CameraManager : MonoBehaviour
         _playerInter = FindFirstObjectByType<PlayerInteractions>();
     }
 
-    public void MoveToTarget(Vector3 targetPosition, Vector3 targetLocalEulerAngles)
+    public void MoveToTarget(Vector3 targetPosition, Vector3 targetLocalEulerAngles )
     {
         initialLocalEulerAngles = transform.localEulerAngles;
-
-        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
-        currentCoroutine = StartCoroutine(
-            SmoothMove(targetPosition, targetLocalEulerAngles));
+        initialLocalEulerAngles.z = 0;
+        if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
+        if (_currentRotateRoutine != null) StopCoroutine(_currentRotateRoutine);
+        if(targetPosition != Vector3.zero)
+            _currentCoroutine = StartCoroutine(SmoothMove(targetPosition));
+        _currentRotateRoutine = StartCoroutine(SmoothRotate(targetLocalEulerAngles));
     }
 
     public void ResetCamera()
     {
 
-        if (currentCoroutine != null) StopCoroutine(currentCoroutine);
-        currentCoroutine = StartCoroutine(LocalSmoothMove(initialLocalPosition, initialLocalEulerAngles));
+        if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
+        if (_currentRotateRoutine != null) StopCoroutine(_currentRotateRoutine);
+        _currentCoroutine = StartCoroutine(LocalSmoothMove(initialLocalPosition));
+        _currentRotateRoutine = StartCoroutine(SmoothRotate(initialLocalEulerAngles));
     }
 
-    private IEnumerator LocalSmoothMove(Vector3 targetPosition, Vector3 targetEulerAngles)
+    private IEnumerator LocalSmoothMove(Vector3 targetPosition)
     {
         StopCoroutine(nameof(SmoothMove));
         float elapsedTime = 0f;
@@ -46,25 +50,14 @@ public class CameraManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
 
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, targetPosition, ref positionVelocity, moveDuration);
-
-            Vector3 smoothedRotation = new Vector3(
-                Mathf.SmoothDampAngle(transform.localEulerAngles.x, targetEulerAngles.x, ref rotationVelocity.x, moveDuration),
-                Mathf.SmoothDampAngle(transform.localEulerAngles.y, targetEulerAngles.y, ref rotationVelocity.y, moveDuration),
-                Mathf.SmoothDampAngle(transform.localEulerAngles.z, targetEulerAngles.z, ref rotationVelocity.z, moveDuration)
-            );
-
-            transform.localEulerAngles = smoothedRotation;
-
             yield return null;
         }
 
         transform.localPosition = targetPosition;
-        transform.localEulerAngles = targetEulerAngles;
-        
         _playerInter.Focus();
     }
     
-    private IEnumerator SmoothMove(Vector3 targetPosition, Vector3 targetEulerAngles)
+    private IEnumerator SmoothMove(Vector3 targetPosition)
     {
         StopCoroutine(nameof(LocalSmoothMove));
         float elapsedTime = 0f;
@@ -74,6 +67,20 @@ public class CameraManager : MonoBehaviour
             elapsedTime += Time.deltaTime;
 
             transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref positionVelocity, moveDuration);
+            yield return null;
+        }
+
+        transform.position = targetPosition;
+    }
+
+    private IEnumerator SmoothRotate(Vector3 targetEulerAngles)
+    {
+        StopCoroutine(nameof(SmoothRotate));
+        float elapsedTime = 0f;
+
+        while (elapsedTime < moveDuration + 1.5f)
+        {
+            elapsedTime += Time.deltaTime;
 
             Vector3 smoothedRotation = new Vector3(
                 Mathf.SmoothDampAngle(transform.localEulerAngles.x, targetEulerAngles.x, ref rotationVelocity.x, moveDuration),
@@ -86,8 +93,6 @@ public class CameraManager : MonoBehaviour
             yield return null;
         }
 
-        transform.position = targetPosition;
         transform.localEulerAngles = targetEulerAngles;
     }
-    
 }

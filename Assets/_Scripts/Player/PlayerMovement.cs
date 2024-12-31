@@ -77,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         _newRot = new Vector3(0, transform.eulerAngles.y + delta.x * _mouseSens, 0);
         
         _camRot = new Vector3(Mathf.Clamp(NormalizeAngle(camAngles.x - delta.y * _mouseSens),
-            rotationXLimits.x, rotationXLimits.y),0, camAngles.z);
+            rotationXLimits.x, rotationXLimits.y),0, 0);
     }
 
     private void FixedUpdate()
