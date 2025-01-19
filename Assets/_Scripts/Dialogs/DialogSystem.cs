@@ -1,60 +1,92 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogSystem : MonoBehaviour
 {
     [HideInInspector] public List<DialogFragment> FragmentsStack = new();
-    
-    [Header("Text")]
-    [SerializeField] private GameObject _dialogMenu;
-    [SerializeField] private TMP_Text _textField;
 
+    [Header("Animation")]
+    [SerializeField] private float _letterDelay = 0.1f;
+    [SerializeField] private float _startFontSize = 10f;
+    [SerializeField] private float _endFontSize = 30f;
+    [SerializeField] private float _growDuration = 0.5f; 
+    [Header("Text")]
+    public GameObject DialogMenu;
+    public TMP_Text TextField;
     [Header("Buttons")] 
     [SerializeField] private GameObject _buttonPrefab;
     [SerializeField] private Transform _buttonsHolder;
-
-    [Header("Object")] [SerializeField] private Transform _objHolder;
+    [Header("Audio")] [SerializeField] private AudioSource _source;
+    
+    private PlayerMovement _playerMovement => FindFirstObjectByType<PlayerMovement>();
+    private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
+    private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
+    
+    private string _currentLine = "";
+    private Image _frameImg => DialogMenu.GetComponent<Image>();
+    private List<IDialogAction> _actions = new List<IDialogAction>();
     
     public event Action ChatEnded;
     public CheckState GoAfter;
-    private NPCManager _npcManager;
-
-    private void Start()
-    {
-        _npcManager = FindFirstObjectByType<NPCManager>();
-    }
 
     public void PlayNext()
     {
-        if (FragmentsStack.Count > 0)
+        if (_currentLine != "" && TextField.text != _currentLine)
         {
-            _dialogMenu.SetActive(true);
-            for (var i = 0; i < _buttonsHolder.childCount; i++ )    
-            {
-                Destroy(_buttonsHolder.GetChild(i).gameObject);
-            }
+            StopAllCoroutines();
+            TextField.text = "";
+            TextField.text = _currentLine;
+            _npcManager.SetNPCTalking(false);
+            _source.mute = true;
+        }
+        else if (FragmentsStack.Count > 0)
+        {
+            TextField.color = Color.white;
+            _frameImg.color = Color.white;
+            TextField.alignment = TextAlignmentOptions.TopLeft;
+            _npcManager.SetNPCTalking();
+            DialogMenu.SetActive(true);
+            _playerInter.StopFocus();
+            
             PlayFragment(FragmentsStack[0]);
+            _currentLine = FragmentsStack[0].Text;
             FragmentsStack.RemoveAt(0);
+            
         }
         else
         {
+            foreach (var action in _actions)
+            {
+                action?.AfterAction();
+            }
+
+            _actions = new List<IDialogAction>();
             EndChat();
-            if(GoAfter == CheckState.Correct)
-                _npcManager.GoTowards();
-            else if(GoAfter == CheckState.Wrong)
-                _npcManager.GoBack();
-            GoAfter = CheckState.None;
         }
     }
-    public void PlayFragment(DialogFragment fragment)
+
+    private void PlayFragment(DialogFragment fragment)
     {
-        _textField.text = fragment.Text;
-        ShowButtons(fragment.Buttons);
-        PlaceObj(fragment.Object);
-        if(fragment.GiveDocs)
-            _npcManager.NPCGiveDocs();
+        StartCoroutine(AnimateText(fragment.Text));
+        _source.mute = false;
+        foreach (Transform child in _buttonsHolder)
+        {
+            Destroy(child.gameObject);
+        }
+        if(fragment.Buttons.Count > 0)
+            ShowButtons(new (fragment.Buttons));
+
+        if (fragment.Actions == null) return;
+        foreach (var action in fragment.Actions)
+        {
+            action?.DoAction();
+            _actions.Add(action);
+        }
+        
     }
 
     private void ShowButtons(List<ButtonSt> buttons)
@@ -62,24 +94,92 @@ public class DialogSystem : MonoBehaviour
         foreach (var btn in buttons)
         {
             var _newButton =Instantiate(_buttonPrefab, _buttonsHolder);
-            var component = _newButton.AddComponent<DialogButton>();
+            var component = _newButton.GetComponent<DialogButton>();
             component.ButtonFields = btn;
         }
-    }
-    
-    private void PlaceObj(GameObject obj)
-    {
-        if(obj != null) Instantiate(obj, _objHolder);
     }
 
     public void EndChat()
     {
+        StopAllCoroutines();
+        _actions = new List<IDialogAction>();
+        _currentLine = "";
+        _npcManager.SetNPCTalking(false);
+        _source.mute = true;
+        
+        _playerMovement.enabled = true;
         FragmentsStack.Clear();
+        _playerInter.Focus();
+        
         for (var i = 0; i < _buttonsHolder.childCount; i++ )    
         {
             Destroy(_buttonsHolder.GetChild(i).gameObject);
         }
-        _dialogMenu.SetActive(false);
+        DialogMenu.SetActive(false);
+        
+        if(GoAfter == CheckState.Correct)
+            _npcManager.GoTowards();
+        else if(GoAfter == CheckState.Wrong)
+            _npcManager.GoBack();
+        GoAfter = CheckState.None;
+        
         ChatEnded?.Invoke();
+    }
+
+    private IEnumerator AnimateText(string textToDisplay)
+    {
+        // Пустой массив для построения текста
+        char[] displayedText = new char[textToDisplay.Length];
+        for (int i = 0; i < displayedText.Length; i++) displayedText[i] = ' ';
+
+        for (int i = 0; i < textToDisplay.Length; i++)
+        {
+            // Добавляем символ в массив и запускаем анимацию увеличения
+            displayedText[i] = textToDisplay[i];
+            StartCoroutine(AnimateCharacterSize(displayedText, i));
+
+            // Задержка перед добавлением следующего символа
+            yield return new WaitForSeconds(_letterDelay);
+        }
+        _npcManager.SetNPCTalking(false);
+        _source.mute = true;
+    }
+
+    private IEnumerator AnimateCharacterSize(char[] displayedText, int charIndex)
+    {
+        float elapsedTime = 0f;
+
+        while (elapsedTime < _growDuration)
+        {
+            elapsedTime += Time.deltaTime;
+            float t = Mathf.Clamp01(elapsedTime / _growDuration);
+
+            // Формируем строку с увеличением только текущего символа
+            string modifiedText = "";
+            for (int i = 0; i < displayedText.Length; i++)
+            {
+                if (i == charIndex && displayedText[i] != ' ')
+                {
+                    // Увеличиваем текущий символ
+                    modifiedText += $"<size={(int)Mathf.Lerp(_startFontSize, _endFontSize, t)}>{displayedText[i]}</size>";
+                }
+                else if (displayedText[i] != ' ')
+                {
+                    // Остальные символы остаются неизменными
+                    modifiedText += $"<size={_endFontSize}>{displayedText[i]}</size>";
+                }
+                else
+                {
+                    // Добавляем пустое место для символов, которые ещё не появились
+                    modifiedText += " ";
+                }
+            }
+
+            // Обновляем текст
+            TextField.text = modifiedText;
+            yield return null;
+        }
+
+        TextField.text = _currentLine;
     }
 }

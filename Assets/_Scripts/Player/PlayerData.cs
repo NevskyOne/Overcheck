@@ -1,15 +1,37 @@
+using System;
 using TMPro;
 using UnityEngine;
 
 public class PlayerData : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _moneyCount;
-    
-    private int _coins;
+    [SerializeField] private TMP_Text _honeyCombsText;
 
-    public void ChageCoins(int value, bool add = true)
+    public static int HoneyCombs { get; private set; }
+
+    private static event Action _onMoneyChange;
+
+    private void Start()
     {
-        _coins = Mathf.Clamp(add? _coins + value : _coins - value, 0, 1000000000);
-        _moneyCount.text = _coins.ToString();
+        _honeyCombsText.text = PlayerData.HoneyCombs.ToString();
+        _onMoneyChange += () =>
+        {
+            _honeyCombsText.text = PlayerData.HoneyCombs.ToString();
+        };
     }
+
+    public static async void InitializeCoins()
+    {
+        HoneyCombs = await APIManager.Instance.GetCoins(Bootstrap.Instance.PlayerName);
+        _onMoneyChange?.Invoke();
+    }
+
+    public static async void ChangeCoins(int value, bool add = true)
+    {
+        var _serverValue = await APIManager.Instance.GetCoins(Bootstrap.Instance.PlayerName);
+        HoneyCombs = Mathf.Clamp(add? _serverValue + value : _serverValue - value, 0, 1000000000);
+        
+        APIManager.Instance.ChangeCoins(Bootstrap.Instance.PlayerName, HoneyCombs);
+        _onMoneyChange?.Invoke();
+    }
+    
 }

@@ -1,58 +1,87 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
+
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement : MonoBehaviour
 {
-    public float MouseSens;
-    
+    [Header("Shake Settings")]
+    [SerializeField][Range(0,5f)] private float shakeAmplitude = 0.1f; 
+    [SerializeField][Range(0,5f)] private float shakeFrequency = 5f;
+    [Header("Settings")]
     [SerializeField][Range(0,1f)] private float _smoothTime;
+    [SerializeField][Range(0,1f)] private float _transitionTime;
     [SerializeField] private float _maxSpeed;
+    [SerializeField] private Vector2 rotationXLimits;
+    [Header("Objects")]
     [SerializeField] private Camera _cam;
     
-    [SerializeField][Range(0,1f)] private float _transitionTime;
-    
-    private PlayerInput _input;
+    private PlayerInput _input => GetComponent<PlayerInput>();
+    private PlayerSFX _sfx => GetComponent<PlayerSFX>();
+    private Effects _fx => FindFirstObjectByType<Effects>();
     private Vector3 _newPos, _newRot, _camRot;
     private Vector3 _velocity = Vector3.zero;
-    private float _speed, _fov = 60, _refTransition;
+    private float _speed, _fov = 60, _refTransition, _refZRotate;
     
-    private void Start()
+    private float _mouseSens => SettingsUI.MouseSens;
+
+    public static event Action OnRun, OnRunEnd;
+    
+    private void Awake()
     {
-        _input = gameObject.GetComponent<PlayerInput>();
-        
-        _input.actions["Look"].performed += Look;
-        _input.actions["Sprint"].started += StartSprint;
-        _input.actions["Sprint"].canceled += StopSprint;
-        
         _speed = _maxSpeed;
     }
 
+    private void OnEnable()
+    {
+        _input.actions["Look"].performed += Look;
+        _input.actions["Sprint"].started += StartSprint;
+        _input.actions["Sprint"].canceled += StopSprint;
+        StartCoroutine(_fx.ChangeChromatic(0.05f));
+    }
+
+    private void OnDisable()
+    {
+        _input.actions["Look"].performed -= Look;
+        _input.actions["Sprint"].started -= StartSprint;
+        _input.actions["Sprint"].canceled -= StopSprint;
+        
+        StartCoroutine(_fx.ChangeChromatic(0.05f));
+        _sfx.PlayBreath(false);
+        _sfx.PlayFeet(false);
+    }
+    
     private void StartSprint(InputAction.CallbackContext _)
     {
         _speed = _maxSpeed * 1.5f;
         _fov = 75;
+        _sfx.PlayBreath();
+        OnRun?.Invoke();
+        StartCoroutine(_fx.ChangeChromatic(0.5f));
     }
     
     private void StopSprint(InputAction.CallbackContext _)
     {
         _speed = _maxSpeed;
         _fov = 60;
+        _sfx.PlayBreath(false);
+        OnRunEnd?.Invoke();
+        StartCoroutine(_fx.ChangeChromatic(0.05f));
     }
     
     private void Look(InputAction.CallbackContext _)
     {
         var delta = _input.actions["Look"].ReadValue<Vector2>();
         var camAngles = _cam.transform.eulerAngles;
-        _newRot = new Vector3(0, transform.eulerAngles.y + delta.x * MouseSens, 0);
+        _newRot = new Vector3(0, transform.eulerAngles.y + delta.x * _mouseSens, 0);
         
-        _camRot = new Vector3(camAngles.x - delta.y * MouseSens,0, 0);
-        //_cam.transform.localRotation = Quaternion.Euler(Mathf.Clamp(_cam.transform.eulerAngles.x,-70f,70f), 0, 0);
+        _camRot = new Vector3(Mathf.Clamp(NormalizeAngle(camAngles.x - delta.y * _mouseSens),
+            rotationXLimits.x, rotationXLimits.y),0, 0);
     }
 
     private void FixedUpdate()
     {
-        
         var delta = _input.actions["Move"].ReadValue<Vector2>();
         var direction = new Vector3(delta.x, 0, delta.y); // Вектор ввода
         direction = Quaternion.Euler(0, transform.eulerAngles.y, 0) * direction; // Учет поворота игрока
@@ -61,7 +90,31 @@ public class PlayerMovement : MonoBehaviour
         
         _cam.fieldOfView = Mathf.SmoothDamp(_cam.fieldOfView, _fov, ref _refTransition, _transitionTime);
 
-        transform.rotation = Quaternion.Euler(_newRot);
-        _cam.transform.localRotation = Quaternion.Euler(_camRot);
+        ApplyShake(_velocity.magnitude);
+        transform.eulerAngles = _newRot;
+        _cam.transform.localEulerAngles = _camRot;
+        
+    }
+
+    private void ApplyShake(float movementSpeed)
+    {
+        if (movementSpeed > 0.1f)
+        {
+            float shakeAmount = 0.7f + Mathf.Cos(Time.time * shakeFrequency * Mathf.PI * 2) * shakeAmplitude;
+            _cam.transform.localPosition = new Vector3(0,shakeAmount,0);
+            _sfx.PlayFeet();
+        }
+        else
+        {
+            _cam.transform.localPosition = Vector3.Lerp(_cam.transform.localPosition,new Vector3(0,0.7f,0), Time.deltaTime);
+            _sfx.PlayFeet(false);
+        }
+
+    }
+    
+    private float NormalizeAngle(float angle)
+    {
+        angle %= 360;
+        return angle > 180 ? angle - 360 : angle;
     }
 }

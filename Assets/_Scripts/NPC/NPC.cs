@@ -1,166 +1,168 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
-using Random = System.Random;
 
 public class NPC : MonoBehaviour
 {
-    [SerializeField] private Mesh[] _models;
-    
+    [Header("Text")]
+    public TimeLine NPCTimeLine;
     [Header("Docs")]
-    [SerializeField] private Sprite _photo;
-    [SerializeField] private Goal _targetGoal;
     [SerializeField] private GameObject _PMS;
     [SerializeField] private GameObject _IIC;
     [SerializeField] private GameObject _PP;
     
     [Header("Valuable")]
     [SerializeField] private uint _cost;
-    [SerializeField] private TimeLine _timeLine;
-    
-    [Header("Text")]
-    [SerializeField] private List<DialogFragment> _fragments = new();
-    [SerializeField] private DialogFragment _endPassText, _endBackText;
-    
-    public Goal CurrentGoal { get; set; }
+
+    public bool FaceChanged { get; set; }
+    public bool IsCriminal  { get; private set; }
+    public Sprite Photo { get; set; }
     
     private string _name;
     private int _planet;
-    private int _collectedDocs;
+    private List<GameObject> _collectedDocs = new();
     private int _docsCount = 1;
     
-    private Random _rnd = new Random();
-    private bool _origin;
+    public List<DialogFragment> Fragments { get; set; }= new();
+    private DialogFragment _endPassText, _endBackText;
+    
+    private bool _origin, _docsGiven;
     private CheckState _checkState = CheckState.None;
     
-    private TimeLines _timeLines;
-    private DialogSystem _dialogSys;
-    private NPCManager _npcManager;
+    private TimeLines _timeLines => FindFirstObjectByType<TimeLines>();
+    private DialogSystem _dialogSys => FindFirstObjectByType<DialogSystem>();
+    private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
     
     private void Start()
     {
-        _timeLines = FindFirstObjectByType<TimeLines>();
-        _dialogSys = FindFirstObjectByType<DialogSystem>();
-        _npcManager = FindFirstObjectByType<NPCManager>();
-        transform.GetChild(0).GetComponent<MeshFilter>().mesh = _models[_rnd.Next(0, 3)];
-        
-        _name = RandomParamSt.Names[_rnd.Next(0,RandomParamSt.Names.Length)];
-        _photo = RandomParamSt.Photos[_rnd.Next(0,RandomParamSt.Photos.Length)];
-        _planet = _rnd.Next(1,5);
+        if (NPCTimeLine == TimeLine.Void)
+        {
+            var randomDialog = Random.Range(0,RandomParamSt.NormalConfigs.Count);
+            Fragments = RandomParamSt.NormalConfigs[randomDialog].Fragments;
+            _endPassText = RandomParamSt.NormalConfigs[randomDialog].GoFragment;
+            _endBackText = RandomParamSt.NormalConfigs[randomDialog].BackFragment;
+        }
 
-        if (_timeLines.WeekDate > 4)
+
+        if (Random.Range(0,101) < _npcManager.CriminalChance)
+        {
+            _name = _npcManager.ChangedCriminals[Random.Range(0,_npcManager.ChangedCriminals.Count)];
+            IsCriminal = true;
+            _cost *= 2;
+            _origin = false;
+            _npcManager.ChangedCriminals.Remove(_name);
+        }
+        else
+        {
+            var newList = (RandomParamSt.Names.Except(_npcManager.ChangedCriminals)).ToList();
+            _name = newList[Random.Range(0, newList.Count)];
+        }
+        
+        _planet = Random.Range(1,5);
+
+        if (_timeLines.WeekDate > 2)
             _docsCount = 3;
-        else if (_timeLines.WeekDate > 2)
+        else if (_timeLines.WeekDate > 0)
             _docsCount = 2;
     }
 
     public void GiveDocs()
     {
+        if (_docsGiven) return;
+        _docsGiven = true;
+        
         Document pp = null, iic = null;
         var pms = _npcManager.GiveDoc(_PMS, 1);
-        pms.Initialize(_name, _photo, _planet);
+        pms.Initialize(_name, Photo, _planet);
         if (_docsCount > 1)
         {
-            iic = _npcManager.GiveDoc(_IIC, 1);
-            iic.Initialize(_name, _photo, _planet);
+            iic = _npcManager.GiveDoc(_IIC, 2);
+            iic.Initialize(_name, Photo, _planet);
         }
 
         if (_docsCount > 2)
         {
-            pp = _npcManager.GiveDoc(_PP, 1);
-            pp.Initialize(_name, _photo, _planet);
+            pp = _npcManager.GiveDoc(_PP, 3);
+            pp.Initialize(_name, Photo, _planet);
         }
-
-        switch (_timeLine)
+        
+        if(!IsCriminal) switch (NPCTimeLine)
         {
             case TimeLine.Void:
-                _origin = Convert.ToBoolean(_rnd.Next(0, 2));
+                _origin = Random.Range(0,2) == 1;
                 if (!_origin)
                 {
-                    if (_timeLines.WeekDate > 2)
-                        iic.Randomize(1);
-                    if (_timeLines.WeekDate > 4)
-                        pp.Randomize(1);
-                    pms.Randomize(1);
+                    iic?.Randomize(2);
+                    pp?.Randomize(2);
+                    pms.Randomize(2);
                 }
                 break;
             case TimeLine.Eternity:
                 _origin = false;
-                if (_timeLines.WeekDate > 2)
-                    iic.Randomize(1);
-                if (_timeLines.WeekDate > 4)
-                    pp.Randomize(1);
-                pms.Randomize(1);
+                iic?.Randomize(2);
+                pp?.Randomize(2);
+                pms.Randomize(2);
                 break;
-            case TimeLine.Father:
+            case TimeLine.Robots:
                 _origin = true;
                 break;
         }
+        print("IsCriminal " + IsCriminal);
+        print("FaceChanged " + FaceChanged);
+        print("Origin " + _origin);
     }
 
-    public void CheckCoast(bool playerOrigin)
+    public void Check(bool playerOrigin)
     {
-        if ((_origin && playerOrigin && CurrentGoal == _targetGoal) || (_origin == false && playerOrigin == false))
-        {
-            _timeLines.CorrectNPC += _cost;
-            _timeLines.ChangeTimeline(TimeLine.Void);
-        }
-        else if (_origin && playerOrigin)
+        if (_origin == playerOrigin)
         {
             _timeLines.ChangeTimeline(TimeLine.Void);
-            _timeLines.CorrectNPC += (uint)(_cost * 0.75f);
+            TimeLines.CorrectNPC += _cost;
         }
         else
         {
-            _timeLines.WrongNPC += _cost;
+            TimeLines.WrongNPC += _cost;
             _timeLines.ChangeTimeline(TimeLine.Void, false);
-            if(_timeLine != TimeLine.Void)
-                _timeLines.ChangeTimeline(_timeLine);
+            if(NPCTimeLine != TimeLine.Void)
+                _timeLines.ChangeTimeline(NPCTimeLine);
         }
 
         _checkState = playerOrigin ? CheckState.Correct : CheckState.Wrong;
     }
 
-    public void CollectDoc()
+    public void CollectDoc(GameObject doc, bool add = true)
     {
-        _collectedDocs += 1;
+        if(add)
+            _collectedDocs.Add(doc);
+        else
+            _collectedDocs.Remove(doc);
     }
     
     public void StartChat()
     {
-        if (_checkState == CheckState.None)
-        {
-            _dialogSys.FragmentsStack = _fragments.ToList();
-        }
-        else if (_collectedDocs == _docsCount && _checkState == CheckState.Correct)
+        if (_collectedDocs.Count == _docsCount && _checkState == CheckState.Correct)
         {
             _dialogSys.FragmentsStack = new List<DialogFragment>{_endPassText};
+            foreach (var doc in _collectedDocs)
+                Destroy(doc);
+            _collectedDocs.Clear();
+            _dialogSys.GoAfter = _checkState;
         }
-        else if (_collectedDocs == _docsCount && _checkState == CheckState.Wrong)
+        else if (_collectedDocs.Count == _docsCount && _checkState == CheckState.Wrong)
         {
             _dialogSys.FragmentsStack = new List<DialogFragment>{_endBackText};
+            foreach (var doc in _collectedDocs)
+                Destroy(doc);
+            _collectedDocs.Clear();
+            _dialogSys.GoAfter = _checkState;
+        }
+        else if(_checkState == CheckState.None)
+        {
+            _dialogSys.FragmentsStack = Fragments.ToList();
         }
         _dialogSys.PlayNext();
-        _dialogSys.GoAfter = _checkState;
+        
     }
     
 }
 
-
-public enum Planet
-{
-    Planet1,
-    Planet2,
-    Planet3,
-    Planet4,
-    Planet5
-}
-
-public enum Goal
-{
-    Work,
-    Family,
-    Vacation,
-    Other
-}

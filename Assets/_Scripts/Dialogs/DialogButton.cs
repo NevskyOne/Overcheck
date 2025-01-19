@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
@@ -14,12 +15,12 @@ public class DialogButton : MonoBehaviour
     {
         GetComponentInChildren<TMP_Text>().text = ButtonFields.Text;
         _dialogSys = FindFirstObjectByType<DialogSystem>();
-        GetComponent<Button>().onClick.AddListener(OnClick);
+        
     }
 
-    private void OnClick()
+    public void Click()
     {
-        _dialogSys.FragmentsStack = ButtonFields.Fragments;
+        _dialogSys.FragmentsStack = ButtonFields.Fragments.ToList();
         _dialogSys.PlayNext();
     }
 }
