@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.Rendering.Universal;
 
-public class Effects : MonoBehaviour
+public class VisualEffects : MonoBehaviour
 {
     [SerializeField] private VolumeProfile _profile;
     [SerializeField] private Vector4 _mainGamma;

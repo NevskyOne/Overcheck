@@ -19,7 +19,7 @@ public class PlayerMovement : MonoBehaviour
     
     private PlayerInput _input => GetComponent<PlayerInput>();
     private PlayerSFX _sfx => GetComponent<PlayerSFX>();
-    private Effects _fx => FindFirstObjectByType<Effects>();
+    private VisualEffects _fx => FindFirstObjectByType<VisualEffects>();
     private Vector3 _newPos, _newRot, _camRot;
     private Vector3 _velocity = Vector3.zero;
     private float _speed, _fov = 60, _refTransition, _refZRotate;

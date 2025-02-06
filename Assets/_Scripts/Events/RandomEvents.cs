@@ -32,7 +32,7 @@ public class RandomEvents : MonoBehaviour
     private Rigidbody _camRb => _cameraMng.GetComponent<Rigidbody>();
     private StartButton _button => FindFirstObjectByType<StartButton>();
     private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
-    private Effects _fx => FindFirstObjectByType<Effects>();
+    private VisualEffects _fx => FindFirstObjectByType<VisualEffects>();
 
     public static event Action OnLose, OnDone;
     
