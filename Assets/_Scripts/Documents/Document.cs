@@ -5,21 +5,17 @@ using Random = System.Random;
 
 public abstract class Document : MonoBehaviour
 {
-    [SerializeField] private TMP_Text _nameText;
-    [SerializeField] private Image _photoImage;
+    [SerializeField] protected TMP_Text _nameText;
+    [SerializeField] protected Image _photoImage;
     
     protected string _name;
     protected Sprite _photo;
     protected bool _origin = true;
     protected int _paramCount = 2;
     protected Random _rnd = new Random();
-    protected NPCManager _npcManager;
-    
-    
 
     public virtual void Initialize(string name, Sprite photo, int planet)
     {
-        _npcManager = FindFirstObjectByType<NPCManager>();
         _name = name;
         _photo = photo;
 

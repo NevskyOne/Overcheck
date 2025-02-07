@@ -733,7 +733,7 @@ MonoBehaviour:
   _meteorsSpawnRateMax: 2
   _meteorsToWinCountMin: 10
   _meteorsToWinCountMax: 12
-  _startButton: {fileID: 0}
+  _startButton: {fileID: 5791940057608679409}
   _spawnpoints:
   - {fileID: 12617855621322238}
   - {fileID: 4634552405600013322}
@@ -741,7 +741,7 @@ MonoBehaviour:
   _stationTransform: {fileID: 5576634873941880502}
   _targetTransform: {fileID: 3506409527968941463}
   _maxStationHealth: 5
-  _zPos: 0.46
+  _zPos: 0.4426493
 --- !u!1 &5791940057608679409
 GameObject:
   m_ObjectHideFlags: 0
@@ -867,6 +867,18 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: MeteorsCore, Assembly-CSharp
         m_MethodName: ActivatePuzzle
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 5791940057608679409}
+        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
+        m_MethodName: SetActive
+        m_Mode: 6
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

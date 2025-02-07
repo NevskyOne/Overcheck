@@ -130,17 +130,12 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 473205960}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9b78a20ccd494067a6e4d02e004c4394, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   npcModels:
-  - {fileID: 733791404547379991, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
-  - {fileID: -1736645332260882939, guid: cfe3594a69271884c958dce8dab034de, type: 3}
-  - {fileID: 823453533345074304, guid: 4ee5f5f9aaaccbb47b41e24cc050a39e, type: 3}
-  - {fileID: 8088842760900868372, guid: aeba18bede16ce4499b8e8bcb2fa7b76, type: 3}
-  - {fileID: 6650871490764013093, guid: 3240079afa4945d4bb4b34205be6b72a, type: 3}
   - {fileID: -642143859752673928, guid: 6547323cff82bc740a72fe528c174ba0, type: 3}
   - {fileID: 5885520868810902055, guid: 410baf9ab30a7e2418321a42781bf955, type: 3}
   - {fileID: 6378839434369556974, guid: c6e9e9997e6aedc4ba4689f2195daa6d, type: 3}
@@ -159,28 +154,6 @@ MonoBehaviour:
   - {fileID: 2100000, guid: e1f69ffa0a9101e43b84c091c51828b5, type: 2}
   captureCamera: {fileID: 1524791928}
   savePath: Assets/Resources/BearPhotos
---- !u!95 &858458845
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1932212366}
-  m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: 47cb461e488b06640ace424dd648e94a, type: 3}
-  m_Controller: {fileID: 9100000, guid: 3efbaa5000c13ba4a8481efb6672b876, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 1
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
 --- !u!1 &1486080308
 GameObject:
   m_ObjectHideFlags: 0
@@ -370,7 +343,7 @@ Camera:
     serializedVersion: 2
     m_Bits: 4294967295
   m_RenderingPath: -1
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 83c0aa8ee233d0844b4897f3380c0d7b, type: 2}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 1
@@ -474,19 +447,19 @@ PrefabInstance:
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 733791404547379991, guid: 416901e87d4725247af5d8642d1c9566, type: 3}
+      objectReference: {fileID: -642143859752673928, guid: 6547323cff82bc740a72fe528c174ba0, type: 3}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: m_Materials.Array.size
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: b161a678b7c832b4e9766471a402bc8b, type: 2}
+      objectReference: {fileID: 2100000, guid: 4d50c9b18065f6e43b5997ee6e174279, type: 2}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
-      objectReference: {fileID: 2100000, guid: b161a678b7c832b4e9766471a402bc8b, type: 2}
+      objectReference: {fileID: 2100000, guid: 4d50c9b18065f6e43b5997ee6e174279, type: 2}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_Materials.Array.data[2]'
       value: 
@@ -505,7 +478,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_BlendShapeWeights.Array.data[2]'
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_BlendShapeWeights.Array.data[3]'
@@ -521,7 +494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_BlendShapeWeights.Array.data[6]'
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: m_LocalScale.x
@@ -1779,9 +1752,6 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 858458845}
     - targetCorrespondingSourceObject: {fileID: 3141286051710766574, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       insertIndex: 1
       addedObject: {fileID: 473205963}
@@ -1789,11 +1759,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1932212500}
   m_SourcePrefab: {fileID: 100100000, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
---- !u!1 &1932212366 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
-  m_PrefabInstance: {fileID: 1932212365}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1932212367 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5392390209365313541, guid: f289e4564edec6e45a312cb6bc225873, type: 3}

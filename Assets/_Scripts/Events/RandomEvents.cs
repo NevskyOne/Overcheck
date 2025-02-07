@@ -9,6 +9,7 @@ public class RandomEvents : MonoBehaviour
 {
     [Header("EventSettings")] 
     [SerializeField] private uint _puzzleTime;
+    [SerializeField] private uint _cost = 4;
     [SerializeField] private Transform _player;
     [SerializeField] private Vector3 _bedPos;
     [Header("Puzzle")]
@@ -17,6 +18,7 @@ public class RandomEvents : MonoBehaviour
     [SerializeField] private GameObject _meteorites;
     [Header("Robots")] 
     [SerializeField] private GameObject _robotPrefab;
+    [SerializeField] private List<Transform> _positions;
     [SerializeField] private List<Transform> _wiresPos;
     [SerializeField] private List<Transform> _gearsPos;
     [SerializeField] private List<Transform> _meteoritesPos;
@@ -27,9 +29,10 @@ public class RandomEvents : MonoBehaviour
     private Coroutine _autoLoseRoutine;
     private GameObject _puzzleObj, _currentRobot;
     private CameraManager _cameraMng => _player.GetComponentInChildren<CameraManager>();
-    private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
+    private Rigidbody _camRb => _cameraMng.GetComponent<Rigidbody>();
+    private StartButton _button => FindFirstObjectByType<StartButton>();
     private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
-    private Effects _fx => FindFirstObjectByType<Effects>();
+    private VisualEffects _fx => FindFirstObjectByType<VisualEffects>();
 
     public static event Action OnLose, OnDone;
     
@@ -48,7 +51,7 @@ public class RandomEvents : MonoBehaviour
             case 0:
                 _wires.SetActive(true);
                 _puzzleObj = _wires;
-                if (_rnd.Next(1, 101) <= (Math.Pow(SettingsUI.RobotsCount,2)))
+                // if (_rnd.Next(1, 101) <= (Math.Pow(7,2)))
                     _currentRobot = Instantiate(_robotPrefab, _wiresPos[_rnd.Next(_wiresPos.Count)]);
 
                 SceneMusic.State = MusicState.Wires;
@@ -56,7 +59,7 @@ public class RandomEvents : MonoBehaviour
             case 1:
                 _gears.SetActive(true);
                 _puzzleObj = _gears;
-                if (_rnd.Next(1, 101) <= (Math.Pow(SettingsUI.RobotsCount,2)))
+                // if (_rnd.Next(1, 101) <= (Math.Pow(7,2)))
                     _currentRobot = Instantiate(_robotPrefab, _gearsPos[_rnd.Next(_gearsPos.Count)]);
                 
                 SceneMusic.State = MusicState.Gears;
@@ -64,13 +67,14 @@ public class RandomEvents : MonoBehaviour
             case 2:
                 _meteorites.SetActive(true);
                 _puzzleObj = _meteorites;
-                if (_rnd.Next(1, 101) <= (Math.Pow(SettingsUI.RobotsCount,2)))
+                // if (_rnd.Next(1, 101) <= (Math.Pow(7,2)))
                     _currentRobot = Instantiate(_robotPrefab, _meteoritesPos[_rnd.Next(_meteoritesPos.Count)]);
                 
                 SceneMusic.State = MusicState.Meteorites;
                 break;
         }
 
+        _currentRobot.GetComponent<Robot>().Positions = _positions;
         _autoLoseRoutine = StartCoroutine(AutoLose());
     }
 
@@ -84,7 +88,7 @@ public class RandomEvents : MonoBehaviour
         _npcMng.SelectNPC(false);
         
         SceneMusic.State = MusicState.Normal;
-        
+        TimeLines.Additional += _cost;
         OnDone?.Invoke();
     }
 
@@ -99,10 +103,16 @@ public class RandomEvents : MonoBehaviour
     {
         if(_autoLoseRoutine != null) 
             StopCoroutine(_autoLoseRoutine);
-        
+        _camRb.useGravity = true;
+        _camRb.isKinematic = false;
         _blackSreen.gameObject.SetActive(true);
         await Task.Delay(3500);
-        _puzzleObj.SetActive(false);
+        
+        if(_puzzleObj) _puzzleObj.SetActive(false);
+        
+        _camRb.isKinematic = true;
+        _camRb.useGravity = false;
+        _cameraMng.transform.localEulerAngles = new Vector3(0, 0, 0);
         _cameraMng.ResetCamera();
         _player.position = _bedPos;
         if(_currentRobot) 
@@ -112,8 +122,9 @@ public class RandomEvents : MonoBehaviour
         
         await Task.Delay(1000);
         SceneMusic.State = MusicState.Normal;
-        _playerInter.ResetButton();
+        _button.Enabled = true;
         StartCoroutine(_blackSreen.EndFade());
+        
         
     }
 }

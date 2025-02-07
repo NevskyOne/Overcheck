@@ -1,6 +1,4 @@
 using System;
-using System.Threading.Tasks;
-using _Scripts.UI;
 using TMPro;
 using UnityEngine;
 
@@ -30,12 +28,12 @@ public class TimeLines : MonoBehaviour
     public int Date => _date;
     public int Month => _month;
 
-    public uint CorrectNPC { get; set; }
-    public uint WrongNPC { get; set; }
-    public uint Additional { get; set; }
+    public static uint CorrectNPC { get; set; }
+    public static uint WrongNPC { get; set; }
+    public static uint Additional { get; set; }
 
-    private uint _voidCounter,_eternityCounter,_robotsCounter;
-    private uint _voidTemp, _eternityTemp, _robotsTemp;
+    private uint _voidCounter,_eternityCounter;
+    private uint _voidTemp, _eternityTemp;
     
     private DataBase _dataBase => FindFirstObjectByType<DataBase>();
 
@@ -62,10 +60,6 @@ public class TimeLines : MonoBehaviour
                 break;
             case TimeLine.Eternity:
                 _eternityTemp = add ? _eternityTemp + 1 : _eternityTemp - 1;
-                break;
-            case TimeLine.Robots:
-                SettingsUI.RobotsCount += 1;
-                _robotsTemp = add ? _robotsTemp + 1 : _robotsTemp - 1;
                 break;
         }
     }
@@ -95,7 +89,6 @@ public class TimeLines : MonoBehaviour
 
     public void ResetDay()
     {
-        _robotsTemp = 0;
         _eternityTemp = 0;
         _voidTemp = 0;
         CorrectNPC = 0;
@@ -103,43 +96,35 @@ public class TimeLines : MonoBehaviour
         Additional = 0;
     }
     
-    public async void Sleep()
+    public void Sleep()
     {
         CorrectNPC = (uint)(CorrectNPC * MoneyFactor);
         Additional = (uint)(Additional * MoneyFactor);
         PlayerData.ChangeCoins((int)(CorrectNPC + Additional));
         PlayerData.ChangeCoins((int)WrongNPC, false);
-
-        _robotsCounter = _robotsTemp;
+        
         _eternityCounter = _eternityTemp;
         _voidCounter = _voidTemp;
         if (WeekDate == _days - 1)
         {
-            if (_robotsCounter > 4)
+            if (_eternityCounter > 4)
             {
-                _endText.text = "Роботы";
-                SettingsUI.Robots = true;
+                _endText.text = "Поздравляем, агент Орион! Мы ждем вас";
+                SettingsUI.FirstEnding = true;
             }
-            else if (_eternityCounter > 4)
+            else if (_voidCounter > 20)
             {
-                _endText.text = "Этернити";
-                SettingsUI.Eternity = true;
-            }
-            else if (_voidCounter > 4)
-            {
-                _endText.text = "Хорошая Void";
-                SettingsUI.GoodVoid = true;
+                _endText.text = "Вы повышены";
+                SettingsUI.SecondEnding = true;
             }
             else
             {
-                _endText.text = "Плохая Void";
-                SettingsUI.BadVoid = true;
+                _endText.text = "Вы уволены";
+                SettingsUI.ThirdEnding = true;
             }
 
             SettingsUI.CurrentDay = 0;
             _titleUI.SetActive(true);
-            await Task.Delay(2000);
-            LoadManager.LoadScene(0);
         }
         else
         {
@@ -160,5 +145,6 @@ public enum TimeLine
 {
     Void,
     Eternity,
-    Robots
+    Robots,
+    Tutorial
 }

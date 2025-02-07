@@ -13,8 +13,8 @@ public class Meteor : MonoBehaviour
     private void Update()
     {
         transform.Translate(Vector3.left * _speed * Time.deltaTime);
-
-        if (transform.position.x <= _stationTransform.position.x)
+        transform.localRotation = Quaternion.Euler(0, 0, 0);
+        if (transform.localPosition.x <= _stationTransform.localPosition.x)
         {
             OnKickStation?.Invoke(gameObject);
             Destroy(gameObject);
