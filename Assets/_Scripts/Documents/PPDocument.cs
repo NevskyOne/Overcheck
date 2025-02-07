@@ -81,15 +81,22 @@ public class PPDocument : Document
                     case 4:
                         var newPlanet = _startPlanet;
                         while (_startPlanet == newPlanet)
-                            newPlanet = (Planet) _rnd.Next(1,8);
+                            newPlanet = (Planet) _rnd.Next(0,5);
+                        _startPlanet = newPlanet;
                         break;
                     case 5:
-                        var newEndPlanet = _endPlanet;
-                        while (newEndPlanet == Planet.Медовия)
-                            newEndPlanet = (Planet) _rnd.Next(1,8);
+                        _endPlanet  = (Planet) _rnd.Next(1,5);
                         break;
                 }
             }
+            _nameText.text = _name;
+            _photoImage.sprite = _photo;
+            _startPlanetText.text = _startPlanet.ToString();
+            _endPlanetText.text = _endPlanet.ToString();
+            _startDateText.text = _startDate.ToString();
+            _startMonthText.text = _startMonth.ToString();
+            _endDateText.text = _endDate.ToString();
+            _endMonthText.text = _endMonth.ToString();
         }
         catch(Exception e)
         {

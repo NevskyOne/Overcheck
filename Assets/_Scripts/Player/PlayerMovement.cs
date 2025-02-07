@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -18,12 +19,14 @@ public class PlayerMovement : MonoBehaviour
     
     private PlayerInput _input => GetComponent<PlayerInput>();
     private PlayerSFX _sfx => GetComponent<PlayerSFX>();
-    private Effects _fx => FindFirstObjectByType<Effects>();
+    private VisualEffects _fx => FindFirstObjectByType<VisualEffects>();
     private Vector3 _newPos, _newRot, _camRot;
     private Vector3 _velocity = Vector3.zero;
     private float _speed, _fov = 60, _refTransition, _refZRotate;
     
     private float _mouseSens => SettingsUI.MouseSens;
+
+    public static event Action OnRun, OnRunEnd;
     
     private void Awake()
     {
@@ -54,6 +57,7 @@ public class PlayerMovement : MonoBehaviour
         _speed = _maxSpeed * 1.5f;
         _fov = 75;
         _sfx.PlayBreath();
+        OnRun?.Invoke();
         StartCoroutine(_fx.ChangeChromatic(0.5f));
     }
     
@@ -62,6 +66,7 @@ public class PlayerMovement : MonoBehaviour
         _speed = _maxSpeed;
         _fov = 60;
         _sfx.PlayBreath(false);
+        OnRunEnd?.Invoke();
         StartCoroutine(_fx.ChangeChromatic(0.05f));
     }
     
@@ -72,7 +77,7 @@ public class PlayerMovement : MonoBehaviour
         _newRot = new Vector3(0, transform.eulerAngles.y + delta.x * _mouseSens, 0);
         
         _camRot = new Vector3(Mathf.Clamp(NormalizeAngle(camAngles.x - delta.y * _mouseSens),
-            rotationXLimits.x, rotationXLimits.y),0, camAngles.z);
+            rotationXLimits.x, rotationXLimits.y),0, 0);
     }
 
     private void FixedUpdate()

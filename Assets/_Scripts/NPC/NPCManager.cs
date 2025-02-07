@@ -43,13 +43,16 @@ public class NPCManager : MonoBehaviour
     private NPCAnim _npcAnim;
     
     private int _weekDate => FindFirstObjectByType<TimeLines>().WeekDate;
-    private DayNPC _currentDay;
-    private bool _isChecked, _toTable;
+    private NPCRandomizer _randomizer => GetComponent<NPCRandomizer>();
+    private StartButton _button => FindFirstObjectByType<StartButton>();
     
-    public static event Action OnNPCEnd, RandomEvent, EternityCheck, NPCAtTable, OnNPCCheck,OnGiveDocs;
+    private DayNPC _currentDay;
+    private bool _isChecked, _toTable, _isTutored;
+    
+    public static event Action OnNPCEnd, RandomEvent, EternityCheck, OnNPCCheck,OnGiveDocs;
     
 
-    private void Start()
+    private  void Start()
     {
         var names = RandomParamSt.Names.ToList();
         for (int i = 0; i < _rnd.Next(3, 5); i++)
@@ -58,9 +61,30 @@ public class NPCManager : MonoBehaviour
             _criminals.Add(bearName);
             names.Remove(bearName);
         }
-
+        
         ChangedCriminals = _criminals;
         RandomEvents.OnLose += ResetDay;
+
+
+
+        TimeLines.OnDayEnd += () =>
+        {
+            _currentDay = NpcList[_weekDate];
+            if (_currentDay.TutorialNPC > 0)
+            {
+                SpawnNPC(new() { _tutorialNPC[0] });
+                _tutorialNPC.Remove(_tutorialNPC[0]);
+                CurrentNPC.Fragments = _weekDate switch
+                {
+                    0 => RandomParamSt.TutorialConfigs[0].Fragments,
+                    1 => RandomParamSt.TutorialConfigs[1].Fragments,
+                    3 => RandomParamSt.TutorialConfigs[2].Fragments,
+                    _ => CurrentNPC.Fragments
+                };
+            }
+            else
+                _button.Enabled = true;
+        };
     }
     
     void Update()
@@ -68,13 +92,19 @@ public class NPCManager : MonoBehaviour
         if (!_currentAgent || !(_currentAgent.velocity.magnitude < 0.1f)) return;
         if (_isChecked)
         {
-            SelectNPC();
+            if(_isTutored)
+                SelectNPC();
+            else
+            {
+                _button.Enabled = true;
+                _isTutored = true;
+            }
+
             _isChecked = false;
         }
 
         else if (_toTable)
         {
-            NPCAtTable?.Invoke();
             StartCoroutine( _npcAnim.TurnRight());
             _toTable = false;
         }
@@ -109,18 +139,14 @@ public class NPCManager : MonoBehaviour
     { 
         if(CurrentNPC) Destroy(CurrentNPC.gameObject);
         var randomSpecial = _rnd.Next(3);
-        if(eventEnabled && _rnd.Next(0,101) < ((SettingsUI.RobotsCount ^ 2) * 2 + EventChance) &&
+        if(eventEnabled && _rnd.Next(0,101) < (EventChance) &&
            (_currentDay.TutorialNPC > 0 || _currentDay.EternityNPC > 0 ||
             _currentDay.AgentNPC > 0 || _currentDay.RobotsNPC > 0 || _currentDay.NormalNPC > 0))
             RandomEvent?.Invoke();
         else
         {
-            if (_currentDay.TutorialNPC > 0)
-            {
-                SpawnNPC(_tutorialNPC);
-                _currentDay.TutorialNPC -= 1;
-            }
-            else if (randomSpecial == 0 && _currentDay.EternityNPC > 0)
+            
+            if (randomSpecial == 0 && _currentDay.EternityNPC > 0)
             {
                 SpawnNPC(_eternityNPC);
                 _currentDay.EternityNPC -= 1;
@@ -139,6 +165,7 @@ public class NPCManager : MonoBehaviour
             {
                 SpawnNPC(_normalNPC);
                 _currentDay.NormalNPC -= 1;
+                _randomizer.Randomize(CurrentNPC.transform);
             }
             else
                 OnNPCEnd?.Invoke();
@@ -177,6 +204,8 @@ public class NPCManager : MonoBehaviour
             EternityCheck?.Invoke();
         
         _currentAgent.SetDestination(_endPos.position);
+        print("GoTowards");
+            
         await Task.Delay(10000);
         _isChecked = true;
     }

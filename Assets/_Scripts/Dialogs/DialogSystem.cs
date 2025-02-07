@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DialogSystem : MonoBehaviour
 {
@@ -14,42 +15,43 @@ public class DialogSystem : MonoBehaviour
     [SerializeField] private float _endFontSize = 30f;
     [SerializeField] private float _growDuration = 0.5f; 
     [Header("Text")]
-    [SerializeField] private GameObject _dialogMenu;
-    [SerializeField] private TMP_Text _textField;
-
+    public GameObject DialogMenu;
+    public TMP_Text TextField;
     [Header("Buttons")] 
     [SerializeField] private GameObject _buttonPrefab;
     [SerializeField] private Transform _buttonsHolder;
-
-    [Header("Object")] [SerializeField] private Transform _objHolder;
+    [Header("Audio")] [SerializeField] private AudioSource _source;
     
     private PlayerMovement _playerMovement => FindFirstObjectByType<PlayerMovement>();
     private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
     private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
     
     private string _currentLine = "";
+    private Image _frameImg => DialogMenu.GetComponent<Image>();
+    private List<IDialogAction> _actions = new List<IDialogAction>();
     
     public event Action ChatEnded;
     public CheckState GoAfter;
 
     public void PlayNext()
     {
-        if (_currentLine != "" && _textField.text != _currentLine)
+        if (_currentLine != "" && TextField.text != _currentLine)
         {
             StopAllCoroutines();
-            _textField.text = "";
-            _textField.text = _currentLine;
+            TextField.text = "";
+            TextField.text = _currentLine;
             _npcManager.SetNPCTalking(false);
+            _source.mute = true;
         }
         else if (FragmentsStack.Count > 0)
         {
+            TextField.color = Color.white;
+            _frameImg.color = Color.white;
+            TextField.alignment = TextAlignmentOptions.TopLeft;
             _npcManager.SetNPCTalking();
-            _dialogMenu.SetActive(true);
+            DialogMenu.SetActive(true);
             _playerInter.StopFocus();
-            for (var i = 0; i < _buttonsHolder.childCount; i++ )    
-            {
-                Destroy(_buttonsHolder.GetChild(0).gameObject);
-            }
+            
             PlayFragment(FragmentsStack[0]);
             _currentLine = FragmentsStack[0].Text;
             FragmentsStack.RemoveAt(0);
@@ -57,18 +59,32 @@ public class DialogSystem : MonoBehaviour
         }
         else
         {
+            foreach (var action in _actions)
+            {
+                action?.AfterAction();
+            }
+
+            _actions = new List<IDialogAction>();
             EndChat();
         }
     }
-    public void PlayFragment(DialogFragment fragment)
+
+    private void PlayFragment(DialogFragment fragment)
     {
         StartCoroutine(AnimateText(fragment.Text));
-
-        ShowButtons(new (fragment.Buttons));
-        PlaceObj(fragment.Object);
-        if (fragment.GiveDocs)
+        _source.mute = false;
+        foreach (Transform child in _buttonsHolder)
         {
-            NPCManager.CurrentNPC.GiveDocs();
+            Destroy(child.gameObject);
+        }
+        if(fragment.Buttons.Count > 0)
+            ShowButtons(new (fragment.Buttons));
+
+        if (fragment.Actions == null) return;
+        foreach (var action in fragment.Actions)
+        {
+            action?.DoAction();
+            _actions.Add(action);
         }
         
     }
@@ -82,17 +98,14 @@ public class DialogSystem : MonoBehaviour
             component.ButtonFields = btn;
         }
     }
-    
-    private void PlaceObj(GameObject obj)
-    {
-        if(obj) Instantiate(obj, _objHolder);
-    }
 
     public void EndChat()
     {
         StopAllCoroutines();
+        _actions = new List<IDialogAction>();
         _currentLine = "";
         _npcManager.SetNPCTalking(false);
+        _source.mute = true;
         
         _playerMovement.enabled = true;
         FragmentsStack.Clear();
@@ -102,7 +115,7 @@ public class DialogSystem : MonoBehaviour
         {
             Destroy(_buttonsHolder.GetChild(i).gameObject);
         }
-        _dialogMenu.SetActive(false);
+        DialogMenu.SetActive(false);
         
         if(GoAfter == CheckState.Correct)
             _npcManager.GoTowards();
@@ -128,6 +141,8 @@ public class DialogSystem : MonoBehaviour
             // Задержка перед добавлением следующего символа
             yield return new WaitForSeconds(_letterDelay);
         }
+        _npcManager.SetNPCTalking(false);
+        _source.mute = true;
     }
 
     private IEnumerator AnimateCharacterSize(char[] displayedText, int charIndex)
@@ -161,11 +176,10 @@ public class DialogSystem : MonoBehaviour
             }
 
             // Обновляем текст
-            _textField.text = modifiedText;
+            TextField.text = modifiedText;
             yield return null;
         }
-        
 
-        _textField.text = _currentLine;
+        TextField.text = _currentLine;
     }
 }
