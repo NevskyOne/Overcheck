@@ -3,6 +3,7 @@ using UnityEngine;
 public class Food: Movable, IUsable
 {
     [SerializeField] private FoodQuality _quality;
+    public FoodQuality Quality => _quality;
 
     public virtual void Use()
     {

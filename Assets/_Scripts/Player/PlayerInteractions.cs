@@ -1,9 +1,6 @@
-using System;
 using System.Threading.Tasks;
-using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.UI;
 
 [RequireComponent(typeof(PlayerInput))]
 public class PlayerInteractions : MonoBehaviour
@@ -17,24 +14,12 @@ public class PlayerInteractions : MonoBehaviour
     [SerializeField] private CamMove _tableMove;
     [SerializeField] private CamMove _leftScreenMove;
     [SerializeField] private CamMove _rightScreenMove;
-    [Header("Cursors")] 
-    [SerializeField] private GameObject _cursor;
-    [SerializeField] private Image _cursorImg;
-    [SerializeField] private Sprite _defaultSprite;
-    [SerializeField] private Sprite _NPCSprite;
-    [SerializeField] private Sprite _bedSprite;    
-    [SerializeField] private Sprite _radioSprite;
-    [SerializeField] private Sprite _startSprite;
-    [SerializeField] private Sprite _UISprite;
     [Header("UI")] 
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private Transform _objectHolder;
-    [SerializeField] private DragRotate _rotateScript;
     [SerializeField] private Transform _tableCamPos;
     [SerializeField] private GameObject _correctStamp;
     [SerializeField] private GameObject _wrongStamp;
-    [SerializeField] private GameObject _popupMenu;
-    [SerializeField] private TMP_Text _popupText;
     [Header("Buttons")]
     [SerializeField] private Material _corectMaterial;
     [SerializeField] private Material _wrongMaterial;
@@ -45,6 +30,7 @@ public class PlayerInteractions : MonoBehaviour
     private PlayerMovement _playerMove => GetComponent<PlayerMovement>();
     private TimeLines _timeLines => GetComponent<TimeLines>();
     private StartButton _button => FindFirstObjectByType<StartButton>();
+    private MainUI _mainUI => FindFirstObjectByType<MainUI>();
     private CameraManager _camManager => FindFirstObjectByType<CameraManager>();
     private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
     private DialogSystem _dialogSystem => FindFirstObjectByType<DialogSystem>();
@@ -125,36 +111,34 @@ public class PlayerInteractions : MonoBehaviour
                 break;
         }
         
-        _popupMenu.gameObject.SetActive(false);
+        _mainUI.HidePopup();
         RaycastHit hit = new (), hit2 = new();
         
         if (PlayerState == PlayerState.Dialog || !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
                 out hit, 3, _clickMask))
         {
-            _cursorImg.sprite = _defaultSprite;
+            _mainUI.ChangeCursor(0);
         }
         else
         {
             if (hit.transform.CompareTag("NPC"))
-                _cursorImg.sprite = _NPCSprite;
+                _mainUI.ChangeCursor(1);
             else if (_canSleep && hit.transform.CompareTag("Bed"))
-                _cursorImg.sprite = _bedSprite;
+                _mainUI.ChangeCursor(2);
             else if (hit.transform.CompareTag("Radio"))
-                _cursorImg.sprite = _radioSprite;
+                _mainUI.ChangeCursor(3);
             else if (_button.Enabled && hit.transform.CompareTag("StartDay"))
-                _cursorImg.sprite = _startSprite;
+                _mainUI.ChangeCursor(4);
             else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Correct"))
             {
-                _popupText.text = "Разрешить";
-                _popupMenu.gameObject.SetActive(true);
+                _mainUI.ShowPopup("Пустить");
             }
             else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Wrong"))
             {
-                _popupText.text = "Не пустить";
-                _popupMenu.gameObject.SetActive(true);
+                _mainUI.ShowPopup("Не пустить");
             }
             else if (!hit.transform.CompareTag("Untagged") && ! hit.transform.CompareTag("Bed") && !hit.transform.CompareTag("StartDay"))
-                _cursorImg.sprite = _UISprite;
+                _mainUI.ChangeCursor(5);
         }
 
         if (_isHolding && _currentDoc && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
@@ -201,14 +185,12 @@ public class PlayerInteractions : MonoBehaviour
             transf.GetComponent<NPC>().StartChat();
             PlayerState = PlayerState.Dialog;
         }
-        else if (PlayerState == PlayerState.None && transf.CompareTag("NPCObject"))
+        else if (PlayerState == PlayerState.None && transf.CompareTag("Movable"))
         {
             StopFocus();
-            transf.SetParent(_objectHolder);
-            transf.localPosition = Vector3.zero;
-            _rotateScript.EnableUI(transf.GetComponent<NPCObject>());
+            _playerMove.enabled = true;
+            transf.GetComponent<Movable>().Take();
             PlayerState = PlayerState.UI;
-            _camera.cullingMask = LayerMask.GetMask("UI", "NPCObject");
         }
         else if (_canSleep && transf.CompareTag("Bed"))
         {
@@ -294,7 +276,7 @@ public class PlayerInteractions : MonoBehaviour
         }
         else if (PlayerState is PlayerState.UI or PlayerState.LeftScreen or PlayerState.RightScreen)
         {
-            _rotateScript.DisableUI();
+            _objectHolder.gameObject.SetActive(false);
             _camManager.ResetCamera();
         }
         else if (PlayerState == PlayerState.Table)
@@ -329,7 +311,7 @@ public class PlayerInteractions : MonoBehaviour
         if(PlayerState == PlayerState.Dialog) return;
         PlayerState = PlayerState.None;
         _playerMove.enabled = true;
-        _cursor.SetActive(true);
+        _mainUI.ShowCursor();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
         _camera.cullingMask = DefaultMask;
@@ -339,7 +321,7 @@ public class PlayerInteractions : MonoBehaviour
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
-        _cursor.SetActive(false);
+        _mainUI.HideCursor();
         _playerMove.enabled = false;
     }
 }

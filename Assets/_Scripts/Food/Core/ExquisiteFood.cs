@@ -7,6 +7,6 @@ public class ExquisiteFood : Food
     public override void Use()
     {
         base.Use();
-        _effect.ApplyEffect();
+        FindFirstObjectByType<EffectSystem>().AddEffect(_effect);
     }
 }

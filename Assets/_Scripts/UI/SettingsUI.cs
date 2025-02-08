@@ -141,8 +141,8 @@ public class SettingsUI : MonoBehaviour
     {
         VFXOn = value;
         PlayerInteractions.DefaultMask = value
-            ? LayerMask.GetMask("Default", "UI", "Clickable", "Document", "NPCObject", "Doors", "VFX", "DocPlace")
-            : LayerMask.GetMask("Default", "UI", "Clickable", "Document", "NPCObject", "Doors", "DocPlace");
+            ? LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Movable", "Doors", "VFX", "DocPlace")
+            : LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Movable", "Doors", "DocPlace");
     }
 }
 
