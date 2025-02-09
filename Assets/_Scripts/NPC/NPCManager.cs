@@ -89,9 +89,10 @@ public class NPCManager : MonoBehaviour
     
     void Update()
     {
-        if (!_currentAgent || !(_currentAgent.velocity.magnitude < 0.1f)) return;
+        if (!_currentAgent || !(_currentAgent.velocity.magnitude < 0.4f)) return;
         if (_isChecked)
         {
+            print("check");
             if(_isTutored)
                 SelectNPC();
             else
@@ -105,7 +106,7 @@ public class NPCManager : MonoBehaviour
 
         else if (_toTable)
         {
-            StartCoroutine( _npcAnim.TurnRight());
+            // StartCoroutine( _npcAnim.TurnRight());
             _toTable = false;
         }
     }
@@ -184,7 +185,7 @@ public class NPCManager : MonoBehaviour
 
     public async void GoBack()
     {
-        StartCoroutine( _npcAnim.TurnRight());
+        // StartCoroutine( _npcAnim.TurnRight());
         
         OnNPCCheck?.Invoke();
         if(CurrentNPC.NPCTimeLine == TimeLine.Eternity)

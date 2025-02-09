@@ -84,7 +84,7 @@ MonoBehaviour:
   _PMS: {fileID: 762431528694896407, guid: 174e46dc922f18e47a57b124a80f9271, type: 3}
   _IIC: {fileID: 762431528694896407, guid: 67dd1bec75363b84ab720f69594907dd, type: 3}
   _PP: {fileID: 762431528694896407, guid: b4ba7a8bde8198d4681eb5d0dccc9fd0, type: 3}
-  _cost: 1
+  _cost: 2
 --- !u!114 &4568354858123837730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +111,7 @@ NavMeshAgent:
   m_Acceleration: 4
   avoidancePriority: 50
   m_AngularSpeed: 500
-  m_StoppingDistance: 2
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
