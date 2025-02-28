@@ -58,7 +58,7 @@ MonoBehaviour:
             Buttons:
             - Text: "\u041E\u0443, \u0441\u043F\u0430\u0441\u0438\u0431\u043E\u0447\u043A\u0438!"
               Fragments: []
-        - Text: "\u041D\u0435\u0442, \u043D\u0435 \u043E\u0434\u0438\u043D\u043E\u043A\u043E))"
+        - Text: "\u041D\u0435\u0442, \u043D\u0435 \u043E\u0434\u0438\u043D\u043E\u043A\u043E!"
           Fragments:
           - Text: "\u041E-\u043A\u0430\u043A... \u041D\u0443, \u0432\u0438\u0434\u0438\u043C\u043E
               \u043C\u043D\u0435 \u0442\u0435\u0431\u044F \u043D\u0435 \u043F\u043E\u043D\u044F\u0442\u044C...
@@ -91,4 +91,4 @@ MonoBehaviour:
     - rid: 8766031448645566464
       type: {class: GiveObject, ns: , asm: Assembly-CSharp}
       data:
-        _object: {fileID: 0}
+        _object: {fileID: 786162176270901643, guid: cde23fb39f463d04584622831898b318, type: 3}

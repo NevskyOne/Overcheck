@@ -49,7 +49,7 @@ MonoBehaviour:
           \u043C\u043D\u0435 \u043F\u0440\u0430\u0432\u0434\u0430 \u043E\u0447\u0435\u043D\u044C
           \u043D\u0443\u0436\u043D\u043E..."
         Actions:
-        - rid: 927469285712331003
+        - rid: 79336582990004319
         Buttons: []
   GoFragment:
     Text: "\u0412\u044B \u043F\u0440\u043E\u0441\u0442\u043E \u043B\u0443\u0447\u0448\u0438\u0439,
@@ -79,6 +79,10 @@ MonoBehaviour:
     RefIds:
     - rid: -2
       type: {class: , ns: , asm: }
+    - rid: 79336582990004319
+      type: {class: GiveObject, ns: , asm: Assembly-CSharp}
+      data:
+        _object: {fileID: 8942581300386911781, guid: 1337f1246a753f14d8ddda3753ee1538, type: 3}
     - rid: 927469285712331003
       type: {class: GiveDocs, ns: , asm: Assembly-CSharp}
       data: 

@@ -29,8 +29,8 @@ QualitySettings:
     billboardsFaceCameraPosition: 1
     useLegacyDetailDistribution: 1
     adaptiveVsync: 0
-    vSyncCount: 0
-    realtimeGICPUUsage: 100
+    vSyncCount: 2
+    realtimeGICPUUsage: 50
     adaptiveVsyncExtraA: 0
     adaptiveVsyncExtraB: 0
     lodBias: 2
@@ -83,8 +83,8 @@ QualitySettings:
     billboardsFaceCameraPosition: 1
     useLegacyDetailDistribution: 1
     adaptiveVsync: 0
-    vSyncCount: 2
-    realtimeGICPUUsage: 100
+    vSyncCount: 1
+    realtimeGICPUUsage: 75
     adaptiveVsyncExtraA: 0
     adaptiveVsyncExtraB: 0
     lodBias: 2
@@ -141,7 +141,7 @@ QualitySettings:
     realtimeGICPUUsage: 100
     adaptiveVsyncExtraA: 0
     adaptiveVsyncExtraB: 0
-    lodBias: 2
+    lodBias: 3
     maximumLODLevel: 0
     enableLODCrossFade: 1
     streamingMipmapsActive: 0
