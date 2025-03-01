@@ -100,13 +100,13 @@ public class PlayerMovement : MonoBehaviour
     {
         if (movementSpeed > 0.1f)
         {
-            float shakeAmount = 0.7f + Mathf.Cos(Time.time * shakeFrequency * Mathf.PI * 2) * shakeAmplitude;
+            float shakeAmount = _cam.transform.localPosition.y + Mathf.Cos(Time.fixedTime * shakeFrequency * Mathf.PI * 2) * shakeAmplitude;
             _cam.transform.localPosition = new Vector3(0,shakeAmount,0);
             _sfx.PlayFeet();
         }
         else
         {
-            _cam.transform.localPosition = Vector3.Lerp(_cam.transform.localPosition,new Vector3(0,0.7f,0), Time.deltaTime);
+            _cam.transform.localPosition = Vector3.Lerp(_cam.transform.localPosition,new Vector3(0,0.7f,0), Time.fixedDeltaTime);
             _sfx.PlayFeet(false);
         }
 
