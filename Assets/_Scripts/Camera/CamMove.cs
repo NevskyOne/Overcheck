@@ -1,15 +1,34 @@
 
+using System;
 using UnityEngine;
+using Zenject;
 
-public class CamMove : MonoBehaviour
+public class CamMove : MonoBehaviour, IInteractable
 {
     [SerializeField] private Transform _camPos;
     
     private CameraManager _cameraMng;
-    private void Start() => _cameraMng = FindFirstObjectByType<CameraManager>();
+    protected Player _player;
+    public event Action OnInteract; 
     
-    public void Move(Vector3 playerRot)
+    [Inject]
+    private void Initialize(CameraManager cameraManager, Player player)
     {
-        _cameraMng.MoveToTarget(_camPos.position,_camPos.eulerAngles - playerRot );
+        _cameraMng = cameraManager;
+        _player = player;
+    }
+
+    public virtual void Interact()
+    {
+        _cameraMng.MoveToTarget(_camPos.position,_camPos.eulerAngles - _player.transform.eulerAngles);
+        ChangePlayerState();
+        OnInteract?.Invoke();
+    }
+
+    protected virtual void ChangePlayerState() => Player.State = PlayerState.UI;
+    
+    public void Uninteract()
+    {
+        _cameraMng.ResetCamera();
     }
 }

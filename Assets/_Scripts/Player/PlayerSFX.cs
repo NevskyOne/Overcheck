@@ -1,8 +1,15 @@
 using UnityEngine;
 
-public class PlayerSFX : MonoBehaviour
+public class PlayerSFX
 {
-    [SerializeField] private AudioSource _breathSource, _feetSource;
+    private readonly AudioSource _breathSource;
+    private readonly AudioSource _feetSource;
+
+    public PlayerSFX(AudioSource breathSource, AudioSource feetSource)
+    {
+        _breathSource = breathSource;
+        _feetSource = feetSource;
+    }
     
     public void PlayBreath(bool flag = true)
     { 

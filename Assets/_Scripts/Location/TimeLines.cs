@@ -100,8 +100,8 @@ public class TimeLines : MonoBehaviour
     {
         CorrectNPC = (uint)(CorrectNPC * MoneyFactor);
         Additional = (uint)(Additional * MoneyFactor);
-        PlayerData.ChangeCoins((int)(CorrectNPC + Additional));
-        PlayerData.ChangeCoins((int)WrongNPC, false);
+        PlayerCoins.ChangeCoins((int)(CorrectNPC + Additional));
+        PlayerCoins.ChangeCoins((int)WrongNPC, false);
         
         _eternityCounter = _eternityTemp;
         _voidCounter = _voidTemp;
@@ -131,7 +131,7 @@ public class TimeLines : MonoBehaviour
             _correctText.text = $"{CorrectNPC}";
             _wrongText.text = $"{WrongNPC}";
             _additionalText.text = $"{Additional}";
-            _totalText.text = $"{PlayerData.HoneyCombs}";
+            _totalText.text = $"{PlayerCoins.HoneyCombs}";
             _sleepUI.SetActive(true);
 
             CorrectNPC = 0;

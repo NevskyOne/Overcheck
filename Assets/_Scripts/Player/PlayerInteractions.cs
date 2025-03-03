@@ -1,345 +1,482 @@
-using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
-[RequireComponent(typeof(PlayerInput))]
-public class PlayerInteractions : MonoBehaviour
+public class PlayerInteractions
 {
-    [Header("Settings")] 
-    [SerializeField] private Camera _camera;
-    [SerializeField] private LayerMask _clickMask;
-    [SerializeField] private LayerMask _docMask;
-    [SerializeField] private LayerMask _docPlace;
-    [Header("CamMoves")]
-    [SerializeField] private CamMove _tableMove;
-    [SerializeField] private CamMove _leftScreenMove;
-    [SerializeField] private CamMove _rightScreenMove;
-    [Header("UI")] 
-    [SerializeField] private GameObject _pauseMenu;
-    [SerializeField] private Transform _objectHolder;
-    [SerializeField] private Transform _tableCamPos;
-    [SerializeField] private GameObject _correctStamp;
-    [SerializeField] private GameObject _wrongStamp;
-    [Header("Buttons")]
-    [SerializeField] private Material _corectMaterial;
-    [SerializeField] private Material _wrongMaterial;
+    public CamSwitcher Switcher;
     
-    public static LayerMask DefaultMask;
+    private readonly LayerMask _clickMask;
+    private readonly LayerMask _docsMask;
+    private readonly Camera _camera;
+    private readonly DragRotate _dragRotate;
+    private MainUI _mainUI;
+    private DialogSystem _dialogSystem;
+    private IInteractable _interactable, _doc;
     
-    private PlayerInput _playerInput => GetComponent<PlayerInput>();
-    private PlayerMovement _playerMove => GetComponent<PlayerMovement>();
-    private TimeLines _timeLines => GetComponent<TimeLines>();
-    private StartButton _button => FindFirstObjectByType<StartButton>();
-    private MainUI _mainUI => FindFirstObjectByType<MainUI>();
-    private CameraManager _camManager => FindFirstObjectByType<CameraManager>();
-    private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
-    private DialogSystem _dialogSystem => FindFirstObjectByType<DialogSystem>();
-
-    private bool  _isHolding, _canSleep;
-    private CheckState _tableState = CheckState.None;
-    public static PlayerState PlayerState { get; set; } = PlayerState.None;
-    private Transform _currentDoc;
-
-    private void Start()
+    public PlayerInteractions(LayerMask clickMask, LayerMask docsMask, Camera cam, DragRotate dragRotate)
     {
-        SettingsUI.ChangeVFX(SettingsUI.VFXOn);
+        var playerInput = Player.Input;
+        _clickMask = clickMask;
+        _docsMask = docsMask;
+        _camera = cam;
+        _dragRotate = dragRotate;
         
-        _playerInput.actions["Click"].started += Click;
-        _playerInput.actions["Click"].canceled += OnClickEnd;
-        _playerInput.actions["RightClick"].started += RightClick;
-        _playerInput.actions["Space"].performed += Space;
-        _playerInput.actions["Escape"].performed += Escape;
-        
-        Focus();
-        _dialogSystem.ChatEnded += () => {PlayerState = PlayerState.None; Focus();};
-        NPCManager.OnNPCEnd += () => _canSleep = true;
-        
-        TimeLines.OnDayEnd += () =>
-        {
-            _camManager.ResetCamera();
-            transform.GetChild(1).gameObject.SetActive(true);
-            PlayerState = PlayerState.Dialog;
-        };
+        playerInput.actions["Click"].started += Click;
+        playerInput.actions["Click"].canceled += OnClickEnd;
+        playerInput.actions["MiddleClick"].started += MiddleClick;
+        playerInput.actions["MiddleClick"].canceled += MiddleClickEnd;
+        playerInput.actions["Use"].started += Use;
+        playerInput.actions["Move"].performed += Move;
+        playerInput.actions["Look"].performed += Look;
+        playerInput.actions["Sprint"].started += StartSprint;
+        playerInput.actions["Sprint"].canceled += StopSprint;
+        playerInput.actions["Space"].performed += Space;
+        playerInput.actions["Escape"].performed += Escape;
     }
 
-    private void Update()
+    [Inject]
+    private void Initialize(MainUI mainUI, DialogSystem dialogSystem)
     {
-        if (Time.timeScale == 0) return;
+        _mainUI = mainUI;
+        _dialogSystem = dialogSystem;
+    }
 
-        switch (_tableState)
+    private void Click(InputAction.CallbackContext _)
+    {
+        switch (Player.State)
         {
-            case CheckState.Correct:
-                _corectMaterial.color = Color.green;
-                _wrongMaterial.color = Color.grey;
+            case PlayerState.Movement:
+                if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+                        out var hit, 3, _clickMask))
+                {
+                    StopFocus();
+                    _interactable = hit.transform.GetComponent<IInteractable>();
+                    _interactable.Interact();
+                }
                 break;
-            case CheckState.Wrong:
-                _wrongMaterial.color = Color.red;
-                _corectMaterial.color = Color.grey;
+            case PlayerState.Checking:
+                if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+                        out var hit2, 3, _docsMask))
+                {
+                    _doc = hit2.transform.GetComponent<IInteractable>();
+                    _doc.Interact();
+                }
                 break;
-            case CheckState.None:
-                _wrongMaterial.color =  Color.grey;
-                _corectMaterial.color = Color.grey;
+            case PlayerState.Holding:
+                _dragRotate.OnPointerDown();
                 break;
-        }
-
-        var delta = _playerInput.actions["Move"].ReadValue<Vector2>();
-        switch (PlayerState)
-        {
-            case PlayerState.Table when delta.x < 0:
-                _leftScreenMove.Move(transform.eulerAngles);
-                PlayerState = PlayerState.LeftScreen;
-                break;
-            case PlayerState.Table when delta.x > 0:
-                _rightScreenMove.Move(transform.eulerAngles);
-                PlayerState = PlayerState.RightScreen;
-                break;
-            case PlayerState.LeftScreen when delta is { y: < 0, x: 0 }:
-                _tableMove.Move(transform.eulerAngles);
-                PlayerState = PlayerState.Table;
-                break;
-            case PlayerState.LeftScreen when delta is { x: > 0, y: 0 }:
-                _rightScreenMove.Move(transform.eulerAngles);
-                PlayerState = PlayerState.RightScreen;
-                break;
-            case PlayerState.RightScreen when delta is { x: < 0, y: 0 }:
-                _leftScreenMove.Move(transform.eulerAngles);
-                PlayerState = PlayerState.LeftScreen;
-                break;
-            case PlayerState.RightScreen when delta is { y: < 0, x: 0 }:
-                _tableMove.Move(transform.eulerAngles);
-                PlayerState = PlayerState.Table;
-                break;
-        }
-        
-        _mainUI.HidePopup();
-        RaycastHit hit = new (), hit2 = new();
-        
-        if (PlayerState == PlayerState.Dialog || !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-                out hit, 3, _clickMask))
-        {
-            _mainUI.ChangeCursor(0);
-        }
-        else
-        {
-            if (hit.transform.CompareTag("NPC"))
-                _mainUI.ChangeCursor(1);
-            else if (_canSleep && hit.transform.CompareTag("Bed"))
-                _mainUI.ChangeCursor(2);
-            else if (hit.transform.CompareTag("Radio"))
-                _mainUI.ChangeCursor(3);
-            else if (_button.Enabled && hit.transform.CompareTag("StartDay"))
-                _mainUI.ChangeCursor(4);
-            else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Correct"))
-            {
-                _mainUI.ShowPopup("Пустить");
-            }
-            else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Wrong"))
-            {
-                _mainUI.ShowPopup("Не пустить");
-            }
-            else if (!hit.transform.CompareTag("Untagged") && ! hit.transform.CompareTag("Bed") && !hit.transform.CompareTag("StartDay"))
-                _mainUI.ChangeCursor(5);
-        }
-
-        if (_isHolding && _currentDoc && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-                out hit2, 3,_docPlace))
-        {
-            _currentDoc.localPosition = new Vector3(hit2.point.x,_currentDoc.localPosition.y,hit2.point.z);
         }
     }
 
-    private async void Click(InputAction.CallbackContext _)
+    private void MiddleClick(InputAction.CallbackContext _)
     {
-        if (Time.timeScale == 0 || PlayerState == PlayerState.Dialog) return;
-        
-        Transform transf;
-        if (PlayerState == PlayerState.Table && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-                out var hit, 3, _docMask))
-        {
-            transf = hit.transform;
-            if (_tableState != CheckState.None 
-                && transf.CompareTag("PMS")
-                && transf.GetChild(0).GetChild(0).childCount == 0)
-            {
-                Instantiate(_tableState == CheckState.Correct? _correctStamp : _wrongStamp,
-                    transf.GetChild(0).GetChild(0));
-                NPCManager.CurrentNPC.Check(_tableState == CheckState.Correct);
-                _tableState = CheckState.None;
-            }
-            else
-            {
-                _isHolding = true;
-                _currentDoc = transf;
-                _currentDoc.GetComponent<Rigidbody>().useGravity = false;
-                _currentDoc.localPosition = new Vector3(_currentDoc.localPosition.x, hit.point.y+0.2f, _currentDoc.localPosition.z);
-            }
-        }
-        
-        if (!Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-                out var hit2, 3, _clickMask)) return;
-        
-        transf = hit2.transform;
-        
-        if (PlayerState == PlayerState.None && transf.CompareTag("NPC"))
-        {
-            transf.GetComponent<NPC>().StartChat();
-            PlayerState = PlayerState.Dialog;
-        }
-        else if (PlayerState == PlayerState.None && transf.CompareTag("Movable"))
-        {
-            StopFocus();
-            _playerMove.enabled = true;
-            transf.GetComponent<Movable>().Take();
-            PlayerState = PlayerState.UI;
-        }
-        else if (_canSleep && transf.CompareTag("Bed"))
-        {
-            StopFocus();
-            _canSleep = false;
-            transf.GetComponent<CamMove>().Move(transform.eulerAngles);
-            
-            transform.GetChild(1).gameObject.SetActive(false);
-            PlayerState = PlayerState.Sleep;
-            await Task.Delay(2000);
-            _timeLines.Sleep();
-        }
-        else if (_button.Enabled && hit2.transform.CompareTag("StartDay"))
-        {
-            _npcMng.StartDay();
-            _button.Enabled = false;
-        }
-        else if (PlayerState == PlayerState.None && transf.CompareTag("Table"))
-        {
-            StopFocus();
-            _tableMove.Move(transform.eulerAngles);
-            PlayerState = PlayerState.Table;
-        }
-        else if (PlayerState == PlayerState.Table && transf.CompareTag("Correct"))
-        {
-            _tableState = CheckState.Correct;
-        }
-        else if (PlayerState == PlayerState.Table && transf.CompareTag("Wrong"))
-        {
-            _tableState = CheckState.Wrong;
-        }
-        else if (transf.CompareTag("Radio"))
-        {
-            var audioSource = transf.GetComponent<AudioSource>();
-            audioSource.mute = !audioSource.mute;
-            transf.GetComponent<Radio>().RadioMat.color = audioSource.mute ? Color.red : Color.green;
-        }
-        else if (PlayerState == PlayerState.None && transf.CompareTag("OpenUI"))
-        {
-            StopFocus();
-            if(transf.name == "Criminals")
-                PlayerState = PlayerState.LeftScreen;
-            else if(transf.name == "Tablet")
-                PlayerState = PlayerState.RightScreen;
-            else
-                PlayerState = PlayerState.UI;
-            transf.GetComponent<CamMove>().Move(transform.eulerAngles);
-        }
+        if(Player.State == PlayerState.Holding)
+            _dragRotate.OnPointerDown();
     }
     
+    private void MiddleClickEnd(InputAction.CallbackContext _)
+    {
+        if(Player.State == PlayerState.Holding)
+            _dragRotate.OnPointerUp();
+    }
 
     private void OnClickEnd(InputAction.CallbackContext _)
     {
-        _isHolding = false;
-        if (_currentDoc != null)
-        {
-            _currentDoc.GetComponent<Rigidbody>().useGravity = true;
-            _currentDoc = null;
+        if (Player.State == PlayerState.Checking){
+                _doc?.Uninteract();
+                _doc = null;
         }
     }
-
-    private void RightClick(InputAction.CallbackContext _)
+    
+    private void Use(InputAction.CallbackContext _)
     {
-        if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-                out var hit, 4, _clickMask) && hit.transform.CompareTag("Radio"))
+        switch (Player.State)
         {
-            hit.transform.GetComponent<Radio>().ChangeClip();
+            case PlayerState.Movement:
+                if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), 
+                        out var hit, 3, _clickMask) &&
+                        hit.transform.TryGetComponent<IUsable>(out var usable))
+                    usable.Use();
+                break;
+            case PlayerState.Holding:
+                if (_dragRotate.TargetMovable.TryGetComponent<IUsable>(out var usable2))
+                    usable2.Use();
+                break;
         }
     }
+    
+    private void Move(InputAction.CallbackContext ctx)
+    {
+        switch (Player.State)
+        {
+            case PlayerState.Movement:
+                Player.Movement.Move(ctx.ReadValue<Vector2>());
+                break;
+            case PlayerState.CamSwitcher:
+                Switcher?.SwitchCamMove(ctx.ReadValue<Vector2>().normalized);
+                break;
+        }
+    }
+    
+    private void Look(InputAction.CallbackContext ctx)
+    {
+        if(Player.State != PlayerState.Movement && Player.State != PlayerState.Holding) return;
 
+        var delta = ctx.ReadValue<Vector2>();
+        Player.Movement.Look(delta);
+        if(Player.State == PlayerState.Holding)
+            _dragRotate.OnLook(delta);
+    }
+    
+    private void StartSprint(InputAction.CallbackContext _)
+    {
+        if(Player.State != PlayerState.Movement && Player.State != PlayerState.Holding) return;
+        Player.Movement.StartSprint();
+    }
+    
+    private void StopSprint(InputAction.CallbackContext _)
+    {
+        if(Player.State != PlayerState.Movement && Player.State != PlayerState.Holding) return;
+        Player.Movement.StopSprint();
+    }
+    
     private void Space(InputAction.CallbackContext _)
     {
-        if(PlayerState == PlayerState.Dialog)
+        if(Player.State == PlayerState.Dialog)
             _dialogSystem.PlayNext();
     }
-
+    
     private void Escape(InputAction.CallbackContext _)
     {
-        if (PlayerState == PlayerState.Dialog)
+        switch (Player.State)
         {
-            _dialogSystem.EndChat();
-            PlayerState = PlayerState.None;
-        }
-        else if (PlayerState is PlayerState.UI or PlayerState.LeftScreen or PlayerState.RightScreen)
-        {
-            _objectHolder.gameObject.SetActive(false);
-            _camManager.ResetCamera();
-        }
-        else if (PlayerState == PlayerState.Table)
-        {
-            _camManager.ResetCamera();
-            _tableState = CheckState.None;
-        }
-        else if (PlayerState == PlayerState.None)
-        {
-            PauseGame();
+            case PlayerState.Movement:
+                PauseGame();
+                Player.State = PlayerState.Block;
+                break;
+            case PlayerState.Dialog:
+                _dialogSystem.EndChat();
+                StopFocus();
+                Player.State = PlayerState.Movement;
+                break;
+            case PlayerState.UI or PlayerState.CamSwitcher or PlayerState.Checking:
+                _interactable?.Uninteract();
+                _interactable = null;
+                _doc?.Uninteract();
+                _doc = null;
+                Focus();
+                Player.State = PlayerState.Movement;
+                break;
         }
     }
-
+    
     public void PauseGame()
     {
         if (Time.timeScale == 0)
         {
-            _pauseMenu.SetActive(false);
+            _mainUI.CloseMenus();
             Focus();
             Time.timeScale = 1;
         }
         else
-        {
-            _pauseMenu.SetActive(true);
+        { 
+            _mainUI.Pause();
             StopFocus();
             Time.timeScale = 0;
         }
     }
-
+    
     public void Focus()
-    {
-        if(PlayerState == PlayerState.Dialog) return;
-        PlayerState = PlayerState.None;
-        _playerMove.enabled = true;
+    { 
+        Player.Movement.Enable();
         _mainUI.ShowCursor();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        _camera.cullingMask = DefaultMask;
     }
-    
+     
     public void StopFocus()
     {
         Cursor.visible = true;
         Cursor.lockState = CursorLockMode.None;
         _mainUI.HideCursor();
-        _playerMove.enabled = false;
+        Player.Movement.Disable();
     }
 }
 
-public enum CheckState
-{
-    None,
-    Wrong,
-    Correct
-}
-
-public enum PlayerState
-{
-    None,
-    Dialog,
-    Table,
-    LeftScreen,
-    RightScreen,
-    UI,
-    Sleep
-}
+//     private void Start()
+//     {
+//         _dialogSystem.ChatEnded += () => {PlayerState = PlayerState.None; Focus();};
+//         NPCManager.OnNPCEnd += () => _canSleep = true;
+//         
+//         TimeLines.OnDayEnd += () =>
+//         {
+//             _camManager.ResetCamera();
+//             transform.GetChild(1).gameObject.SetActive(true);
+//             PlayerState = PlayerState.Dialog;
+//         };
+//     }
+//
+//     private void Update()
+//     {
+//         if (Time.timeScale == 0) return;
+//
+//         switch (_tableState)
+//         {
+//             case CheckState.Correct:
+//                 _corectMaterial.color = Color.green;
+//                 _wrongMaterial.color = Color.grey;
+//                 break;
+//             case CheckState.Wrong:
+//                 _wrongMaterial.color = Color.red;
+//                 _corectMaterial.color = Color.grey;
+//                 break;
+//             case CheckState.None:
+//                 _wrongMaterial.color =  Color.grey;
+//                 _corectMaterial.color = Color.grey;
+//                 break;
+//         }
+//
+//         var delta = _playerInput.actions["Move"].ReadValue<Vector2>();
+//         switch (PlayerState)
+//         {
+//             case PlayerState.Table when delta.x < 0:
+//                 _leftScreenMove.Move(transform.eulerAngles);
+//                 PlayerState = PlayerState.LeftScreen;
+//                 break;
+//             case PlayerState.Table when delta.x > 0:
+//                 _rightScreenMove.Move(transform.eulerAngles);
+//                 PlayerState = PlayerState.RightScreen;
+//                 break;
+//             case PlayerState.LeftScreen when delta is { y: < 0, x: 0 }:
+//                 _tableMove.Move(transform.eulerAngles);
+//                 PlayerState = PlayerState.Table;
+//                 break;
+//             case PlayerState.LeftScreen when delta is { x: > 0, y: 0 }:
+//                 _rightScreenMove.Move(transform.eulerAngles);
+//                 PlayerState = PlayerState.RightScreen;
+//                 break;
+//             case PlayerState.RightScreen when delta is { x: < 0, y: 0 }:
+//                 _leftScreenMove.Move(transform.eulerAngles);
+//                 PlayerState = PlayerState.LeftScreen;
+//                 break;
+//             case PlayerState.RightScreen when delta is { y: < 0, x: 0 }:
+//                 _tableMove.Move(transform.eulerAngles);
+//                 PlayerState = PlayerState.Table;
+//                 break;
+//         }
+//         
+//         _mainUI.HidePopup();
+//         RaycastHit hit = new (), hit2 = new();
+//         
+//         if (PlayerState == PlayerState.Dialog || !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+//                 out hit, 3, _clickMask))
+//         {
+//             _mainUI.ChangeCursor(0);
+//         }
+//         else
+//         {
+//             if (hit.transform.CompareTag("NPC"))
+//                 _mainUI.ChangeCursor(1);
+//             else if (_canSleep && hit.transform.CompareTag("Bed"))
+//                 _mainUI.ChangeCursor(2);
+//             else if (hit.transform.CompareTag("Radio"))
+//                 _mainUI.ChangeCursor(3);
+//             else if (_button.Enabled && hit.transform.CompareTag("StartDay"))
+//                 _mainUI.ChangeCursor(4);
+//             else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Correct"))
+//             {
+//                 _mainUI.ShowPopup("Пустить");
+//             }
+//             else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Wrong"))
+//             {
+//                 _mainUI.ShowPopup("Не пустить");
+//             }
+//             else if (!hit.transform.CompareTag("Untagged") && ! hit.transform.CompareTag("Bed") && !hit.transform.CompareTag("StartDay"))
+//                 _mainUI.ChangeCursor(5);
+//         }
+//
+//         if (_isHolding && _currentDoc && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+//                 out hit2, 3,_docPlace))
+//         {
+//             _currentDoc.localPosition = new Vector3(hit2.point.x,_currentDoc.localPosition.y,hit2.point.z);
+//         }
+//     }
+//
+//     private async void Click(InputAction.CallbackContext _)
+//     {
+//         if (Time.timeScale == 0 || PlayerState == PlayerState.Dialog) return;
+//         
+//         Transform transf;
+//         if (PlayerState == PlayerState.Table && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+//                 out var hit, 3, _docMask))
+//         {
+//             transf = hit.transform;
+//             if (_tableState != CheckState.None 
+//                 && transf.CompareTag("PMS")
+//                 && transf.GetChild(0).GetChild(0).childCount == 0)
+//             {
+//                 Instantiate(_tableState == CheckState.Correct? _correctStamp : _wrongStamp,
+//                     transf.GetChild(0).GetChild(0));
+//                 NPCManager.CurrentNPC.Check(_tableState == CheckState.Correct);
+//                 _tableState = CheckState.None;
+//             }
+//             else
+//             {
+//                 _isHolding = true;
+//                 _currentDoc = transf;
+//                 _currentDoc.GetComponent<Rigidbody>().useGravity = false;
+//                 _currentDoc.localPosition = new Vector3(_currentDoc.localPosition.x, hit.point.y+0.2f, _currentDoc.localPosition.z);
+//             }
+//         }
+//         
+//         if (!Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+//                 out var hit2, 3, _clickMask)) return;
+//         
+//         transf = hit2.transform;
+//         
+//         if (PlayerState == PlayerState.None && transf.CompareTag("NPC"))
+//         {
+//             transf.GetComponent<NPC>().StartChat();
+//             PlayerState = PlayerState.Dialog;
+//         }
+//         else if (PlayerState == PlayerState.None && transf.CompareTag("Movable"))
+//         {
+//             StopFocus();
+//             _playerMove.enabled = true;
+//             transf.GetComponent<Movable>().Take();
+//             PlayerState = PlayerState.UI;
+//         }
+//         else if (_canSleep && transf.CompareTag("Bed"))
+//         {
+//             StopFocus();
+//             _canSleep = false;
+//             transf.GetComponent<CamMove>().Move(transform.eulerAngles);
+//             
+//             transform.GetChild(1).gameObject.SetActive(false);
+//             PlayerState = PlayerState.Sleep;
+//             await Task.Delay(2000);
+//             _timeLines.Sleep();
+//         }
+//         else if (_button.Enabled && hit2.transform.CompareTag("StartDay"))
+//         {
+//             _npcMng.StartDay();
+//             _button.Enabled = false;
+//         }
+//         else if (PlayerState == PlayerState.None && transf.CompareTag("Table"))
+//         {
+//             StopFocus();
+//             _tableMove.Move(transform.eulerAngles);
+//             PlayerState = PlayerState.Table;
+//         }
+//         else if (PlayerState == PlayerState.Table && transf.CompareTag("Correct"))
+//         {
+//             _tableState = CheckState.Correct;
+//         }
+//         else if (PlayerState == PlayerState.Table && transf.CompareTag("Wrong"))
+//         {
+//             _tableState = CheckState.Wrong;
+//         }
+//         else if (transf.CompareTag("Radio"))
+//         {
+//             var audioSource = transf.GetComponent<AudioSource>();
+//             audioSource.mute = !audioSource.mute;
+//             transf.GetComponent<Radio>().RadioMat.color = audioSource.mute ? Color.red : Color.green;
+//         }
+//         else if (PlayerState == PlayerState.None && transf.CompareTag("OpenUI"))
+//         {
+//             StopFocus();
+//             if(transf.name == "Criminals")
+//                 PlayerState = PlayerState.LeftScreen;
+//             else if(transf.name == "Tablet")
+//                 PlayerState = PlayerState.RightScreen;
+//             else
+//                 PlayerState = PlayerState.UI;
+//             transf.GetComponent<CamMove>().Move(transform.eulerAngles);
+//         }
+//     }
+//     
+//
+//     private void OnClickEnd(InputAction.CallbackContext _)
+//     {
+//         _isHolding = false;
+//         if (_currentDoc != null)
+//         {
+//             _currentDoc.GetComponent<Rigidbody>().useGravity = true;
+//             _currentDoc = null;
+//         }
+//     }
+//
+//     private void RightClick(InputAction.CallbackContext _)
+//     {
+//         if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+//                 out var hit, 4, _clickMask) && hit.transform.CompareTag("Radio"))
+//         {
+//             hit.transform.GetComponent<Radio>().ChangeClip();
+//         }
+//     }
+//
+//     private void Space(InputAction.CallbackContext _)
+//     {
+//         if(PlayerState == PlayerState.Dialog)
+//             _dialogSystem.PlayNext();
+//     }
+//
+//     private void Escape(InputAction.CallbackContext _)
+//     {
+//         if (PlayerState == PlayerState.Dialog)
+//         {
+//             _dialogSystem.EndChat();
+//             PlayerState = PlayerState.None;
+//         }
+//         else if (PlayerState is PlayerState.UI or PlayerState.LeftScreen or PlayerState.RightScreen)
+//         {
+//             _objectHolder.gameObject.SetActive(false);
+//             _camManager.ResetCamera();
+//         }
+//         else if (PlayerState == PlayerState.Table)
+//         {
+//             _camManager.ResetCamera();
+//             _tableState = CheckState.None;
+//         }
+//         else if (PlayerState == PlayerState.None)
+//         {
+//             PauseGame();
+//         }
+//     }
+//
+//     public void PauseGame()
+//     {
+//         if (Time.timeScale == 0)
+//         {
+//             _pauseMenu.SetActive(false);
+//             Focus();
+//             Time.timeScale = 1;
+//         }
+//         else
+//         {
+//             _pauseMenu.SetActive(true);
+//             StopFocus();
+//             Time.timeScale = 0;
+//         }
+//     }
+//
+//     public void Focus()
+//     {
+//         if(PlayerState == PlayerState.Dialog) return;
+//         PlayerState = PlayerState.None;
+//         _playerMove.enabled = true;
+//         _mainUI.ShowCursor();
+//         Cursor.visible = false;
+//         Cursor.lockState = CursorLockMode.Locked;
+//         _camera.cullingMask = DefaultMask;
+//     }
+//     
+//     public void StopFocus()
+//     {
+//         Cursor.visible = true;
+//         Cursor.lockState = CursorLockMode.None;
+//         _mainUI.HideCursor();
+//         _playerMove.enabled = false;
+//     }
+// }

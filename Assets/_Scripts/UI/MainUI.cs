@@ -5,23 +5,37 @@ using UnityEngine.UI;
 
 public class MainUI : MonoBehaviour
 {
-    [Header("Objects")] 
+    [Header("Main menues")] 
+    [SerializeField] private GameObject _pauseMenu;
+    [SerializeField] private GameObject _sleepMenu;
+    [SerializeField] private GameObject _holdingMenu;
+    [Header("Cursors")] 
+    [SerializeField] private GameObject _cursor;
+    [SerializeField] private Image _cursorImg;
+    [SerializeField] private Sprite[] _cursors;
+    [Header("Additional UI")] 
     [SerializeField] private Slider _runSlider;
     [SerializeField] private Slider _saturationSlider;
     [SerializeField] private Slider _eventSlider;
     [SerializeField] private TMP_Text _eventTimer;
     [SerializeField] private GameObject _popupMenu;
     [SerializeField] private TMP_Text _popupText;
-    
-    [Header("Cursors")] 
-    [SerializeField] private GameObject _cursor;
-    [SerializeField] private Image _cursorImg;
-    [SerializeField] private Sprite[] _cursors;
 
     private Coroutine _drainRunRoutine, _fillRunRoutine,
         _drainSaturationRoutine, _fillSaturationRoutine,
         _drainEventRoutine, _drainTimerRoutine;
-    
+
+    public void Pause() => _pauseMenu.SetActive(true);
+    public void Sleep() => _sleepMenu.SetActive(true);
+    public void Hold() => _holdingMenu.SetActive(true);
+
+    public void CloseMenus()
+    {
+        _sleepMenu.SetActive(false);
+        _pauseMenu.SetActive(false);
+        _holdingMenu.SetActive(false);
+    }
+
     public void ChangeCursor(int index) => _cursorImg.sprite = _cursors[index];
     public void ShowCursor() => _cursor.SetActive(true);
     public void HideCursor() => _cursor.SetActive(false);

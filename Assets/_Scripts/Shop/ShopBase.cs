@@ -9,7 +9,7 @@ public class ShopBase : MonoBehaviour
      
      public async void InitializePlayerShop()
      {
-         var shop = await APIManager.Instance.GetShop(Bootstrap.Instance.PlayerName);
+         var shop = await APIManager.Instance.GetShop(AuthBootstrap.Instance.PlayerName);
 
          if (shop != null)
          {
@@ -24,12 +24,12 @@ public class ShopBase : MonoBehaviour
                  }
              }
          }
-         APIManager.Instance.ChangeCoins(Bootstrap.Instance.PlayerName, 1000);
+         APIManager.Instance.ChangeCoins(AuthBootstrap.Instance.PlayerName, 1000);
      }
 
      public async void BuyFood(string foodToBuy)
      {
-         var playerName = Bootstrap.Instance.PlayerName;
+         var playerName = AuthBootstrap.Instance.PlayerName;
          var coins = await APIManager.Instance.GetCoins(playerName);
          var food = GetTool(foodToBuy);
 
@@ -47,7 +47,7 @@ public class ShopBase : MonoBehaviour
              shop[foodToBuy] = 0;
              APIManager.Instance.ChangeShop(playerName, shop);
              Instantiate(food, _spawnPos.position, Quaternion.identity);
-             PlayerData.ChangeCoins(price, false);
+             PlayerCoins.ChangeCoins(price, false);
          }
      }
 

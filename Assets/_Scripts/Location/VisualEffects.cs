@@ -9,8 +9,14 @@ public class VisualEffects : MonoBehaviour
     [SerializeField] private VolumeProfile _profile;
     [SerializeField] private Vector4 _mainGamma;
     [SerializeField] private Vector4 _redGamma;
+
+    public void ChangeChromatic(float value)
+    {
+        StopCoroutine("ChangeChromaticRoutine");
+        StartCoroutine(ChangeChromaticRoutine(value));
+    }
     
-    public IEnumerator ChangeChromatic(float value)
+    private IEnumerator ChangeChromaticRoutine(float value)
     {
         if (!_profile.TryGet<ChromaticAberration>(out var chromatic)) yield break;
         while (Mathf.Abs(chromatic.intensity.value - value) > 0.04f)

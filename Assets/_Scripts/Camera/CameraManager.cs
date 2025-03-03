@@ -1,5 +1,6 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class CameraManager : MonoBehaviour
 {
@@ -13,11 +14,11 @@ public class CameraManager : MonoBehaviour
 
     private Coroutine _currentCoroutine, _currentRotateRoutine;
     private PlayerInteractions _playerInter;
-
+    
     private void Start()
     {
         initialLocalEulerAngles = transform.localEulerAngles;
-        _playerInter = FindFirstObjectByType<PlayerInteractions>();
+        _playerInter = Player.Interactions;
     }
 
     public void MoveToTarget(Vector3 targetPosition, Vector3 targetLocalEulerAngles )

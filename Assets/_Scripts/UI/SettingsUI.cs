@@ -2,6 +2,7 @@ using _Scripts.UI;
 using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
+using Zenject;
 
 
 public class SettingsUI : MonoBehaviour
@@ -18,6 +19,11 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private Slider _mouseSens;
     [Header("EndingsUI")] 
     [SerializeField] private GameObject[] _endings;
+
+    private static Player _player;
+
+    [Inject]
+    private void Initialize(Player player) => _player = player;
     
     public static int Graphics
     {
@@ -79,11 +85,6 @@ public class SettingsUI : MonoBehaviour
         get { return PlayerPrefs.GetInt("CurrentDay"); }
         set { PlayerPrefs.SetInt("CurrentDay", value); PlayerPrefs.Save(); }
     }
-    public static int RobotsCount
-    {
-        get { return PlayerPrefs.GetInt("RobotsCount"); }
-        set { PlayerPrefs.SetInt("RobotsCount", value); PlayerPrefs.Save();}
-    }
     
     public void Start()
     {
@@ -95,7 +96,7 @@ public class SettingsUI : MonoBehaviour
             ChangeMusic(0.5f);
             ChangeRadio(0.5f);
             ChangeSFX(0.5f);
-            APIManager.Instance.ChangeCoins(Bootstrap.Instance.PlayerName,0);
+            APIManager.Instance.ChangeCoins(AuthBootstrap.Instance.PlayerName,0);
             PlayerPrefs.SetInt("InGame", 1);
             PlayerPrefs.Save();
         }
@@ -140,9 +141,9 @@ public class SettingsUI : MonoBehaviour
     public static void ChangeVFX(bool value)
     {
         VFXOn = value;
-        PlayerInteractions.DefaultMask = value
-            ? LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Movable", "Doors", "VFX", "DocPlace")
-            : LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Movable", "Doors", "DocPlace");
+        _player.Cam.cullingMask = value
+            ? LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Doors", "VFX")
+            : LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Doors");
     }
 }
 

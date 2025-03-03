@@ -22,8 +22,8 @@ public class DialogSystem : MonoBehaviour
     [SerializeField] private Transform _buttonsHolder;
     [Header("Audio")] [SerializeField] private AudioSource _source;
     
-    private PlayerMovement _playerMovement => FindFirstObjectByType<PlayerMovement>();
-    private PlayerInteractions _playerInter => FindFirstObjectByType<PlayerInteractions>();
+    private PlayerMovement _playerMovement => Player.Movement;
+    private PlayerInteractions _playerInter => Player.Interactions;
     private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
     
     private string _currentLine = "";
@@ -106,8 +106,10 @@ public class DialogSystem : MonoBehaviour
         _currentLine = "";
         _npcManager.SetNPCTalking(false);
         _source.mute = true;
+
+        Player.State = PlayerState.Movement;
         
-        _playerMovement.enabled = true;
+        _playerMovement.Enable();
         FragmentsStack.Clear();
         _playerInter.Focus();
         
