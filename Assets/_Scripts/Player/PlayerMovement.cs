@@ -2,7 +2,6 @@ using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-[RequireComponent(typeof(PlayerInput))]
 public class PlayerMovement
 {
     private readonly MovementStruct _struct;
@@ -13,10 +12,12 @@ public class PlayerMovement
     private readonly VisualEffects _visualFX;
     private readonly Transform _playerTransform;
     
-    private Vector3 _newPos, _newRot, _camRot;
+    private Vector3 _newPos, _newRot;
     private Vector3 _velocity = Vector3.zero;
     private float _speed, _fov = 60, _refTransition, _refZRotate;
     private bool enabled = true;
+
+    public Vector3 CamRot;
     
     public static event Action OnRun, OnRunEnd;
 
@@ -67,27 +68,24 @@ public class PlayerMovement
         var camAngles = _cam.transform.eulerAngles;
         _newRot = new Vector3(0, _playerTransform.eulerAngles.y + delta.x * _mouseSens, 0);
         
-        _camRot = new Vector3(Mathf.Clamp(NormalizeAngle(camAngles.x - delta.y * _mouseSens),
+        CamRot = new Vector3(Mathf.Clamp(NormalizeAngle(camAngles.x - delta.y * _mouseSens),
             _struct.RotationLimits.x, _struct.RotationLimits.y),0, 0);
     }
-
-    public void Move(Vector2 delta)
+    
+    public void LocalUpdate(Vector2 delta)
     {
+        if(!enabled) return;
+
         var direction = new Vector3(delta.x, 0, delta.y); // Вектор ввода
         direction = Quaternion.Euler(0, _playerTransform.eulerAngles.y, 0) * direction; // Учет поворота игрока
         _newPos = _playerTransform.position + direction.normalized * (_speed * Time.fixedDeltaTime);
-    }
-    public void LocalUpdate()
-    {
-        if(!enabled) return;
-        
         _playerTransform.position = Vector3.SmoothDamp(_playerTransform.position, _newPos, ref _velocity, _struct.SmoothTime);
         
         _cam.fieldOfView = Mathf.SmoothDamp(_cam.fieldOfView, _fov, ref _refTransition, _struct.TransitionTime);
 
         ApplyShake(_velocity.magnitude);
         _playerTransform.eulerAngles = _newRot;
-        _cam.transform.localEulerAngles = _camRot;
+        _cam.transform.localEulerAngles = CamRot;
     }
 
     private void ApplyShake(float movementSpeed)

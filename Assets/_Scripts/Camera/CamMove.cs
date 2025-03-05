@@ -9,6 +9,8 @@ public class CamMove : MonoBehaviour, IInteractable
     
     private CameraManager _cameraMng;
     protected Player _player;
+
+    public Vector3 HitPos;
     public event Action OnInteract; 
     
     [Inject]
@@ -20,9 +22,13 @@ public class CamMove : MonoBehaviour, IInteractable
 
     public virtual void Interact()
     {
-        _cameraMng.MoveToTarget(_camPos.position,_camPos.eulerAngles - _player.transform.eulerAngles);
         ChangePlayerState();
+        if (HitPos == Vector3.zero)
+            HitPos = _camPos.position;
+        _cameraMng.MoveToTarget(_camPos.position,_camPos.eulerAngles - _player.transform.eulerAngles, HitPos);
+        Player.Interactions.StopFocus();
         OnInteract?.Invoke();
+        HitPos = Vector3.zero;
     }
 
     protected virtual void ChangePlayerState() => Player.State = PlayerState.UI;

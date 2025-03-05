@@ -10,21 +10,28 @@ public class Movable : MonoBehaviour, IInteractable
     public string Description => _description;
     
     private Rigidbody _rb => GetComponent<Rigidbody>();
-    private Transform _rotator;
+    private Collider _collider => GetComponent<Collider>();
+    private DragRotate _rotator;
+    private MainUI _mainUI;
 
     [Inject]
-    private void Initialize(Player player)
+    private void Initialize(Player player, MainUI mainUI)
     {
-        _rotator = player.Rotator.transform;
+        _rotator = player.Rotator;
+        _mainUI = mainUI;
     }
     
     public void Interact()
     {
         _rb.useGravity = false;
         _rb.isKinematic = true;
-        transform.SetParent(_rotator);
-        transform.localPosition = new Vector3(0, -0.05f, 0.05f);
-        _rotator.gameObject.SetActive(true);
+        transform.SetParent(_rotator.transform);
+        transform.localPosition = new Vector3(0, 0, 0.4f);
+        _collider.enabled = false;
+        _rotator.enabled = true;
+        
+        Player.State = PlayerState.Holding;
+        _mainUI.HideCursor();
     }
     
     public void Uninteract()
@@ -32,6 +39,9 @@ public class Movable : MonoBehaviour, IInteractable
         gameObject.SetActive(true);
         _rb.useGravity = true;
         _rb.isKinematic = false;
+        _collider.enabled = true;
         
+        Player.State = PlayerState.Movement;
+        _mainUI.ShowCursor();
     }
 }

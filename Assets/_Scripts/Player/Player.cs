@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -8,6 +7,9 @@ using Zenject;
 
 public class Player : MonoBehaviour
 {
+    [field: SerializeReference] public Camera Cam { get; private set; }
+    [field: SerializeReference] public DragRotate Rotator { get; private set; }
+    [field: SerializeReference] public GameObject Model { get; private set; }
     [Header("Structures")] 
     [SerializeField] private MonologueStruct _monologueStruct;
     [SerializeField] private MovementStruct _movementStruct;
@@ -17,10 +19,6 @@ public class Player : MonoBehaviour
     [Header("Audio Sources")]
     [SerializeField] private AudioSource _breathSource;
     [SerializeField] private AudioSource _feetSource;
-    [Header("Public objects")]
-    [field: SerializeReference] public Camera Cam { get; private set; }
-    [field: SerializeReference] public DragRotate Rotator { get; private set; }
-    [field: SerializeReference] public GameObject Model { get; private set; }
     [Header("UI")]
     [SerializeField] private List<TMP_Text> _honeyCombsTextes;
 
@@ -38,7 +36,7 @@ public class Player : MonoBehaviour
     private DialogSystem _dialogSystem;
     
     [Inject]
-    private void Initialize(VisualEffects effects, DialogSystem dialogSystem)
+    public void Initialize(VisualEffects effects, MainUI mainUI, DialogSystem dialogSystem)
     {
         _effects = effects;
         _dialogSystem = dialogSystem;
@@ -48,12 +46,12 @@ public class Player : MonoBehaviour
         Sfx = new PlayerSFX(_breathSource, _feetSource);
         Coins = new PlayerCoins(_honeyCombsTextes);
         Movement = new PlayerMovement(_movementStruct,_effects,Cam,transform);
-        Interactions = new PlayerInteractions(_clickMask, _docsMask, Cam, Rotator);
+        Interactions = new PlayerInteractions(_clickMask, _docsMask, Cam, Rotator, mainUI,_dialogSystem);
     }
 
     private void FixedUpdate()
     {
-        Movement.LocalUpdate();
+        Movement.LocalUpdate(Input.actions["Move"].ReadValue<Vector2>());
     }
 }
 

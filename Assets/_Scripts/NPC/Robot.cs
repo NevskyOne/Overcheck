@@ -146,7 +146,7 @@ public class Robot : MonoBehaviour
             _state = RobotState.Attack;
             
             transform.LookAt(sbj.transform);
-            _cameraManager.MoveToTarget(Vector3.zero, _cameraManager.transform.eulerAngles+transform.eulerAngles);
+            _cameraManager.MoveToTarget(Vector3.zero, _cameraManager.transform.eulerAngles+transform.eulerAngles, transform.position);
             _input.enabled = false;
             var fragments = new List<DialogFragment>(RandomParamSt.RobotsReplics[Random.Range(0, RandomParamSt.RobotsReplics.Count)].Fragments);
             _dialogSystem.FragmentsStack = fragments;

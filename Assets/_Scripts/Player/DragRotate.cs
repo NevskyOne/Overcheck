@@ -72,10 +72,11 @@ public class DragRotate : MonoBehaviour
         if (!_isDragging && _inertiaTimeRemaining > 0)
         {
             float t = _inertiaTimeRemaining / inertiaDuration;
-            Vector2 delta = _inertiaVelocity * t * Time.deltaTime;
+            Vector2 delta = _inertiaVelocity * (t * Time.deltaTime);
             Rotate(delta);
             _inertiaTimeRemaining -= Time.deltaTime;
         }
+        
     }
 
     private void Rotate(Vector2 delta)

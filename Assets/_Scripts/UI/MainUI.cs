@@ -2,6 +2,7 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class MainUI : MonoBehaviour
 {
@@ -24,8 +25,10 @@ public class MainUI : MonoBehaviour
     private Coroutine _drainRunRoutine, _fillRunRoutine,
         _drainSaturationRoutine, _fillSaturationRoutine,
         _drainEventRoutine, _drainTimerRoutine;
-
+    
+    
     public void Pause() => _pauseMenu.SetActive(true);
+    public void Unpause() => Player.Interactions.PauseGame();
     public void Sleep() => _sleepMenu.SetActive(true);
     public void Hold() => _holdingMenu.SetActive(true);
 

@@ -9,10 +9,10 @@ public class BindingsInstaller : MonoInstaller
         Container.Bind<EventBus>().AsSingle();
         Container.Bind<NPCDataBaseService>().AsSingle();
         
-        Container.Bind<VisualEffects>().AsSingle();
-        Container.Bind<DialogSystem>().AsSingle(); 
-        Container.Bind<CameraManager>().AsSingle();
-        Container.Bind<Player>().AsSingle();
-        Container.Bind<MainUI>().AsSingle();
+        Container.Bind<VisualEffects>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<DialogSystem>().FromComponentInHierarchy().AsSingle(); 
+        Container.Bind<CameraManager>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<Player>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<MainUI>().FromComponentInHierarchy().AsSingle();
     }
 }

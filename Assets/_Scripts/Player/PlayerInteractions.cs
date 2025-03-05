@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
-using Zenject;
 
 public class PlayerInteractions
 {
@@ -10,36 +9,35 @@ public class PlayerInteractions
     private readonly LayerMask _docsMask;
     private readonly Camera _camera;
     private readonly DragRotate _dragRotate;
-    private MainUI _mainUI;
-    private DialogSystem _dialogSystem;
+    private readonly MainUI _mainUI;
+    private readonly DialogSystem _dialogSystem;
     private IInteractable _interactable, _doc;
-    
-    public PlayerInteractions(LayerMask clickMask, LayerMask docsMask, Camera cam, DragRotate dragRotate)
+
+    private bool _lockTheView;
+
+    public PlayerInteractions(LayerMask clickMask, LayerMask docsMask, Camera cam, DragRotate dragRotate, MainUI mainUI, DialogSystem dialogSystem)
     {
         var playerInput = Player.Input;
         _clickMask = clickMask;
         _docsMask = docsMask;
         _camera = cam;
         _dragRotate = dragRotate;
-        
+
         playerInput.actions["Click"].started += Click;
         playerInput.actions["Click"].canceled += OnClickEnd;
         playerInput.actions["MiddleClick"].started += MiddleClick;
         playerInput.actions["MiddleClick"].canceled += MiddleClickEnd;
         playerInput.actions["Use"].started += Use;
-        playerInput.actions["Move"].performed += Move;
+        playerInput.actions["Move"].started += Move;
         playerInput.actions["Look"].performed += Look;
         playerInput.actions["Sprint"].started += StartSprint;
         playerInput.actions["Sprint"].canceled += StopSprint;
         playerInput.actions["Space"].performed += Space;
         playerInput.actions["Escape"].performed += Escape;
-    }
-
-    [Inject]
-    private void Initialize(MainUI mainUI, DialogSystem dialogSystem)
-    {
+        
         _mainUI = mainUI;
         _dialogSystem = dialogSystem;
+        Focus();
     }
 
     private void Click(InputAction.CallbackContext _)
@@ -48,10 +46,12 @@ public class PlayerInteractions
         {
             case PlayerState.Movement:
                 if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-                        out var hit, 3, _clickMask))
+                        out var hit, 3, _clickMask) &&
+                        hit.transform.TryGetComponent<IInteractable>(out var iter))
                 {
-                    StopFocus();
-                    _interactable = hit.transform.GetComponent<IInteractable>();
+                    if (hit.transform.TryGetComponent<CamMove>(out var camMove))
+                        camMove.HitPos = hit.point;
+                    _interactable = iter;
                     _interactable.Interact();
                 }
                 break;
@@ -59,33 +59,38 @@ public class PlayerInteractions
                 if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
                         out var hit2, 3, _docsMask))
                 {
+                    if (hit2.transform.TryGetComponent<CamMove>(out var camMove))
+                        camMove.HitPos = hit2.point;
                     _doc = hit2.transform.GetComponent<IInteractable>();
                     _doc.Interact();
                 }
-                break;
-            case PlayerState.Holding:
-                _dragRotate.OnPointerDown();
                 break;
         }
     }
 
     private void MiddleClick(InputAction.CallbackContext _)
     {
-        if(Player.State == PlayerState.Holding)
+        if (Player.State == PlayerState.Holding)
+        {
             _dragRotate.OnPointerDown();
+            _lockTheView = true;
+        }
     }
     
     private void MiddleClickEnd(InputAction.CallbackContext _)
     {
-        if(Player.State == PlayerState.Holding)
+        if (Player.State == PlayerState.Holding)
+        {
             _dragRotate.OnPointerUp();
+            _lockTheView = false;
+        }
     }
 
     private void OnClickEnd(InputAction.CallbackContext _)
     {
         if (Player.State == PlayerState.Checking){
-                _doc?.Uninteract();
-                _doc = null;
+            _doc?.Uninteract();
+            _doc = null;
         }
     }
     
@@ -101,7 +106,10 @@ public class PlayerInteractions
                 break;
             case PlayerState.Holding:
                 if (_dragRotate.TargetMovable.TryGetComponent<IUsable>(out var usable2))
+                {
+                    _dragRotate.enabled = false;
                     usable2.Use();
+                }
                 break;
         }
     }
@@ -110,9 +118,6 @@ public class PlayerInteractions
     {
         switch (Player.State)
         {
-            case PlayerState.Movement:
-                Player.Movement.Move(ctx.ReadValue<Vector2>());
-                break;
             case PlayerState.CamSwitcher:
                 Switcher?.SwitchCamMove(ctx.ReadValue<Vector2>().normalized);
                 break;
@@ -121,12 +126,19 @@ public class PlayerInteractions
     
     private void Look(InputAction.CallbackContext ctx)
     {
-        if(Player.State != PlayerState.Movement && Player.State != PlayerState.Holding) return;
-
         var delta = ctx.ReadValue<Vector2>();
-        Player.Movement.Look(delta);
-        if(Player.State == PlayerState.Holding)
-            _dragRotate.OnLook(delta);
+        switch (Player.State)
+        {
+            case PlayerState.Movement:
+                Player.Movement.Look(delta);
+                break;
+            case PlayerState.Holding:
+                if (_lockTheView)
+                    _dragRotate.OnLook(delta);
+                else
+                    Player.Movement.Look(delta);
+                break;
+        }
     }
     
     private void StartSprint(InputAction.CallbackContext _)
@@ -153,7 +165,6 @@ public class PlayerInteractions
         {
             case PlayerState.Movement:
                 PauseGame();
-                Player.State = PlayerState.Block;
                 break;
             case PlayerState.Dialog:
                 _dialogSystem.EndChat();
@@ -165,8 +176,10 @@ public class PlayerInteractions
                 _interactable = null;
                 _doc?.Uninteract();
                 _doc = null;
-                Focus();
-                Player.State = PlayerState.Movement;
+                break;
+            case PlayerState.Holding:
+                _dragRotate.enabled = false;
+                _interactable = null;
                 break;
         }
     }
@@ -178,12 +191,14 @@ public class PlayerInteractions
             _mainUI.CloseMenus();
             Focus();
             Time.timeScale = 1;
+            Player.State = PlayerState.Movement;
         }
         else
         { 
             _mainUI.Pause();
             StopFocus();
             Time.timeScale = 0;
+            Player.State = PlayerState.Block;
         }
     }
     
