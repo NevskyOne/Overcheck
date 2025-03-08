@@ -148,9 +148,9 @@ public class Robot : MonoBehaviour
             transform.LookAt(sbj.transform);
             _cameraManager.MoveToTarget(Vector3.zero, _cameraManager.transform.eulerAngles+transform.eulerAngles, transform.position);
             _input.enabled = false;
-            var fragments = new List<DialogFragment>(RandomParamSt.RobotsReplics[Random.Range(0, RandomParamSt.RobotsReplics.Count)].Fragments);
+            var fragments = new List<DialogFragment>(RandomParamStruct.RobotsReplics[Random.Range(0, RandomParamStruct.RobotsReplics.Count)].Fragments);
             _dialogSystem.FragmentsStack = fragments;
-            _dialogSystem.PlayNext();
+            _dialogSystem.PlayNext(_animator);
             _creapySounds.SetActive(true);
         }
     }

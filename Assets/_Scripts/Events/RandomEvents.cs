@@ -31,14 +31,14 @@ public class RandomEvents : MonoBehaviour
     private CameraManager _cameraMng => _player.GetComponentInChildren<CameraManager>();
     private Rigidbody _camRb => _cameraMng.GetComponent<Rigidbody>();
     private StartButton _button => FindFirstObjectByType<StartButton>();
-    private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
+    // private NPCManager _npcMng => FindFirstObjectByType<NPCManager>();
     private VisualEffects _fx => FindFirstObjectByType<VisualEffects>();
 
     public static event Action OnLose, OnDone;
     
     private void Start()
     {
-        NPCManager.RandomEvent += OnEventStart;
+        // NPCManager.RandomEvent += OnEventStart;
         StartCoroutine(_fx.ChangeGamma());
     }
 
@@ -85,7 +85,7 @@ public class RandomEvents : MonoBehaviour
         _puzzleObj.SetActive(false);
         
         StartCoroutine(_fx.ChangeGamma());
-        _npcMng.SelectNPC(false);
+        // _npcMng.SelectNPC(false);
         
         SceneMusic.State = MusicState.Normal;
         TimeLines.Additional += _cost;

@@ -1,6 +1,7 @@
 using UnityEngine;
 using Zenject;
 
+[RequireComponent(typeof(Rigidbody), typeof(Collider))]
 public class Movable : MonoBehaviour, IInteractable
 {
     [SerializeField] private string _title;

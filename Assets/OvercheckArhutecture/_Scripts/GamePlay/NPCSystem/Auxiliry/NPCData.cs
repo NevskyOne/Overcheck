@@ -5,15 +5,17 @@ public class NPCData
 {
     private DocsData _docsData;
     private NPCAppearanceData _npcAppearanceData;
-    //Здесь еще какая-то иная дата, которая не касается внешности и документов
+    private DialogConfig _config; 
 
     public DocsData DocsData => _docsData;
-
     public NPCAppearanceData NpcAppearanceData => _npcAppearanceData;
+    public DialogConfig Config => _config;
 
-    public void Setup(DocsData docsData, NPCAppearanceData npcAppearanceData)
+
+    public void Setup(DocsData docsData, NPCAppearanceData npcAppearanceData, DialogConfig config)
     {
         _docsData = docsData;
         _npcAppearanceData = npcAppearanceData;
+        _config = config;
     }
 }

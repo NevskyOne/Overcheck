@@ -1,6 +1,11 @@
 ﻿using System;
 
 [Serializable]
-public class NPCAppearanceData
+public struct NPCAppearanceData
 {
+    public int Model;
+    public int ModelMaterial;
+    public int AccessMaterial;
+    public int Photo;
+    public int[] Accessories;
 }

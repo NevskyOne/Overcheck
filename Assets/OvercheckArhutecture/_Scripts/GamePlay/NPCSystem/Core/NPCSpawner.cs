@@ -6,12 +6,16 @@ public class NPCSpawner : MonoBehaviour
     [SerializeField] private NPCBase _npcBasePrefab;
     
     private EventBus _eventBus;
+    private NPCService _npcService;
     private bool _isGameStarted;
+    
+    [Inject] private DiContainer _container;
 
     [Inject]
-    private void Initialize(EventBus eventBus)
+    private void Initialize(EventBus eventBus, NPCService npcService)
     {
         _eventBus = eventBus;
+        _npcService = npcService;
         
         _eventBus.Subscribe<GameStartedEvent>(OnGameStarted);
         _eventBus.Subscribe<GamePausedEvent>(OnGamePaused);
@@ -33,8 +37,9 @@ public class NPCSpawner : MonoBehaviour
         if (!_isGameStarted) return;
 
         var spawnData = e.NPCSpawnData;
-        var newNpc = Instantiate(_npcBasePrefab, spawnData.SpawnPosition, Quaternion.identity);
-        newNpc.Setup(spawnData.NPCData);
+        var newNpc = _container.InstantiatePrefab(
+            _npcBasePrefab, spawnData.SpawnPosition, Quaternion.identity, null).GetComponent<NPCBase>();
+        newNpc.Setup(spawnData.NPCData, _npcService);
         _eventBus.Invoke(new NPCSpawnedEvent(spawnData, newNpc));
     }
 }

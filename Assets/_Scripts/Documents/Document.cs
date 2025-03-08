@@ -1,32 +1,41 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
-using Random = System.Random;
 
-public abstract class Document : MonoBehaviour
+[RequireComponent(typeof(Rigidbody))]
+public abstract class Document : MonoBehaviour, IInteractable
 {
+    [Header("UI")]
     [SerializeField] protected TMP_Text _nameText;
     [SerializeField] protected Image _photoImage;
     
-    protected string _name;
-    protected Sprite _photo;
-    protected bool _origin = true;
-    protected int _paramCount = 2;
-    protected Random _rnd = new Random();
-
-    public virtual void Initialize(string name, Sprite photo, int planet)
+    private Rigidbody _rb => GetComponent<Rigidbody>();
+    
+    public virtual void Setup(DocData docData)
     {
-        _name = name;
-        _photo = photo;
-
-        _nameText.text = _name;
-        _photoImage.sprite = _photo;
+        _nameText.text = docData.Name;
+        _photoImage.sprite = RandomParamStruct.Photos[docData.Photo];
     }
 
-    public virtual void Randomize(int maxRandomCount)
+    public void Move(Vector3 position)
     {
-        _origin = false;
+        if(!_rb.isKinematic) return;
+        transform.position = new Vector3(position.x, transform.position.y, position.z);
+    }
+    
+    public void Interact()
+    {
+        _rb.useGravity = false;
+        _rb.isKinematic = true;
+        transform.position =
+            new Vector3(transform.position.x, transform.position.y + 0.2f, transform.position.z);
     }
 
-    protected void OnFaceChanging() => NPCManager.CurrentNPC.FaceChanged = true;
+    public void Uninteract()
+    {
+        _rb.useGravity = true;
+        _rb.isKinematic = false;
+    }
 }
+
+

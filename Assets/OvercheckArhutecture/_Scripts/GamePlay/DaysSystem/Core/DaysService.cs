@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Zenject;
 
 public class DaysService : MonoBehaviour
@@ -9,7 +10,7 @@ public class DaysService : MonoBehaviour
 
     private ISaver _saver;
     private EventBus _eventBus;
-    private int _currentDay;
+    public static int CurrentDay { get; private set; }
 
     [Inject]
     private void Initialize(ISaver saver, EventBus eventBus)
@@ -26,7 +27,7 @@ public class DaysService : MonoBehaviour
     private void OnAutoSave(AutoSaveEvent obj)
     {
         _saver.Save(_days, SavePathConstants.DaysDataSavePath);
-        _saver.Save(_currentDay, SavePathConstants.CurrentDaySavePath);
+        _saver.Save(CurrentDay, SavePathConstants.CurrentDaySavePath);
     }
 
     private void OnGameStart(GameStartedEvent e)
@@ -42,7 +43,7 @@ public class DaysService : MonoBehaviour
 
         if (!e.IsNewGame)
         {
-            _currentDay = _saver.Load<int>(SavePathConstants.CurrentDaySavePath);
+            CurrentDay = _saver.Load<int>(SavePathConstants.CurrentDaySavePath);
             var days = _saver.Load<List<DayData>>(SavePathConstants.DaysDataSavePath);
             for (var i = 0; i < days.Count; i++)
             {
@@ -56,23 +57,23 @@ public class DaysService : MonoBehaviour
 
     private void StartNewDay(int day)
     {
-        _currentDay = day;
-        var currentDayData = _days[_currentDay];
+        CurrentDay = day;
+        var currentDayData = _days[CurrentDay];
         _eventBus.Invoke(new NewDayStartedEvent(currentDayData));
         StartCoroutine(DayCycleRoutine());
     }
 
     private void EndDay()
     {
-        var currentDayData = _days[_currentDay];
+        var currentDayData = _days[CurrentDay];
         _saver.Save(_days, SavePathConstants.DaysDataSavePath);
-        _saver.Save(_currentDay, SavePathConstants.CurrentDaySavePath);
+        _saver.Save(CurrentDay, SavePathConstants.CurrentDaySavePath);
         _eventBus.Invoke(new DayEndedEvent(currentDayData));
     }
     
     private IEnumerator DayCycleRoutine()
     {
-        var currentDayData = _days[_currentDay];
+        var currentDayData = _days[CurrentDay];
         yield return new WaitForSeconds(1f);
         for (var i = 0; i < currentDayData.Events.Count; i++)
         {
@@ -82,7 +83,7 @@ public class DaysService : MonoBehaviour
 
         if (currentDayData.ConditionalEvents.Count > 0)
         {
-            var previousDay = _days[_currentDay - 1];
+            var previousDay = _days[CurrentDay - 1];
             for (var i = 0; i < currentDayData.ConditionalEvents.Count; i++)
             {
                 currentDayData.ConditionalEvents[i].ExecuteIf(previousDay);
@@ -112,6 +113,6 @@ public class DaysService : MonoBehaviour
 
     private void OnEventInvoked(EventHasBeenInvoked e)
     {
-        _days[_currentDay].InvokedEvents.Add(e.Action.Method.Name);
+        _days[CurrentDay].InvokedEvents.Add(e.Action.Method.Name);
     }
 }

@@ -15,7 +15,8 @@ public class PlayerInteractions
 
     private bool _lockTheView;
 
-    public PlayerInteractions(LayerMask clickMask, LayerMask docsMask, Camera cam, DragRotate dragRotate, MainUI mainUI, DialogSystem dialogSystem)
+    public PlayerInteractions(LayerMask clickMask, LayerMask docsMask, Camera cam,
+                DragRotate dragRotate, MainUI mainUI, DialogSystem dialogSystem)
     {
         var playerInput = Player.Input;
         _clickMask = clickMask;
@@ -59,10 +60,25 @@ public class PlayerInteractions
                 if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
                         out var hit2, 3, _docsMask))
                 {
-                    if (hit2.transform.TryGetComponent<CamMove>(out var camMove))
-                        camMove.HitPos = hit2.point;
-                    _doc = hit2.transform.GetComponent<IInteractable>();
-                    _doc.Interact();
+                    switch (Player.CheckingState)
+                    {
+                        case CheckState.None:
+                            _doc = hit2.transform.GetComponent<IInteractable>();
+                            _doc.Interact();
+                            break;
+                        case CheckState.Correct:
+                            if (hit2.transform.TryGetComponent<IAcceptable>(out var acceptable))
+                            {
+                                acceptable.Accept();
+                            }
+                            break;
+                        case CheckState.Wrong:
+                            if (hit2.transform.TryGetComponent<IAcceptable>(out var acceptable2))
+                            {
+                                acceptable2.Reject();
+                            }
+                            break;
+                    }
                 }
                 break;
         }
@@ -79,7 +95,7 @@ public class PlayerInteractions
     
     private void MiddleClickEnd(InputAction.CallbackContext _)
     {
-        if (Player.State == PlayerState.Holding)
+        if (Player.State == PlayerState.Holding && Player.CheckingState == CheckState.None)
         {
             _dragRotate.OnPointerUp();
             _lockTheView = false;
@@ -137,6 +153,14 @@ public class PlayerInteractions
                     _dragRotate.OnLook(delta);
                 else
                     Player.Movement.Look(delta);
+                break;
+            case PlayerState.Checking:
+                if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+                        out var hit, 3, _clickMask))
+                {
+                    Document doc = _doc as Document;
+                    doc?.Move(hit.point);
+                }
                 break;
         }
     }

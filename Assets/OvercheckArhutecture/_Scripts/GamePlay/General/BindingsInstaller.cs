@@ -9,6 +9,8 @@ public class BindingsInstaller : MonoInstaller
         Container.Bind<EventBus>().AsSingle();
         Container.Bind<NPCDataBaseService>().AsSingle();
         
+        Container.Bind<DocumentControlService>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<NPCService>().FromComponentInHierarchy().AsSingle();
         Container.Bind<VisualEffects>().FromComponentInHierarchy().AsSingle();
         Container.Bind<DialogSystem>().FromComponentInHierarchy().AsSingle(); 
         Container.Bind<CameraManager>().FromComponentInHierarchy().AsSingle();

@@ -1,236 +1,236 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using TMPro;
-using UnityEngine;
-using UnityEngine.AI;
-using Random = System.Random;
-
-public class NPCManager : MonoBehaviour
-{
-    [Header("Randomnes")] 
-    public uint CriminalChance;
-    public uint EventChance = 30;
-    [Header("NPC")] 
-    public List<DayNPC> NpcList = new(7);
-    [SerializeField] private List<GameObject> _normalNPC;
-    [SerializeField] private List<GameObject> _eternityNPC;
-    [SerializeField] private List<GameObject> _agentsNPC;
-    [SerializeField] private List<GameObject> _robotsNPC;
-    [SerializeField] private List<GameObject> _tutorialNPC;
-    
-    [Header("DocsSpawn")] 
-    [SerializeField] private Transform _pos1;
-    [SerializeField] private Transform _pos2;
-    [SerializeField] private Transform _pos3;
-
-    [Header("NPCPoints")] 
-    [SerializeField] private Transform _startPos;
-    [SerializeField] private Transform _tablePos;
-    [SerializeField] private Transform _endPos;
-
-    [Header("UI")] 
-    [SerializeField] private Transform _criminalHolder;
-
-    public static NPC CurrentNPC {get; private set; }
-    private List<string> _criminals  = new();
-    public List<string> ChangedCriminals { get; private set; } = new();
-
-    private Random _rnd = new Random();
-    
-    private NavMeshAgent _currentAgent;
-    private NPCAnim _npcAnim;
-    
-    private int _weekDate => FindFirstObjectByType<TimeLines>().WeekDate;
-    private NPCRandomizer _randomizer => GetComponent<NPCRandomizer>();
-    private StartButton _button => FindFirstObjectByType<StartButton>();
-    
-    private DayNPC _currentDay;
-    private bool _isChecked, _toTable, _isTutored;
-    
-    public static event Action OnNPCEnd, RandomEvent, EternityCheck, OnNPCCheck,OnGiveDocs;
-    
-
-    private  void Start()
-    {
-        var names = RandomParamSt.Names.ToList();
-        for (int i = 0; i < _rnd.Next(3, 5); i++)
-        {
-            var bearName = names[_rnd.Next(names.Count)];
-            _criminals.Add(bearName);
-            names.Remove(bearName);
-        }
-        
-        ChangedCriminals = _criminals;
-        RandomEvents.OnLose += ResetDay;
-
-
-
-        TimeLines.OnDayEnd += () =>
-        {
-            _currentDay = NpcList[_weekDate];
-            if (_currentDay.TutorialNPC > 0)
-            {
-                SpawnNPC(new() { _tutorialNPC[0] });
-                _tutorialNPC.Remove(_tutorialNPC[0]);
-                CurrentNPC.Fragments = _weekDate switch
-                {
-                    0 => RandomParamSt.TutorialConfigs[0].Fragments,
-                    1 => RandomParamSt.TutorialConfigs[1].Fragments,
-                    3 => RandomParamSt.TutorialConfigs[2].Fragments,
-                    _ => CurrentNPC.Fragments
-                };
-            }
-            else
-                _button.Enabled = true;
-        };
-    }
-    
-    void Update()
-    {
-        if (!_currentAgent || !(_currentAgent.velocity.magnitude < 0.4f)) return;
-        if (_isChecked)
-        {
-            print("check");
-            if(_isTutored)
-                SelectNPC();
-            else
-            {
-                _button.Enabled = true;
-                _isTutored = true;
-            }
-
-            _isChecked = false;
-        }
-
-        else if (_toTable)
-        {
-            // StartCoroutine( _npcAnim.TurnRight());
-            _toTable = false;
-        }
-    }
-
-    public void StartDay()
-    {
-        _criminals = ChangedCriminals;
-        _currentDay = NpcList[_weekDate];
-        SelectNPC();
-        int i = 0;
-        foreach (var criminal in _criminals)
-        {
-            _criminalHolder.GetChild(i).GetChild(1).GetComponent<TMP_Text>().text = criminal;
-            i++;
-        }
-    }
-
-    public void ResetDay()
-    {
-        ChangedCriminals = _criminals;
-        _currentDay = NpcList[_weekDate];
-    }
-
-    public void SetNPCTalking(bool talking = true)
-    {
-        if(_npcAnim)
-            _npcAnim.IsTalking = talking;
-    }
-
-    public void SelectNPC(bool eventEnabled = true)
-    { 
-        if(CurrentNPC) Destroy(CurrentNPC.gameObject);
-        var randomSpecial = _rnd.Next(3);
-        if(eventEnabled && _rnd.Next(0,101) < (EventChance) &&
-           (_currentDay.TutorialNPC > 0 || _currentDay.EternityNPC > 0 ||
-            _currentDay.AgentNPC > 0 || _currentDay.RobotsNPC > 0 || _currentDay.NormalNPC > 0))
-            RandomEvent?.Invoke();
-        else
-        {
-            
-            if (randomSpecial == 0 && _currentDay.EternityNPC > 0)
-            {
-                SpawnNPC(_eternityNPC);
-                _currentDay.EternityNPC -= 1;
-            }
-            else if (randomSpecial == 1 && _currentDay.AgentNPC > 0)
-            {
-                SpawnNPC(_agentsNPC);
-                _currentDay.AgentNPC -= 1;
-            }
-            else if (randomSpecial == 2 && _currentDay.RobotsNPC > 0)
-            {
-                SpawnNPC(_robotsNPC);
-                _currentDay.RobotsNPC -= 1;
-            }
-            else if (_currentDay.NormalNPC > 0)
-            {
-                SpawnNPC(_normalNPC);
-                _currentDay.NormalNPC -= 1;
-                _randomizer.Randomize(CurrentNPC.transform);
-            }
-            else
-                OnNPCEnd?.Invoke();
-        }
-    }
-
-    private async void SpawnNPC(List<GameObject> npcList)
-    {
-        _currentAgent = Instantiate(npcList[_rnd.Next(0, npcList.Count)], _startPos.position, Quaternion.identity).GetComponent<NavMeshAgent>();
-        _currentAgent.SetDestination(_tablePos.position);
-        CurrentNPC = _currentAgent.GetComponent<NPC>();
-        _npcAnim = CurrentNPC.GetComponent<NPCAnim>();
-        await Task.Delay(1000);
-        _toTable = true;
-    }
-
-    public async void GoBack()
-    {
-        // StartCoroutine( _npcAnim.TurnRight());
-        
-        OnNPCCheck?.Invoke();
-        if(CurrentNPC.NPCTimeLine == TimeLine.Eternity)
-            EternityCheck?.Invoke();
-        
-        _currentAgent.SetDestination(_startPos.position);
-        await Task.Delay(10000);
-        _isChecked = true;
-    }
-    
-    public async void GoTowards()
-    {
-        StartCoroutine(_npcAnim.TurnLeft());
-        
-        OnNPCCheck?.Invoke();
-        if(CurrentNPC.NPCTimeLine == TimeLine.Eternity)
-            EternityCheck?.Invoke();
-        
-        _currentAgent.SetDestination(_endPos.position);
-        print("GoTowards");
-            
-        await Task.Delay(10000);
-        _isChecked = true;
-    }
-    
-    public Document GiveDoc(GameObject doc, uint pos)
-    {
-        OnGiveDocs?.Invoke();
-        return pos switch
-        {
-            1 => Instantiate(doc, _pos1.position, Quaternion.Euler(0,90,0))
-                .GetComponent<Document>(),
-            2 => Instantiate(doc, _pos2.position, Quaternion.Euler(0,90,0)).GetComponent<Document>(),
-            3 => Instantiate(doc, _pos3.position,Quaternion.Euler(0,90,0)).GetComponent<Document>(),
-            _ => null
-        };
-    }
-}
-
-[Serializable]
-public struct DayNPC
-{
-    public uint NormalNPC;
-    public uint EternityNPC;
-    public uint AgentNPC;
-    public uint RobotsNPC;
-    public uint TutorialNPC;
-}
+// using System;
+// using System.Collections.Generic;
+// using System.Linq;
+// using System.Threading.Tasks;
+// using TMPro;
+// using UnityEngine;
+// using UnityEngine.AI;
+// using Random = System.Random;
+//
+// public class NPCManager : MonoBehaviour
+// {
+//     [Header("Randomnes")] 
+//     public uint CriminalChance;
+//     public uint EventChance = 30;
+//     [Header("NPC")] 
+//     public List<DayNPC> NpcList = new(7);
+//     [SerializeField] private List<GameObject> _normalNPC;
+//     [SerializeField] private List<GameObject> _eternityNPC;
+//     [SerializeField] private List<GameObject> _agentsNPC;
+//     [SerializeField] private List<GameObject> _robotsNPC;
+//     [SerializeField] private List<GameObject> _tutorialNPC;
+//     
+//     [Header("DocsSpawn")] 
+//     [SerializeField] private Transform _pos1;
+//     [SerializeField] private Transform _pos2;
+//     [SerializeField] private Transform _pos3;
+//
+//     [Header("NPCPoints")] 
+//     [SerializeField] private Transform _startPos;
+//     [SerializeField] private Transform _tablePos;
+//     [SerializeField] private Transform _endPos;
+//
+//     [Header("UI")] 
+//     [SerializeField] private Transform _criminalHolder;
+//
+//     public static NPC CurrentNPC {get; private set; }
+//     private List<string> _criminals  = new();
+//     public List<string> ChangedCriminals { get; private set; } = new();
+//
+//     private Random _rnd = new Random();
+//     
+//     private NavMeshAgent _currentAgent;
+//     private NPCAnim _npcAnim;
+//     
+//     private int _weekDate => FindFirstObjectByType<TimeLines>().WeekDate;
+//     private NPCRandomizer _randomizer => GetComponent<NPCRandomizer>();
+//     private StartButton _button => FindFirstObjectByType<StartButton>();
+//     
+//     private DayNPC _currentDay;
+//     private bool _isChecked, _toTable, _isTutored;
+//     
+//     public static event Action OnNPCEnd, RandomEvent, EternityCheck, OnNPCCheck,OnGiveDocs;
+//     
+//
+//     private  void Start()
+//     {
+//         var names = RandomParamStruct.Names.ToList();
+//         for (int i = 0; i < _rnd.Next(3, 5); i++)
+//         {
+//             var bearName = names[_rnd.Next(names.Count)];
+//             _criminals.Add(bearName);
+//             names.Remove(bearName);
+//         }
+//         
+//         ChangedCriminals = _criminals;
+//         RandomEvents.OnLose += ResetDay;
+//
+//
+//
+//         TimeLines.OnDayEnd += () =>
+//         {
+//             _currentDay = NpcList[_weekDate];
+//             if (_currentDay.TutorialNPC > 0)
+//             {
+//                 SpawnNPC(new() { _tutorialNPC[0] });
+//                 _tutorialNPC.Remove(_tutorialNPC[0]);
+//                 CurrentNPC.Fragments = _weekDate switch
+//                 {
+//                     0 => RandomParamStruct.TutorialConfigs[0].Fragments,
+//                     1 => RandomParamStruct.TutorialConfigs[1].Fragments,
+//                     3 => RandomParamStruct.TutorialConfigs[2].Fragments,
+//                     _ => CurrentNPC.Fragments
+//                 };
+//             }
+//             else
+//                 _button.Enabled = true;
+//         };
+//     }
+//     
+//     void Update()
+//     {
+//         if (!_currentAgent || !(_currentAgent.velocity.magnitude < 0.4f)) return;
+//         if (_isChecked)
+//         {
+//             print("check");
+//             if(_isTutored)
+//                 SelectNPC();
+//             else
+//             {
+//                 _button.Enabled = true;
+//                 _isTutored = true;
+//             }
+//
+//             _isChecked = false;
+//         }
+//
+//         else if (_toTable)
+//         {
+//             // StartCoroutine( _npcAnim.TurnRight());
+//             _toTable = false;
+//         }
+//     }
+//
+//     public void StartDay()
+//     {
+//         _criminals = ChangedCriminals;
+//         _currentDay = NpcList[_weekDate];
+//         SelectNPC();
+//         int i = 0;
+//         foreach (var criminal in _criminals)
+//         {
+//             _criminalHolder.GetChild(i).GetChild(1).GetComponent<TMP_Text>().text = criminal;
+//             i++;
+//         }
+//     }
+//
+//     public void ResetDay()
+//     {
+//         ChangedCriminals = _criminals;
+//         _currentDay = NpcList[_weekDate];
+//     }
+//
+//     public void SetNPCTalking(bool talking = true)
+//     {
+//         if(_npcAnim)
+//             _npcAnim.IsTalking = talking;
+//     }
+//
+//     public void SelectNPC(bool eventEnabled = true)
+//     { 
+//         if(CurrentNPC) Destroy(CurrentNPC.gameObject);
+//         var randomSpecial = _rnd.Next(3);
+//         if(eventEnabled && _rnd.Next(0,101) < (EventChance) &&
+//            (_currentDay.TutorialNPC > 0 || _currentDay.EternityNPC > 0 ||
+//             _currentDay.AgentNPC > 0 || _currentDay.RobotsNPC > 0 || _currentDay.NormalNPC > 0))
+//             RandomEvent?.Invoke();
+//         else
+//         {
+//             
+//             if (randomSpecial == 0 && _currentDay.EternityNPC > 0)
+//             {
+//                 SpawnNPC(_eternityNPC);
+//                 _currentDay.EternityNPC -= 1;
+//             }
+//             else if (randomSpecial == 1 && _currentDay.AgentNPC > 0)
+//             {
+//                 SpawnNPC(_agentsNPC);
+//                 _currentDay.AgentNPC -= 1;
+//             }
+//             else if (randomSpecial == 2 && _currentDay.RobotsNPC > 0)
+//             {
+//                 SpawnNPC(_robotsNPC);
+//                 _currentDay.RobotsNPC -= 1;
+//             }
+//             else if (_currentDay.NormalNPC > 0)
+//             {
+//                 SpawnNPC(_normalNPC);
+//                 _currentDay.NormalNPC -= 1;
+//                 _randomizer.Randomize(CurrentNPC.transform);
+//             }
+//             else
+//                 OnNPCEnd?.Invoke();
+//         }
+//     }
+//
+//     private async void SpawnNPC(List<GameObject> npcList)
+//     {
+//         _currentAgent = Instantiate(npcList[_rnd.Next(0, npcList.Count)], _startPos.position, Quaternion.identity).GetComponent<NavMeshAgent>();
+//         _currentAgent.SetDestination(_tablePos.position);
+//         CurrentNPC = _currentAgent.GetComponent<NPC>();
+//         _npcAnim = CurrentNPC.GetComponent<NPCAnim>();
+//         await Task.Delay(1000);
+//         _toTable = true;
+//     }
+//
+//     public async void GoBack()
+//     {
+//         // StartCoroutine( _npcAnim.TurnRight());
+//         
+//         OnNPCCheck?.Invoke();
+//         if(CurrentNPC.NPCTimeLine == TimeLine.Eternity)
+//             EternityCheck?.Invoke();
+//         
+//         _currentAgent.SetDestination(_startPos.position);
+//         await Task.Delay(10000);
+//         _isChecked = true;
+//     }
+//     
+//     public async void GoTowards()
+//     {
+//         StartCoroutine(_npcAnim.TurnLeft());
+//         
+//         OnNPCCheck?.Invoke();
+//         if(CurrentNPC.NPCTimeLine == TimeLine.Eternity)
+//             EternityCheck?.Invoke();
+//         
+//         _currentAgent.SetDestination(_endPos.position);
+//         print("GoTowards");
+//             
+//         await Task.Delay(10000);
+//         _isChecked = true;
+//     }
+//     
+//     public Document GiveDoc(GameObject doc, uint pos)
+//     {
+//         OnGiveDocs?.Invoke();
+//         return pos switch
+//         {
+//             1 => Instantiate(doc, _pos1.position, Quaternion.Euler(0,90,0))
+//                 .GetComponent<Document>(),
+//             2 => Instantiate(doc, _pos2.position, Quaternion.Euler(0,90,0)).GetComponent<Document>(),
+//             3 => Instantiate(doc, _pos3.position,Quaternion.Euler(0,90,0)).GetComponent<Document>(),
+//             _ => null
+//         };
+//     }
+// }
+//
+// [Serializable]
+// public struct DayNPC
+// {
+//     public uint NormalNPC;
+//     public uint EternityNPC;
+//     public uint AgentNPC;
+//     public uint RobotsNPC;
+//     public uint TutorialNPC;
+// }

@@ -4,6 +4,9 @@ using Zenject;
 
 public class NPCService : MonoBehaviour
 {
+    [SerializeField] private AppearRandomStruct _appearStruct;
+    public AppearRandomStruct AppearStruct => _appearStruct;
+    
     private NPCDataBaseService _npcDataBaseService;
     private NPCCreator _npcCreator;
     private EventBus _eventBus;
@@ -15,7 +18,7 @@ public class NPCService : MonoBehaviour
         _npcDataBaseService = npcDataBaseService;
         _saver = saver;
         _eventBus = eventBus;
-        _npcCreator = new NPCCreator();
+        _npcCreator = new NPCCreator(_appearStruct);
         
         _eventBus.Subscribe<CreateNPCRequestEvent>(LoadNpcDatas);
     }

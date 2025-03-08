@@ -1,24 +1,72 @@
 ﻿using UnityEngine;
 using UnityEngine.AI;
+using Zenject;
 
-[SelectionBase]
-[RequireComponent(typeof(NavMeshAgent))]
-public abstract class NPCBase : MonoBehaviour
+[RequireComponent(typeof(NavMeshAgent), typeof(NPCAnim))]
+public abstract class NPCBase : MonoBehaviour, IInteractable
 {
     private NavMeshAgent _agent;
+    private NPCAnim _animator;
+    
     private NPCData _npcData;
-
+    private DialogConfig _dialog;
+    private DialogSystem _dialogSystem;
+    private DocumentControlService _docControl;
+    
+    public CheckState State { get; set; } = CheckState.None;
+    
     public NPCData NPCData => _npcData;
 
-    private void Start()
+    [Inject]
+    public void Initialize(DialogSystem dialogSystem, DocumentControlService docControl)
     {
-        _agent = GetComponent<NavMeshAgent>();
+        _dialogSystem = dialogSystem;
+        _docControl = docControl;
     }
     
-    public void Setup(NPCData npcData)
+    public void Setup(NPCData npcData, NPCService npcService)
     {
+        _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<NPCAnim>();
+        
         _npcData = npcData;
-        // здесь реализация сборки нпс. Т.е. его внешности и т.д.
+        var appearence = _npcData.NpcAppearanceData;
+        var appearStruct = npcService.AppearStruct;
+        
+        var meshRenderer = transform.GetChild(0).GetChild(0).GetChild(0).GetComponent<SkinnedMeshRenderer>();
+        meshRenderer.sharedMesh = appearStruct.Models[appearence.Model];
+        meshRenderer.SetMaterials(new()
+        {
+            appearStruct.Materials[appearence.ModelMaterial],
+            appearStruct.Materials[appearence.ModelMaterial],
+            appearStruct.AccessMaterials[appearence.AccessMaterial]
+        });
+        foreach (var i in npcData.NpcAppearanceData.Accessories)
+            meshRenderer.SetBlendShapeWeight(i, 100);
+
+        _dialog = _npcData.Config;
+    }
+
+    public void Interact()
+    {
+        switch (State)
+        {
+            case CheckState.None:
+                _dialogSystem.FragmentsStack = _dialog.Fragments;
+                _dialogSystem.PlayNext(_animator);
+                break;
+            case CheckState.Correct:
+                _docControl.Accept();
+                break;
+            case CheckState.Wrong:
+                _docControl.Reject();
+                break;
+        }
+    }
+    
+    public void Uninteract()
+    {
+        _dialogSystem.EndChat();
     }
 
     public void GoToPoint(Vector3 point)

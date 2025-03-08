@@ -1,9 +1,14 @@
 ﻿using System.Collections;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
 public class DocumentControlService : MonoBehaviour
 {
+    [Header("Documents")]
+    [SerializeField] private Document[] _documents;
+    [SerializeField] private Transform _docSpawnpoint;
+    [Header("NPC")]
     [SerializeField] private Transform _spawnpoint;
     [SerializeField] private Transform _documentcheckpoint;
     [SerializeField] private Transform _exitpoint;
@@ -15,6 +20,10 @@ public class DocumentControlService : MonoBehaviour
     private bool _isGameStarted;
     private bool _isInControl;
     private int _currentNpcIndex;
+    
+    [Inject] private DiContainer _container;
+    
+    public NPCBase CurrentNPC => _currentNPC;
 
     [Inject]
     private void Initialize(EventBus eventBus)
@@ -32,12 +41,12 @@ public class DocumentControlService : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Q))
         {
             StartControl();
-            Approve();
+            Accept();
         }
         else if (Input.GetKeyDown(KeyCode.E))
         {
             StartControl();
-            Decline();
+            Reject();
         }
         else if (Input.GetKeyDown(KeyCode.V))
         {
@@ -66,7 +75,7 @@ public class DocumentControlService : MonoBehaviour
         _isInControl = true;
     }
     
-    public void Approve()
+    public void Accept()
     {
         if (!_isInControl || !_isGameStarted) return;
         
@@ -75,7 +84,7 @@ public class DocumentControlService : MonoBehaviour
         StartCoroutine(ProcessRoutine(_continuepoint.position));
     }
 
-    public void Decline()
+    public void Reject()
     {
         if (!_isInControl || !_isGameStarted) return;
         
@@ -93,13 +102,32 @@ public class DocumentControlService : MonoBehaviour
         }
         
         Destroy(_currentNPC.gameObject);
-        if (_currentNpcIndex < _currentDay.NPCs.Count)
+        if (_currentNpcIndex < _currentDay.NPCs.Count - 1)
         {
             _currentNpcIndex++;
             StartProcess();
         }
         else
             _eventBus.Invoke(new AllDayNPCsEndedEvent());
+    }
+    
+    public async void GiveDocs()
+    {
+        var docsData = _currentNPC.NPCData.DocsData;
+        if (DaysService.CurrentDay > 5)
+        {
+            var PPD = _container.InstantiatePrefab(_documents[docsData.Docs[2].Document], _docSpawnpoint.position, Quaternion.identity, null).GetComponent<Document>();
+            PPD.Setup(docsData.Docs[2]);
+            await Task.Delay(200);
+        }
+        if (DaysService.CurrentDay > 2)
+        {
+            var IIC = _container.InstantiatePrefab(_documents[docsData.Docs[1].Document], _docSpawnpoint.position, Quaternion.identity, null).GetComponent<Document>();
+            IIC.Setup(docsData.Docs[1]);
+            await Task.Delay(200);
+        }
+        var PMS = _container.InstantiatePrefab(_documents[docsData.Docs[0].Document],_docSpawnpoint.position, Quaternion.identity, null).GetComponent<Document>();
+        PMS.Setup(docsData.Docs[0]);
     }
     
     private void OnNewDayStarted(NewDayStartedEvent e)

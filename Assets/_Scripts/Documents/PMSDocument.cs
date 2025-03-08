@@ -1,34 +1,43 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
+using TMPro;
 using UnityEngine;
+using Zenject;
 
-public class PMSDocument : Document
+public class PMSDocument : Document, IAcceptable
 {
+    [SerializeField] private TMP_Text _genderText;
+    [Header("Particles")]
+    [SerializeField] private GameObject _acceptParticle;
+    [SerializeField] private GameObject _rejectParticle;
+    [SerializeField] private Transform _particleSpawn;
+
+    private DocumentControlService _docControl;
     
-    public override void Randomize(int maxRandomCount)
+    [Inject]
+    private void Initialize(DocumentControlService docControl)
     {
-        base.Randomize(maxRandomCount);
+        _docControl = docControl;
+    }
+    
+    public override void Setup(DocData docData)
+    {
+        base.Setup(docData);
         
-        var randomCount = _rnd.Next(0, maxRandomCount);
-        for (UInt16 i = 0; i < randomCount; i++)
-        {
-            var randomParam = _rnd.Next(0, _paramCount);
-            switch (randomParam)
-            {
-                case 0:
-                    _name = (RandomParamSt.Names.Except(new List<string>{_name})).ToList()
-                        [_rnd.Next(0,RandomParamSt.Names.Count)];
-                    break;
-                case 1:
-                    _photo = (RandomParamSt.Photos.Except(new List<Sprite>{_photo})).ToList()
-                        [_rnd.Next(0,RandomParamSt.Photos.Count)];
-                    OnFaceChanging();
-                    break;
-            }
-        }
-        _nameText.text = _name;
-        _photoImage.sprite = _photo;
+        PMSData pmsData = docData as PMSData;
+
+        _genderText.text = pmsData.Male ? "Мужчина" : "Женщина";
     }
 
+    public void Accept()
+    {
+        if (_docControl.CurrentNPC.State != CheckState.None) return;
+        Instantiate(_acceptParticle, _particleSpawn);
+        _docControl.CurrentNPC.State = CheckState.Correct;
+    }
+    
+    public void Reject()
+    {
+        if (_docControl.CurrentNPC.State != CheckState.None) return;
+        Instantiate(_rejectParticle, _particleSpawn);
+        _docControl.CurrentNPC.State = CheckState.Wrong;
+    }
 }

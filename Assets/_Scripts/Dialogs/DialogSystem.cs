@@ -1,9 +1,11 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using JetBrains.Annotations;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class DialogSystem : MonoBehaviour
 {
@@ -22,25 +24,34 @@ public class DialogSystem : MonoBehaviour
     [SerializeField] private Transform _buttonsHolder;
     [Header("Audio")] [SerializeField] private AudioSource _source;
     
+    private Image _frameImg => DialogMenu.GetComponent<Image>();
     private PlayerMovement _playerMovement => Player.Movement;
     private PlayerInteractions _playerInter => Player.Interactions;
-    private NPCManager _npcManager => FindFirstObjectByType<NPCManager>();
+    private DocumentControlService _docControl;
     
     private string _currentLine = "";
-    private Image _frameImg => DialogMenu.GetComponent<Image>();
+    private NPCAnim _npcAnim;
     private List<IDialogAction> _actions = new List<IDialogAction>();
     
     public event Action ChatEnded;
-    public CheckState GoAfter;
+    public static CheckState GoAfter;
 
-    public void PlayNext()
+    [Inject]
+    private void Initialize(DocumentControlService docControl)
     {
+        _docControl = docControl;
+    }
+
+    public void PlayNext(NPCAnim npcAnim = null)
+    {
+        if(npcAnim)
+            _npcAnim = npcAnim;
         if (_currentLine != "" && TextField.text != _currentLine)
         {
             StopAllCoroutines();
             TextField.text = "";
             TextField.text = _currentLine;
-            _npcManager.SetNPCTalking(false);
+            _npcAnim.IsTalking = true;
             _source.mute = true;
         }
         else if (FragmentsStack.Count > 0)
@@ -48,7 +59,7 @@ public class DialogSystem : MonoBehaviour
             TextField.color = Color.white;
             _frameImg.color = Color.white;
             TextField.alignment = TextAlignmentOptions.TopLeft;
-            _npcManager.SetNPCTalking();
+            _npcAnim.IsTalking = false;
             DialogMenu.SetActive(true);
             _playerInter.StopFocus();
             
@@ -104,7 +115,10 @@ public class DialogSystem : MonoBehaviour
         StopAllCoroutines();
         _actions = new List<IDialogAction>();
         _currentLine = "";
-        _npcManager.SetNPCTalking(false);
+        
+        _npcAnim.IsTalking = false;
+        _npcAnim = null;
+        
         _source.mute = true;
 
         Player.State = PlayerState.Movement;
@@ -119,10 +133,15 @@ public class DialogSystem : MonoBehaviour
         }
         DialogMenu.SetActive(false);
         
-        if(GoAfter == CheckState.Correct)
-            _npcManager.GoTowards();
-        else if(GoAfter == CheckState.Wrong)
-            _npcManager.GoBack();
+        switch (GoAfter)
+        {
+            case CheckState.Correct:
+                _docControl.Accept();
+                break;
+            case CheckState.Wrong:
+                _docControl.Reject();
+                break;
+        }
         GoAfter = CheckState.None;
         
         ChatEnded?.Invoke();
@@ -143,7 +162,7 @@ public class DialogSystem : MonoBehaviour
             // Задержка перед добавлением следующего символа
             yield return new WaitForSeconds(_letterDelay);
         }
-        _npcManager.SetNPCTalking(false);
+        _npcAnim.IsTalking = false;
         _source.mute = true;
     }
 
