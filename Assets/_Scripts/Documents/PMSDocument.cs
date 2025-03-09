@@ -24,7 +24,7 @@ public class PMSDocument : Document, IAcceptable
         
         PMSData pmsData = docData as PMSData;
 
-        _genderText.text = pmsData.Male ? "Мужчина" : "Женщина";
+        _genderText.text = "Женщина";
     }
 
     public void Accept()
