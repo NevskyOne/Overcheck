@@ -26,7 +26,7 @@ public class IICData : DocData
     public int Stamp;
 }
 
-public class PPDData : DocData
+public class PPData : DocData
 {
     public int StartPlanet;
     public int EndPlanet;

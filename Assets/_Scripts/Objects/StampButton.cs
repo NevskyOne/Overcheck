@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class StampButton : MonoBehaviour, IInteractable
@@ -8,7 +9,12 @@ public class StampButton : MonoBehaviour, IInteractable
     [SerializeField] private StampButton _anotherButton;
 
     private Color _defaultColor;
-    
+
+    private void Start()
+    {
+        _defaultColor = _material.color;
+    }
+
     public void Interact()
     {
         if (Player.CheckingState == _checkState)
@@ -18,7 +24,7 @@ public class StampButton : MonoBehaviour, IInteractable
         }
         _anotherButton.Uninteract();
 
-        _defaultColor = _material.color;
+        ;
         _material.color = _activeColor;
 
         Player.CheckingState = _checkState;
@@ -27,6 +33,11 @@ public class StampButton : MonoBehaviour, IInteractable
     public void Uninteract()
     {
         Player.CheckingState = CheckState.None;
+        _material.color = _defaultColor;
+    }
+
+    private void OnDisable()
+    {
         _material.color = _defaultColor;
     }
 }

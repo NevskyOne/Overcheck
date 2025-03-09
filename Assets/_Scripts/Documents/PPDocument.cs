@@ -14,14 +14,14 @@ public class PPDocument : Document
     {
         base.Setup(docData);
         
-        PPDData ppdData = docData as PPDData;
+        PPData ppData = docData as PPData;
 
-        _startPlanetText.text = ppdData.StartPlanet.ToString();
-        _endPlanetText.text = ppdData.EndPlanet.ToString();
-        _startDateText.text = ppdData.StartDate.ToString();
-        _startMonthText.text = ppdData.StartMonth.ToString();
-        _endDateText.text = ppdData.EndDate.ToString();
-        _endMonthText.text = ppdData.EndMonth.ToString();
+        _startPlanetText.text = ppData.StartPlanet.ToString();
+        _endPlanetText.text = ppData.EndPlanet.ToString();
+        _startDateText.text = ppData.StartDate.ToString();
+        _startMonthText.text = ppData.StartMonth.ToString();
+        _endDateText.text = ppData.EndDate.ToString();
+        _endMonthText.text = ppData.EndMonth.ToString();
 
     }
     

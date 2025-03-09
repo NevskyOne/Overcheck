@@ -11,7 +11,7 @@ public class DocsRandomizer
         var fake = Random.Range(0,100) > 79;
         PMSData PMS = new();
         IICData IIC = new();
-        PPDData PPD = new();
+        PPData PP = new();
         
         var name = male? 
             RandomParamStruct.MaleNames[Random.Range(0,RandomParamStruct.MaleNames.Count)] :
@@ -19,10 +19,11 @@ public class DocsRandomizer
         var id = Random.Range(100000, 999999);
         var healthClass = Random.Range(3, 6);
         var planet = Random.Range(1, 5);
+        var endPlanet = 0;
         var startDate = Random.Range(1, 29);
-        var startMonth = Random.Range(7, 12);
+        var startMonth = Random.Range(1, 6);
         var endDate = Random.Range(1, 29);
-        var endMonth = Random.Range(startMonth, 13);
+        var endMonth = Random.Range(7, 13);
         
         
         if (fake)
@@ -83,7 +84,40 @@ public class DocsRandomizer
                 Stamp = planet
             };
             
+            switch (Random.Range(0, 6)) //third documnet
+            {
+                case 0:
+                    name = newNames[Random.Range(0, newNames.Count)];
+                    break;
+                case 1:
+                    photo = Random.Range(0, newPhotoes.Count);
+                    break;
+                case 2:
+                    startMonth = Random.Range(7, 13);
+                    break;
+                case 3:
+                    endMonth = Random.Range(1, 6);
+                    break;
+                case 4:
+                    planet = 0;
+                    break;
+                case 5:
+                    endPlanet = Random.Range(1,5);
+                    break;
+            }
             
+            PP = new PPData
+            {
+                Name = name,
+                Document = 2,
+                Photo = photo,
+                StartDate = startDate,
+                StartMonth = startMonth,
+                EndDate = endDate,
+                EndMonth = endMonth,
+                StartPlanet = planet,
+                EndPlanet = endPlanet
+            };
         }
         else
         {
@@ -103,7 +137,7 @@ public class DocsRandomizer
                 ID = id,
                 Stamp = planet
             };
-            PPD = new PPDData
+            PP = new PPData
             {
                 Name = name,
                 Document = 2,
@@ -113,14 +147,14 @@ public class DocsRandomizer
                 EndDate = endDate,
                 EndMonth = endMonth,
                 StartPlanet = planet,
-                EndPlanet = 0
+                EndPlanet = endPlanet
             };
         }
 
         return new DocsData
         {
             Fake = fake,
-            Docs = new DocData[]{PMS, IIC, PPD}
+            Docs = new DocData[]{PMS, IIC, PP}
         };
     }
 }

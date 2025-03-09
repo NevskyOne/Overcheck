@@ -20,6 +20,7 @@ public class DocumentControlService : MonoBehaviour
     private bool _isGameStarted;
     private bool _isInControl;
     private int _currentNpcIndex;
+    private Document PMS, IIC, PP;
     
     [Inject] private DiContainer _container;
     
@@ -78,7 +79,7 @@ public class DocumentControlService : MonoBehaviour
     public void Accept()
     {
         if (!_isInControl || !_isGameStarted) return;
-        
+        DestroyDocs();
         _isInControl = false;
         _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, true));
         StartCoroutine(ProcessRoutine(_continuepoint.position));
@@ -87,7 +88,7 @@ public class DocumentControlService : MonoBehaviour
     public void Reject()
     {
         if (!_isInControl || !_isGameStarted) return;
-        
+        DestroyDocs();
         _isInControl = false;
         _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, false));
         StartCoroutine(ProcessRoutine(_exitpoint.position));
@@ -114,20 +115,30 @@ public class DocumentControlService : MonoBehaviour
     public async void GiveDocs()
     {
         var docsData = _currentNPC.NPCData.DocsData;
-        if (DaysService.CurrentDay > 5)
+        if (DaysService.CurrentDay > 0)
         {
-            var PPD = _container.InstantiatePrefab(_documents[docsData.Docs[2].Document], _docSpawnpoint.position, Quaternion.identity, null).GetComponent<Document>();
-            PPD.Setup(docsData.Docs[2]);
+            PP = _container.InstantiatePrefab(_documents[docsData.Docs[2].Document],
+                _docSpawnpoint.position, Quaternion.Euler(0,180,0), null).GetComponent<Document>();
+            PP.Setup(docsData.Docs[2]);
             await Task.Delay(200);
         }
-        if (DaysService.CurrentDay > 2)
+        if (DaysService.CurrentDay > 0)
         {
-            var IIC = _container.InstantiatePrefab(_documents[docsData.Docs[1].Document], _docSpawnpoint.position, Quaternion.identity, null).GetComponent<Document>();
+            IIC = _container.InstantiatePrefab(_documents[docsData.Docs[1].Document],
+                _docSpawnpoint.position, Quaternion.Euler(0,180,0), null).GetComponent<Document>();
             IIC.Setup(docsData.Docs[1]);
             await Task.Delay(200);
         }
-        var PMS = _container.InstantiatePrefab(_documents[docsData.Docs[0].Document],_docSpawnpoint.position, Quaternion.identity, null).GetComponent<Document>();
+        PMS = _container.InstantiatePrefab(_documents[docsData.Docs[0].Document],
+            _docSpawnpoint.position, Quaternion.Euler(0,180,0), null).GetComponent<Document>();
         PMS.Setup(docsData.Docs[0]);
+    }
+
+    private void DestroyDocs()
+    {
+        Destroy(PMS?.gameObject);
+        Destroy(IIC?.gameObject);
+        Destroy(PP?.gameObject);
     }
     
     private void OnNewDayStarted(NewDayStartedEvent e)

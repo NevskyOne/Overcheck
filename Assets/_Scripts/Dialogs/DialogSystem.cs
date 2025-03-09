@@ -42,16 +42,15 @@ public class DialogSystem : MonoBehaviour
         _docControl = docControl;
     }
 
-    public void PlayNext(NPCAnim npcAnim = null)
+    public void SetNPCAnim(NPCAnim npcAnim) => _npcAnim = npcAnim;
+    public void PlayNext()
     {
-        if(npcAnim)
-            _npcAnim = npcAnim;
         if (_currentLine != "" && TextField.text != _currentLine)
         {
             StopAllCoroutines();
             TextField.text = "";
             TextField.text = _currentLine;
-            _npcAnim.IsTalking = true;
+            _npcAnim.IsTalking = false;
             _source.mute = true;
         }
         else if (FragmentsStack.Count > 0)
@@ -59,8 +58,10 @@ public class DialogSystem : MonoBehaviour
             TextField.color = Color.white;
             _frameImg.color = Color.white;
             TextField.alignment = TextAlignmentOptions.TopLeft;
-            _npcAnim.IsTalking = false;
+            _npcAnim.IsTalking = true;
             DialogMenu.SetActive(true);
+            
+            Player.State = PlayerState.Dialog;
             _playerInter.StopFocus();
             
             PlayFragment(FragmentsStack[0]);

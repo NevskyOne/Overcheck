@@ -53,7 +53,8 @@ public abstract class NPCBase : MonoBehaviour, IInteractable
         {
             case CheckState.None:
                 _dialogSystem.FragmentsStack = _dialog.Fragments;
-                _dialogSystem.PlayNext(_animator);
+                _dialogSystem.SetNPCAnim(_animator);
+                _dialogSystem.PlayNext();
                 break;
             case CheckState.Correct:
                 _docControl.Accept();

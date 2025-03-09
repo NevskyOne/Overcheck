@@ -5,8 +5,7 @@ public class PlayerInteractions
 {
     public CamSwitcher Switcher;
     
-    private readonly LayerMask _clickMask;
-    private readonly LayerMask _docsMask;
+    private readonly LayerMask _clickMask,_docsMask,_docsPlaceMask;
     private readonly Camera _camera;
     private readonly DragRotate _dragRotate;
     private readonly MainUI _mainUI;
@@ -15,12 +14,13 @@ public class PlayerInteractions
 
     private bool _lockTheView;
 
-    public PlayerInteractions(LayerMask clickMask, LayerMask docsMask, Camera cam,
+    public PlayerInteractions(LayerMask clickMask, LayerMask docsMask, LayerMask docsPlaceMask, Camera cam,
                 DragRotate dragRotate, MainUI mainUI, DialogSystem dialogSystem)
     {
         var playerInput = Player.Input;
         _clickMask = clickMask;
         _docsMask = docsMask;
+        _docsPlaceMask = docsPlaceMask;
         _camera = cam;
         _dragRotate = dragRotate;
 
@@ -64,6 +64,12 @@ public class PlayerInteractions
                     {
                         case CheckState.None:
                             _doc = hit2.transform.GetComponent<IInteractable>();
+                            
+                            Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+                                out var hit3, 3, _docsPlaceMask);
+                            var trueDoc = _doc as Document;
+                            trueDoc?.SetInitialHeight(hit3.point.y);
+                            
                             _doc.Interact();
                             break;
                         case CheckState.Correct:
@@ -79,6 +85,12 @@ public class PlayerInteractions
                             }
                             break;
                     }
+                }
+                else if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition), 
+                        out var hit4, 3, _clickMask) && 
+                        hit4.transform.TryGetComponent<StampButton>(out var stamp))
+                {
+                    stamp.Interact();
                 }
                 break;
         }
@@ -134,7 +146,7 @@ public class PlayerInteractions
     {
         switch (Player.State)
         {
-            case PlayerState.CamSwitcher:
+            case PlayerState.UI or PlayerState.Checking:
                 Switcher?.SwitchCamMove(ctx.ReadValue<Vector2>().normalized);
                 break;
         }
@@ -156,7 +168,7 @@ public class PlayerInteractions
                 break;
             case PlayerState.Checking:
                 if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-                        out var hit, 3, _clickMask))
+                        out var hit, 3, _docsPlaceMask))
                 {
                     Document doc = _doc as Document;
                     doc?.Move(hit.point);
@@ -195,11 +207,12 @@ public class PlayerInteractions
                 StopFocus();
                 Player.State = PlayerState.Movement;
                 break;
-            case PlayerState.UI or PlayerState.CamSwitcher or PlayerState.Checking:
+            case PlayerState.UI or PlayerState.Checking:
                 _interactable?.Uninteract();
                 _interactable = null;
                 _doc?.Uninteract();
                 _doc = null;
+                Switcher = null;
                 break;
             case PlayerState.Holding:
                 _dragRotate.enabled = false;

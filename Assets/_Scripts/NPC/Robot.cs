@@ -150,8 +150,8 @@ public class Robot : MonoBehaviour
             _input.enabled = false;
             var fragments = new List<DialogFragment>(RandomParamStruct.RobotsReplics[Random.Range(0, RandomParamStruct.RobotsReplics.Count)].Fragments);
             _dialogSystem.FragmentsStack = fragments;
-            _dialogSystem.PlayNext(_animator);
-            _creapySounds.SetActive(true);
+            _dialogSystem.SetNPCAnim(_animator);
+            _dialogSystem.PlayNext();
         }
     }
 

@@ -16,6 +16,7 @@ public class Player : MonoBehaviour
     [Header("Layer Masks")]
     [SerializeField] private LayerMask _clickMask;
     [SerializeField] private LayerMask _docsMask;
+    [SerializeField] private LayerMask _docsPlaceMask;
     [Header("Audio Sources")]
     [SerializeField] private AudioSource _breathSource;
     [SerializeField] private AudioSource _feetSource;
@@ -46,11 +47,13 @@ public class Player : MonoBehaviour
         Sfx = new PlayerSFX(_breathSource, _feetSource);
         Coins = new PlayerCoins(_honeyCombsTextes);
         Movement = new PlayerMovement(_movementStruct,_effects,Cam,transform);
-        Interactions = new PlayerInteractions(_clickMask, _docsMask, Cam, Rotator, mainUI,_dialogSystem);
+        Interactions = new PlayerInteractions(_clickMask, _docsMask, _docsPlaceMask, Cam, Rotator, mainUI,_dialogSystem);
     }
 
     private void FixedUpdate()
     {
+        print(State);
+        print(CheckingState);
         Movement.LocalUpdate(Input.actions["Move"].ReadValue<Vector2>());
     }
 }
@@ -59,7 +62,6 @@ public enum PlayerState
 {
     Movement,
     Dialog,
-    CamSwitcher,
     Holding,
     Checking,
     UI,

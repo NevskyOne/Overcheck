@@ -17,7 +17,6 @@ public class CamSwitcher : MonoBehaviour
     private void SetIndex(int i)
     {
         _currentIndex = i;
-        Player.State = PlayerState.CamSwitcher;
         Player.Interactions.Switcher = this;
     }
     
