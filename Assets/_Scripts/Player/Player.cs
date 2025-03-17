@@ -52,8 +52,6 @@ public class Player : MonoBehaviour
 
     private void FixedUpdate()
     {
-        print(State);
-        print(CheckingState);
         Movement.LocalUpdate(Input.actions["Move"].ReadValue<Vector2>());
     }
 }
