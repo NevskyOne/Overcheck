@@ -11,14 +11,7 @@ public class Bootstrap : MonoBehaviour
     private void Initialize(EventBus eventBus)
     {
         _eventBus = eventBus;
-    }
-
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            StartGame();
-        }
+        StartGame();
     }
     
     public void StartGame()

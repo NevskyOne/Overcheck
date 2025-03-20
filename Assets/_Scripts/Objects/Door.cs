@@ -10,6 +10,7 @@ public class Door : MonoBehaviour
     {
         if (!other.CompareTag("Player") && !other.CompareTag("HoloBear")) return;
         _animator.SetBool(_open, true);
+        print("Open");
         _source.Play();
     }
     
@@ -17,6 +18,7 @@ public class Door : MonoBehaviour
     {
         if (!other.CompareTag("Player")&& !other.CompareTag("HoloBear")) return;
         _animator.SetBool(_open, false);
+        print("Close");
         _source.Play();
     }
 }

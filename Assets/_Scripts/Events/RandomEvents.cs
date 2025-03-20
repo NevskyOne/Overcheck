@@ -88,7 +88,6 @@ public class RandomEvents : MonoBehaviour
         // _npcMng.SelectNPC(false);
         
         SceneMusic.State = MusicState.Normal;
-        TimeLines.Additional += _cost;
         OnDone?.Invoke();
     }
 

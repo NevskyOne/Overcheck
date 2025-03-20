@@ -37,26 +37,8 @@ public class DocumentControlService : MonoBehaviour
         _eventBus.Subscribe<NPCSpawnedEvent>(OnNPCSpawned);
     }
     
-    private void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Q))
-        {
-            StartControl();
-            Accept();
-        }
-        else if (Input.GetKeyDown(KeyCode.E))
-        {
-            StartControl();
-            Reject();
-        }
-        else if (Input.GetKeyDown(KeyCode.V))
-        {
-            StartProcess();
-            StartControl();
-        }
-    }
 
-    private void StartProcess()
+    public void StartProcess()
     {
         var data = _currentDay.NPCs[_currentNpcIndex];
         _eventBus.Invoke(new SpawnNPCRequestEvent(new NPCSpawnData(data, _spawnpoint.position)));
@@ -80,18 +62,22 @@ public class DocumentControlService : MonoBehaviour
     {
         if (!_isInControl || !_isGameStarted) return;
         DestroyDocs();
-        _isInControl = false;
+
         _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, true));
         StartCoroutine(ProcessRoutine(_continuepoint.position));
+
+        PlayerCoins.ChangeCoins(1);
     }
 
     public void Reject()
     {
         if (!_isInControl || !_isGameStarted) return;
         DestroyDocs();
-        _isInControl = false;
+
         _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, false));
         StartCoroutine(ProcessRoutine(_exitpoint.position));
+        
+        PlayerCoins.ChangeCoins(1, false);
     }
 
     private IEnumerator ProcessRoutine(Vector3 point)

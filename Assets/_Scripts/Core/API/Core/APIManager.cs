@@ -64,11 +64,15 @@ public class APIManager
             {
                 _currentShop = new Dictionary<string, int>
                 {
-                    { Constants.FACE_SCANNER, 1 },
-                    { Constants.ANTI_CRIME_SYSTEM, 1 },
-                    { Constants.PIGGY_BANK, 1 },
-                    { Constants.HAPPY_HONEY, 1 },
-                    { Constants.HONORARY_CORPORATION, 1 }
+                    { Constants.HONEY_APPLE, 1 },
+                    { Constants.BERRY_JELLY, 1 },
+                    { Constants.PANCAKES, 1 },
+                    { Constants.SALAD_CAESAR, 1 },
+                    { Constants.BORSCH, 1 },
+                    { Constants.PEPPERONI, 1 },
+                    { Constants.CREAMY_FISH, 1 },
+                    { Constants.MUSHROOM_SOUP, 1 },
+                    { Constants.CHICKEN, 1 },
                 };
         
                 _currentCoins = 0;
@@ -90,11 +94,15 @@ public class APIManager
                 {
                     _currentShop = new Dictionary<string, int>
                     {
-                        { Constants.FACE_SCANNER, 1 },
-                        { Constants.ANTI_CRIME_SYSTEM, 1 },
-                        { Constants.PIGGY_BANK, 1 },
-                        { Constants.HAPPY_HONEY, 1 },
-                        { Constants.HONORARY_CORPORATION, 1 }
+                        { Constants.HONEY_APPLE, 1 },
+                        { Constants.BERRY_JELLY, 1 },
+                        { Constants.PANCAKES, 1 },
+                        { Constants.SALAD_CAESAR, 1 },
+                        { Constants.BORSCH, 1 },
+                        { Constants.PEPPERONI, 1 },
+                        { Constants.CREAMY_FISH, 1 },
+                        { Constants.MUSHROOM_SOUP, 1 },
+                        { Constants.CHICKEN, 1 },
                     };
                 }
             }
@@ -187,11 +195,15 @@ public class APIManager
 
         var shop = new Dictionary<string, int>
         {
-            { Constants.FACE_SCANNER, 1 },
-            { Constants.ANTI_CRIME_SYSTEM, 1 },
-            { Constants.PIGGY_BANK, 1 },
-            { Constants.HAPPY_HONEY, 1 },
-            { Constants.HONORARY_CORPORATION, 1 }
+            { Constants.HONEY_APPLE, 1 },
+            { Constants.BERRY_JELLY, 1 },
+            { Constants.PANCAKES, 1 },
+            { Constants.SALAD_CAESAR, 1 },
+            { Constants.BORSCH, 1 },
+            { Constants.PEPPERONI, 1 },
+            { Constants.CREAMY_FISH, 1 },
+            { Constants.MUSHROOM_SOUP, 1 },
+            { Constants.CHICKEN, 1 },
         };
         
         var createShopObject = new CreateShopRequest { name = SHOP_NAME, resources = shop };

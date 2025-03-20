@@ -1,9 +1,11 @@
 using UnityEngine;
+using Zenject;
 
-public class StartButton : MonoBehaviour
+public class StartButton : MonoBehaviour, IInteractable
 {
     [SerializeField] private Material _material;
     private bool enable;
+    private DocumentControlService _docsService;
 
     public bool Enabled
     {
@@ -18,8 +20,17 @@ public class StartButton : MonoBehaviour
         }
     }
 
-    private void Start()
+    [Inject]
+    private void Initialize(DocumentControlService service)
     {
         _material.color = Color.grey;
+        _docsService = service;
     }
+
+    public void Interact()
+    {
+        _docsService.StartProcess();
+        _docsService.StartControl();
+    }
+    public void Uninteract(){}
 }

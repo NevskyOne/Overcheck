@@ -17,8 +17,6 @@ public class SettingsUI : MonoBehaviour
     [SerializeField] private Slider _radio;
     [SerializeField] private Slider _sfx;
     [SerializeField] private Slider _mouseSens;
-    [Header("EndingsUI")] 
-    [SerializeField] private GameObject[] _endings;
 
     private static Player _player;
 
@@ -64,22 +62,7 @@ public class SettingsUI : MonoBehaviour
         get { return Mathf.Clamp(PlayerPrefs.GetFloat("MouseSens"), 0.05f,0.5f); }
         set { PlayerPrefs.SetFloat("MouseSens", value); PlayerPrefs.Save();}
     }
-
-    public static bool FirstEnding
-    {
-        get { return PlayerPrefs.GetInt("Ending1") == 1; }
-        set { PlayerPrefs.SetInt("Ending1", 1); PlayerPrefs.Save();}
-    }
-    public static bool SecondEnding
-    {
-        get { return PlayerPrefs.GetInt("Ending2") == 1; }
-        set { PlayerPrefs.SetInt("Ending2", 1); PlayerPrefs.Save();}
-    }
-    public static bool ThirdEnding
-    {
-        get { return PlayerPrefs.GetInt("Ending3") == 1; }
-        set { PlayerPrefs.SetInt("Ending3", 1); PlayerPrefs.Save();}
-    }
+    
     public static int CurrentDay
     {
         get { return PlayerPrefs.GetInt("CurrentDay"); }
@@ -108,10 +91,6 @@ public class SettingsUI : MonoBehaviour
             _sfx.value = Radio;
             _mouseSens.value = MouseSens;
         }
-
-        if(FirstEnding) _endings[0].SetActive(true);
-        if(SecondEnding) _endings[1].SetActive(true);
-        if(ThirdEnding) _endings[2].SetActive(true);
     }
 
     public void ChangeVolume(float value)

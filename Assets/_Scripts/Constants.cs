@@ -1,21 +1,30 @@
 ﻿public class Constants
 {
-    public const string FACE_SCANNER = "FaceScaner";
-    public const string ANTI_CRIME_SYSTEM = "AntiCriminal";
-    public const string PIGGY_BANK = "BearBank";
-    public const string HAPPY_HONEY = "LuckyHoney";
-    public const string HONORARY_CORPORATION = "FamousWorker";
-
+    public const string HONEY_APPLE = "HoneyApple";
+    public const string BERRY_JELLY = "BerryJelly";
+    public const string PANCAKES = "Pancakes";
+    public const string SALAD_CAESAR = "SaladCeasar";
+    public const string BORSCH = "Borsch";
+    public const string PEPPERONI = "Pepperoni";
+    public const string CREAMY_FISH = "CreamyFish";
+    public const string MUSHROOM_SOUP = "MushroomSoup";
+    public const string CHICKEN = "Chicken";
+    
     public const string PLAYER_NAME_PLAYERPREFS_KEY = "PlayerNamePlayerPrefsKey";
     
-    public const string GAMEPLAY_SCENE_NAME = "MainSceneFInal";
+    public const string GAMEPLAY_SCENE_NAME = "FirstActLocation";
 }
 
-public enum ToolName
+[System.Serializable]
+public enum FoodEnum
 {
-    FaceScaner,
-    AntiCriminal,
-    BearBank,
-    LuckyHoney,
-    FamousWorker
+    HoneyApple,
+    BerryJelly,
+    Pancakes,
+    SaladCaesar,
+    Borsch,
+    Pepperoni,
+    CreamyFish,
+    MushroomSoup,
+    Chicken
 }

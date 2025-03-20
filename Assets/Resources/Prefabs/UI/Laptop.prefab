@@ -5987,7 +5987,6 @@ GameObject:
   - component: {fileID: 6263675664116548623}
   - component: {fileID: 1424219897087428296}
   - component: {fileID: 2520316139476239747}
-  - component: {fileID: 1600786201484574085}
   - component: {fileID: 6027373849125572900}
   - component: {fileID: 6892932511787108820}
   m_Layer: 5
@@ -6126,18 +6125,6 @@ MonoBehaviour:
   - {fileID: 2257776192952756548}
   - {fileID: 1822664099541362882}
   - {fileID: 9127619229349991810}
---- !u!114 &1600786201484574085
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4485714143017424538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 620349df3f74499a8c95048961c4444a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &6027373849125572900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6242,7 +6229,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _camPos: {fileID: 6527166269192241867}
-  _camRot: {x: 14, y: 106, z: 0}
+  HitPos: {x: 0, y: 0, z: 0}
 --- !u!1 &4543881266825687855
 GameObject:
   m_ObjectHideFlags: 0
