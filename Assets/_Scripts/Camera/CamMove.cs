@@ -12,6 +12,7 @@ public class CamMove : MonoBehaviour, IInteractable
 
     public Vector3 HitPos;
     public event Action OnInteract; 
+    public int CursorInd { get; set; } = 1;
     
     [Inject]
     private void Initialize(CameraManager cameraManager, Player player)

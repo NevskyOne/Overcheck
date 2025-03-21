@@ -10,6 +10,7 @@ public class Movable : MonoBehaviour, IInteractable
     public string Title => _title;
     public string Description => _description;
     
+    public int CursorInd { get; set; } = 1;
     private Rigidbody _rb => GetComponent<Rigidbody>();
     private Collider _collider => GetComponent<Collider>();
     private DragRotate _rotator;

@@ -11,6 +11,7 @@ public abstract class Document : MonoBehaviour, IInteractable
 
     private float _initHeight;
     private Rigidbody _rb => GetComponent<Rigidbody>();
+    public int CursorInd { get; set; } = 1;
     
     public virtual void Setup(DocData docData)
     {

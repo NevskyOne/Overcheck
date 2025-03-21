@@ -159,6 +159,16 @@ public class PlayerInteractions
         {
             case PlayerState.Movement:
                 Player.Movement.Look(delta);
+                if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
+                        out var hit, 3, _clickMask)&&
+                    hit.transform.TryGetComponent<IInteractable>(out var iter))
+                {
+                    _mainUI.ChangeCursor(iter.CursorInd);
+                }
+                else
+                {
+                    _mainUI.ChangeCursor(0);
+                }
                 break;
             case PlayerState.Holding:
                 if (_lockTheView)
@@ -168,10 +178,10 @@ public class PlayerInteractions
                 break;
             case PlayerState.Checking:
                 if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-                        out var hit, 3, _docsPlaceMask))
+                        out var hit2, 3, _docsPlaceMask))
                 {
                     Document doc = _doc as Document;
-                    doc?.Move(hit.point);
+                    doc?.Move(hit2.point);
                 }
                 break;
         }

@@ -14,6 +14,7 @@ public abstract class NPCBase : MonoBehaviour, IInteractable
     private DocumentControlService _docControl;
     
     public CheckState State { get; set; } = CheckState.None;
+    public int CursorInd { get; set; } = 2;
     
     public NPCData NPCData => _npcData;
 
