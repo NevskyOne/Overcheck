@@ -48,32 +48,71 @@ public class ExpressionProblem : MathProblem
 
             CorrectAnswer = result;
         }
+        // В методе Generate класса ExpressionProblem
         else
         {
-           
             SlagCount = Random.Range(minSlag, maxSlag + 1);
             MultCount = SlagCount - 1;
-
-            List<int> numbers = new List<int>();
+            List<string> parts = new List<string>();
             int result = 1;
-
             for (int i = 0; i < SlagCount; i++)
             {
-                char op = Random.Range(0, 2) == 0 ? '×' : '/';
-                int num = Random.Range(minMult, maxMult + 1);
-                while (num == 0) num = Random.Range(minMult, maxMult + 1);
-                
-                ProblemText = string.Join($" {op} ", numbers);
-                numbers.Add(num);
-                if (op == '×') 
-                    result *= num;
+                int num;
+                char op;
+                if (i == 0)
+                {
+                    num = GetNonZeroNumber(minMult, maxMult);
+                    parts.Add(num.ToString());
+                    result = num;
+                }
                 else
-                    result /= num;
-            }
+                {
+                    op = Random.Range(0, 2) == 0 ? '×' : '/';
+                    if (op == '/')
+                    {
+                        // Получаем делитель, который делит текущий результат без остатка
+                        num = GetDivisor(result, minMult, maxMult);
+                        if (num == 0) // Если делитель не найден, используем умножение
+                        {
+                            op = '×';
+                            num = GetNonZeroNumber(minMult, maxMult);
+                        }
+                    }
+                    else
+                    {
+                        num = GetNonZeroNumber(minMult, maxMult);
+                    }
 
-            
+                    parts.Add($"{op} {num}");
+                    result = (op == '×') ? result * num : result / num;
+                }
+            }
+            ProblemText = string.Join(" ", parts);
             CorrectAnswer = result;
         }
+    }
+
+    private int GetNonZeroNumber(int min, int max)
+    {
+        int num;
+        do
+        {
+            num = Random.Range(min, max + 1);
+        } while (num == 0);
+        return num;
+    }
+
+    private int GetDivisor(int value, int min, int max)
+    {
+        int attempts = 0;
+        while (attempts < 100)
+        {
+            int divisor = Random.Range(min, max + 1);
+            if (divisor != 0 && value % divisor == 0)
+                return divisor;
+            attempts++;
+        }
+        return 0; // Если не найден, вернуть 0 для смены операции
     }
 
     public override bool CheckAnswer(int answer) => answer == CorrectAnswer;
@@ -90,6 +129,14 @@ public class EquationProblem : MathProblem
 
     public EquationProblem(int minSlag, int maxSlag, int minNumber, int maxNumber, int minMult, int maxMult)
     {
+        // Проверка корректности настроек
+        if (minNumber > maxNumber || minMult > maxMult || minSlag > maxSlag)
+        {
+            Debug.LogError("Неверные настройки диапазонов!");
+            GenerateFallback();
+            return;
+        }
+
         _minNumber = minNumber;
         _maxNumber = maxNumber;
         _minSlag = minSlag;
@@ -99,41 +146,55 @@ public class EquationProblem : MathProblem
 
         bool valid = false;
         int attempts = 0;
+        int maxAttempts = 100;
 
-        while (!valid && attempts < 1000)
+        while (!valid && attempts < maxAttempts)
         {
             GenerateComplexEquation();
             valid = CheckValidity();
             attempts++;
-
-            Debug.Log($"Attempt {attempts}: {ProblemText} | Slag: {SlagCount} | Valid: {valid}");
         }
 
         if (!valid)
         {
-            Debug.LogError("Не удалось сгенерировать уравнение!");
             GenerateFallback();
         }
-
-        IsEquation = true;
     }
+
 
     private void GenerateComplexEquation()
     {
         int a = GetRandomNonZero();
-        int b = Random.Range(_minMult, _maxMult + 1);
-        int operations = Random.Range(_minSlag - 2, _maxSlag - 1);
+        int b = GetRandomNonZero(); // Добавлена проверка на ноль
+
+        // Ограничение количества операций
+        int maxOperations = Mathf.Max(1, _maxSlag - 2);
+        int operations = Random.Range(
+            Mathf.Max(1, _minSlag - 2),
+            maxOperations + 1
+        );
+
         string[] rightPart = GenerateExpression(operations);
         int rightValue = EvaluateExpression(rightPart[0]);
 
-        int x = b * rightValue + a;
-        if (x < _minNumber || x > _maxNumber) return;
-        
+        if (b == 0 || rightValue == 0)
+        {
+            GenerateFallback();
+            return;
+        }
+
+        int x = a + b * rightValue;
+
+        if (x < _minNumber || x > _maxNumber)
+        {
+            GenerateFallback();
+            return;
+        }
+
         string strA = a < 0 ? $"({a})" : a.ToString();
-        
         ProblemText = $"(x - {strA}) / {b} = {rightPart[1]}";
         CorrectAnswer = x;
-        SlagCount = 2 + operations + 1; // Левая часть (2) + операции справа + 1
+        SlagCount = 2 + operations + 1;
         MultCount = 1;
     }
 
@@ -143,22 +204,31 @@ public class EquationProblem : MathProblem
         List<string> partsPrint = new List<string>();
         int currentResult = Random.Range(_minNumber, _maxNumber + 1);
         parts.Add(currentResult.ToString());
+        partsPrint.Add(currentResult.ToString());
 
         for (int i = 0; i < operations; i++)
         {
             char op = GetRandomOperator();
             int num = GetNumberForOperation(currentResult, op);
-            
             string strNum = num < 0 ? $"({num})" : num.ToString();
-            partsPrint.Add(strNum);
-            
+
             parts.Add(op.ToString());
             parts.Add(num.ToString());
 
+            partsPrint.Add(op.ToString());
+            partsPrint.Add(strNum);
+
             currentResult = Calculate(currentResult, op, num);
+
+            // Проверка выхода за границы
+            if (currentResult < _minNumber || currentResult > _maxNumber)
+            {
+                GenerateFallback();
+                return new[] { "", "" };
+            }
         }
 
-        return new []{string.Join(" ", parts), string.Join(" ", partsPrint)};
+        return new[] { string.Join(" ", parts), string.Join(" ", partsPrint) };
     }
 
     private int GetNumberForOperation(int current, char op)
@@ -213,7 +283,6 @@ public class EquationProblem : MathProblem
         // Проверка всех чисел в выражении
         var tokens = ProblemText.Split(new[] { ' ', '+', '-', '×', '/', '=', '(', ')' },
                                       System.StringSplitOptions.RemoveEmptyEntries);
-
         foreach (var token in tokens)
         {
             if (int.TryParse(token, out int num))
@@ -221,17 +290,31 @@ public class EquationProblem : MathProblem
                 if (num < _minNumber || num > _maxNumber)
                     return false;
             }
+            else if (token.Contains("x"))
+            {
+                // Разрешить только одну переменную x
+                if (!token.Equals("x"))
+                    return false;
+            }
         }
-
         return true;
     }
 
     private void GenerateFallback()
     {
-        int a = GetRandomNonZero();
-        int b = Random.Range(_minNumber, _maxNumber);
-        int x = Random.Range(_minNumber, _maxNumber + 1);
-        
+        int a, b, x;
+        int attempts = 0;
+        const int maxAttempts = 100;
+
+        do
+        {
+            a = GetRandomNonZero();
+            b = GetRandomNonZero();
+            x = Random.Range(_minNumber, _maxNumber + 1);
+            attempts++;
+        }
+        while ((a * x < _minNumber || a * x > _maxNumber) && attempts < maxAttempts);
+
         ProblemText = $"{a} × x = {a * x}";
         CorrectAnswer = x;
         SlagCount = 2;
