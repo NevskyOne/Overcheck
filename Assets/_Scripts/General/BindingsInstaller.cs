@@ -10,6 +10,7 @@ public class BindingsInstaller : MonoInstaller
         Container.Bind<NPCDataBaseService>().AsSingle();
         
         Container.Bind<DocumentControlService>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<RandomEvents>().FromComponentInHierarchy().AsSingle();
         Container.Bind<NPCService>().FromComponentInHierarchy().AsSingle();
         Container.Bind<VisualEffects>().FromComponentInHierarchy().AsSingle();
         Container.Bind<DialogSystem>().FromComponentInHierarchy().AsSingle(); 

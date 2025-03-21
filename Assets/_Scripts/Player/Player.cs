@@ -21,6 +21,7 @@ public class Player : MonoBehaviour
     [SerializeField] private AudioSource _breathSource;
     [SerializeField] private AudioSource _feetSource;
     [Header("UI")]
+    [SerializeField] private TMP_Text _dayCombsTextes;
     [SerializeField] private List<TMP_Text> _honeyCombsTextes;
 
     public static PlayerState State { get; set; } = PlayerState.Movement;
@@ -37,7 +38,7 @@ public class Player : MonoBehaviour
     private DialogSystem _dialogSystem;
     
     [Inject]
-    public void Initialize(VisualEffects effects, MainUI mainUI, DialogSystem dialogSystem)
+    public void Initialize(VisualEffects effects, MainUI mainUI, DialogSystem dialogSystem, EventBus eventBus)
     {
         _effects = effects;
         _dialogSystem = dialogSystem;
@@ -45,7 +46,7 @@ public class Player : MonoBehaviour
         Input = GetComponent<PlayerInput>();
         Monologue = new PlayerMonologue(_dialogSystem,_monologueStruct);
         Sfx = new PlayerSFX(_breathSource, _feetSource);
-        Coins = new PlayerCoins(_honeyCombsTextes);
+        Coins = new PlayerCoins(_honeyCombsTextes,_dayCombsTextes, eventBus);
         Movement = new PlayerMovement(_movementStruct,_effects,Cam,transform);
         Interactions = new PlayerInteractions(_clickMask, _docsMask, _docsPlaceMask, Cam, Rotator, mainUI,_dialogSystem);
     }

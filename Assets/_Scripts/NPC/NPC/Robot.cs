@@ -157,7 +157,7 @@ public class Robot : MonoBehaviour
 
     public async void Deactivate()
     {
-        _events.Lose();
+        _events.LoseEvent();
         _state = RobotState.Normal;
         await Task.Delay(3000);
         _creapySounds.SetActive(false);

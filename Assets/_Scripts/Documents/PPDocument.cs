@@ -1,3 +1,4 @@
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -16,66 +17,12 @@ public class PPDocument : Document
         
         PPData ppData = docData as PPData;
 
-        _startPlanetText.text = ppData.StartPlanet.ToString();
-        _endPlanetText.text = ppData.EndPlanet.ToString();
+        _startPlanetText.text = ((Planet)Enum.GetValues(typeof(Planet)).GetValue(ppData.StartPlanet)).ToString();
+        _endPlanetText.text = ((Planet)Enum.GetValues(typeof(Planet)).GetValue(ppData.EndPlanet)).ToString();
         _startDateText.text = ppData.StartDate.ToString();
         _startMonthText.text = ppData.StartMonth.ToString();
         _endDateText.text = ppData.EndDate.ToString();
         _endMonthText.text = ppData.EndMonth.ToString();
 
     }
-    
-    // public override void Randomize(int maxRandomCount)
-    // {
-    //     base.Randomize(maxRandomCount);
-    //     try
-    //     {
-    //         var randomCount = _rnd.Next(0, maxRandomCount);
-    //         for (UInt16 i = 0; i < randomCount; i++)
-    //         {
-    //             var randomParam = _rnd.Next(0, _paramCount);
-    //             switch (randomParam)
-    //             {
-    //                 case 0:
-    //                     _name = (RandomParamStruct.Names.Except(new List<string>{_name})).ToList()
-    //                         [_rnd.Next(0,RandomParamStruct.Names.Count)];
-    //                     break;
-    //                 case 1:
-    //                     _photo = (RandomParamStruct.Photos.Except(new List<Sprite>{_photo})).ToList()
-    //                         [_rnd.Next(0,RandomParamStruct.Photos.Count)];
-    //                     OnFaceChanging();
-    //                     break;
-    //                 case 2:
-    //                     _startDate = _rnd.Next(1,28);
-    //                     _startMonth = _rnd.Next(_curentMounth+1, 13);
-    //                     break;
-    //                 case 3:
-    //                     _endDate = _rnd.Next(1,28);
-    //                     _endMonth = _rnd.Next(1, _curentMounth);
-    //                     break;
-    //                 case 4:
-    //                     var newPlanet = _startPlanet;
-    //                     while (_startPlanet == newPlanet)
-    //                         newPlanet = (Planet) _rnd.Next(0,5);
-    //                     _startPlanet = newPlanet;
-    //                     break;
-    //                 case 5:
-    //                     _endPlanet  = (Planet) _rnd.Next(1,5);
-    //                     break;
-    //             }
-    //         }
-    //         _nameText.text = _name;
-    //         _photoImage.sprite = _photo;
-    //         _startPlanetText.text = _startPlanet.ToString();
-    //         _endPlanetText.text = _endPlanet.ToString();
-    //         _startDateText.text = _startDate.ToString();
-    //         _startMonthText.text = _startMonth.ToString();
-    //         _endDateText.text = _endDate.ToString();
-    //         _endMonthText.text = _endMonth.ToString();
-    //     }
-    //     catch(Exception e)
-    //     {
-    //         print(e.ToString());
-    //     }
-    // }
 }

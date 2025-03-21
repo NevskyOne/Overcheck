@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Threading.Tasks;
 using UnityEngine;
@@ -25,7 +26,16 @@ public class FogController : MonoBehaviour
             StartCoroutine(FogTransition(fog, 0));
         }
     }
-    
+
+    private void OnDisable()
+    {
+        StopAllCoroutines();
+        foreach (var fog in _fogMaterials)
+        {
+            StartCoroutine(FogTransition(fog, 0));
+        }
+    }
+
     private IEnumerator FogTransition(Material fog, float toDensity)
     {
         if (toDensity == 0)

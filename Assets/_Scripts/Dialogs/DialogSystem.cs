@@ -30,6 +30,7 @@ public class DialogSystem : MonoBehaviour
     private DocumentControlService _docControl;
     
     private string _currentLine = "";
+    private bool _docsGiven;
     private NPCAnim _npcAnim;
     private List<IDialogAction> _actions = new List<IDialogAction>();
     
@@ -95,6 +96,14 @@ public class DialogSystem : MonoBehaviour
         if (fragment.Actions == null) return;
         foreach (var action in fragment.Actions)
         {
+            if (action is GiveDocs)
+            {
+                if (_docsGiven) 
+                    continue;
+                else 
+                    _docsGiven = true;
+            }
+                
             action?.DoAction();
             _actions.Add(action);
         }
@@ -119,7 +128,7 @@ public class DialogSystem : MonoBehaviour
         
         _npcAnim.IsTalking = false;
         _npcAnim = null;
-        
+        _docsGiven = false;
         _source.mute = true;
 
         Player.State = PlayerState.Movement;

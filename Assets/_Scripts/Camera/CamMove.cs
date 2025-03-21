@@ -9,16 +9,20 @@ public class CamMove : MonoBehaviour, IInteractable
     
     private CameraManager _cameraMng;
     protected Player _player;
+    protected EventBus _eventBus;
+    protected MainUI _mainUI;
 
     public Vector3 HitPos;
     public event Action OnInteract; 
     public int CursorInd { get; set; } = 1;
     
     [Inject]
-    private void Initialize(CameraManager cameraManager, Player player)
+    private void Initialize(CameraManager cameraManager, Player player, EventBus bus, MainUI mainUI)
     {
         _cameraMng = cameraManager;
         _player = player;
+        _eventBus = bus;
+        _mainUI = mainUI;
     }
 
     public virtual void Interact()
@@ -34,7 +38,7 @@ public class CamMove : MonoBehaviour, IInteractable
 
     protected virtual void ChangePlayerState() => Player.State = PlayerState.UI;
     
-    public void Uninteract()
+    public virtual void Uninteract()
     {
         _cameraMng.ResetCamera();
     }

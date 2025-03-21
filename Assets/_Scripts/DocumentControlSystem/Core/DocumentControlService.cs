@@ -15,6 +15,7 @@ public class DocumentControlService : MonoBehaviour
     [SerializeField] private Transform _continuepoint;
     
     private EventBus _eventBus;
+    private RandomEvents _randomEvents;
     private NPCBase _currentNPC;
     private DayData _currentDay;
     private bool _isGameStarted;
@@ -27,8 +28,9 @@ public class DocumentControlService : MonoBehaviour
     public NPCBase CurrentNPC => _currentNPC;
 
     [Inject]
-    private void Initialize(EventBus eventBus)
+    private void Initialize(EventBus eventBus, RandomEvents randomEvents)
     {
+        _randomEvents = randomEvents;
         _eventBus = eventBus;
 
         _eventBus.Subscribe<GameStartedEvent>(OnGameStarted);
@@ -65,8 +67,6 @@ public class DocumentControlService : MonoBehaviour
 
         _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, true));
         StartCoroutine(ProcessRoutine(_continuepoint.position));
-
-        PlayerCoins.ChangeCoins(1);
     }
 
     public void Reject()
@@ -76,8 +76,6 @@ public class DocumentControlService : MonoBehaviour
 
         _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, false));
         StartCoroutine(ProcessRoutine(_exitpoint.position));
-        
-        PlayerCoins.ChangeCoins(1, false);
     }
 
     private IEnumerator ProcessRoutine(Vector3 point)
@@ -89,6 +87,8 @@ public class DocumentControlService : MonoBehaviour
         }
         
         Destroy(_currentNPC.gameObject);
+        if(_randomEvents.ChooseRandomEvent()) yield break;
+        
         if (_currentNpcIndex < _currentDay.NPCs.Count - 1)
         {
             _currentNpcIndex++;
@@ -101,14 +101,14 @@ public class DocumentControlService : MonoBehaviour
     public async void GiveDocs()
     {
         var docsData = _currentNPC.NPCData.DocsData;
-        if (DaysService.CurrentDay > 0)
+        if (DaysService.CurrentDay > 3)
         {
             PP = _container.InstantiatePrefab(_documents[docsData.Docs[2].Document],
                 _docSpawnpoint.position, Quaternion.Euler(0,180,0), null).GetComponent<Document>();
             PP.Setup(docsData.Docs[2]);
             await Task.Delay(200);
         }
-        if (DaysService.CurrentDay > 0)
+        if (DaysService.CurrentDay > 1)
         {
             IIC = _container.InstantiatePrefab(_documents[docsData.Docs[1].Document],
                 _docSpawnpoint.position, Quaternion.Euler(0,180,0), null).GetComponent<Document>();

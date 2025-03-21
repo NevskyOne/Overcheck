@@ -1,18 +1,42 @@
 using System;
+using UnityEngine;
+using Zenject;
 
-public static class Saturation
+public class Saturation:MonoBehaviour
 {
     private static uint _saturation = 100;
-    //Добавить подписку на событие проверки доков
-    public static void ChangeSaturation(uint value, bool add = true)
+    private static VisualEffects _fx;
+    private static MainUI _mainUI;
+    
+    [Inject]
+    private void Initialize(VisualEffects fx, EventBus eventBus, MainUI mainUI)
     {
-        _saturation = Math.Clamp(add? _saturation + value: _saturation - value,0,100);
-        if (_saturation < 20)
-            Starve();
+        _fx = fx;
+        _mainUI = mainUI;
+        eventBus.Subscribe((NPCControledEvent _) => { ChangeSaturation(-20); });
+        print("init");
     }
+    
+    public static void ChangeSaturation(int value)
+    {
+        print(value);
+        _saturation = (uint)Math.Clamp(_saturation + value,0,100);
+        
+        if (value < 0) 
+            _mainUI.DrainSaturation(_saturation); 
+        else 
+            _mainUI.FillSaturation(_saturation);
 
-    private static void Starve()
-    {
-        //TODO
+        if (_saturation < 30)
+        {
+            _fx.Starve(1, 0.3f, 0.5f, 0.5f);
+            _mainUI.ChangeSaturColor(Color.red);
+        }
+        else
+        {
+            _fx.Starve(0.3f, 0, 0, 0);
+            _mainUI.ChangeSaturColor(Color.white);
+        }
     }
+    
 }

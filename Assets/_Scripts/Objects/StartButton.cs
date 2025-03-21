@@ -24,10 +24,11 @@ public class StartButton : MonoBehaviour, IInteractable
     }
 
     [Inject]
-    private void Initialize(DocumentControlService service)
+    private void Initialize(DocumentControlService service, EventBus eventBus)
     {
         _material.color = Color.grey;
         _docsService = service;
+        eventBus.Subscribe((NewDayStartedEvent _) => { Uninteract();});
     }
 
     public void Interact()

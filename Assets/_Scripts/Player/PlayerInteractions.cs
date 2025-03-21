@@ -187,16 +187,18 @@ public class PlayerInteractions
         }
     }
     
-    private void StartSprint(InputAction.CallbackContext _)
+    private void StartSprint(InputAction.CallbackContext _ = new InputAction.CallbackContext())
     {
         if(Player.State != PlayerState.Movement && Player.State != PlayerState.Holding) return;
         Player.Movement.StartSprint();
+        _mainUI.DrainRun();
     }
     
-    private void StopSprint(InputAction.CallbackContext _)
+    public void StopSprint(InputAction.CallbackContext _ = new InputAction.CallbackContext())
     {
         if(Player.State != PlayerState.Movement && Player.State != PlayerState.Holding) return;
         Player.Movement.StopSprint();
+        _mainUI.FillRun();
     }
     
     private void Space(InputAction.CallbackContext _)
@@ -209,7 +211,7 @@ public class PlayerInteractions
     {
         switch (Player.State)
         {
-            case PlayerState.Movement:
+            case PlayerState.Movement or PlayerState.Block:
                 PauseGame();
                 break;
             case PlayerState.Dialog:
@@ -266,279 +268,3 @@ public class PlayerInteractions
     }
 }
 
-//     private void Start()
-//     {
-//         _dialogSystem.ChatEnded += () => {PlayerState = PlayerState.None; Focus();};
-//         NPCManager.OnNPCEnd += () => _canSleep = true;
-//         
-//         TimeLines.OnDayEnd += () =>
-//         {
-//             _camManager.ResetCamera();
-//             transform.GetChild(1).gameObject.SetActive(true);
-//             PlayerState = PlayerState.Dialog;
-//         };
-//     }
-//
-//     private void Update()
-//     {
-//         if (Time.timeScale == 0) return;
-//
-//         switch (_tableState)
-//         {
-//             case CheckState.Correct:
-//                 _corectMaterial.color = Color.green;
-//                 _wrongMaterial.color = Color.grey;
-//                 break;
-//             case CheckState.Wrong:
-//                 _wrongMaterial.color = Color.red;
-//                 _corectMaterial.color = Color.grey;
-//                 break;
-//             case CheckState.None:
-//                 _wrongMaterial.color =  Color.grey;
-//                 _corectMaterial.color = Color.grey;
-//                 break;
-//         }
-//
-//         var delta = _playerInput.actions["Move"].ReadValue<Vector2>();
-//         switch (PlayerState)
-//         {
-//             case PlayerState.Table when delta.x < 0:
-//                 _leftScreenMove.Move(transform.eulerAngles);
-//                 PlayerState = PlayerState.LeftScreen;
-//                 break;
-//             case PlayerState.Table when delta.x > 0:
-//                 _rightScreenMove.Move(transform.eulerAngles);
-//                 PlayerState = PlayerState.RightScreen;
-//                 break;
-//             case PlayerState.LeftScreen when delta is { y: < 0, x: 0 }:
-//                 _tableMove.Move(transform.eulerAngles);
-//                 PlayerState = PlayerState.Table;
-//                 break;
-//             case PlayerState.LeftScreen when delta is { x: > 0, y: 0 }:
-//                 _rightScreenMove.Move(transform.eulerAngles);
-//                 PlayerState = PlayerState.RightScreen;
-//                 break;
-//             case PlayerState.RightScreen when delta is { x: < 0, y: 0 }:
-//                 _leftScreenMove.Move(transform.eulerAngles);
-//                 PlayerState = PlayerState.LeftScreen;
-//                 break;
-//             case PlayerState.RightScreen when delta is { y: < 0, x: 0 }:
-//                 _tableMove.Move(transform.eulerAngles);
-//                 PlayerState = PlayerState.Table;
-//                 break;
-//         }
-//         
-//         _mainUI.HidePopup();
-//         RaycastHit hit = new (), hit2 = new();
-//         
-//         if (PlayerState == PlayerState.Dialog || !Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-//                 out hit, 3, _clickMask))
-//         {
-//             _mainUI.ChangeCursor(0);
-//         }
-//         else
-//         {
-//             if (hit.transform.CompareTag("NPC"))
-//                 _mainUI.ChangeCursor(1);
-//             else if (_canSleep && hit.transform.CompareTag("Bed"))
-//                 _mainUI.ChangeCursor(2);
-//             else if (hit.transform.CompareTag("Radio"))
-//                 _mainUI.ChangeCursor(3);
-//             else if (_button.Enabled && hit.transform.CompareTag("StartDay"))
-//                 _mainUI.ChangeCursor(4);
-//             else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Correct"))
-//             {
-//                 _mainUI.ShowPopup("Пустить");
-//             }
-//             else if (PlayerState == PlayerState.Table && hit.transform.CompareTag("Wrong"))
-//             {
-//                 _mainUI.ShowPopup("Не пустить");
-//             }
-//             else if (!hit.transform.CompareTag("Untagged") && ! hit.transform.CompareTag("Bed") && !hit.transform.CompareTag("StartDay"))
-//                 _mainUI.ChangeCursor(5);
-//         }
-//
-//         if (_isHolding && _currentDoc && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-//                 out hit2, 3,_docPlace))
-//         {
-//             _currentDoc.localPosition = new Vector3(hit2.point.x,_currentDoc.localPosition.y,hit2.point.z);
-//         }
-//     }
-//
-//     private async void Click(InputAction.CallbackContext _)
-//     {
-//         if (Time.timeScale == 0 || PlayerState == PlayerState.Dialog) return;
-//         
-//         Transform transf;
-//         if (PlayerState == PlayerState.Table && Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-//                 out var hit, 3, _docMask))
-//         {
-//             transf = hit.transform;
-//             if (_tableState != CheckState.None 
-//                 && transf.CompareTag("PMS")
-//                 && transf.GetChild(0).GetChild(0).childCount == 0)
-//             {
-//                 Instantiate(_tableState == CheckState.Correct? _correctStamp : _wrongStamp,
-//                     transf.GetChild(0).GetChild(0));
-//                 NPCManager.CurrentNPC.Check(_tableState == CheckState.Correct);
-//                 _tableState = CheckState.None;
-//             }
-//             else
-//             {
-//                 _isHolding = true;
-//                 _currentDoc = transf;
-//                 _currentDoc.GetComponent<Rigidbody>().useGravity = false;
-//                 _currentDoc.localPosition = new Vector3(_currentDoc.localPosition.x, hit.point.y+0.2f, _currentDoc.localPosition.z);
-//             }
-//         }
-//         
-//         if (!Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-//                 out var hit2, 3, _clickMask)) return;
-//         
-//         transf = hit2.transform;
-//         
-//         if (PlayerState == PlayerState.None && transf.CompareTag("NPC"))
-//         {
-//             transf.GetComponent<NPC>().StartChat();
-//             PlayerState = PlayerState.Dialog;
-//         }
-//         else if (PlayerState == PlayerState.None && transf.CompareTag("Movable"))
-//         {
-//             StopFocus();
-//             _playerMove.enabled = true;
-//             transf.GetComponent<Movable>().Take();
-//             PlayerState = PlayerState.UI;
-//         }
-//         else if (_canSleep && transf.CompareTag("Bed"))
-//         {
-//             StopFocus();
-//             _canSleep = false;
-//             transf.GetComponent<CamMove>().Move(transform.eulerAngles);
-//             
-//             transform.GetChild(1).gameObject.SetActive(false);
-//             PlayerState = PlayerState.Sleep;
-//             await Task.Delay(2000);
-//             _timeLines.Sleep();
-//         }
-//         else if (_button.Enabled && hit2.transform.CompareTag("StartDay"))
-//         {
-//             _npcMng.StartDay();
-//             _button.Enabled = false;
-//         }
-//         else if (PlayerState == PlayerState.None && transf.CompareTag("Table"))
-//         {
-//             StopFocus();
-//             _tableMove.Move(transform.eulerAngles);
-//             PlayerState = PlayerState.Table;
-//         }
-//         else if (PlayerState == PlayerState.Table && transf.CompareTag("Correct"))
-//         {
-//             _tableState = CheckState.Correct;
-//         }
-//         else if (PlayerState == PlayerState.Table && transf.CompareTag("Wrong"))
-//         {
-//             _tableState = CheckState.Wrong;
-//         }
-//         else if (transf.CompareTag("Radio"))
-//         {
-//             var audioSource = transf.GetComponent<AudioSource>();
-//             audioSource.mute = !audioSource.mute;
-//             transf.GetComponent<Radio>().RadioMat.color = audioSource.mute ? Color.red : Color.green;
-//         }
-//         else if (PlayerState == PlayerState.None && transf.CompareTag("OpenUI"))
-//         {
-//             StopFocus();
-//             if(transf.name == "Criminals")
-//                 PlayerState = PlayerState.LeftScreen;
-//             else if(transf.name == "Tablet")
-//                 PlayerState = PlayerState.RightScreen;
-//             else
-//                 PlayerState = PlayerState.UI;
-//             transf.GetComponent<CamMove>().Move(transform.eulerAngles);
-//         }
-//     }
-//     
-//
-//     private void OnClickEnd(InputAction.CallbackContext _)
-//     {
-//         _isHolding = false;
-//         if (_currentDoc != null)
-//         {
-//             _currentDoc.GetComponent<Rigidbody>().useGravity = true;
-//             _currentDoc = null;
-//         }
-//     }
-//
-//     private void RightClick(InputAction.CallbackContext _)
-//     {
-//         if (Physics.Raycast(_camera.ScreenPointToRay(Input.mousePosition),
-//                 out var hit, 4, _clickMask) && hit.transform.CompareTag("Radio"))
-//         {
-//             hit.transform.GetComponent<Radio>().ChangeClip();
-//         }
-//     }
-//
-//     private void Space(InputAction.CallbackContext _)
-//     {
-//         if(PlayerState == PlayerState.Dialog)
-//             _dialogSystem.PlayNext();
-//     }
-//
-//     private void Escape(InputAction.CallbackContext _)
-//     {
-//         if (PlayerState == PlayerState.Dialog)
-//         {
-//             _dialogSystem.EndChat();
-//             PlayerState = PlayerState.None;
-//         }
-//         else if (PlayerState is PlayerState.UI or PlayerState.LeftScreen or PlayerState.RightScreen)
-//         {
-//             _objectHolder.gameObject.SetActive(false);
-//             _camManager.ResetCamera();
-//         }
-//         else if (PlayerState == PlayerState.Table)
-//         {
-//             _camManager.ResetCamera();
-//             _tableState = CheckState.None;
-//         }
-//         else if (PlayerState == PlayerState.None)
-//         {
-//             PauseGame();
-//         }
-//     }
-//
-//     public void PauseGame()
-//     {
-//         if (Time.timeScale == 0)
-//         {
-//             _pauseMenu.SetActive(false);
-//             Focus();
-//             Time.timeScale = 1;
-//         }
-//         else
-//         {
-//             _pauseMenu.SetActive(true);
-//             StopFocus();
-//             Time.timeScale = 0;
-//         }
-//     }
-//
-//     public void Focus()
-//     {
-//         if(PlayerState == PlayerState.Dialog) return;
-//         PlayerState = PlayerState.None;
-//         _playerMove.enabled = true;
-//         _mainUI.ShowCursor();
-//         Cursor.visible = false;
-//         Cursor.lockState = CursorLockMode.Locked;
-//         _camera.cullingMask = DefaultMask;
-//     }
-//     
-//     public void StopFocus()
-//     {
-//         Cursor.visible = true;
-//         Cursor.lockState = CursorLockMode.None;
-//         _mainUI.HideCursor();
-//         _playerMove.enabled = false;
-//     }
-// }

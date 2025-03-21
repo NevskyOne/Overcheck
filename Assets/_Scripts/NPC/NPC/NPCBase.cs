@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 using Zenject;
 
@@ -53,15 +54,21 @@ public abstract class NPCBase : MonoBehaviour, IInteractable
         switch (State)
         {
             case CheckState.None:
-                _dialogSystem.FragmentsStack = _dialog.Fragments;
+                _dialogSystem.FragmentsStack = new List<DialogFragment>(_dialog.Fragments);
                 _dialogSystem.SetNPCAnim(_animator);
                 _dialogSystem.PlayNext();
                 break;
             case CheckState.Correct:
-                _docControl.Accept();
+                _dialogSystem.FragmentsStack = new List<DialogFragment>{_dialog.GoFragment};
+                _dialogSystem.SetNPCAnim(_animator);
+                _dialogSystem.PlayNext();
+                DialogSystem.GoAfter = CheckState.Correct;
                 break;
             case CheckState.Wrong:
-                _docControl.Reject();
+                _dialogSystem.FragmentsStack = new List<DialogFragment>{_dialog.GoFragment};
+                _dialogSystem.SetNPCAnim(_animator);
+                _dialogSystem.PlayNext();
+                DialogSystem.GoAfter = CheckState.Wrong;
                 break;
         }
     }

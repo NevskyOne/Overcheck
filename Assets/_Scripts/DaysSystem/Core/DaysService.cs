@@ -1,7 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 using Zenject;
 
 public class DaysService : MonoBehaviour
@@ -60,39 +58,11 @@ public class DaysService : MonoBehaviour
         CurrentDay = day;
         var currentDayData = _days[CurrentDay];
         _eventBus.Invoke(new NewDayStartedEvent(currentDayData));
-        StartCoroutine(DayCycleRoutine());
-    }
-
-    private void EndDay()
-    {
-        var currentDayData = _days[CurrentDay];
         _saver.Save(_days, SavePathConstants.DaysDataSavePath);
         _saver.Save(CurrentDay, SavePathConstants.CurrentDaySavePath);
-        _eventBus.Invoke(new DayEndedEvent(currentDayData));
     }
-    
-    private IEnumerator DayCycleRoutine()
-    {
-        var currentDayData = _days[CurrentDay];
-        yield return new WaitForSeconds(1f);
-        for (var i = 0; i < currentDayData.Events.Count; i++)
-        {
-            currentDayData.Events[i].Invoke();
-            yield return new WaitForSeconds(1f);
-        }
 
-        if (currentDayData.ConditionalEvents.Count > 0)
-        {
-            var previousDay = _days[CurrentDay - 1];
-            for (var i = 0; i < currentDayData.ConditionalEvents.Count; i++)
-            {
-                currentDayData.ConditionalEvents[i].ExecuteIf(previousDay);
-                yield return new WaitForSeconds(1f);
-            }
-        }
-
-        EndDay();
-    }
+    public void NextDay() => StartNewDay(CurrentDay + 1);
 
     private void SetupNPCToDays(NPCsCreatedEvent e)
     {

@@ -4698,7 +4698,7 @@ GameObject:
   - component: {fileID: 2509263222113592836}
   - component: {fileID: 9095612615656577095}
   m_Layer: 0
-  m_Name: HoloBear
+  m_Name: Robot
   m_TagString: HoloBear
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -4734,21 +4734,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 420860d232914111811e1abef55c57fa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _player: {fileID: 0}
-  _positions:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  Positions: []
   _huntSpeed: 8
   _huntAcceleration: 9
   _material: {fileID: 2100000, guid: fa9de61ab1a6751418a89f6a286d7d3d, type: 2}

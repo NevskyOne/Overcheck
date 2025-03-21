@@ -14,10 +14,14 @@ public class MainUI : MonoBehaviour
     [SerializeField] private GameObject _cursor;
     [SerializeField] private Image _cursorImg;
     [SerializeField] private Sprite[] _cursors;
-    [Header("Additional UI")] 
+    [Header("Sliders")] 
     [SerializeField] private Slider _runSlider;
     [SerializeField] private Slider _saturationSlider;
     [SerializeField] private Slider _eventSlider;
+
+    [Header("Additional UI")] 
+    [SerializeField] private Image _saturationBack;
+    [SerializeField] private Image _saturationFront;
     [SerializeField] private TMP_Text _eventTimer;
     [SerializeField] private GameObject _popupMenu;
     [SerializeField] private TMP_Text _popupText;
@@ -40,8 +44,23 @@ public class MainUI : MonoBehaviour
     }
 
     public void ChangeCursor(int index) => _cursorImg.sprite = _cursors[index];
-    public void ShowCursor() => _cursor.SetActive(true);
-    public void HideCursor() => _cursor.SetActive(false);
+
+    public void ChangeSaturColor(Color color)
+    {
+        _saturationBack.color = color;
+        _saturationFront.color = color;
+    }
+
+    public void ShowCursor()
+    {
+        _cursor.SetActive(true);
+        _runSlider.gameObject.SetActive(true);
+    }
+
+    public void HideCursor(){
+        _cursor.SetActive(false);
+        _runSlider.gameObject.SetActive(false);
+    }
     
     public void ShowPopup(string text)
     {
@@ -52,32 +71,34 @@ public class MainUI : MonoBehaviour
 
     public void DrainRun()
     {
-        StopCoroutine(_fillRunRoutine);
-        _drainRunRoutine = StartCoroutine(SmoothSlideRoutine(_runSlider, 0));
+        if(_fillRunRoutine != null) StopCoroutine(_fillRunRoutine);
+        _drainRunRoutine = StartCoroutine(SmoothSlideRoutine(_runSlider, 0, 1, true));
     }
 
     public void FillRun()
     {
-        StopCoroutine(_drainRunRoutine);
-        _fillRunRoutine = StartCoroutine(SmoothSlideRoutine(_runSlider, 1));
+        if(_drainRunRoutine != null) StopCoroutine(_drainRunRoutine);
+        _fillRunRoutine = StartCoroutine(SmoothSlideRoutine(_runSlider, _runSlider.maxValue, 0.3f));
     }
 
     public void DrainSaturation(float value)
     {
-        StopCoroutine(_fillSaturationRoutine);
+        if(_fillSaturationRoutine != null) StopCoroutine(_fillSaturationRoutine);
         _drainSaturationRoutine = StartCoroutine(SmoothSlideRoutine(_saturationSlider, value));
     }
 
-    public void FillSaturation()
+    public void FillSaturation(float value)
     {
-        StopCoroutine(_drainSaturationRoutine);
-        _fillSaturationRoutine = StartCoroutine(SmoothSlideRoutine(_saturationSlider, 1));
+        if(_drainSaturationRoutine != null) StopCoroutine(_drainSaturationRoutine);
+        _fillSaturationRoutine = StartCoroutine(SmoothSlideRoutine(_saturationSlider, value));
     }
     
-    public void DrainEvent()
+    public void DrainEvent(int duration)
     {
+        _eventSlider.maxValue = duration;
+        _eventSlider.value = duration;
         _drainEventRoutine = StartCoroutine(SmoothSlideRoutine(_eventSlider, 0));
-        _drainTimerRoutine = StartCoroutine(TimerRoutine(_eventTimer, 180));
+        _drainTimerRoutine = StartCoroutine(TimerRoutine(_eventTimer, duration));
     }
 
     public void StopTimer()
@@ -87,14 +108,14 @@ public class MainUI : MonoBehaviour
         _eventSlider.value = 1;
     }
     
-    public IEnumerator SmoothSlideRoutine(Slider slider, float endValue)
+    public IEnumerator SmoothSlideRoutine(Slider slider, float endValue, float multiplaier = 1, bool stopSprint = false)
     {
         if (endValue > slider.value)
         {
             while (endValue > slider.value)
             {
                 yield return new WaitForFixedUpdate();
-                slider.value += Time.fixedDeltaTime;
+                slider.value += Time.fixedDeltaTime * multiplaier;
             }
         }
         else
@@ -102,9 +123,10 @@ public class MainUI : MonoBehaviour
             while (endValue < slider.value)
             {
                 yield return new WaitForFixedUpdate();
-                slider.value -= Time.fixedDeltaTime;
+                slider.value -= Time.fixedDeltaTime * multiplaier;
             }
         }
+        if(stopSprint) Player.Interactions.StopSprint();
     } 
     
     public IEnumerator TimerRoutine(TMP_Text tmpText, int duration)

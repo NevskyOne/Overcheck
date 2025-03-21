@@ -3,6 +3,10 @@ using Zenject;
 
 public class RandomEventContainer : MonoBehaviour
 {
+    [SerializeField] private GameObject _mathQuiz;
+    [SerializeField] private GameObject _wiresQuiz;
+    [SerializeField] private GameObject _morzeQuiz;
+    
     private EventBus _eventBus;
     
     [Inject]
@@ -11,9 +15,21 @@ public class RandomEventContainer : MonoBehaviour
         _eventBus = eventBus;
     }
 
-    public void RandomEvent()
+    public void MathQuiz()
     {
-        // Какая-то логика
-        _eventBus.Invoke(new EventHasBeenInvoked(RandomEvent));
+        _mathQuiz.SetActive(true);
+        _eventBus.Invoke(new EventHasBeenInvoked(MathQuiz));
+    }
+    
+    public void WiresQuiz()
+    {
+        _wiresQuiz.SetActive(true);
+        _eventBus.Invoke(new EventHasBeenInvoked(WiresQuiz));
+    }
+    
+    public void MorzeQuiz()
+    {
+        _morzeQuiz.SetActive(true);
+        _eventBus.Invoke(new EventHasBeenInvoked(MorzeQuiz));
     }
 }

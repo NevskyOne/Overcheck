@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Rendering;
@@ -37,5 +38,22 @@ public class VisualEffects : MonoBehaviour
             gamma.gamma.Override(Vector4.Lerp(value, targetGamma,0.05f));
             yield return new WaitForSeconds(0.05f);
         }
+    }
+
+    public void Starve(float motionI, float lensI,float grainI,float paniniI)
+    {
+        _profile.TryGet<MotionBlur>(out var motion);
+        motion.intensity.value = motionI;
+        _profile.TryGet<LensDistortion>(out var lens);
+        lens.intensity.value = lensI;
+        _profile.TryGet<FilmGrain>(out var grain);
+        grain.intensity.value = grainI;
+        _profile.TryGet<PaniniProjection>(out var panini);
+        panini.distance.value = paniniI;
+    }
+
+    private void OnDisable()
+    {
+        Starve(0.3f, 0, 0, 0);
     }
 }

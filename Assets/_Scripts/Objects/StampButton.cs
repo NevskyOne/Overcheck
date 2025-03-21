@@ -9,7 +9,7 @@ public class StampButton : MonoBehaviour, IInteractable
     [SerializeField] private StampButton _anotherButton;
 
     private Color _defaultColor;
-    public int CursorInd { get; set; } = 2;
+    public int CursorInd { get; set; } = 1;
 
     private void Start()
     {
