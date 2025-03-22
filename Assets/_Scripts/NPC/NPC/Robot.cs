@@ -62,6 +62,12 @@ public class Robot : MonoBehaviour
         };
     }
 
+    private void OnEnable()
+    {
+        StartCoroutine(WalkRoutine());
+    }
+    
+
     private void Update()
     {
         if (!_agent.hasPath)
@@ -135,6 +141,7 @@ public class Robot : MonoBehaviour
             _agent.speed = _huntSpeed;
             _agent.acceleration = _huntAcceleration;
         };
+        StopAllCoroutines();
     }
 
     public void OnTriggerEnter(Collider sbj)

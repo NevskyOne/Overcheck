@@ -2,6 +2,7 @@
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using Zenject;
 
 public class MathQuiz : MonoBehaviour, IQuiz
 {
@@ -13,6 +14,7 @@ public class MathQuiz : MonoBehaviour, IQuiz
     [SerializeField] private Button _submitButton;
     [SerializeField] private GameObject _resultPanel;
     [SerializeField] private TextMeshProUGUI _resultMessage;
+    [SerializeField] private TextMeshProUGUI _progressText;
 
     private MathQuizData _currentData;
     private MathProblem _currentProblem;
@@ -20,10 +22,21 @@ public class MathQuiz : MonoBehaviour, IQuiz
     private int _solvedCount;
     private bool _isGameActive;
     private int _remainingLives;
-
-    public void StartQuiz(QuizData data)
+    
+    [Inject] private EventBus _eventBus;
+    
+    public void StartQuiz(IQuizData data)
     {
-        _currentData = data as MathQuizData;
+        _currentData = (MathQuizData)data;
+
+        if (_currentData.MinNumber > _currentData.MaxNumber ||
+            _currentData.MinMultiplaier > _currentData.MaxMultiplaier ||
+            _currentData.MinSlag > _currentData.MaxSlag)
+        {
+            Debug.LogError("Неверные настройки квиза!");
+            return;
+        }
+
         _remainingLives = _currentData.Lives;
         RestartQuiz();
     }
@@ -47,6 +60,15 @@ public class MathQuiz : MonoBehaviour, IQuiz
         _livesText.text = $"{_remainingLives}";
         _submitButton.onClick.RemoveAllListeners();
         _submitButton.onClick.AddListener(OnSubmitAnswer);
+        UpdateProgressDisplay();
+    }
+
+    private void UpdateProgressDisplay()
+    {
+        if (_progressText != null)
+        {
+            _progressText.text = $"Прогресс: {_solvedCount}/{_currentData.Count}";
+        }
     }
 
     private void GenerateNextProblem()
@@ -107,6 +129,7 @@ public class MathQuiz : MonoBehaviour, IQuiz
             if (_currentProblem.CheckAnswer(answer))
             {
                 _solvedCount++;
+                UpdateProgressDisplay();
                 if (_solvedCount >= _currentData.Count)
                 {
                     Win();
@@ -135,11 +158,13 @@ public class MathQuiz : MonoBehaviour, IQuiz
     public void Lose()
     {
         ShowResult(false);
+        _eventBus.Invoke(new LoseEvent());
     }
 
     public void Win()
     {
         ShowResult(true);
+        _eventBus.Invoke(new WinEvent());
     }
 
     private void ShowResult(bool isWin)

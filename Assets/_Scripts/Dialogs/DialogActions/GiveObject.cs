@@ -7,8 +7,8 @@ public class GiveObject : IDialogAction
 {
     [SerializeField] private GameObject _object;
     private DiContainer _container;
-
-    public GiveObject(DiContainer container)
+    
+    public void SetContainet(DiContainer container)
     {
         _container = container;
     }

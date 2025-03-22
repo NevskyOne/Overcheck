@@ -4,21 +4,25 @@ using Zenject;
 
 public class NPCService : MonoBehaviour
 {
+    [SerializeField] private Transform _ciminalsParent;
     [SerializeField] private AppearRandomStruct _appearStruct;
     public AppearRandomStruct AppearStruct => _appearStruct;
     
     private NPCDataBaseService _npcDataBaseService;
+    private DocumentDataBase _docDataBaseService;
     private NPCCreator _npcCreator;
     private EventBus _eventBus;
     private ISaver _saver;
     
     [Inject]
-    private void Initialize(NPCDataBaseService npcDataBaseService, ISaver saver, EventBus eventBus)
+    private void Initialize(NPCDataBaseService npcDataBaseService, ISaver saver, EventBus eventBus,
+        DocumentDataBase docDataBaseService)
     {
         _npcDataBaseService = npcDataBaseService;
+        _docDataBaseService = docDataBaseService;
         _saver = saver;
         _eventBus = eventBus;
-        _npcCreator = new NPCCreator(_appearStruct);
+        _npcCreator = new NPCCreator(_appearStruct, docDataBaseService, _ciminalsParent);
         
         _eventBus.Subscribe<CreateNPCRequestEvent>(LoadNpcDatas);
     }
@@ -42,6 +46,8 @@ public class NPCService : MonoBehaviour
             var npc = _npcCreator.CreateNPC();
             _npcDataBaseService.AddToDB(npc);
         }
+
+        _docDataBaseService.InitDataBase();
         
         var dataBase = _npcDataBaseService.GetDB();
         _saver.Save(dataBase, SavePathConstants.NPCDataBaseSavePath);

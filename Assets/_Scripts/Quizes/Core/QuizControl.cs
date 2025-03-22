@@ -1,14 +1,25 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class QuizControl : MonoBehaviour
 {
     [Header("Quizes")]
-    [SerializeField] private MathQuiz _mathQuiz;
+    [SerializeField] private List<GameObject> _quizes;
+
     [Header("Data")]
-    [SerializeField] private MathQuizData _mathData;
+    [SerializeReference,SerializeReferenceButton] private List<IQuizData> _quizDatas;
+
+    private int _quizIndex;
     
-    void Start()
+    public void StartQuiz(int index)
     {
-        _mathQuiz.StartQuiz(_mathData);
+        _quizIndex = index;
+        _quizes[index].SetActive(true);
+        _quizes[index].GetComponent<IQuiz>().StartQuiz(_quizDatas[index]);
+    }
+
+    public void EndQuiz()
+    {
+        _quizes[_quizIndex].SetActive(false);
     }
 }

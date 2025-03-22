@@ -4,6 +4,7 @@
 public class DocsData
 {
     public bool Fake;
+    public bool Criminal;
     public DocData[] Docs;
 }
 

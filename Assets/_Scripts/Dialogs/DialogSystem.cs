@@ -37,6 +37,8 @@ public class DialogSystem : MonoBehaviour
     public event Action ChatEnded;
     public static CheckState GoAfter;
 
+    [Inject] private DiContainer _diContainer;
+
     [Inject]
     private void Initialize(DocumentControlService docControl)
     {
@@ -98,12 +100,14 @@ public class DialogSystem : MonoBehaviour
         {
             if (action is GiveDocs)
             {
-                if (_docsGiven) 
-                    continue;
-                else 
+                if (!_docsGiven)
                     _docsGiven = true;
+                else continue;
             }
-                
+            else if (action is GiveObject giveObject)
+            {
+                giveObject.SetContainet(_diContainer);
+            }
             action?.DoAction();
             _actions.Add(action);
         }

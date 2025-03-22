@@ -1,7 +1,7 @@
 ﻿
 
 public  interface IQuiz{
-    public void StartQuiz(QuizData data);
+    public void StartQuiz(IQuizData data);
     public void Lose();
     public void Win();
 }

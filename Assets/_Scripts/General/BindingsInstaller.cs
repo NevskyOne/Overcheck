@@ -9,6 +9,7 @@ public class BindingsInstaller : MonoInstaller
         Container.Bind<EventBus>().AsSingle();
         Container.Bind<NPCDataBaseService>().AsSingle();
         
+        Container.Bind<DocumentDataBase>().FromComponentInHierarchy().AsSingle();
         Container.Bind<DocumentControlService>().FromComponentInHierarchy().AsSingle();
         Container.Bind<RandomEvents>().FromComponentInHierarchy().AsSingle();
         Container.Bind<NPCService>().FromComponentInHierarchy().AsSingle();
@@ -17,5 +18,8 @@ public class BindingsInstaller : MonoInstaller
         Container.Bind<CameraManager>().FromComponentInHierarchy().AsSingle();
         Container.Bind<Player>().FromComponentInHierarchy().AsSingle();
         Container.Bind<MainUI>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<QuizControl>().FromComponentInHierarchy().AsSingle();
+
+        Container.Bind<IDialogAction>().To<GiveObject>().AsTransient();
     }
 }

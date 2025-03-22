@@ -74,6 +74,7 @@ public class DaysService : MonoBehaviour
             index += day.RandomNpcCount;
             for (var j = index - day.RandomNpcCount; j < index; j++)
             {
+
                 day.NPCs.Add(npcList[j]);
             }
         }

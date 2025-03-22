@@ -101,7 +101,7 @@ public class MainUI : MonoBehaviour
         _drainTimerRoutine = StartCoroutine(TimerRoutine(_eventTimer, duration));
     }
 
-    public void StopTimer()
+    public void StopEvent()
     {
         StopCoroutine(_drainEventRoutine);
         StopCoroutine(_drainTimerRoutine);

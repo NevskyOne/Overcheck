@@ -1,15 +1,20 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
+using Random = UnityEngine.Random;
 
-public class BrokenElectricityCore : IQuiz
+public class BrokenElectricityCore : MonoBehaviour,IQuiz
 {
     [SerializeField] private List<FormulaSO> _formulas = new();
     [SerializeField] private List<BrokenElectricityStartBtn> _startBtns = new();
     [SerializeField] private List<BrokenElectricityEndBtn> _endBtns = new();
     [SerializeField] private List<Material> _materials;
     [SerializeField] private LineRenderer[] _lines;
+
+    [Inject] private EventBus _eventBus;
     
-    public void StartQuiz(QuizData data)
+    public void StartQuiz(IQuizData data)
     {
         foreach (var line in _lines)
         {
@@ -54,17 +59,25 @@ public class BrokenElectricityCore : IQuiz
         }
 
         if (!isSolved)
-            Lose();
+            Reset();
         else
             Win();
     }
 
-    public void Win(){}
-    public void Lose()
+    private void Reset()
     {
         foreach (var b in _startBtns)
         {
             b.Reset();
         }
+    }
+
+    public void Win()
+    {
+        _eventBus.Invoke(new WinEvent());
+    }
+    public void Lose()
+    {
+        _eventBus.Invoke(new LoseEvent());
     }
 }

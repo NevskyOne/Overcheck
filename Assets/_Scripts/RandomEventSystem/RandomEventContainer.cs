@@ -3,33 +3,34 @@ using Zenject;
 
 public class RandomEventContainer : MonoBehaviour
 {
-    [SerializeField] private GameObject _mathQuiz;
-    [SerializeField] private GameObject _wiresQuiz;
-    [SerializeField] private GameObject _morzeQuiz;
-    
+    private QuizControl _quizControl;
     private EventBus _eventBus;
     
     [Inject]
-    private void Initialize(EventBus eventBus)
+    private void Initialize(EventBus eventBus, QuizControl quizControl)
     {
         _eventBus = eventBus;
+        _quizControl = quizControl;
     }
 
     public void MathQuiz()
     {
-        _mathQuiz.SetActive(true);
+        SceneMusic.State = MusicState.Math;
+        _quizControl.StartQuiz(0);
         _eventBus.Invoke(new EventHasBeenInvoked(MathQuiz));
     }
     
     public void WiresQuiz()
     {
-        _wiresQuiz.SetActive(true);
+        SceneMusic.State = MusicState.Wires;
+        _quizControl.StartQuiz(1);
         _eventBus.Invoke(new EventHasBeenInvoked(WiresQuiz));
     }
     
-    public void MorzeQuiz()
+    public void MorseQuiz()
     {
-        _morzeQuiz.SetActive(true);
-        _eventBus.Invoke(new EventHasBeenInvoked(MorzeQuiz));
+        SceneMusic.State = MusicState.Morse;
+        _quizControl.StartQuiz(2);
+        _eventBus.Invoke(new EventHasBeenInvoked(MorseQuiz));
     }
 }
