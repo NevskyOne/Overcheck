@@ -13,6 +13,7 @@ public class BindingsInstaller : MonoInstaller
         Container.Bind<DocumentControlService>().FromComponentInHierarchy().AsSingle();
         Container.Bind<RandomEvents>().FromComponentInHierarchy().AsSingle();
         Container.Bind<NPCService>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<DaysService>().FromComponentInHierarchy().AsSingle();
         Container.Bind<VisualEffects>().FromComponentInHierarchy().AsSingle();
         Container.Bind<DialogSystem>().FromComponentInHierarchy().AsSingle(); 
         Container.Bind<CameraManager>().FromComponentInHierarchy().AsSingle();

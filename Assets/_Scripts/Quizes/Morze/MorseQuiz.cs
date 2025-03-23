@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using TMPro;
 using System.Collections;
@@ -5,6 +6,7 @@ using System.Text;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class MorseQuiz : MonoBehaviour, IQuiz
 {
@@ -21,28 +23,43 @@ public class MorseQuiz : MonoBehaviour, IQuiz
     [SerializeField] private int _requiredCorrect;
     [SerializeField] private TextMeshProUGUI _progressText;
 
+
     private MorseQuizData _currentData;
     private NameIDPair _currentPair;
     private float _timeRemaining;
     private int _remainingLives;
     private bool _isGameActive;
     private int _currentShift;
-    
-    [Inject] private EventBus _eventBus;
+    [Inject] private DocumentDataBase _documentDataBase;
+    private List<NameIDPair> _nameIDList = new();
+    private bool _initialized;
 
-    private Dictionary<char, string> _morseCodeMap = new Dictionary<char, string>()
+    private Dictionary<char, string> _morseCodeMap = new Dictionary<char, string>
     {
-        {'�', "�-"}, {'�', "-���"}, {'�', "�--"}, {'�', "--�"}, {'�', "-��"},
-        {'�', "�"}, {'�', "�"}, {'�', "���-"}, {'�', "--��"}, {'�', "��"},
-        {'�', "�---"}, {'�', "-�-"}, {'�', "�-��"}, {'�', "--"}, {'�', "-�"},
-        {'�', "---"}, {'�', "�--�"}, {'�', "�-�"}, {'�', "���"}, {'�', "-"},
-        {'�', "��-"}, {'�', "��-�"}, {'�', "����"}, {'�', "-�-�"}, {'�', "---�"},
-        {'�', "----"}, {'�', "--.-"}, {'�', "--.--"}, {'�', "-.--"}, {'�', "-..-"},
-        {'�', "��-��"}, {'�', "��--"}, {'�', "�-�-"}, {' ', "  "}
+        {'А', "·-"}, {'Б', "-···"}, {'В', "·--"}, {'Г', "--·"}, {'Д', "-··"},
+        {'Е', "·"}, {'Ё', "·"}, {'Ж', "···-"}, {'З', "--··"}, {'И', "··"},
+        {'Й', "·---"}, {'К', "-·-"}, {'Л', "·-··"}, {'М', "--"}, {'Н', "-·"},
+        {'О', "---"}, {'П', "·--·"}, {'Р', "·-·"}, {'С', "···"}, {'Т', "-"},
+        {'У', "··-"}, {'Ф', "··-·"}, {'Х', "····"}, {'Ц', "-·-·"}, {'Ч', "---·"},
+        {'Ш', "----"}, {'Щ', "--.-"}, {'Ъ', "--.--"}, {'Ы', "-.--"}, {'Ь', "-..-"},
+        {'Э', "··-··"}, {'Ю', "··--"}, {'Я', "·-·-"}, {' ', "  "}
     };
+    
+
+    private void InitializeDB()
+    {
+        foreach (BearData data in (List<BearData>)_documentDataBase.GetDB())
+        {
+            _nameIDList.Add(new NameIDPair{ID = data.ID, Name = data.Name});
+        }
+
+        _initialized = true;
+    }
 
     public void StartQuiz(IQuizData data)
     {
+        if(!_initialized) InitializeDB();
+        
         _currentData = data as MorseQuizData;
         _requiredCorrect = _currentData.Count;
         ResetQuiz();
@@ -80,15 +97,14 @@ public class MorseQuiz : MonoBehaviour, IQuiz
 
     private void UpdateProgress()
     {
-        _progressText.text = $"��������: {_correctAnswersCount}/{_requiredCorrect}";
+        _progressText.text = $"Прогресс: {_correctAnswersCount}/{_requiredCorrect}";
     }
 
     private void GenerateNewPuzzle()
     {
-        // ����� ���������� ����� �� ����
-        _currentPair = _currentData.NameIDList[Random.Range(0, _currentData.NameIDList.Count)];
-
-        // ���������� ��������
+        print(_nameIDList.Count);
+        _currentPair = _nameIDList[Random.Range(0, _nameIDList.Count)];
+        
         string shiftedName = _currentPair.Name;
         _currentShift = 0;
 
@@ -100,7 +116,7 @@ public class MorseQuiz : MonoBehaviour, IQuiz
 
         // ��������� Morse-����
         _morseText.text = ConvertToMorse(shiftedName);
-        _shiftInfoText.text = _currentData.UseShift ? $"(�������� {_currentShift})" : "";
+        _shiftInfoText.text = _currentData.UseShift ? $"(смещение {_currentShift})" : "";
 
         // ��������� �������
         _timeRemaining = _currentData.BaseTime + (_currentData.UseShift ? _currentData.ExtraTime : 0);
@@ -109,7 +125,7 @@ public class MorseQuiz : MonoBehaviour, IQuiz
 
     private string ApplyShift(string input, int shift)
     {
-        string alphabet = "�����Ũ��������������������������";
+        string alphabet = "АБВГДЕЁЖЗИЙКЛМНОПРСТУФХЦЧШЩЪЫЬЭЮЯ";
         char[] chars = input.ToUpper().ToCharArray();
 
         for (int i = 0; i < chars.Length; i++)
@@ -184,16 +200,13 @@ public class MorseQuiz : MonoBehaviour, IQuiz
     public void Lose()
     {
         _isGameActive = false;
-        ShowResult("���������! ����� ����� ��� �������� ID!");
-        _eventBus.Invoke(new LoseEvent());
-        
+        ShowResult("Поражение! Время вышло или неверный ID!");
     }
 
     public void Win()
     {
         _isGameActive = false;
-        ShowResult("������! �� ������� ��� ID!");
-        _eventBus.Invoke(new WinEvent());
+        ShowResult("Победа! Вы правильно ввели все ID!");
     }
 
     private void ShowResult(string message)

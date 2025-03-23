@@ -3,5 +3,5 @@
 public class NameIDPair
 {
     public string Name; // ��� �������
-    public int ID;      // ��������������� ID
+    public uint ID;      // ��������������� ID
 }

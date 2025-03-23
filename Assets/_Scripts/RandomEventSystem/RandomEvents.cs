@@ -18,7 +18,8 @@ public class RandomEvents : MonoBehaviour
     [Header("Additional")] 
     [SerializeField] private Rigidbody _camRb;
     [SerializeField] private Transform _bedPos;
-    [SerializeField] private GameObject _blackScreen;
+    [SerializeField] private ScreenFade _blackScreen;
+    [SerializeField] private StartButton _startButton;
     
     private UnityEvent _currentEvent;
         
@@ -26,15 +27,20 @@ public class RandomEvents : MonoBehaviour
     private CameraManager _cameraManager;
     private Transform _playerTF;
     private QuizControl _quizControl;
+    private DaysService _daysService;
+    private DocumentControlService _docControl;
     private Coroutine _loseCoroutine;
 
     [Inject]
-    private void Initialize(MainUI mainUI, CameraManager camMan, Player player, QuizControl quizControl, EventBus eventBus)
+    private void Initialize(MainUI mainUI, CameraManager camMan, Player player,
+        QuizControl quizControl, EventBus eventBus, DaysService daysService, DocumentControlService docControl)
     {
         _mainUI = mainUI;
         _playerTF = player.transform;
         _cameraManager = camMan;
         _quizControl = quizControl;
+        _daysService = daysService;
+        _docControl = docControl;
         
         eventBus.Subscribe<WinEvent>(_ => WinEvent());
         eventBus.Subscribe<LoseEvent>(_ => LoseEvent());
@@ -42,10 +48,11 @@ public class RandomEvents : MonoBehaviour
     
     public bool ChooseRandomEvent()
     {
+        print("to be chosen");
         if (Random.Range(0, 100) > _eventChance) return false;
         _currentEvent = _events[Random.Range(0, _events.Count)];
         _currentEvent.Invoke();
-
+        print("chosen");
         if(Random.Range(0,100) < _robotChance)
             _robot.SetActive(false);
         _loseCoroutine = StartCoroutine(AutoLose());
@@ -55,9 +62,9 @@ public class RandomEvents : MonoBehaviour
     private IEnumerator AutoLose()
     {
         int currentTime = 0;
+        _mainUI.DrainEvent(_eventTime);
         while (currentTime < _eventTime)
         {
-            _mainUI.DrainEvent(_eventTime);
             currentTime++;
             yield return new WaitForSeconds(1);
         }
@@ -80,6 +87,7 @@ public class RandomEvents : MonoBehaviour
     public void WinEvent()
     {
         EndEvent();
+        _docControl.StartProcess();
     }
     
     public async void LoseEvent()
@@ -95,6 +103,11 @@ public class RandomEvents : MonoBehaviour
         _cameraManager.transform.localEulerAngles = new Vector3(0, 0, 0);
         _cameraManager.ResetCamera();
         _playerTF.position = _bedPos.position;
+        StartCoroutine(_blackScreen.EndFade());
+        _startButton.Enabled = true;
+        
+        _daysService.StartNewDay(DaysService.CurrentDay);
+       
     }
     
     // [Header("EventSettings")] 

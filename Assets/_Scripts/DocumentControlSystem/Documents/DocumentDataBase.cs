@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class DocumentDataBase : MonoBehaviour, IDataBaseService
 {
-    [SerializeField] private Transform _spawnPrefab;
+    [SerializeField] private List<Transform> _spawnPrefabs;
     [SerializeField] private GameObject _bearPrefab;
     private static List<BearData> _bears = new();
     
@@ -22,30 +22,38 @@ public class DocumentDataBase : MonoBehaviour, IDataBaseService
     
     public void ClearData()
     {
-        RemoveChildren();
+        RemoveAllChildren();
         _bears.Clear();
     }
 
     public void CheckForId(string id)
     {
-        RemoveChildren();
+        RemoveChildren(0);
         foreach (var bear in _bears.Where(bear => id != "" && bear.ID.ToString().StartsWith(id)))
         {
-            SpawnBear(bear);
+            SpawnBear(bear, 0);
         }
     }
 
-    private void RemoveChildren()
+    private void RemoveAllChildren()
     {
-        for (var i = 0; i < _spawnPrefab.childCount; i++)
+        for (int i = 0; i < _spawnPrefabs.Count; i++)
         {
-            Destroy(_spawnPrefab.GetChild(i).gameObject);
+            RemoveChildren(i);
         }
     }
     
-    private void SpawnBear(BearData bearData)
+    private void RemoveChildren(int index)
     {
-        var newObj = Instantiate(_bearPrefab, _spawnPrefab).transform;
+        for (var i = 0; i < _spawnPrefabs[index].childCount; i++)
+        {
+            Destroy(_spawnPrefabs[index].GetChild(i).gameObject);
+        }
+    }
+    
+    private void SpawnBear(BearData bearData, int index)
+    {
+        var newObj = Instantiate(_bearPrefab, _spawnPrefabs[index]).transform;
         newObj.GetChild(0).GetComponent<TMP_Text>().text = bearData.Name;
         newObj.GetChild(1).GetChild(0).GetComponent<Image>().sprite = RandomParamStruct.Photos[bearData.Photo];
         newObj.GetChild(2).GetComponent<TMP_Text>().text = bearData.ID.ToString();
@@ -53,10 +61,11 @@ public class DocumentDataBase : MonoBehaviour, IDataBaseService
 
     public void InitDataBase()
     {
-        RemoveChildren();
+        RemoveAllChildren();
         foreach (var bear in _bears)
         {
-            SpawnBear(bear);
+            SpawnBear(bear,0);
+            SpawnBear(bear,1);
         }
     }
 }

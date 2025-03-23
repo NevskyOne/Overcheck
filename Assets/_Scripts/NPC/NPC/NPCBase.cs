@@ -12,7 +12,6 @@ public abstract class NPCBase : MonoBehaviour, IInteractable
     private NPCData _npcData;
     private DialogConfig _dialog;
     private DialogSystem _dialogSystem;
-    private DocumentControlService _docControl;
     
     public CheckState State { get; set; } = CheckState.None;
     public int CursorInd { get; set; } = 2;
@@ -20,16 +19,16 @@ public abstract class NPCBase : MonoBehaviour, IInteractable
     public NPCData NPCData => _npcData;
 
     [Inject]
-    public void Initialize(DialogSystem dialogSystem, DocumentControlService docControl)
+    public void Initialize(DialogSystem dialogSystem)
     {
         _dialogSystem = dialogSystem;
-        _docControl = docControl;
+
+        _agent = GetComponent<NavMeshAgent>();
+        _animator = GetComponent<NPCAnim>();
     }
     
     public void Setup(NPCData npcData, NPCService npcService)
     {
-        _agent = GetComponent<NavMeshAgent>();
-        _animator = GetComponent<NPCAnim>();
         
         _npcData = npcData;
         var appearence = _npcData.NpcAppearanceData;
@@ -46,8 +45,10 @@ public abstract class NPCBase : MonoBehaviour, IInteractable
         foreach (var i in npcData.NpcAppearanceData.Accessories)
             meshRenderer.SetBlendShapeWeight(i, 100);
 
-        _dialog = _npcData.Config;
+        SetDialog(_npcData.Config);
     }
+
+    public void SetDialog(DialogConfig config) => _dialog = config;
 
     public void Interact()
     {

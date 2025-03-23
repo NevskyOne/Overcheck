@@ -22,15 +22,14 @@ public struct MathQuizData : IQuizData
 
 [System.Serializable]
 public class MorseQuizData : IQuizData
-{
-    public List<NameIDPair> NameIDList; // ���� ������ ���� � ID
+{ 
     public int Count;
-    public float BaseTime;             // ������� ����� �� �������
-    public float ExtraTime;            // ���. ����� ��� ��������
-    public bool UseShift;              // ������������ �� ��������
-    public int MinShift;               // ����������� ��������
-    public int MaxShift;               // ������������ ��������
-    public int Lives;                  // ���������� ������
+    public float BaseTime;             
+    public float ExtraTime;            
+    public bool UseShift;              
+    public int MinShift;               
+    public int MaxShift;               
+    public int Lives;                  
 }
 
 [System.Serializable]

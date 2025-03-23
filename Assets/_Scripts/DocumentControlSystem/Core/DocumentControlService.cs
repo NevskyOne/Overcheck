@@ -1,4 +1,5 @@
 ﻿using System.Collections;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
@@ -87,11 +88,12 @@ public class DocumentControlService : MonoBehaviour
         }
         
         Destroy(_currentNPC.gameObject);
-        if(_randomEvents.ChooseRandomEvent()) yield break;
+        
         
         if (_currentNpcIndex < _currentDay.NPCs.Count - 1)
         {
             _currentNpcIndex++;
+            if(_randomEvents.ChooseRandomEvent()) yield break;
             StartProcess();
         }
         else

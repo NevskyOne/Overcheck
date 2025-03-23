@@ -95,14 +95,20 @@ public class MainUI : MonoBehaviour
     
     public void DrainEvent(int duration)
     {
+        if(_drainEventRoutine != null) StopCoroutine(_drainEventRoutine);
+        if(_drainTimerRoutine != null) StopCoroutine(_drainTimerRoutine);
         _eventSlider.maxValue = duration;
         _eventSlider.value = duration;
+        _eventSlider.gameObject.SetActive(true);
+        _eventTimer.gameObject.SetActive(true);
         _drainEventRoutine = StartCoroutine(SmoothSlideRoutine(_eventSlider, 0));
         _drainTimerRoutine = StartCoroutine(TimerRoutine(_eventTimer, duration));
     }
 
     public void StopEvent()
     {
+        _eventSlider.gameObject.SetActive(false);
+        _eventTimer.gameObject.SetActive(false);
         StopCoroutine(_drainEventRoutine);
         StopCoroutine(_drainTimerRoutine);
         _eventSlider.value = 1;
@@ -135,7 +141,7 @@ public class MainUI : MonoBehaviour
         {
             yield return new WaitForSeconds(1);
             duration -= 1;
-            tmpText.text = "${duration // 60}:${duration % 60}";
+            tmpText.text = $"{(int)(duration / 60)}:{duration % 60}";
         }
     } 
 }

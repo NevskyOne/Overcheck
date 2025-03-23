@@ -8,6 +8,11 @@ public class DaysService : MonoBehaviour
 
     private ISaver _saver;
     private EventBus _eventBus;
+    
+    private List<Message> _startDayMessages = new();
+    private List<Message> _endDayMessages = new();
+    private List<Message> _randomMessages = new();
+    
     public static int CurrentDay { get; private set; }
 
     [Inject]
@@ -53,7 +58,7 @@ public class DaysService : MonoBehaviour
         }
     }
 
-    private void StartNewDay(int day)
+    public void StartNewDay(int day)
     {
         CurrentDay = day;
         var currentDayData = _days[CurrentDay];
@@ -85,5 +90,11 @@ public class DaysService : MonoBehaviour
     private void OnEventInvoked(EventHasBeenInvoked e)
     {
         _days[CurrentDay].InvokedEvents.Add(e.Action.Method.Name);
+    }
+
+    private void NPCMessageInvoke(MessageNPC message)
+    {
+        
+        message.Invoke(_eventBus);
     }
 }
