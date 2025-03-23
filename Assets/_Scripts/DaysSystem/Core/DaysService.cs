@@ -1,10 +1,13 @@
 ﻿using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using Zenject;
 
 public class DaysService : MonoBehaviour
 {
+    [SerializeField] private TMP_Text _dayCounter;
     [SerializeField] private List<DayData> _days = new();
+    [SerializeField] private List<NPCBase> _prefabs;
 
     private ISaver _saver;
     private EventBus _eventBus;
@@ -47,6 +50,7 @@ public class DaysService : MonoBehaviour
         if (!e.IsNewGame)
         {
             CurrentDay = _saver.Load<int>(SavePathConstants.CurrentDaySavePath);
+            _dayCounter.text = $"{CurrentDay} ИЮНЯ";
             var days = _saver.Load<List<DayData>>(SavePathConstants.DaysDataSavePath);
             for (var i = 0; i < days.Count; i++)
             {
@@ -61,6 +65,7 @@ public class DaysService : MonoBehaviour
     public void StartNewDay(int day)
     {
         CurrentDay = day;
+        _dayCounter.text = $"{CurrentDay} ИЮНЯ";
         var currentDayData = _days[CurrentDay];
         _eventBus.Invoke(new NewDayStartedEvent(currentDayData));
         _saver.Save(_days, SavePathConstants.DaysDataSavePath);
@@ -86,7 +91,7 @@ public class DaysService : MonoBehaviour
             {
                 var message = (MessageNPC)messageUnd;
                 var newData = new NPCData();
-                newData.Setup(message.StoryNPC, new DocsData(),
+                newData.Setup(_prefabs.IndexOf(message.StoryNPC), new DocsData(),
                     new NPCAppearanceData(), message.Config);
                 switch (message.SpawnEvent)
                 {

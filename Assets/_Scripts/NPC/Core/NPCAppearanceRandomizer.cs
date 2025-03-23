@@ -48,5 +48,5 @@ public struct AppearRandomStruct
     public Mesh[] Models;
     public Material[] Materials;
     public Material[] AccessMaterials;
-    public NPCBase BasePrefab;
+    public int BasePrefab;
 }

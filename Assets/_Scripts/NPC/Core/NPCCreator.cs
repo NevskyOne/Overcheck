@@ -7,7 +7,7 @@ public class NPCCreator
     private NPCAppearanceRandomizer _appearanceRandomizer;
     private DocsRandomizer _docsRandomizer;
     private DocumentDataBase _documentDataBase;
-    private NPCBase _basePrefab;
+    private int _basePrefab;
     
     public NPCCreator(AppearRandomStruct appearStruct, DocumentDataBase docBase, Transform criminalParent)
     {

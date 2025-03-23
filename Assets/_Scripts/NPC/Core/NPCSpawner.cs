@@ -1,11 +1,10 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Zenject;
 
 public class NPCSpawner : MonoBehaviour
 {
-    [SerializeField] private NPCBase _npcBasePrefab;
-    [SerializeField] private StoryNPC _npcStoryPrefab;
-    
+    [SerializeField] private List<NPCBase> _prefabs;
     private EventBus _eventBus;
     private NPCService _npcService;
     private bool _isGameStarted;
@@ -39,7 +38,7 @@ public class NPCSpawner : MonoBehaviour
 
         var spawnData = e.NPCSpawnData;
         var newNpc = _container.InstantiatePrefab(
-            _npcBasePrefab, spawnData.SpawnPosition, Quaternion.identity, null).GetComponent<NPCBase>();
+            _prefabs[spawnData.NPCData.Prefab], spawnData.SpawnPosition, Quaternion.identity, null).GetComponent<NPCBase>();
         newNpc.Setup(spawnData.NPCData, _npcService);
         _eventBus.Invoke(new NPCSpawnedEvent(spawnData, newNpc));
     }
