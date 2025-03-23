@@ -41,12 +41,12 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 899727643289225492}
-  - component: {fileID: 5285693651076766612}
   - component: {fileID: 4568354858123837730}
+  - component: {fileID: 1892378638862877642}
   - component: {fileID: 47357776550331533}
   - component: {fileID: 2509263222113592836}
   m_Layer: 6
-  m_Name: TutorialNPC
+  m_Name: Mila's_Maker
   m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -68,23 +68,6 @@ Transform:
   - {fileID: 8125084131461130155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5285693651076766612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9178155007998355382}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199d8aa87fcf8964c84f29cdd59a1a48, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  NPCTimeLine: 3
-  _PMS: {fileID: 762431528694896407, guid: 174e46dc922f18e47a57b124a80f9271, type: 3}
-  _IIC: {fileID: 762431528694896407, guid: 67dd1bec75363b84ab720f69594907dd, type: 3}
-  _PP: {fileID: 762431528694896407, guid: b4ba7a8bde8198d4681eb5d0dccc9fd0, type: 3}
-  _cost: 1
 --- !u!114 &4568354858123837730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -95,6 +78,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 871cebdfdde5468498829968d5ba1171, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1892378638862877642
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9178155007998355382}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cba7a104a3e1484186fca7aff8d24473, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!195 &47357776550331533
@@ -177,7 +172,7 @@ PrefabInstance:
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: m_Mesh
       value: 
-      objectReference: {fileID: 8088842760900868372, guid: aeba18bede16ce4499b8e8bcb2fa7b76, type: 3}
+      objectReference: {fileID: 733791404547379991, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: m_Quality
       value: 0
@@ -193,7 +188,7 @@ PrefabInstance:
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_Materials.Array.data[0]'
       value: 
-      objectReference: {fileID: 2100000, guid: 911d421521dc9ba4e84c54b9aa5448c3, type: 2}
+      objectReference: {fileID: 2100000, guid: 07f0e156ce252814cbe68a8647fb62ab, type: 2}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_Materials.Array.data[1]'
       value: 
@@ -216,11 +211,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_BlendShapeWeights.Array.data[2]'
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_BlendShapeWeights.Array.data[3]'
-      value: 100
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_BlendShapeWeights.Array.data[4]'
@@ -228,7 +223,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_BlendShapeWeights.Array.data[5]'
-      value: 0
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: -8916213757258753995, guid: f289e4564edec6e45a312cb6bc225873, type: 3}
       propertyPath: 'm_BlendShapeWeights.Array.data[6]'
@@ -1640,7 +1635,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1476236074894974769}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b2d8418b0b9634b1892b0268dd9c2743, type: 3}
   m_Name: 
