@@ -4,6 +4,7 @@ using Zenject;
 public class NPCSpawner : MonoBehaviour
 {
     [SerializeField] private NPCBase _npcBasePrefab;
+    [SerializeField] private StoryNPC _npcStoryPrefab;
     
     private EventBus _eventBus;
     private NPCService _npcService;

@@ -27,7 +27,7 @@ public abstract class NPCBase : MonoBehaviour, IInteractable
         _animator = GetComponent<NPCAnim>();
     }
     
-    public void Setup(NPCData npcData, NPCService npcService)
+    public virtual void Setup(NPCData npcData, NPCService npcService)
     {
         
         _npcData = npcData;

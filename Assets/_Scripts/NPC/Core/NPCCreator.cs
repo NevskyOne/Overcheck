@@ -7,12 +7,14 @@ public class NPCCreator
     private NPCAppearanceRandomizer _appearanceRandomizer;
     private DocsRandomizer _docsRandomizer;
     private DocumentDataBase _documentDataBase;
+    private NPCBase _basePrefab;
     
     public NPCCreator(AppearRandomStruct appearStruct, DocumentDataBase docBase, Transform criminalParent)
     {
         _appearanceRandomizer = new NPCAppearanceRandomizer(appearStruct);
         _docsRandomizer = new DocsRandomizer(20,10, 6);
         _documentDataBase = docBase;
+        _basePrefab = appearStruct.BasePrefab;
 
         var criminals = _docsRandomizer.CreateCriminals();
         var criminalsText = criminalParent.GetComponentsInChildren<TMP_Text>();
@@ -31,7 +33,7 @@ public class NPCCreator
         var appearance = _appearanceRandomizer.Randomize(male);
         var docs = _docsRandomizer.Randomize(male, appearance.Photo, _documentDataBase);
         var data = new NPCData();
-        data.Setup(docs, appearance,configs[Random.Range(0, configs.Count)]);
+        data.Setup(_basePrefab,docs, appearance,configs[Random.Range(0, configs.Count)]);
         return data;
     }
 }

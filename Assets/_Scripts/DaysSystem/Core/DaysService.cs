@@ -82,19 +82,33 @@ public class DaysService : MonoBehaviour
 
                 day.NPCs.Add(npcList[j]);
             }
+            foreach (var messageUnd in day.Messages)
+            {
+                var message = (MessageNPC)messageUnd;
+                var newData = new NPCData();
+                newData.Setup(message.StoryNPC, new DocsData(),
+                    new NPCAppearanceData(), message.Config);
+                switch (message.SpawnEvent)
+                {
+                    case SpawnEvent.AtDayStart:
+                        npcList.Insert(0,newData);
+                        break;
+                    case SpawnEvent.AtDayEnd:
+                        npcList.Insert(npcList.Count-1,newData);
+                        break;
+                    case SpawnEvent.AtRandomTime:
+                        npcList.Insert(Random.Range(0,npcList.Count),newData);
+                        break;
+                }
+            }
+            
         }
-        
+
         StartNewDay(0);
     }
 
     private void OnEventInvoked(EventHasBeenInvoked e)
     {
         _days[CurrentDay].InvokedEvents.Add(e.Action.Method.Name);
-    }
-
-    private void NPCMessageInvoke(MessageNPC message)
-    {
-        
-        message.Invoke(_eventBus);
     }
 }
