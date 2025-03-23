@@ -22,9 +22,9 @@ public class DialogParser : MonoBehaviour
             config.GoFragment = ParseDialog(ending.Split("(Фраза не допуска)")[0])[0];
             config.BackFragment = ParseDialog(ending.Split("(Фраза не допуска)")[1])[0];
 
-            // AssetDatabase.CreateAsset(config, $"{_savePath}/{index}.asset");
-            // AssetDatabase.SaveAssets();
-            // AssetDatabase.Refresh();
+            AssetDatabase.CreateAsset(config, $"{_savePath}/{index}.asset");
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
             index++;
         }
     }
