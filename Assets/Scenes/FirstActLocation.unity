@@ -42,7 +42,8 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 12
+  serializedVersion: 13
+  m_BakeOnSceneLoad: 0
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -729,7 +730,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -762,7 +763,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -1043,7 +1044,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -1076,7 +1077,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -2037,7 +2038,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -2070,7 +2071,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 6.324045, y: 1}
   m_BounceIntensity: 1
@@ -4179,7 +4180,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -4212,7 +4213,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 6.324045, y: 1}
   m_BounceIntensity: 1
@@ -4355,7 +4356,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -4388,7 +4389,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 6.324045, y: 1}
   m_BounceIntensity: 1
@@ -4606,7 +4607,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -4639,7 +4640,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -7497,7 +7498,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -7530,7 +7531,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -7673,7 +7674,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -7706,7 +7707,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -7885,7 +7886,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -7918,7 +7919,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -8766,7 +8767,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -8799,7 +8800,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -9878,7 +9879,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -9911,7 +9912,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -10334,7 +10335,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -10367,7 +10368,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -10725,7 +10726,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -10758,7 +10759,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -11336,7 +11337,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -11369,7 +11370,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -12505,7 +12506,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -12538,7 +12539,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -12681,7 +12682,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -12714,7 +12715,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -13121,7 +13122,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -13154,7 +13155,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -14255,7 +14256,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -14288,7 +14289,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -16448,7 +16449,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -16481,7 +16482,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -17128,7 +17129,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -17161,7 +17162,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -18413,7 +18414,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -18446,7 +18447,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -19052,7 +19053,7 @@ Light:
   m_InnerSpotAngle: 132.49945
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -19085,7 +19086,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 6.324045, y: 1}
   m_BounceIntensity: 1
@@ -19228,7 +19229,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -19261,7 +19262,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -19748,7 +19749,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -19781,7 +19782,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -21426,7 +21427,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -21459,7 +21460,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -24066,7 +24067,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -24099,7 +24100,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -24832,7 +24833,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -24865,7 +24866,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -25782,7 +25783,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -25815,7 +25816,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -29283,6 +29284,13 @@ PrefabInstance:
     - {fileID: -2392714050655951078, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
     - {fileID: -5603705161037684905, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
     - {fileID: 8523285684341326722, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
+    - {fileID: 2136285349215855929, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
+    - {fileID: 7178048443432924627, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
+    - {fileID: -4614735669383006360, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
+    - {fileID: -4914880421587461026, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
+    - {fileID: 9165593408393345271, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
+    - {fileID: -7879630151036194865, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
+    - {fileID: -3858456717047516900, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: -2223987205362908960, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
       insertIndex: 0
@@ -29291,6 +29299,9 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1399948854}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2038533909}
     - targetCorrespondingSourceObject: {fileID: 5454597013299700375, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 535020174}
@@ -29495,9 +29506,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 1682704553828276193, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1118817240}
-    - targetCorrespondingSourceObject: {fileID: -3858456717047516900, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1758573501}
   m_SourcePrefab: {fileID: 100100000, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
 --- !u!4 &909851613 stripped
 Transform:
@@ -30192,7 +30200,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -30225,7 +30233,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -30723,7 +30731,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -30756,7 +30764,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -31395,7 +31403,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 979220812}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -125}
+  m_LocalPosition: {x: 0, y: 0, z: -476}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -31403,7 +31411,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0, y: -109}
+  m_AnchoredPosition: {x: 0, y: -109}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!328 &979220814
@@ -31416,14 +31424,14 @@ VideoPlayer:
   m_Enabled: 1
   m_VideoClip: {fileID: 32900000, guid: 942a6c655c0d72c4ab595dd5d97b7b1d, type: 3}
   m_TargetCameraAlpha: 1
-  m_TargetCamera3DLayout: 0
+  m_TargetCamera3DLayout: 2
   m_TargetCamera: {fileID: 1739545549}
-  m_TargetTexture: {fileID: 0}
+  m_TargetTexture: {fileID: 8400000, guid: 26951c22fac5fcd42af07ea70fd0d367, type: 2}
   m_TimeReference: 0
   m_TargetMaterialRenderer: {fileID: 0}
   m_TargetMaterialProperty: <noninit>
-  m_RenderMode: 4
-  m_AspectRatio: 2
+  m_RenderMode: 2
+  m_AspectRatio: 0
   m_DataSource: 0
   m_TimeUpdateMode: 2
   m_PlaybackSpeed: 1
@@ -31928,7 +31936,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -31961,7 +31969,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -33218,7 +33226,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -33251,7 +33259,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -33712,7 +33720,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -33745,7 +33753,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 6.324045, y: 1}
   m_BounceIntensity: 1
@@ -34118,7 +34126,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -34151,7 +34159,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 6.324045, y: 1}
   m_BounceIntensity: 1
@@ -34863,7 +34871,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -34896,7 +34904,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -36388,7 +36396,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -36421,7 +36429,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -37401,7 +37409,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -37434,7 +37442,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -38306,7 +38314,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -38339,7 +38347,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -41327,7 +41335,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -41360,7 +41368,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -42062,7 +42070,7 @@ Light:
   m_InnerSpotAngle: 77.208565
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -42095,7 +42103,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -43570,7 +43578,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -43603,7 +43611,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -44714,81 +44722,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 3610376926186979130, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
---- !u!1 &1364756437
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1364756438}
-  - component: {fileID: 1364756440}
-  - component: {fileID: 1364756439}
-  m_Layer: 5
-  m_Name: Chan
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1364756438
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364756437}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1.1725287, y: 1.1725287, z: 1.1725287}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 1518139553}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0.41773966, y: 1}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &1364756439
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364756437}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 134901d81c7f71944a4d01092cd72590, type: 3}
-  m_Type: 0
-  m_PreserveAspect: 1
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
---- !u!222 &1364756440
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1364756437}
-  m_CullTransparentMesh: 1
 --- !u!1001 &1367542027
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -50932,6 +50865,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1518139553}
+  - component: {fileID: 1518139554}
   m_Layer: 5
   m_Name: Content
   m_TagString: Untagged
@@ -50951,7 +50885,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1364756438}
+  - {fileID: 2115804844}
   - {fileID: 1377542837}
   - {fileID: 30687878}
   m_Father: {fileID: 999467525}
@@ -50961,6 +50895,19 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 1}
+--- !u!114 &1518139554
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1518139552}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 31a19414c41e5ae4aae2af33fee712f6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_ShowMaskGraphic: 1
 --- !u!1 &1523727432
 GameObject:
   m_ObjectHideFlags: 0
@@ -51338,7 +51285,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -51371,7 +51318,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -54190,7 +54137,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 1
@@ -54223,7 +54170,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -54845,7 +54792,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -54878,7 +54825,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -56777,7 +56724,7 @@ Light:
   m_InnerSpotAngle: 132.49945
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -56810,7 +56757,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 6.324045, y: 1}
   m_BounceIntensity: 1
@@ -57809,7 +57756,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -57842,7 +57789,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 6.324045, y: 1}
   m_BounceIntensity: 1
@@ -57985,7 +57932,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -58018,7 +57965,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 6.324045, y: 1}
   m_BounceIntensity: 1
@@ -59599,33 +59546,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1779963622918223928, guid: e29869001d462d04fb255af27c810d58, type: 3}
   m_PrefabInstance: {fileID: 1751145470}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1758573497 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: -3858456717047516900, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
-  m_PrefabInstance: {fileID: 909851612}
-  m_PrefabAsset: {fileID: 0}
---- !u!64 &1758573501
-MeshCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1758573497}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 5
-  m_Convex: 0
-  m_CookingOptions: 30
-  m_Mesh: {fileID: -8327905997426172096, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
 --- !u!1 &1761041959
 GameObject:
   m_ObjectHideFlags: 0
@@ -61010,7 +60930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1813450069
 Transform:
   m_ObjectHideFlags: 0
@@ -61502,7 +61422,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -61535,7 +61455,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -64366,7 +64286,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -64399,7 +64319,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -65012,7 +64932,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -65045,7 +64965,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -65188,7 +65108,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -65221,7 +65141,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -66774,7 +66694,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -66807,7 +66727,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -67350,6 +67270,47 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2035420287}
   m_CullTransparentMesh: 1
+--- !u!1 &2038533908 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 86d3a1165612cc8419a0a30552cf9d8a, type: 3}
+  m_PrefabInstance: {fileID: 909851612}
+  m_PrefabAsset: {fileID: 0}
+--- !u!328 &2038533909
+VideoPlayer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2038533908}
+  m_Enabled: 1
+  m_VideoClip: {fileID: 32900000, guid: 942a6c655c0d72c4ab595dd5d97b7b1d, type: 3}
+  m_TargetCameraAlpha: 1
+  m_TargetCamera3DLayout: 0
+  m_TargetCamera: {fileID: 0}
+  m_TargetTexture: {fileID: 0}
+  m_TimeReference: 0
+  m_TargetMaterialRenderer: {fileID: 0}
+  m_TargetMaterialProperty: <noninit>
+  m_RenderMode: 2
+  m_AspectRatio: 2
+  m_DataSource: 0
+  m_TimeUpdateMode: 2
+  m_PlaybackSpeed: 1
+  m_AudioOutputMode: 2
+  m_TargetAudioSources:
+  - {fileID: 0}
+  m_DirectAudioVolumes:
+  - 1
+  m_Url: 
+  m_EnabledAudioTracks: 01
+  m_DirectAudioMutes: 00
+  m_ControlledAudioTrackCount: 1
+  m_PlayOnAwake: 1
+  m_SkipOnDrop: 1
+  m_Looping: 0
+  m_WaitForFirstFrame: 1
+  m_FrameReadyEventEnabled: 0
+  m_VideoShaders: []
 --- !u!1 &2039574718
 GameObject:
   m_ObjectHideFlags: 0
@@ -67736,7 +67697,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: -1
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -67769,7 +67730,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -68817,6 +68778,78 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2115775949}
   m_CullTransparentMesh: 1
+--- !u!1 &2115804843
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2115804844}
+  - component: {fileID: 2115804845}
+  - component: {fileID: 2115804846}
+  m_Layer: 5
+  m_Name: Render
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &2115804844
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115804843}
+  m_LocalRotation: {x: -0, y: -0.0000001490116, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 10, y: 11, z: 11}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1518139553}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -588, y: -11}
+  m_SizeDelta: {x: 100, y: 100}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &2115804845
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115804843}
+  m_CullTransparentMesh: 1
+--- !u!114 &2115804846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2115804843}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Texture: {fileID: 8400000, guid: 26951c22fac5fcd42af07ea70fd0d367, type: 2}
+  m_UVRect:
+    serializedVersion: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
 --- !u!1 &2118059683
 GameObject:
   m_ObjectHideFlags: 0
@@ -69584,7 +69617,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -69617,7 +69650,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
@@ -69866,7 +69899,7 @@ Light:
   m_InnerSpotAngle: 54.775764
   m_CookieSize: 10
   m_Shadows:
-    m_Type: 0
+    m_Type: 2
     m_Resolution: 128
     m_CustomResolution: -1
     m_Strength: 0.6
@@ -69899,7 +69932,7 @@ Light:
     serializedVersion: 2
     m_Bits: 7617
   m_RenderingLayerMask: 2
-  m_Lightmapping: 4
+  m_Lightmapping: 2
   m_LightShadowCasterMode: 0
   m_AreaSize: {x: 1, y: 1}
   m_BounceIntensity: 1
