@@ -5,6 +5,7 @@ using Zenject;
 public class NPCSpawner : MonoBehaviour
 {
     [SerializeField] private List<NPCBase> _prefabs;
+    [SerializeField] private Transform _defaultSpawn;
     private EventBus _eventBus;
     private NPCService _npcService;
     private bool _isGameStarted;
@@ -35,10 +36,14 @@ public class NPCSpawner : MonoBehaviour
     public void SpawnNPC(SpawnNPCRequestEvent e)
     {
         if (!_isGameStarted) return;
-
+        
         var spawnData = e.NPCSpawnData;
+        if (spawnData is StoryNPCData)
+        
+        if (spawnData.SpawnPosition == default)
+            spawnData.SpawnPosition = _defaultSpawn.position;
         var newNpc = _container.InstantiatePrefab(
-            _prefabs[spawnData.NPCData.Prefab], spawnData.SpawnPosition, Quaternion.identity, null).GetComponent<NPCBase>();
+            spawnData.NPCData.Prefab, spawnData.SpawnPosition, Quaternion.identity, null).GetComponent<NPCBase>();
         newNpc.Setup(spawnData.NPCData, _npcService);
         _eventBus.Invoke(new NPCSpawnedEvent(spawnData, newNpc));
     }

@@ -16,7 +16,7 @@ LightingSettings:
   m_IndirectOutputScale: 1
   m_UsingShadowmask: 0
   m_BakeBackend: 2
-  m_LightmapMaxSize: 2048
+  m_LightmapMaxSize: 4096
   m_LightmapSizeFixed: 1
   m_UseMipmapLimits: 1
   m_BakeResolution: 100
@@ -40,7 +40,7 @@ LightingSettings:
   m_PVRCulling: 1
   m_PVRSampling: 1
   m_PVRDirectSampleCount: 16
-  m_PVRSampleCount: 64
+  m_PVRSampleCount: 128
   m_PVREnvironmentSampleCount: 256
   m_PVREnvironmentReferencePointCount: 2048
   m_LightProbeSampleCountMultiplier: 4

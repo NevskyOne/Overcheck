@@ -3,9 +3,9 @@
 public class NPCSpawnData
 {
     public readonly NPCData NPCData;
-    public readonly Vector3 SpawnPosition;
+    public Vector3 SpawnPosition;
 
-    public NPCSpawnData(NPCData npcData, Vector3 spawnPosition)
+    public NPCSpawnData(NPCData npcData, Vector3 spawnPosition = default)
     {
         NPCData = npcData;
         SpawnPosition = spawnPosition;
