@@ -30,11 +30,11 @@ public class SceneMusic : MonoBehaviour
                     _crossfade.Fade(_wiresMusic, 1);
                     _source.loop = true;
                     break;
-                case MusicState.Gears:
+                case MusicState.Math:
                     _crossfade.Fade(_gearMusic, 1);
                     _source.loop = true;
                     break;
-                case MusicState.Meteorites:
+                case MusicState.Morse:
                     _crossfade.Fade(_meteoriteMusic, 1);
                     _source.loop = true;
                     break;
@@ -50,5 +50,5 @@ public class SceneMusic : MonoBehaviour
 
 public enum MusicState
 {
-    Normal, Wires, Gears, Meteorites
+    Normal, Wires, Math, Morse
 }

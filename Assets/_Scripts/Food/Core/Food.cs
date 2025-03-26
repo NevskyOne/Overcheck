@@ -3,11 +3,11 @@ using UnityEngine;
 public class Food: Movable, IUsable
 {
     [SerializeField] private FoodQuality _quality;
-    //private uint _freshness = 2; надо ли нам?
+    public FoodQuality Quality => _quality;
 
-    public void Use()
+    public virtual void Use()
     {
-        Saturation.ChangeSaturation((uint)_quality);
+        Saturation.ChangeSaturation((int)_quality);
         Destroy(gameObject);
     }
 }

@@ -1,14 +1,20 @@
 using System;
 using UnityEngine;
-using Object = UnityEngine.Object;
+using Zenject;
 
 [Serializable]
 public class GiveObject : IDialogAction
 {
     [SerializeField] private GameObject _object;
-    public  void DoAction()
+    private DiContainer _container;
+    
+    public void SetContainet(DiContainer container)
     {
-        Object.Instantiate(_object, Object.FindFirstObjectByType<DragRotate>().transform);
+        _container = container;
+    }
+    public void DoAction()
+    {
+        _container.InstantiatePrefab(_object, GameObject.FindGameObjectWithTag("ItemsHolder").transform);
     }
     public void AfterAction(){}
 }

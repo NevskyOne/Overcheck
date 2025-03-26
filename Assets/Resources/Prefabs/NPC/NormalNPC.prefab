@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 899727643289225492}
-  - component: {fileID: 5285693651076766612}
+  - component: {fileID: -341489016626545301}
   - component: {fileID: 4568354858123837730}
   - component: {fileID: 47357776550331533}
   - component: {fileID: 2509263222113592836}
@@ -68,7 +68,7 @@ Transform:
   - {fileID: 8125084131461130155}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &5285693651076766612
+--- !u!114 &-341489016626545301
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -77,14 +77,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 9178155007998355382}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 199d8aa87fcf8964c84f29cdd59a1a48, type: 3}
+  m_Script: {fileID: 11500000, guid: c7fb5270429c44caab743dbd037d5635, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  NPCTimeLine: 0
-  _PMS: {fileID: 762431528694896407, guid: 174e46dc922f18e47a57b124a80f9271, type: 3}
-  _IIC: {fileID: 762431528694896407, guid: 67dd1bec75363b84ab720f69594907dd, type: 3}
-  _PP: {fileID: 762431528694896407, guid: b4ba7a8bde8198d4681eb5d0dccc9fd0, type: 3}
-  _cost: 1
 --- !u!114 &4568354858123837730
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -111,7 +106,7 @@ NavMeshAgent:
   m_Acceleration: 4
   avoidancePriority: 50
   m_AngularSpeed: 500
-  m_StoppingDistance: 2
+  m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1

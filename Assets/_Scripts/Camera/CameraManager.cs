@@ -1,29 +1,34 @@
 using System.Collections;
 using UnityEngine;
+using Zenject;
 
 public class CameraManager : MonoBehaviour
 {
-    [SerializeField] private float moveDuration = 1f;
-
-    private Vector3 initialLocalPosition = new Vector3(0,0.7f,0);
+    [SerializeField] private float moveDuration = 0.2f;
+    [SerializeField] private float rotateDuration = 0.1f;
+    [SerializeField] private Vector3 initialLocalPosition = new Vector3(0,0.66f,0);
+    [SerializeField] private Transform _rotateEmpty;
     private Vector3 initialLocalEulerAngles;
     private Vector3 positionVelocity;
-    private Vector3 rotationVelocity;
+    private float rotationVelocityX, rotationVelocityY, rotationVelocityZ;
     private float currentLocalXRotation;
 
     private Coroutine _currentCoroutine, _currentRotateRoutine;
-    private PlayerInteractions _playerInter;
-
-    private void Start()
+    private Player _player;
+    
+    [Inject]
+    private void Initialize(Player player)
     {
         initialLocalEulerAngles = transform.localEulerAngles;
-        _playerInter = FindFirstObjectByType<PlayerInteractions>();
+        _player = player;
     }
 
-    public void MoveToTarget(Vector3 targetPosition, Vector3 targetLocalEulerAngles )
+    public void MoveToTarget(Vector3 targetPosition, Vector3 targetLocalEulerAngles, Vector3 hitPos)
     {
-        initialLocalEulerAngles = transform.localEulerAngles;
-        initialLocalEulerAngles.z = 0;
+        _rotateEmpty.LookAt(hitPos);
+        initialLocalEulerAngles = new Vector3(_rotateEmpty.localEulerAngles.x, 0,0);
+        Player.Movement.CamRot = initialLocalEulerAngles;
+        
         if (_currentCoroutine != null) StopCoroutine(_currentCoroutine);
         if (_currentRotateRoutine != null) StopCoroutine(_currentRotateRoutine);
         if(targetPosition != Vector3.zero)
@@ -45,16 +50,17 @@ public class CameraManager : MonoBehaviour
         StopCoroutine(nameof(SmoothMove));
         float elapsedTime = 0f;
 
-        while (elapsedTime < moveDuration + 0.4f)
+        while (elapsedTime < moveDuration + 0.5f)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.fixedDeltaTime;
 
             transform.localPosition = Vector3.SmoothDamp(transform.localPosition, targetPosition, ref positionVelocity, moveDuration);
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         transform.localPosition = targetPosition;
-        _playerInter.Focus();
+        Player.Interactions.Focus();
+        Player.State = PlayerState.Movement;
     }
     
     private IEnumerator SmoothMove(Vector3 targetPosition)
@@ -62,12 +68,13 @@ public class CameraManager : MonoBehaviour
         StopCoroutine(nameof(LocalSmoothMove));
         float elapsedTime = 0f;
 
-        while (elapsedTime < moveDuration + 1.5f)
+        while (elapsedTime < moveDuration + 0.5f)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.fixedDeltaTime;
 
-            transform.position = Vector3.SmoothDamp(transform.position, targetPosition, ref positionVelocity, moveDuration);
-            yield return null;
+            transform.position =
+                Vector3.SmoothDamp(transform.position, targetPosition, ref positionVelocity, moveDuration);
+            yield return new WaitForFixedUpdate();
         }
 
         transform.position = targetPosition;
@@ -78,19 +85,19 @@ public class CameraManager : MonoBehaviour
         StopCoroutine(nameof(SmoothRotate));
         float elapsedTime = 0f;
 
-        while (elapsedTime < moveDuration + 1.5f)
+        while (elapsedTime < moveDuration + 0.5f)
         {
-            elapsedTime += Time.deltaTime;
+            elapsedTime += Time.fixedDeltaTime;
 
             Vector3 smoothedRotation = new Vector3(
-                Mathf.SmoothDampAngle(transform.localEulerAngles.x, targetEulerAngles.x, ref rotationVelocity.x, moveDuration),
-                Mathf.SmoothDampAngle(transform.localEulerAngles.y, targetEulerAngles.y, ref rotationVelocity.y, moveDuration),
-                Mathf.SmoothDampAngle(transform.localEulerAngles.z, targetEulerAngles.z, ref rotationVelocity.z, moveDuration)
+                Mathf.SmoothDampAngle(transform.localEulerAngles.x, targetEulerAngles.x, ref rotationVelocityX, rotateDuration),
+                Mathf.SmoothDampAngle(transform.localEulerAngles.y, targetEulerAngles.y, ref rotationVelocityY, rotateDuration),
+                Mathf.SmoothDampAngle(transform.localEulerAngles.z, targetEulerAngles.z, ref rotationVelocityZ, rotateDuration)
             );
 
             transform.localEulerAngles = smoothedRotation;
 
-            yield return null;
+            yield return new WaitForFixedUpdate();
         }
 
         transform.localEulerAngles = targetEulerAngles;

@@ -10,7 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 6804849158074879119}
   - component: {fileID: 3665893101819067402}
-  - component: {fileID: 3537368084543181572}
   - component: {fileID: 1440355132029942300}
   - component: {fileID: 5039900872677668167}
   m_Layer: 7
@@ -28,7 +27,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 762431528694896407}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0.7071068, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.75, y: 0.75, z: 0.75}
   m_ConstrainProportionsScale: 1
@@ -36,7 +35,7 @@ Transform:
   - {fileID: 709555378618944806}
   - {fileID: 695956802919545144}
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
 --- !u!114 &3665893101819067402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -57,18 +56,6 @@ MonoBehaviour:
   _startMonthText: {fileID: 317481249478911782}
   _endDateText: {fileID: 8824385018526225400}
   _endMonthText: {fileID: 3853387674804067952}
---- !u!114 &3537368084543181572
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 762431528694896407}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a30e98adc18b7514392a318827f7e988, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!65 &1440355132029942300
 BoxCollider:
   m_ObjectHideFlags: 0

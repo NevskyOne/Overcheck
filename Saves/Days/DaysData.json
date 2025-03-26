@@ -1,0 +1,4749 @@
+[
+  {
+    "InvokedEvents": [],
+    "NPCs": [
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Касьян Липкин",
+              "Photo": 11,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 314263,
+              "Stamp": 2,
+              "Name": "Касьян Липкин",
+              "Photo": 11,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 26,
+              "StartMonth": 5,
+              "EndDate": 2,
+              "EndMonth": 11,
+              "Name": "Касьян Липкин",
+              "Photo": 11,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 1,
+          "ModelMaterial": 5,
+          "AccessMaterial": 1,
+          "Photo": 11,
+          "Accessories": [
+            1,
+            5,
+            3,
+            6,
+            5
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "👉🛂",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Эм, чего-чего?",
+                  "Fragments": [
+                    {
+                      "Text": "🤲📜✨👨‍👩‍👧‍👦❤️",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А документы можно посмотреть?",
+                          "Fragments": [
+                            {
+                              "Text": "😟❓",
+                              "Actions": [
+                                {}
+                              ],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "🤯",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "🥺👉👨‍👩‍👧‍👦🏠💔",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "🙏🙏🙏",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "❤️👨‍👩‍👧‍👦",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "💔🥺",
+            "Actions": [],
+            "Buttons": []
+          },
+          "name": "15",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Белла Орешникова",
+              "Photo": 70,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 386504,
+              "Stamp": 4,
+              "Name": "Белла Орешникова",
+              "Photo": 70,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 4,
+              "EndPlanet": 0,
+              "StartDate": 16,
+              "StartMonth": 5,
+              "EndDate": 21,
+              "EndMonth": 12,
+              "Name": "Белла Орешникова",
+              "Photo": 70,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 7,
+          "ModelMaterial": 0,
+          "AccessMaterial": 2,
+          "Photo": 70,
+          "Accessories": [
+            0,
+            5,
+            4,
+            5
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "З-з-здравствуйте! В-в-от мои документы... Во-возь-мите...",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "А почему Вы так говорите?",
+                  "Fragments": [
+                    {
+                      "Text": "Ну у меня с самого детст-в-в-ва так... Я не очень хочу говорить на эту тему... А Вам это в-в-важно?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Нет, извините...",
+                          "Fragments": []
+                        },
+                        {
+                          "Text": "Да, мне очень интересно",
+                          "Fragments": [
+                            {
+                              "Text": "Ну, ч-че-стно говоря, я сам не помню, из-за че-че-е-го это началось.... Но по рассказам моего п-п-папы  это всё началось, когда моя мм-м-мама умерла... В-в--в-видимо стресс-с-с повлиял так на меня...",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Мне очень жаль Вас...",
+                                  "Fragments": []
+                                },
+                                {
+                                  "Text": "Сожалею о потере...",
+                                  "Fragments": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Text": "Куда направляетесь?",
+                  "Fragments": [
+                    {
+                      "Text": "Я не очень х-х-хочу об этом говорить... Просто по своим личным дел-л-лам еду...",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Вы как-то закрыто себя ведёте...",
+                          "Fragments": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "С-с-спасибо Вам большое. До свидания!",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Но поч-ч-чему... Что я в-в-вам сделал...",
+            "Actions": [],
+            "Buttons": []
+          },
+          "name": "0",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": true,
+          "Criminal": true,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Елена Салий",
+              "Photo": 87,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 265999,
+              "Stamp": 4,
+              "Name": "Юрий Барсуков",
+              "Photo": 87,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 4,
+              "EndPlanet": 0,
+              "StartDate": 15,
+              "StartMonth": 5,
+              "EndDate": 28,
+              "EndMonth": 10,
+              "Name": "Юрий Барсуков",
+              "Photo": 81,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 8,
+          "ModelMaterial": 21,
+          "AccessMaterial": 1,
+          "Photo": 87,
+          "Accessories": [
+            2,
+            5,
+            6
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуй! Пропусти меня к моей семье... Я с ними уже 3 года не виделась...",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Для начала предъявите свои документы!",
+                  "Fragments": [
+                    {
+                      "Text": "Вот, пожалуйста.... ",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я не знаю, как у меня там с документами, по идее должно быть всё хорошо... но",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Кто знает... Всякое может быть...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                },
+                {
+                  "Text": "Для начала предъявите свои документы!",
+                  "Fragments": [
+                    {
+                      "Text": "Если пропустишь, могу что-нибудь дать в замен своё, ну, не знаю, например семейную реликвию, кулончик, ведь мне правда очень нужно...",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Вы просто лучший, спасибо ВАМ БОЛЬШОЕ!!!! Вот, держи кулончик",
+            "Actions": [
+              {}
+            ],
+            "Buttons": [
+              {
+                "Text": "Хорошего Вам дня!",
+                "Fragments": []
+              }
+            ]
+          },
+          "BackFragment": {
+            "Text": "Да, нет... Как-так, не может быть... Теперь я могу не успеть... Откуда в тебе столько злобы?",
+            "Actions": [
+              null
+            ],
+            "Buttons": [
+              {
+                "Text": "Извините, но я просто действую по инструкциям...",
+                "Fragments": []
+              }
+            ]
+          },
+          "name": "9",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Елисей Шершнев",
+              "Photo": 78,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 286140,
+              "Stamp": 3,
+              "Name": "Елисей Шершнев",
+              "Photo": 78,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 17,
+              "StartMonth": 2,
+              "EndDate": 15,
+              "EndMonth": 12,
+              "Name": "Елисей Шершнев",
+              "Photo": 78,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 7,
+          "ModelMaterial": 26,
+          "AccessMaterial": 0,
+          "Photo": 78,
+          "Accessories": [
+            1,
+            6
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Эй, брат, здесь вообще кто-нибудь работает? Очереди такие длинные... пррф",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Работа не волк, в лес не убежит… хотя кто её знает.",
+                  "Fragments": [
+                    {
+                      "Text": "Что?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Да так, забей",
+                          "Fragments": [
+                            {
+                              "Text": "Эм, ну ладно...",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Text": "Ну вообще нет, я один тут. Чего Вам?",
+                  "Fragments": [
+                    {
+                      "Text": "Мне бы приземлиться, да мои проверить. Вот держи",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": [
+                        {
+                          "Text": "А что это такое у тебя?",
+                          "Fragments": [
+                            {
+                              "Text": "Небольшая партия мёда. Для личного потребления.",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Хочешь и тебе могу баночку дать?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Да, не откажусь!",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Вот тогда, бери",
+                                      "Actions": [
+                                        {}
+                                      ],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Text": "Неее, спасибо",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ну ладно, как скажешь...",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Ладно, бывай тогда! Поеду к своей семье. Удачи!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "И куда мне теперь весь этот мёд деть... Эх... Ладно, до свидания...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "13",
+          "hideFlags": 0
+        }
+      }
+    ],
+    "Messages": [],
+    "ConditionalEvents": [],
+    "RandomNpcCount": 4
+  },
+  {
+    "InvokedEvents": [],
+    "NPCs": [
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Николас Янушевский",
+              "Photo": 48,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 895186,
+              "Stamp": 3,
+              "Name": "Николас Янушевский",
+              "Photo": 48,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 17,
+              "StartMonth": 2,
+              "EndDate": 13,
+              "EndMonth": 11,
+              "Name": "Николас Янушевский",
+              "Photo": 48,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 4,
+          "ModelMaterial": 25,
+          "AccessMaterial": 1,
+          "Photo": 48,
+          "Accessories": [
+            2,
+            3,
+            3,
+            4
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйте! Пропустите меня? Вот документы:",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да конечно, сейчас проверю только...",
+                  "Fragments": [
+                    {
+                      "Text": "У Вас тут отвратительные очереди... Я уже 6 часов примерно здесь простояла... Ужас...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам, что так быстро проверили! Хорошего дня!",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "И что за бред... Только время зря потратила своё... ",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "19",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Дарья Лакина",
+              "Photo": 0,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 525391,
+              "Stamp": 3,
+              "Name": "Дарья Лакина",
+              "Photo": 0,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 7,
+              "StartMonth": 5,
+              "EndDate": 26,
+              "EndMonth": 12,
+              "Name": "Дарья Лакина",
+              "Photo": 0,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 0,
+          "ModelMaterial": 0,
+          "AccessMaterial": 2,
+          "Photo": 0,
+          "Accessories": [
+            1
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Прив, bro! Проверь мои docsы пж",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Добрый день. Да, конечно",
+                  "Fragments": [
+                    {
+                      "Text": "Пасиб бро. Чё, дела как у тебя?",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Как твой day?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Да нормально, вроде всё обычно.",
+                          "Fragments": [
+                            {
+                              "Text": "Хайпарик. Это гуд для our лайв",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Ну так, не очень...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Да, забей бро. Не грусти. У меня вот всё хайпарик. Живу в кайф.",
+                                      "Actions": [],
+                                      "Buttons": [
+                                        {
+                                          "Text": "Ну вот, пытаюсь",
+                                          "Fragments": [
+                                            {
+                                              "Text": "И правильно делаешь",
+                                              "Actions": [],
+                                              "Buttons": []
+                                            }
+                                          ]
+                                        },
+                                        {
+                                          "Text": "Ну я не знаю как...",
+                                          "Fragments": [
+                                            {
+                                              "Text": "Да никто не знает, даже я, LOL",
+                                              "Actions": [],
+                                              "Buttons": []
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Лан! Давай, живи в кайф, бро",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Ну, что сказать, very sad... Пойду пофинклю...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "8",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Устина Барсукова",
+              "Photo": 97,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 923569,
+              "Stamp": 1,
+              "Name": "Устина Барсукова",
+              "Photo": 97,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 1,
+              "EndPlanet": 0,
+              "StartDate": 9,
+              "StartMonth": 5,
+              "EndDate": 28,
+              "EndMonth": 11,
+              "Name": "Устина Барсукова",
+              "Photo": 97,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 9,
+          "ModelMaterial": 21,
+          "AccessMaterial": 2,
+          "Photo": 97,
+          "Accessories": [
+            0,
+            5
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Привет, брат! Как жизнь на станции? Наверное, скука смертная, да? Вот, держи мои докумекнты сразу!",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Ну да, но работа есть работа.",
+                  "Fragments": [
+                    {
+                      "Text": "Работа – это не круто! Я вот сейчас как раз решил в отпуск отправиться, от скуки отдохнуть. Или отдОхнуть, хах",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                },
+                {
+                  "Text": "Не соглашусь! Интересная работа!",
+                  "Fragments": [
+                    {
+                      "Text": "Да?! Ну я бы точно не смог на такой работать, не по мне это...",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А что Вам интересно?",
+                          "Fragments": [
+                            {
+                              "Text": "Всякие креативные професии! Дизайнер например... Но к сожалению, всё никак устроиться не могу на него... ",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо бро! Ещё возможно увидимся. Бывай!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Да ёпрст.... Жаль...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "2",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": true,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Агата Липкина",
+              "Photo": 52,
+              "Document": 0
+            },
+            {
+              "HealthClass": 1,
+              "ID": 599812,
+              "Stamp": 2,
+              "Name": "Агата Липкина",
+              "Photo": 52,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 1,
+              "StartDate": 8,
+              "StartMonth": 4,
+              "EndDate": 3,
+              "EndMonth": 7,
+              "Name": "Агата Липкина",
+              "Photo": 52,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 8,
+          "ModelMaterial": 4,
+          "AccessMaterial": 2,
+          "Photo": 81,
+          "Accessories": [
+            1,
+            5,
+            3,
+            6
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйтеее! Я хочу приземлится на планету.",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Конечно, держите!",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я тут задумалась над тем какой мир жестокий, эх.",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "У вас что-то произошло?",
+                          "Fragments": [
+                            {
+                              "Text": "Да вот, умер любимый пёсик",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Я теперь хочу приютить нового, а тут говорят есть хороший магазин",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Вы не знаете случайно?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Сожалею, но я не знаю...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Угу, все равно спасибо, что выслушали",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну, я могу с Вами согласиться",
+                          "Fragments": [
+                            {
+                              "Text": "У вас тоже что-то произошло?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Я жил в бедной семье, нам с мамой никто не помогал. Тяжёлое детство...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ох, вы росли без отца, соболезную.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Понимаю вашу боль.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам большое, надеюсь я найду себе нового пёскика)",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Я... даже не знаю что... сказать... Почему Вы такой...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "1",
+          "hideFlags": 0
+        }
+      }
+    ],
+    "Messages": [],
+    "ConditionalEvents": [],
+    "RandomNpcCount": 4
+  },
+  {
+    "InvokedEvents": [],
+    "NPCs": [
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Татьяна Ольховская",
+              "Photo": 45,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 661188,
+              "Stamp": 1,
+              "Name": "Татьяна Ольховская",
+              "Photo": 45,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 1,
+              "EndPlanet": 0,
+              "StartDate": 15,
+              "StartMonth": 5,
+              "EndDate": 3,
+              "EndMonth": 11,
+              "Name": "Татьяна Ольховская",
+              "Photo": 45,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 4,
+          "ModelMaterial": 16,
+          "AccessMaterial": 2,
+          "Photo": 45,
+          "Accessories": [
+            1,
+            4,
+            5
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Йоооу! Дарова бро. Чё как жизнь, как сам? Вот мои доки",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да я, нормально, хах. А ты как?",
+                  "Fragments": [
+                    {
+                      "Text": "Ye? e vtyz dc` [jhjij/ Z yt edthty ghfdlf? xnj rnj-nj ,eltn xbnfnm 'njn ntrcn gjkyjcnm./// Yj? lf kflyj///",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Ой, извините... Синхронный переводчик залагал... Хотите подарю его Вам? Раз он всё равно сломался и лагает?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Ну, давай, спасибо",
+                          "Fragments": [
+                            {
+                              "Text": "Вот, держи. Может быть тебе и пригодиться... А то как по мне он так, сувенир, на полку теперь...",
+                              "Actions": [
+                                {}
+                              ],
+                              "Buttons": []
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Да не, спасибо... Обойдусь...",
+                          "Fragments": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Ну давайте, я погнал. Удачки! бб",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Ну ББ, больше я сюда к тебе  не прийду! ",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "4",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Надежда Медова",
+              "Photo": 92,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 117822,
+              "Stamp": 1,
+              "Name": "Надежда Медова",
+              "Photo": 92,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 1,
+              "EndPlanet": 0,
+              "StartDate": 22,
+              "StartMonth": 1,
+              "EndDate": 26,
+              "EndMonth": 12,
+              "Name": "Надежда Медова",
+              "Photo": 92,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 9,
+          "ModelMaterial": 7,
+          "AccessMaterial": 0,
+          "Photo": 92,
+          "Accessories": [
+            1,
+            3,
+            5,
+            6
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Приветик! Пропустишь меня?",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Эх, да... Конечно. Только документы можно?",
+                  "Fragments": [
+                    {
+                      "Text": "Так я уже положила. Ты что-то какой-то грустный... Что-то случилось?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Ну чуть-чуть... Одно и то же, устал...",
+                          "Fragments": [
+                            {
+                              "Text": "Ну да, работать вахтёром не так просто получается... Но я в целом знала это... Поэтому и не хочу на эту работу...",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну чуть-чуть... Одно и то же, устал...",
+                          "Fragments": [
+                            {
+                              "Text": "Ну да, работать вахтёром не так просто получается... Но я в целом знала это... Поэтому и не хочу на эту работу...",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "А ты чего так? решил просто попробовать или нужда?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Нужда, я маме хочу с деньгами помочь...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Поняла тебя, ну удачки тебе тогда)",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Text": "Не хочу говорить на эту тему...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Окей, как скажешь... ТОгда просто проверь мои документики и я уйду...",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Text": "Документы можно посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Так я уже положила...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Пока-пока! Спасибо тебе.",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Жаль... Очень-очень жаль...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "16",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Еремей Логов",
+              "Photo": 72,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 292474,
+              "Stamp": 2,
+              "Name": "Еремей Логов",
+              "Photo": 72,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 11,
+              "StartMonth": 2,
+              "EndDate": 3,
+              "EndMonth": 9,
+              "Name": "Еремей Логов",
+              "Photo": 72,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 7,
+          "ModelMaterial": 6,
+          "AccessMaterial": 0,
+          "Photo": 72,
+          "Accessories": [
+            2,
+            6
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйтеее! Я хочу приземлится на планету.",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Конечно, держите!",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я тут задумалась над тем какой мир жестокий, эх.",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "У вас что-то произошло?",
+                          "Fragments": [
+                            {
+                              "Text": "Да вот, умер любимый пёсик",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Я теперь хочу приютить нового, а тут говорят есть хороший магазин",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Вы не знаете случайно?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Сожалею, но я не знаю...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Угу, все равно спасибо, что выслушали",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну, я могу с Вами согласиться",
+                          "Fragments": [
+                            {
+                              "Text": "У вас тоже что-то произошло?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Я жил в бедной семье, нам с мамой никто не помогал. Тяжёлое детство...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ох, вы росли без отца, соболезную.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Понимаю вашу боль.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам большое, надеюсь я найду себе нового пёскика)",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Я... даже не знаю что... сказать... Почему Вы такой...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "1",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": true,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Фаина Верескова",
+              "Photo": 42,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 552795,
+              "Stamp": 0,
+              "Name": "Фаина Верескова",
+              "Photo": 42,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 0,
+              "EndPlanet": 3,
+              "StartDate": 5,
+              "StartMonth": 5,
+              "EndDate": 16,
+              "EndMonth": 11,
+              "Name": "Фаина Верескова",
+              "Photo": 42,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 3,
+          "ModelMaterial": 9,
+          "AccessMaterial": 1,
+          "Photo": 33,
+          "Accessories": [
+            1,
+            4,
+            5,
+            3
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйтеее! Я хочу приземлится на планету.",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Конечно, держите!",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я тут задумалась над тем какой мир жестокий, эх.",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "У вас что-то произошло?",
+                          "Fragments": [
+                            {
+                              "Text": "Да вот, умер любимый пёсик",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Я теперь хочу приютить нового, а тут говорят есть хороший магазин",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Вы не знаете случайно?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Сожалею, но я не знаю...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Угу, все равно спасибо, что выслушали",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну, я могу с Вами согласиться",
+                          "Fragments": [
+                            {
+                              "Text": "У вас тоже что-то произошло?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Я жил в бедной семье, нам с мамой никто не помогал. Тяжёлое детство...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ох, вы росли без отца, соболезную.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Понимаю вашу боль.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам большое, надеюсь я найду себе нового пёскика)",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Я... даже не знаю что... сказать... Почему Вы такой...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "1",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Берта Черничникова",
+              "Photo": 62,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 858322,
+              "Stamp": 3,
+              "Name": "Берта Черничникова",
+              "Photo": 62,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 15,
+              "StartMonth": 3,
+              "EndDate": 27,
+              "EndMonth": 12,
+              "Name": "Берта Черничникова",
+              "Photo": 62,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 6,
+          "ModelMaterial": 6,
+          "AccessMaterial": 0,
+          "Photo": 62,
+          "Accessories": [
+            0,
+            6,
+            5,
+            5
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуй внучок! как у тебя делишки, как сам поживаешь?",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Добрый день? А Вы кто?",
+                  "Fragments": [
+                    {
+                      "Text": "Да просто прохожу, хочу к семье на планету приземлиться... Тут вот очередь просто отвратительная была...",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А, понял.. А я уж подумал, что Вы моя бабушка, хах",
+                          "Fragments": [
+                            {
+                              "Text": "Да нет, чего ты внучок... Как я то... Но ты был бы не плохим внуком",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "И прекрасным сыном!",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Спасибо большое!",
+                                  "Fragments": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Text": "Добрый! Ваши документы?",
+                  "Fragments": [
+                    {
+                      "Text": "Ой, точно.... Совсем запамятывала... возраст... Ну, сам понимаешь...",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": [
+                        {
+                          "Text": "Понимаю, понимаю... Со всеми бывает",
+                          "Fragments": [
+                            {
+                              "Text": "Ну ты там поспеши с проверкой, сынок... А то совс...",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "...совсеем...",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Спасибо большое!",
+                                  "Fragments": []
+                                }
+                              ]
+                            },
+                            {
+                              "Text": "...совсем...",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Спасибо большое!",
+                                  "Fragments": []
+                                }
+                              ]
+                            },
+                            {
+                              "Text": "Такс, а о чём мы говорили? Чёт память совсем уже... Стара я стала, эх",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Да, я честно тоже уже забыл...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ну и ладно... бывает",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Text": "Мы как-то ничего и не обсудили",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ну и ладно... тогда, документики проверь мои, сыночек)",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Text": "Мы говорили о криптовалютах и инвестициях",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ах да, криптовалюты и инвестиции! Конечно же, как я могла забыть",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "В условиях волатильности децентрализованных активов критически важно диверсифицировать портфель, учитывая корреляцию с традиционными деривативами.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Главное — не поддаваться эффекту FOMO и тщательно анализировать ликвидность стейблкоинов.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Ты согласен со мной, сынок?",
+                                      "Actions": [],
+                                      "Buttons": [
+                                        {
+                                          "Text": "0-0",
+                                          "Fragments": []
+                                        },
+                                        {
+                                          "Text": "Да, полностью....",
+                                          "Fragments": []
+                                        },
+                                        {
+                                          "Text": "Видно сразу, что у Вас большой опыт",
+                                          "Fragments": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Ох внучок, выручил! Спасибо тебе! ",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Да я даже не знаю, что сказать... потерянное поколение... Вот раньше было лучше...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "10",
+          "hideFlags": 0
+        }
+      }
+    ],
+    "Messages": [],
+    "ConditionalEvents": [],
+    "RandomNpcCount": 5
+  },
+  {
+    "InvokedEvents": [],
+    "NPCs": [
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Гавриил Бортняк",
+              "Photo": 96,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 212436,
+              "Stamp": 3,
+              "Name": "Гавриил Бортняк",
+              "Photo": 96,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 1,
+              "StartMonth": 1,
+              "EndDate": 3,
+              "EndMonth": 11,
+              "Name": "Гавриил Бортняк",
+              "Photo": 96,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 9,
+          "ModelMaterial": 19,
+          "AccessMaterial": 0,
+          "Photo": 96,
+          "Accessories": [
+            2,
+            3
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйте! Пропустите меня? Вот документы:",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да конечно, сейчас проверю только...",
+                  "Fragments": [
+                    {
+                      "Text": "У Вас тут отвратительные очереди... Я уже 6 часов примерно здесь простояла... Ужас...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам, что так быстро проверили! Хорошего дня!",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "И что за бред... Только время зря потратила своё... ",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "19",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Никон Черносотенский",
+              "Photo": 95,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 746684,
+              "Stamp": 2,
+              "Name": "Никон Черносотенский",
+              "Photo": 95,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 24,
+              "StartMonth": 4,
+              "EndDate": 19,
+              "EndMonth": 10,
+              "Name": "Никон Черносотенский",
+              "Photo": 95,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 9,
+          "ModelMaterial": 17,
+          "AccessMaterial": 0,
+          "Photo": 95,
+          "Accessories": [
+            0,
+            4,
+            6
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Привет, брат! Как жизнь на станции? Наверное, скука смертная, да? Вот, держи мои докумекнты сразу!",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Ну да, но работа есть работа.",
+                  "Fragments": [
+                    {
+                      "Text": "Работа – это не круто! Я вот сейчас как раз решил в отпуск отправиться, от скуки отдохнуть. Или отдОхнуть, хах",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                },
+                {
+                  "Text": "Не соглашусь! Интересная работа!",
+                  "Fragments": [
+                    {
+                      "Text": "Да?! Ну я бы точно не смог на такой работать, не по мне это...",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А что Вам интересно?",
+                          "Fragments": [
+                            {
+                              "Text": "Всякие креативные професии! Дизайнер например... Но к сожалению, всё никак устроиться не могу на него... ",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо бро! Ещё возможно увидимся. Бывай!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Да ёпрст.... Жаль...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "2",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": true,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Анна Ли",
+              "Photo": 81,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 357989,
+              "Stamp": 0,
+              "Name": "Анна Ли",
+              "Photo": 81,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 0,
+              "EndPlanet": 0,
+              "StartDate": 18,
+              "StartMonth": 3,
+              "EndDate": 19,
+              "EndMonth": 12,
+              "Name": "Анна Ли",
+              "Photo": 52,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 8,
+          "ModelMaterial": 4,
+          "AccessMaterial": 0,
+          "Photo": 81,
+          "Accessories": [
+            1
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Добрый вечер, сударь! Пропустите меня?",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Добрый. Давайте документы",
+                  "Fragments": [
+                    {
+                      "Text": "Да, конечно. Вот:",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Не очень конечно мне на эту командировку хочется ехать, но, работа - это работа...",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А что у Вас за работа?",
+                          "Fragments": [
+                            {
+                              "Text": "Ну я должен собирать различные редкие травы, чтобы потом изучать их состав",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Может быть ещё какой-нибудь новый вид найду, было бы не плохо, эхх",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну, да... Мне тоже не всегда нравится моя работа",
+                          "Fragments": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо сударь. До свидания!",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Эх, сударь-сударь... Ну как-так можно то, а?",
+            "Actions": [],
+            "Buttons": []
+          },
+          "name": "6",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Харлампий Прополисов",
+              "Photo": 90,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 535290,
+              "Stamp": 2,
+              "Name": "Харлампий Прополисов",
+              "Photo": 90,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 13,
+              "StartMonth": 2,
+              "EndDate": 3,
+              "EndMonth": 11,
+              "Name": "Харлампий Прополисов",
+              "Photo": 90,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 9,
+          "ModelMaterial": 1,
+          "AccessMaterial": 1,
+          "Photo": 90,
+          "Accessories": [
+            0,
+            3,
+            6
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Добрый день! Поставите зелёный штампик?",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Здравствуй! Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Вот, пожалуйста...",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Тебе тут не одиноко?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А зачем спрашиваешь?",
+                          "Fragments": [
+                            {
+                              "Text": "Да, так, просто...",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Эм, ну ладно...",
+                                  "Fragments": []
+                                },
+                                {
+                                  "Text": "... *промолчать*",
+                                  "Fragments": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Да, одиноко...",
+                          "Fragments": [
+                            {
+                              "Text": "Ну, тогда вот, возьми этого плюшевого, как думаешь кого?",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Этого плющевого человека... Он вот такой вот необычненький, стоит, руки раздвинув.",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Но зато, тебе будет с ним покомфортнее, ну, я надеюсь!",
+                              "Actions": [
+                                {}
+                              ],
+                              "Buttons": [
+                                {
+                                  "Text": "Оу, спасибочки!",
+                                  "Fragments": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Нет, не одиноко!",
+                          "Fragments": [
+                            {
+                              "Text": "О-как... Ну, видимо мне тебя не понять... Я бы не смогла работать тут, на этой станции, в одиночку...",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибочки! Я пойду. Хорошего Вам дня))",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Эх, а чего ты так... Я разве тебе что-то плохое сделала...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "5",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Анастасия Косолапова",
+              "Photo": 4,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 502390,
+              "Stamp": 1,
+              "Name": "Анастасия Косолапова",
+              "Photo": 4,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 1,
+              "EndPlanet": 0,
+              "StartDate": 13,
+              "StartMonth": 5,
+              "EndDate": 4,
+              "EndMonth": 7,
+              "Name": "Анастасия Косолапова",
+              "Photo": 4,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 0,
+          "ModelMaterial": 13,
+          "AccessMaterial": 1,
+          "Photo": 4,
+          "Accessories": [
+            1,
+            4
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйте! Пропустите меня? Вот документы:",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да конечно, сейчас проверю только...",
+                  "Fragments": [
+                    {
+                      "Text": "У Вас тут отвратительные очереди... Я уже 6 часов примерно здесь простояла... Ужас...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам, что так быстро проверили! Хорошего дня!",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "И что за бред... Только время зря потратила своё... ",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "19",
+          "hideFlags": 0
+        }
+      }
+    ],
+    "Messages": [],
+    "ConditionalEvents": [],
+    "RandomNpcCount": 5
+  },
+  {
+    "InvokedEvents": [],
+    "NPCs": [
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Никита Лакин",
+              "Photo": 48,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 337106,
+              "Stamp": 4,
+              "Name": "Никита Лакин",
+              "Photo": 48,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 4,
+              "EndPlanet": 0,
+              "StartDate": 18,
+              "StartMonth": 5,
+              "EndDate": 27,
+              "EndMonth": 10,
+              "Name": "Никита Лакин",
+              "Photo": 48,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 4,
+          "ModelMaterial": 25,
+          "AccessMaterial": 1,
+          "Photo": 48,
+          "Accessories": [
+            0,
+            4,
+            4,
+            5,
+            4
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Добрый вечер! Вот мои документы. Проверьте пожалуйста их:",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да, конечно. Сейчас Займусь",
+                  "Fragments": [
+                    {
+                      "Text": "Хорошо. Жду....",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Вы только поторопитесь.... а то я итак опаздываю... вот как можно было так не заботиться о клиентах...",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Буквально оден кпп на ЦЕЛУЮ ПЛАНЕТУ.... Тут жуткие очереди...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Всё, спасибо! Я побежал... Удачи!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "... мне даже сказать нечего... Эх...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "18",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Снежана Логова",
+              "Photo": 23,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 980807,
+              "Stamp": 3,
+              "Name": "Снежана Логова",
+              "Photo": 23,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 19,
+              "StartMonth": 1,
+              "EndDate": 8,
+              "EndMonth": 9,
+              "Name": "Снежана Логова",
+              "Photo": 23,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 2,
+          "ModelMaterial": 9,
+          "AccessMaterial": 1,
+          "Photo": 23,
+          "Accessories": [
+            2,
+            5,
+            3,
+            5,
+            4
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Добрый вечер! Вот мои документы. Проверьте пожалуйста их:",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да, конечно. Сейчас Займусь",
+                  "Fragments": [
+                    {
+                      "Text": "Хорошо. Жду....",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Вы только поторопитесь.... а то я итак опаздываю... вот как можно было так не заботиться о клиентах...",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Буквально оден кпп на ЦЕЛУЮ ПЛАНЕТУ.... Тут жуткие очереди...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Всё, спасибо! Я побежал... Удачи!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "... мне даже сказать нечего... Эх...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "18",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Эмилия Орехова",
+              "Photo": 1,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 253668,
+              "Stamp": 4,
+              "Name": "Эмилия Орехова",
+              "Photo": 1,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 4,
+              "EndPlanet": 0,
+              "StartDate": 11,
+              "StartMonth": 4,
+              "EndDate": 8,
+              "EndMonth": 8,
+              "Name": "Эмилия Орехова",
+              "Photo": 1,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 0,
+          "ModelMaterial": 4,
+          "AccessMaterial": 0,
+          "Photo": 1,
+          "Accessories": [
+            2
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Добрый вечер! Вот мои документы. Проверьте пожалуйста их:",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да, конечно. Сейчас Займусь",
+                  "Fragments": [
+                    {
+                      "Text": "Хорошо. Жду....",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Вы только поторопитесь.... а то я итак опаздываю... вот как можно было так не заботиться о клиентах...",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Буквально оден кпп на ЦЕЛУЮ ПЛАНЕТУ.... Тут жуткие очереди...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Всё, спасибо! Я побежал... Удачи!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "... мне даже сказать нечего... Эх...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "18",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": true,
+          "Criminal": true,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Христина Когтева",
+              "Photo": 97,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 629897,
+              "Stamp": 3,
+              "Name": "Христина Когтева",
+              "Photo": 97,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 19,
+              "StartMonth": 4,
+              "EndDate": 5,
+              "EndMonth": 8,
+              "Name": "Христина Когтева",
+              "Photo": 28,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 4,
+          "ModelMaterial": 12,
+          "AccessMaterial": 1,
+          "Photo": 44,
+          "Accessories": [
+            2
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Эй, брат, здесь вообще кто-нибудь работает? Очереди такие длинные... пррф",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Работа не волк, в лес не убежит… хотя кто её знает.",
+                  "Fragments": [
+                    {
+                      "Text": "Что?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Да так, забей",
+                          "Fragments": [
+                            {
+                              "Text": "Эм, ну ладно...",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Text": "Ну вообще нет, я один тут. Чего Вам?",
+                  "Fragments": [
+                    {
+                      "Text": "Мне бы приземлиться, да мои проверить. Вот держи",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": [
+                        {
+                          "Text": "А что это такое у тебя?",
+                          "Fragments": [
+                            {
+                              "Text": "Небольшая партия мёда. Для личного потребления.",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Хочешь и тебе могу баночку дать?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Да, не откажусь!",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Вот тогда, бери",
+                                      "Actions": [
+                                        {}
+                                      ],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Text": "Неее, спасибо",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ну ладно, как скажешь...",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Ладно, бывай тогда! Поеду к своей семье. Удачи!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "И куда мне теперь весь этот мёд деть... Эх... Ладно, до свидания...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "13",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Одетта Лесковская",
+              "Photo": 99,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 397582,
+              "Stamp": 1,
+              "Name": "Одетта Лесковская",
+              "Photo": 99,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 1,
+              "EndPlanet": 0,
+              "StartDate": 26,
+              "StartMonth": 3,
+              "EndDate": 26,
+              "EndMonth": 11,
+              "Name": "Одетта Лесковская",
+              "Photo": 99,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 9,
+          "ModelMaterial": 27,
+          "AccessMaterial": 2,
+          "Photo": 99,
+          "Accessories": [
+            2,
+            3
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Приветик! Пропустишь меня?",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Эх, да... Конечно. Только документы можно?",
+                  "Fragments": [
+                    {
+                      "Text": "Так я уже положила. Ты что-то какой-то грустный... Что-то случилось?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Ну чуть-чуть... Одно и то же, устал...",
+                          "Fragments": [
+                            {
+                              "Text": "Ну да, работать вахтёром не так просто получается... Но я в целом знала это... Поэтому и не хочу на эту работу...",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну чуть-чуть... Одно и то же, устал...",
+                          "Fragments": [
+                            {
+                              "Text": "Ну да, работать вахтёром не так просто получается... Но я в целом знала это... Поэтому и не хочу на эту работу...",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "А ты чего так? решил просто попробовать или нужда?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Нужда, я маме хочу с деньгами помочь...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Поняла тебя, ну удачки тебе тогда)",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Text": "Не хочу говорить на эту тему...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Окей, как скажешь... ТОгда просто проверь мои документики и я уйду...",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Text": "Документы можно посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Так я уже положила...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Пока-пока! Спасибо тебе.",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Жаль... Очень-очень жаль...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "16",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Валентина Гризли",
+              "Photo": 29,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 729891,
+              "Stamp": 2,
+              "Name": "Валентина Гризли",
+              "Photo": 29,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 26,
+              "StartMonth": 1,
+              "EndDate": 20,
+              "EndMonth": 11,
+              "Name": "Валентина Гризли",
+              "Photo": 29,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 2,
+          "ModelMaterial": 28,
+          "AccessMaterial": 2,
+          "Photo": 29,
+          "Accessories": [
+            1
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйтеее! Я хочу приземлится на планету.",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Конечно, держите!",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я тут задумалась над тем какой мир жестокий, эх.",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "У вас что-то произошло?",
+                          "Fragments": [
+                            {
+                              "Text": "Да вот, умер любимый пёсик",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Я теперь хочу приютить нового, а тут говорят есть хороший магазин",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Вы не знаете случайно?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Сожалею, но я не знаю...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Угу, все равно спасибо, что выслушали",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну, я могу с Вами согласиться",
+                          "Fragments": [
+                            {
+                              "Text": "У вас тоже что-то произошло?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Я жил в бедной семье, нам с мамой никто не помогал. Тяжёлое детство...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ох, вы росли без отца, соболезную.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Понимаю вашу боль.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам большое, надеюсь я найду себе нового пёскика)",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Я... даже не знаю что... сказать... Почему Вы такой...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "1",
+          "hideFlags": 0
+        }
+      }
+    ],
+    "Messages": [],
+    "ConditionalEvents": [],
+    "RandomNpcCount": 6
+  },
+  {
+    "InvokedEvents": [],
+    "NPCs": [
+      {
+        "DocsData": {
+          "Fake": true,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Семён Пушистов",
+              "Photo": 0,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 682500,
+              "Stamp": 2,
+              "Name": "Семён Пушистов",
+              "Photo": 6,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 24,
+              "StartMonth": 4,
+              "EndDate": 27,
+              "EndMonth": 5,
+              "Name": "Семён Пушистов",
+              "Photo": 6,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 3,
+          "ModelMaterial": 18,
+          "AccessMaterial": 1,
+          "Photo": 36,
+          "Accessories": [
+            1,
+            3,
+            6,
+            6
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуй! Пропусти меня к моей семье... Я с ними уже 3 года не виделась...",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Для начала предъявите свои документы!",
+                  "Fragments": [
+                    {
+                      "Text": "Вот, пожалуйста.... ",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я не знаю, как у меня там с документами, по идее должно быть всё хорошо... но",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Кто знает... Всякое может быть...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                },
+                {
+                  "Text": "Для начала предъявите свои документы!",
+                  "Fragments": [
+                    {
+                      "Text": "Если пропустишь, могу что-нибудь дать в замен своё, ну, не знаю, например семейную реликвию, кулончик, ведь мне правда очень нужно...",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Вы просто лучший, спасибо ВАМ БОЛЬШОЕ!!!! Вот, держи кулончик",
+            "Actions": [
+              {}
+            ],
+            "Buttons": [
+              {
+                "Text": "Хорошего Вам дня!",
+                "Fragments": []
+              }
+            ]
+          },
+          "BackFragment": {
+            "Text": "Да, нет... Как-так, не может быть... Теперь я могу не успеть... Откуда в тебе столько злобы?",
+            "Actions": [
+              null
+            ],
+            "Buttons": [
+              {
+                "Text": "Извините, но я просто действую по инструкциям...",
+                "Fragments": []
+              }
+            ]
+          },
+          "name": "9",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Грейс Пасечная",
+              "Photo": 66,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 692071,
+              "Stamp": 3,
+              "Name": "Грейс Пасечная",
+              "Photo": 66,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 22,
+              "StartMonth": 4,
+              "EndDate": 25,
+              "EndMonth": 8,
+              "Name": "Грейс Пасечная",
+              "Photo": 66,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 6,
+          "ModelMaterial": 19,
+          "AccessMaterial": 1,
+          "Photo": 66,
+          "Accessories": [
+            1,
+            3,
+            3
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйтеее! Я хочу приземлится на планету.",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Конечно, держите!",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я тут задумалась над тем какой мир жестокий, эх.",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "У вас что-то произошло?",
+                          "Fragments": [
+                            {
+                              "Text": "Да вот, умер любимый пёсик",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Я теперь хочу приютить нового, а тут говорят есть хороший магазин",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Вы не знаете случайно?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Сожалею, но я не знаю...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Угу, все равно спасибо, что выслушали",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну, я могу с Вами согласиться",
+                          "Fragments": [
+                            {
+                              "Text": "У вас тоже что-то произошло?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Я жил в бедной семье, нам с мамой никто не помогал. Тяжёлое детство...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ох, вы росли без отца, соболезную.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Понимаю вашу боль.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам большое, надеюсь я найду себе нового пёскика)",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Я... даже не знаю что... сказать... Почему Вы такой...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "1",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Сильвия Овсянникова",
+              "Photo": 12,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 623878,
+              "Stamp": 1,
+              "Name": "Сильвия Овсянникова",
+              "Photo": 12,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 1,
+              "EndPlanet": 0,
+              "StartDate": 23,
+              "StartMonth": 1,
+              "EndDate": 20,
+              "EndMonth": 9,
+              "Name": "Сильвия Овсянникова",
+              "Photo": 12,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 1,
+          "ModelMaterial": 6,
+          "AccessMaterial": 2,
+          "Photo": 12,
+          "Accessories": [
+            0,
+            4
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйтеее! Я хочу приземлится на планету.",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Конечно, держите!",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я тут задумалась над тем какой мир жестокий, эх.",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "У вас что-то произошло?",
+                          "Fragments": [
+                            {
+                              "Text": "Да вот, умер любимый пёсик",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Я теперь хочу приютить нового, а тут говорят есть хороший магазин",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Вы не знаете случайно?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Сожалею, но я не знаю...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Угу, все равно спасибо, что выслушали",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну, я могу с Вами согласиться",
+                          "Fragments": [
+                            {
+                              "Text": "У вас тоже что-то произошло?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Я жил в бедной семье, нам с мамой никто не помогал. Тяжёлое детство...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ох, вы росли без отца, соболезную.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Понимаю вашу боль.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам большое, надеюсь я найду себе нового пёскика)",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Я... даже не знаю что... сказать... Почему Вы такой...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "1",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Офелия Ольховская",
+              "Photo": 3,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 344903,
+              "Stamp": 1,
+              "Name": "Офелия Ольховская",
+              "Photo": 3,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 1,
+              "EndPlanet": 0,
+              "StartDate": 2,
+              "StartMonth": 2,
+              "EndDate": 18,
+              "EndMonth": 11,
+              "Name": "Офелия Ольховская",
+              "Photo": 3,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 0,
+          "ModelMaterial": 9,
+          "AccessMaterial": 1,
+          "Photo": 3,
+          "Accessories": [
+            2,
+            6,
+            3,
+            3
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Йоооу! Дарова бро. Чё как жизнь, как сам? Вот мои доки",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да я, нормально, хах. А ты как?",
+                  "Fragments": [
+                    {
+                      "Text": "Ye? e vtyz dc` [jhjij/ Z yt edthty ghfdlf? xnj rnj-nj ,eltn xbnfnm 'njn ntrcn gjkyjcnm./// Yj? lf kflyj///",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Ой, извините... Синхронный переводчик залагал... Хотите подарю его Вам? Раз он всё равно сломался и лагает?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Ну, давай, спасибо",
+                          "Fragments": [
+                            {
+                              "Text": "Вот, держи. Может быть тебе и пригодиться... А то как по мне он так, сувенир, на полку теперь...",
+                              "Actions": [
+                                {}
+                              ],
+                              "Buttons": []
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Да не, спасибо... Обойдусь...",
+                          "Fragments": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Ну давайте, я погнал. Удачки! бб",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Ну ББ, больше я сюда к тебе  не прийду! ",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "4",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Наталья Кленникова",
+              "Photo": 4,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 225490,
+              "Stamp": 2,
+              "Name": "Наталья Кленникова",
+              "Photo": 4,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 27,
+              "StartMonth": 4,
+              "EndDate": 25,
+              "EndMonth": 9,
+              "Name": "Наталья Кленникова",
+              "Photo": 4,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 0,
+          "ModelMaterial": 12,
+          "AccessMaterial": 2,
+          "Photo": 4,
+          "Accessories": [
+            2
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Йоооу! Дарова бро. Чё как жизнь, как сам? Вот мои доки",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да я, нормально, хах. А ты как?",
+                  "Fragments": [
+                    {
+                      "Text": "Ye? e vtyz dc` [jhjij/ Z yt edthty ghfdlf? xnj rnj-nj ,eltn xbnfnm 'njn ntrcn gjkyjcnm./// Yj? lf kflyj///",
+                      "Actions": [],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Ой, извините... Синхронный переводчик залагал... Хотите подарю его Вам? Раз он всё равно сломался и лагает?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Ну, давай, спасибо",
+                          "Fragments": [
+                            {
+                              "Text": "Вот, держи. Может быть тебе и пригодиться... А то как по мне он так, сувенир, на полку теперь...",
+                              "Actions": [
+                                {}
+                              ],
+                              "Buttons": []
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Да не, спасибо... Обойдусь...",
+                          "Fragments": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Ну давайте, я погнал. Удачки! бб",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Ну ББ, больше я сюда к тебе  не прийду! ",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "4",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": true,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Григорий Тополь",
+              "Photo": 30,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 440386,
+              "Stamp": 0,
+              "Name": "Григорий Тополь",
+              "Photo": 30,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 0,
+              "EndPlanet": 3,
+              "StartDate": 10,
+              "StartMonth": 2,
+              "EndDate": 2,
+              "EndMonth": 8,
+              "Name": "Григорий Тополь",
+              "Photo": 30,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 8,
+          "ModelMaterial": 8,
+          "AccessMaterial": 0,
+          "Photo": 82,
+          "Accessories": [
+            2,
+            6,
+            4,
+            4
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйтеее! Я хочу приземлится на планету.",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Конечно, держите!",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я тут задумалась над тем какой мир жестокий, эх.",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "У вас что-то произошло?",
+                          "Fragments": [
+                            {
+                              "Text": "Да вот, умер любимый пёсик",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Я теперь хочу приютить нового, а тут говорят есть хороший магазин",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Вы не знаете случайно?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Сожалею, но я не знаю...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Угу, все равно спасибо, что выслушали",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну, я могу с Вами согласиться",
+                          "Fragments": [
+                            {
+                              "Text": "У вас тоже что-то произошло?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Я жил в бедной семье, нам с мамой никто не помогал. Тяжёлое детство...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ох, вы росли без отца, соболезную.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Понимаю вашу боль.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам большое, надеюсь я найду себе нового пёскика)",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Я... даже не знаю что... сказать... Почему Вы такой...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "1",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Элеонора Плюшева",
+              "Photo": 86,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 297423,
+              "Stamp": 3,
+              "Name": "Элеонора Плюшева",
+              "Photo": 86,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 15,
+              "StartMonth": 1,
+              "EndDate": 28,
+              "EndMonth": 8,
+              "Name": "Элеонора Плюшева",
+              "Photo": 86,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 8,
+          "ModelMaterial": 18,
+          "AccessMaterial": 0,
+          "Photo": 86,
+          "Accessories": [
+            0,
+            4
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Привет, брат! Как жизнь на станции? Наверное, скука смертная, да? Вот, держи мои докумекнты сразу!",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Ну да, но работа есть работа.",
+                  "Fragments": [
+                    {
+                      "Text": "Работа – это не круто! Я вот сейчас как раз решил в отпуск отправиться, от скуки отдохнуть. Или отдОхнуть, хах",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                },
+                {
+                  "Text": "Не соглашусь! Интересная работа!",
+                  "Fragments": [
+                    {
+                      "Text": "Да?! Ну я бы точно не смог на такой работать, не по мне это...",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А что Вам интересно?",
+                          "Fragments": [
+                            {
+                              "Text": "Всякие креативные професии! Дизайнер например... Но к сожалению, всё никак устроиться не могу на него... ",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо бро! Ещё возможно увидимся. Бывай!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Да ёпрст.... Жаль...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "2",
+          "hideFlags": 0
+        }
+      }
+    ],
+    "Messages": [],
+    "ConditionalEvents": [],
+    "RandomNpcCount": 7
+  },
+  {
+    "InvokedEvents": [],
+    "NPCs": [
+      {
+        "DocsData": {
+          "Fake": true,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Николай Топтыгин",
+              "Photo": 24,
+              "Document": 0
+            },
+            {
+              "HealthClass": 2,
+              "ID": 457261,
+              "Stamp": 4,
+              "Name": "Николай Топтыгин",
+              "Photo": 24,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 4,
+              "EndPlanet": 4,
+              "StartDate": 18,
+              "StartMonth": 2,
+              "EndDate": 27,
+              "EndMonth": 8,
+              "Name": "Николай Топтыгин",
+              "Photo": 24,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 4,
+          "ModelMaterial": 20,
+          "AccessMaterial": 1,
+          "Photo": 46,
+          "Accessories": [
+            0,
+            4,
+            4
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Эй, брат, здесь вообще кто-нибудь работает? Очереди такие длинные... пррф",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Работа не волк, в лес не убежит… хотя кто её знает.",
+                  "Fragments": [
+                    {
+                      "Text": "Что?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Да так, забей",
+                          "Fragments": [
+                            {
+                              "Text": "Эм, ну ладно...",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Text": "Ну вообще нет, я один тут. Чего Вам?",
+                  "Fragments": [
+                    {
+                      "Text": "Мне бы приземлиться, да мои проверить. Вот держи",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": [
+                        {
+                          "Text": "А что это такое у тебя?",
+                          "Fragments": [
+                            {
+                              "Text": "Небольшая партия мёда. Для личного потребления.",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Хочешь и тебе могу баночку дать?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Да, не откажусь!",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Вот тогда, бери",
+                                      "Actions": [
+                                        {}
+                                      ],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Text": "Неее, спасибо",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ну ладно, как скажешь...",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Ладно, бывай тогда! Поеду к своей семье. Удачи!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "И куда мне теперь весь этот мёд деть... Эх... Ладно, до свидания...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "13",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Сильвестр Гуммич",
+              "Photo": 79,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 639242,
+              "Stamp": 3,
+              "Name": "Сильвестр Гуммич",
+              "Photo": 79,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 3,
+              "EndPlanet": 0,
+              "StartDate": 22,
+              "StartMonth": 4,
+              "EndDate": 1,
+              "EndMonth": 8,
+              "Name": "Сильвестр Гуммич",
+              "Photo": 79,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 7,
+          "ModelMaterial": 27,
+          "AccessMaterial": 2,
+          "Photo": 79,
+          "Accessories": [
+            2,
+            3,
+            4
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйтеее! Я хочу приземлится на планету.",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Конечно, держите!",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Я тут задумалась над тем какой мир жестокий, эх.",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "У вас что-то произошло?",
+                          "Fragments": [
+                            {
+                              "Text": "Да вот, умер любимый пёсик",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Я теперь хочу приютить нового, а тут говорят есть хороший магазин",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Вы не знаете случайно?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Сожалею, но я не знаю...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Угу, все равно спасибо, что выслушали",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Ну, я могу с Вами согласиться",
+                          "Fragments": [
+                            {
+                              "Text": "У вас тоже что-то произошло?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Я жил в бедной семье, нам с мамой никто не помогал. Тяжёлое детство...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ох, вы росли без отца, соболезную.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Понимаю вашу боль.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам большое, надеюсь я найду себе нового пёскика)",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Я... даже не знаю что... сказать... Почему Вы такой...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "1",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Джульетта Пчельникова",
+              "Photo": 20,
+              "Document": 0
+            },
+            {
+              "HealthClass": 4,
+              "ID": 214458,
+              "Stamp": 2,
+              "Name": "Джульетта Пчельникова",
+              "Photo": 20,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 12,
+              "StartMonth": 2,
+              "EndDate": 18,
+              "EndMonth": 7,
+              "Name": "Джульетта Пчельникова",
+              "Photo": 20,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 2,
+          "ModelMaterial": 0,
+          "AccessMaterial": 1,
+          "Photo": 20,
+          "Accessories": [
+            1
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Привет, брат! Как жизнь на станции? Наверное, скука смертная, да? Вот, держи мои докумекнты сразу!",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Ну да, но работа есть работа.",
+                  "Fragments": [
+                    {
+                      "Text": "Работа – это не круто! Я вот сейчас как раз решил в отпуск отправиться, от скуки отдохнуть. Или отдОхнуть, хах",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                },
+                {
+                  "Text": "Не соглашусь! Интересная работа!",
+                  "Fragments": [
+                    {
+                      "Text": "Да?! Ну я бы точно не смог на такой работать, не по мне это...",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А что Вам интересно?",
+                          "Fragments": [
+                            {
+                              "Text": "Всякие креативные професии! Дизайнер например... Но к сожалению, всё никак устроиться не могу на него... ",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо бро! Ещё возможно увидимся. Бывай!",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Да ёпрст.... Жаль...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "2",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Дарина Липова",
+              "Photo": 54,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 451704,
+              "Stamp": 4,
+              "Name": "Дарина Липова",
+              "Photo": 54,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 4,
+              "EndPlanet": 0,
+              "StartDate": 3,
+              "StartMonth": 4,
+              "EndDate": 25,
+              "EndMonth": 8,
+              "Name": "Дарина Липова",
+              "Photo": 54,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 5,
+          "ModelMaterial": 14,
+          "AccessMaterial": 2,
+          "Photo": 54,
+          "Accessories": [
+            1,
+            4,
+            6,
+            4,
+            5
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуй внучок! как у тебя делишки, как сам поживаешь?",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Добрый день? А Вы кто?",
+                  "Fragments": [
+                    {
+                      "Text": "Да просто прохожу, хочу к семье на планету приземлиться... Тут вот очередь просто отвратительная была...",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А, понял.. А я уж подумал, что Вы моя бабушка, хах",
+                          "Fragments": [
+                            {
+                              "Text": "Да нет, чего ты внучок... Как я то... Но ты был бы не плохим внуком",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "И прекрасным сыном!",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Спасибо большое!",
+                                  "Fragments": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Text": "Добрый! Ваши документы?",
+                  "Fragments": [
+                    {
+                      "Text": "Ой, точно.... Совсем запамятывала... возраст... Ну, сам понимаешь...",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": [
+                        {
+                          "Text": "Понимаю, понимаю... Со всеми бывает",
+                          "Fragments": [
+                            {
+                              "Text": "Ну ты там поспеши с проверкой, сынок... А то совс...",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "...совсеем...",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Спасибо большое!",
+                                  "Fragments": []
+                                }
+                              ]
+                            },
+                            {
+                              "Text": "...совсем...",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Спасибо большое!",
+                                  "Fragments": []
+                                }
+                              ]
+                            },
+                            {
+                              "Text": "Такс, а о чём мы говорили? Чёт память совсем уже... Стара я стала, эх",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Да, я честно тоже уже забыл...",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ну и ладно... бывает",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Text": "Мы как-то ничего и не обсудили",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ну и ладно... тогда, документики проверь мои, сыночек)",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    }
+                                  ]
+                                },
+                                {
+                                  "Text": "Мы говорили о криптовалютах и инвестициях",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ах да, криптовалюты и инвестиции! Конечно же, как я могла забыть",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "В условиях волатильности децентрализованных активов критически важно диверсифицировать портфель, учитывая корреляцию с традиционными деривативами.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Главное — не поддаваться эффекту FOMO и тщательно анализировать ликвидность стейблкоинов.",
+                                      "Actions": [],
+                                      "Buttons": []
+                                    },
+                                    {
+                                      "Text": "Ты согласен со мной, сынок?",
+                                      "Actions": [],
+                                      "Buttons": [
+                                        {
+                                          "Text": "0-0",
+                                          "Fragments": []
+                                        },
+                                        {
+                                          "Text": "Да, полностью....",
+                                          "Fragments": []
+                                        },
+                                        {
+                                          "Text": "Видно сразу, что у Вас большой опыт",
+                                          "Fragments": []
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Ох внучок, выручил! Спасибо тебе! ",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Да я даже не знаю, что сказать... потерянное поколение... Вот раньше было лучше...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "10",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Мира Пасечникова",
+              "Photo": 83,
+              "Document": 0
+            },
+            {
+              "HealthClass": 3,
+              "ID": 368372,
+              "Stamp": 2,
+              "Name": "Мира Пасечникова",
+              "Photo": 83,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 2,
+              "StartMonth": 4,
+              "EndDate": 10,
+              "EndMonth": 12,
+              "Name": "Мира Пасечникова",
+              "Photo": 83,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 8,
+          "ModelMaterial": 11,
+          "AccessMaterial": 2,
+          "Photo": 83,
+          "Accessories": [
+            2,
+            3
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Здравствуйте! Пропустите меня? Вот документы:",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Да конечно, сейчас проверю только...",
+                  "Fragments": [
+                    {
+                      "Text": "У Вас тут отвратительные очереди... Я уже 6 часов примерно здесь простояла... Ужас...",
+                      "Actions": [],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибо Вам, что так быстро проверили! Хорошего дня!",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "И что за бред... Только время зря потратила своё... ",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "19",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": false,
+              "Name": "Фелицата Чернозёмова",
+              "Photo": 88,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 421503,
+              "Stamp": 4,
+              "Name": "Фелицата Чернозёмова",
+              "Photo": 88,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 4,
+              "EndPlanet": 0,
+              "StartDate": 4,
+              "StartMonth": 4,
+              "EndDate": 4,
+              "EndMonth": 8,
+              "Name": "Фелицата Чернозёмова",
+              "Photo": 88,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 8,
+          "ModelMaterial": 26,
+          "AccessMaterial": 2,
+          "Photo": 88,
+          "Accessories": [
+            2,
+            3,
+            3,
+            3,
+            3
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Ну чё, как?",
+              "Actions": [
+                {}
+              ],
+              "Buttons": [
+                {
+                  "Text": "Что как?",
+                  "Fragments": [
+                    {
+                      "Text": "Да ничего, у тебя же ничего никак?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "Чего?",
+                          "Fragments": [
+                            {
+                              "Text": "Ну вот, чего - ничего я же и говорю. Что ничего. Понял?",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Что как?",
+                                  "Fragments": [
+                                    {
+                                      "Text": "Ничего и никак. Смекаешь?",
+                                      "Actions": [],
+                                      "Buttons": [
+                                        {
+                                          "Text": "Неа, не понял",
+                                          "Fragments": [
+                                            {
+                                              "Text": "Забей.... Как можно понять ничего? Ведь его же буквально нет...",
+                                              "Actions": [],
+                                              "Buttons": [
+                                                {
+                                                  "Text": "Ну да, его нет",
+                                                  "Fragments": [
+                                                    {
+                                                      "Text": "Ну вот я и говорю, как твоё ничего) Рофлю короче...",
+                                                      "Actions": null,
+                                                      "Buttons": null
+                                                    }
+                                                  ]
+                                                }
+                                              ]
+                                            }
+                                          ]
+                                        }
+                                      ]
+                                    }
+                                  ]
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Да, мне очень интересно",
+                          "Fragments": [
+                            {
+                              "Text": "Ну, ч-че-стно говоря, я сам не помню, из-за че-че-е-го это началось.... Но по рассказам моего п-п-папы  это всё началось, когда моя мм-м-мама умерла... В-в--в-видимо стресс-с-с повлиял так на меня...",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Мне очень жаль Вас...",
+                                  "Fragments": []
+                                },
+                                {
+                                  "Text": "Сожалею о потере...",
+                                  "Fragments": []
+                                }
+                              ]
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "Text": "Можно Ваши документы?",
+                  "Fragments": [
+                    {
+                      "Text": "Да, вот. Держи...",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Нуу, давай. Ничего говорить не могу, поэтому просто хорошего тебе ничего!",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Ничего ты не понимаешь в этом... Мог бы и пропустить...",
+            "Actions": [],
+            "Buttons": []
+          },
+          "name": "17",
+          "hideFlags": 0
+        }
+      },
+      {
+        "DocsData": {
+          "Fake": false,
+          "Criminal": false,
+          "Docs": [
+            {
+              "Male": true,
+              "Name": "Тарас Гнездов",
+              "Photo": 56,
+              "Document": 0
+            },
+            {
+              "HealthClass": 5,
+              "ID": 133784,
+              "Stamp": 2,
+              "Name": "Тарас Гнездов",
+              "Photo": 56,
+              "Document": 1
+            },
+            {
+              "StartPlanet": 2,
+              "EndPlanet": 0,
+              "StartDate": 22,
+              "StartMonth": 3,
+              "EndDate": 9,
+              "EndMonth": 12,
+              "Name": "Тарас Гнездов",
+              "Photo": 56,
+              "Document": 2
+            }
+          ]
+        },
+        "NpcAppearanceData": {
+          "Model": 5,
+          "ModelMaterial": 20,
+          "AccessMaterial": 2,
+          "Photo": 56,
+          "Accessories": [
+            2,
+            3,
+            3,
+            6,
+            6
+          ]
+        },
+        "Config": {
+          "Fragments": [
+            {
+              "Text": "Добрый день! Поставите зелёный штампик?",
+              "Actions": [],
+              "Buttons": [
+                {
+                  "Text": "Здравствуй! Документы могу посмотреть?",
+                  "Fragments": [
+                    {
+                      "Text": "Вот, пожалуйста...",
+                      "Actions": [
+                        {}
+                      ],
+                      "Buttons": []
+                    },
+                    {
+                      "Text": "Тебе тут не одиноко?",
+                      "Actions": [],
+                      "Buttons": [
+                        {
+                          "Text": "А зачем спрашиваешь?",
+                          "Fragments": [
+                            {
+                              "Text": "Да, так, просто...",
+                              "Actions": [],
+                              "Buttons": [
+                                {
+                                  "Text": "Эм, ну ладно...",
+                                  "Fragments": []
+                                },
+                                {
+                                  "Text": "... *промолчать*",
+                                  "Fragments": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Да, одиноко...",
+                          "Fragments": [
+                            {
+                              "Text": "Ну, тогда вот, возьми этого плюшевого, как думаешь кого?",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Этого плющевого человека... Он вот такой вот необычненький, стоит, руки раздвинув.",
+                              "Actions": [],
+                              "Buttons": []
+                            },
+                            {
+                              "Text": "Но зато, тебе будет с ним покомфортнее, ну, я надеюсь!",
+                              "Actions": [
+                                {}
+                              ],
+                              "Buttons": [
+                                {
+                                  "Text": "Оу, спасибочки!",
+                                  "Fragments": []
+                                }
+                              ]
+                            }
+                          ]
+                        },
+                        {
+                          "Text": "Нет, не одиноко!",
+                          "Fragments": [
+                            {
+                              "Text": "О-как... Ну, видимо мне тебя не понять... Я бы не смогла работать тут, на этой станции, в одиночку...",
+                              "Actions": [],
+                              "Buttons": []
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "GoFragment": {
+            "Text": "Спасибочки! Я пойду. Хорошего Вам дня))",
+            "Actions": [],
+            "Buttons": []
+          },
+          "BackFragment": {
+            "Text": "Эх, а чего ты так... Я разве тебе что-то плохое сделала...",
+            "Actions": [
+              null
+            ],
+            "Buttons": []
+          },
+          "name": "5",
+          "hideFlags": 0
+        }
+      }
+    ],
+    "Messages": [],
+    "ConditionalEvents": [],
+    "RandomNpcCount": 7
+  }
+]

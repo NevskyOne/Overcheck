@@ -796,14 +796,69 @@ MonoBehaviour:
   - {fileID: 1077044445135096925}
   - {fileID: -5359951455695784883}
   - {fileID: -521193136928575469}
-  - {fileID: 5209287002467430408}
-  - {fileID: 881265372669214575}
-  - {fileID: 5728536368658254805}
-  - {fileID: -6934261831919068017}
-  - {fileID: -394723887232931679}
-  - {fileID: -3742491176163688109}
-  - {fileID: -4898333577196192908}
-  - {fileID: -2625735565340196276}
+  - {fileID: 689527093657494282}
+  - {fileID: 4439716317941620235}
+--- !u!114 &689527093657494282
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8752436c1c6e30f4da82236df21c18e3, type: 3}
+  m_Name: Fog
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  quality:
+    m_OverrideState: 1
+    m_Value: 2
+  alphaMultiplier:
+    m_OverrideState: 1
+    m_Value: 0.5
+  additionalLightsIntensityMultiplier:
+    m_OverrideState: 1
+    m_Value: 1
+  jitter:
+    m_OverrideState: 1
+    m_Value: 0.15
+  downsample:
+    m_OverrideState: 1
+    m_Value: 1
+  steps:
+    m_OverrideState: 1
+    m_Value: 125
+  stepSize:
+    m_OverrideState: 1
+    m_Value: 0.2
+  density:
+    m_OverrideState: 1
+    m_Value: 0.045
+  minDensity:
+    m_OverrideState: 1
+    m_Value: 0
+  fogColor:
+    m_OverrideState: 1
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
+  brightness:
+    m_OverrideState: 1
+    m_Value: 3
+  anisotropy:
+    m_OverrideState: 1
+    m_Value: 0.8
+  blurRadius:
+    m_OverrideState: 1
+    m_Value: 0.01
+  blurStrength:
+    m_OverrideState: 1
+    m_Value: 0.5
+  blurIterations:
+    m_OverrideState: 1
+    m_Value: 2
 --- !u!114 &881265372669214575
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -894,6 +949,58 @@ MonoBehaviour:
   intensity:
     m_OverrideState: 1
     m_Value: 0
+--- !u!114 &4439716317941620235
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fdaaa7489cdb84f4b9389e3a3e61a780, type: 3}
+  m_Name: SkyAndClouds
+  m_EditorClassIdentifier: 
+  active: 1
+  enabled:
+    m_OverrideState: 1
+    m_Value: 0
+  compositing:
+    m_OverrideState: 1
+    m_Value:
+      renderScale: 0.4
+      blurRadius: 0.0025
+      blurStrength: 0.01
+      blurIterations: 1
+      alphaStep: 0
+      alphaSoftness: 0.35
+      cloudBrightness: 0.3
+      skyBrightness: 0.2
+  clouds:
+    m_OverrideState: 1
+    m_Value:
+      quality: 2
+      steps: 30
+      stepSize: 80
+      cloudLayerLow: 1
+      cloudLayerHigh: 4
+      cloudShadows: 0
+      cloudDataLow: {fileID: 0}
+      cloudDataHigh: {fileID: 0}
+  sky:
+    m_OverrideState: 1
+    m_Value:
+      sunSize: 0.1
+      sunIntensity: 1000
+      starIntensity: 5
+      lightWavelengths: {x: 680, y: 550, z: 440}
+      densityPower: 8
+      DayScattering: 1
+      EveningScattering: 8
+      dayColor: {r: 1, g: 1, b: 1, a: 1}
+      eveningColor: {r: 1, g: 0.509, b: 0.509, a: 1}
+      saturation: 1.5
+      eveningThreshold: 3
 --- !u!114 &4913375503421774336
 MonoBehaviour:
   m_ObjectHideFlags: 3
