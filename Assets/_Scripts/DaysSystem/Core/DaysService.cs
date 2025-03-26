@@ -7,14 +7,10 @@ public class DaysService : MonoBehaviour
 {
     [SerializeField] private TMP_Text _dayCounter;
     [SerializeField] private List<DayData> _days = new();
-    [SerializeField] private List<NPCBase> _prefabs;
 
     private ISaver _saver;
     private EventBus _eventBus;
-    
-    private List<Message> _startDayMessages = new();
-    private List<Message> _endDayMessages = new();
-    private List<Message> _randomMessages = new();
+
     
     public static int CurrentDay { get; private set; }
 
@@ -87,13 +83,12 @@ public class DaysService : MonoBehaviour
 
                 day.NPCs.Add(npcList[j]);
             }
-            foreach (var messageUnd in day.Messages)
+            foreach (var storyData in day.Stories)
             {
-                var message = (MessageNPC)messageUnd;
                 var newData = new NPCData();
-                newData.Setup(_prefabs.IndexOf(message.StoryNPC), new DocsData(),
-                    new NPCAppearanceData(), message.Config);
-                switch (message.SpawnEvent)
+                newData.Setup(storyData.Prefab,new DocsData(),
+                    new NPCAppearanceData(), storyData.Config);
+                switch (storyData.SpawnEvent)
                 {
                     case SpawnEvent.AtDayStart:
                         npcList.Insert(0,newData);
