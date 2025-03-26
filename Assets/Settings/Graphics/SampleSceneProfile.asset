@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-7893295128165547882
+--- !u!114 &-4867336393893078778
 MonoBehaviour:
   m_ObjectHideFlags: 3
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14,26 +14,26 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   active: 1
   skipIterations:
-    m_OverrideState: 1
-    m_Value: 0
+    m_OverrideState: 0
+    m_Value: 1
   threshold:
-    m_OverrideState: 1
-    m_Value: 0.93
+    m_OverrideState: 0
+    m_Value: 0.9
   intensity:
-    m_OverrideState: 1
-    m_Value: 5
+    m_OverrideState: 0
+    m_Value: 0
   scatter:
-    m_OverrideState: 1
-    m_Value: 0.286
+    m_OverrideState: 0
+    m_Value: 0.7
   clamp:
     m_OverrideState: 0
     m_Value: 65472
   tint:
     m_OverrideState: 0
-    m_Value: {r: 0.7762852, g: 0.740566, b: 1, a: 1}
+    m_Value: {r: 1, g: 1, b: 1, a: 1}
   highQualityFiltering:
-    m_OverrideState: 1
-    m_Value: 1
+    m_OverrideState: 0
+    m_Value: 0
   downscale:
     m_OverrideState: 0
     m_Value: 0
@@ -135,7 +135,6 @@ MonoBehaviour:
   m_Name: SampleSceneProfile
   m_EditorClassIdentifier: 
   components:
-  - {fileID: -7893295128165547882}
   - {fileID: -3357603926938260329}
   - {fileID: 7957730700180659536}
   - {fileID: 2839745814526860591}
@@ -146,6 +145,7 @@ MonoBehaviour:
   - {fileID: -3529321310359304780}
   - {fileID: 1214623538345727407}
   - {fileID: 7461909260954213219}
+  - {fileID: -4867336393893078778}
 --- !u!114 &1214623538345727407
 MonoBehaviour:
   m_ObjectHideFlags: 3
@@ -267,7 +267,7 @@ MonoBehaviour:
   active: 1
   intensity:
     m_OverrideState: 1
-    m_Value: 0.6
+    m_Value: 1
   tintColor:
     m_OverrideState: 0
     m_Value: {r: 0.8584906, g: 0.8584906, b: 0.8584906, a: 1}
