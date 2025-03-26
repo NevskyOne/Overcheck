@@ -8,6 +8,8 @@ public class DaysService : MonoBehaviour
     [SerializeField] private TMP_Text _dayCounter;
     [SerializeField] private List<DayData> _days = new();
 
+    public List<NPCData> Data = new(); 
+    
     private ISaver _saver;
     private EventBus _eventBus;
 
@@ -91,17 +93,19 @@ public class DaysService : MonoBehaviour
                 switch (storyData.SpawnEvent)
                 {
                     case SpawnEvent.AtDayStart:
-                        npcList.Insert(0,newData);
+                        print("Rar");
+                        day.NPCs.Insert(0,newData);
                         break;
                     case SpawnEvent.AtDayEnd:
-                        npcList.Insert(npcList.Count-1,newData);
+                        day.NPCs.Insert(npcList.Count-1,newData);
                         break;
                     case SpawnEvent.AtRandomTime:
-                        npcList.Insert(Random.Range(0,npcList.Count),newData);
+                        day.NPCs.Insert(Random.Range(0,npcList.Count),newData);
                         break;
                 }
             }
-            
+
+            print(day.NPCs[0].Prefab);
         }
 
         StartNewDay(0);
