@@ -16,21 +16,29 @@ public class PlayerMovement
     private Vector3 _velocity = Vector3.zero;
     private float _speed, _fov = 60, _refTransition, _refZRotate;
     private bool enabled = true;
+    private EventBus _eventBus;
 
     public Vector3 CamRot;
     
     public static event Action OnRun, OnRunEnd;
 
-    public PlayerMovement(MovementStruct movementStruct, VisualEffects effects, Camera cam, Transform transform)
+    public PlayerMovement(MovementStruct movementStruct, VisualEffects effects, Camera cam, Transform transform, EventBus eventBus)
     {
         _struct = movementStruct;
         _visualFX = effects;
         _cam = cam;
         _playerTransform = transform;
+        _eventBus = eventBus;
+        _eventBus.Subscribe<PlayerModConfigLoaded>(OnPlayerModConfigLoaded);
         
         _speed = _struct.MaxSpeed;
     }
 
+    private void OnPlayerModConfigLoaded(PlayerModConfigLoaded e)
+    {
+        _speed = e.PlayerConfig.PlayerRunSpeed;
+    }
+    
     public void Enable()
     {
         _visualFX.ChangeChromatic(0.05f);
