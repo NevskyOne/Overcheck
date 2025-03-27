@@ -394,6 +394,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Reactor (3)
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: aea73dcd2761ea3448c8904c0aff2cc2, type: 3}
+      propertyPath: m_TagString
+      value: Reactor
+      objectReference: {fileID: 0}
     - target: {fileID: 1835430029636861938, guid: aea73dcd2761ea3448c8904c0aff2cc2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
       value: -90.00727
@@ -78014,6 +78018,9 @@ GameObject:
   - component: {fileID: 2081375383}
   - component: {fileID: 2081375382}
   - component: {fileID: 2081375384}
+  - component: {fileID: 2081375387}
+  - component: {fileID: 2081375386}
+  - component: {fileID: 2081375385}
   m_Layer: 0
   m_Name: Services
   m_TagString: Untagged
@@ -78070,6 +78077,44 @@ MonoBehaviour:
   _menuPanel: {fileID: 0}
   _authorizationInputField: {fileID: 0}
   _playerText: {fileID: 282964113}
+--- !u!114 &2081375385
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081375381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8d01a3e3e4e83904fa37a50c1bda9d75, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2081375386
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081375381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 228b65ad6fe24c72bb06138428d11ae0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _light: {fileID: 385191624}
+--- !u!114 &2081375387
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2081375381}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fb1d6bda4541c3848877835365fecc25, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _starter: {fileID: 2081375386}
 --- !u!1 &2086100825
 GameObject:
   m_ObjectHideFlags: 0

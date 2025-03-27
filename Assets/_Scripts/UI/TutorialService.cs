@@ -19,7 +19,7 @@ public class TutorialService : MonoBehaviour
     private async void Initialize(MainUI ui)
     {
         _mainUI = ui;
-        if (PlayerPrefs.GetInt("IsTutored") == 1)
+        if (PlayerPrefs.GetInt("IsTutored") == 0)
         {
             _intro.SetActive(true);
             await Task.Delay(23000);
