@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HoloBear
+  m_Name: HoloBook
   m_Shader: {fileID: -6465566751694194690, guid: dde464528a864524aa08d4225f532563, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -147,17 +147,17 @@ Material:
     - _EdgeThickness: 1.29
     - _EnvironmentReflections: 1
     - _Float: -1.58
-    - _FresnelPower: 4.5
+    - _FresnelPower: 3.46
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HeightCutoff: 1.2
     - _HeightFactor: 1
     - _LinesBrightness: 0.39
-    - _LinesSpeed: 0.3
+    - _LinesSpeed: 0.01
     - _Metallic: 0
-    - _Noise: 2
-    - _NoiseSpeed: 0.05
+    - _Noise: 0.56
+    - _NoiseSpeed: 0.0001
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -183,8 +183,8 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 0.0627451}
     - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FresnelColor: {r: 1.1486984, g: 0, b: 0, a: 1}
-    - _MainColor: {r: 0.05882353, g: 0.01778738, b: 0, a: 0.31764707}
+    - _FresnelColor: {r: 0, g: 0.07205814, b: 0.57254905, a: 1}
+    - _MainColor: {r: 0.012245852, g: 0, b: 0.05882353, a: 0.31764707}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _WindSpeed: {r: 1, g: 1, b: 1, a: 1}
     - _WorldSize: {r: 1, g: 1, b: 1, a: 1}

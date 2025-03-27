@@ -1,13 +1,16 @@
-using System;
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class StartButton : MonoBehaviour, IInteractable
 {
-    [SerializeField] private Material _material;
+    [SerializeField] private Material _activeMaterial;
+    [SerializeField] private Material _passiveMaterial;
+    
     private bool enable;
     private DocumentControlService _docsService;
 
+    private MeshRenderer _meshRenderer;
     public int CursorInd { get; set; } = 5;
     
     public bool Enabled
@@ -18,7 +21,7 @@ public class StartButton : MonoBehaviour, IInteractable
         }
         set
         {
-            _material.color = value ? Color.green : Color.grey;
+            _meshRenderer.material = value? _passiveMaterial : _activeMaterial;
             enable = value;
         }
     }
@@ -26,7 +29,7 @@ public class StartButton : MonoBehaviour, IInteractable
     [Inject]
     private void Initialize(DocumentControlService service, EventBus eventBus)
     {
-        _material.color = Color.grey;
+        _meshRenderer.material = _activeMaterial;
         _docsService = service;
         eventBus.Subscribe((NewDayStartedEvent _) => { Uninteract();});
     }

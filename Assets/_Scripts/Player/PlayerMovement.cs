@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement
 {
+    private static readonly int Forward = Animator.StringToHash("Forward");
     private readonly MovementStruct _struct;
     
     private readonly Camera _cam;
@@ -15,7 +16,7 @@ public class PlayerMovement
     private Vector3 _newPos, _newRot;
     private Vector3 _velocity = Vector3.zero;
     private float _speed, _fov = 60, _refTransition, _refZRotate;
-    private bool enabled = true;
+    private bool enabled = true, _isSprinting, _sprintActive, _fRun;
 
     public Vector3 CamRot;
     
@@ -48,19 +49,16 @@ public class PlayerMovement
     public void StartSprint()
     {
         _speed = _struct.MaxSpeed * 1.5f;
-        _fov = 75;
-        _sfx.PlayBreath();
+        _isSprinting = true;
         OnRun?.Invoke();
-        _visualFX.ChangeChromatic(0.5f);
     }
     
     public void StopSprint()
     {
         _speed = _struct.MaxSpeed;
-        _fov = 60;
-        _sfx.PlayBreath(false);
         OnRunEnd?.Invoke();
-        _visualFX.ChangeChromatic(0.05f);
+        _isSprinting = false;
+        _sprintActive = false;
     }
     
     public void Look(Vector2 delta)
@@ -76,6 +74,35 @@ public class PlayerMovement
     {
         if(!enabled) return;
 
+        if (delta != Vector2.zero)
+        {
+            if (!_fRun)
+            {
+                _struct.Anim.SetFloat(Forward, 1);
+                _fRun = true;
+            }
+
+            if (_isSprinting && !_sprintActive)
+            {
+                _fov = 75;
+                _sfx.PlayBreath();
+                _visualFX.ChangeChromatic(0.5f);
+                _sprintActive = true;
+            }
+            else if(!_isSprinting)
+            {
+                _fov = 60;
+                _sfx.PlayBreath(false);
+                _visualFX.ChangeChromatic(0.05f);
+                _sprintActive = false;
+            }
+        }
+        else
+        {
+            _struct.Anim.SetFloat(Forward, 0);
+            _fRun = false;
+        }
+        
         var direction = new Vector3(delta.x, 0, delta.y); // Вектор ввода
         direction = Quaternion.Euler(0, _playerTransform.eulerAngles.y, 0) * direction; // Учет поворота игрока
         _newPos = _playerTransform.position + direction.normalized * (_speed * Time.fixedDeltaTime);
