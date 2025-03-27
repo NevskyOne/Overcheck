@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class PlayerMovement
 {
@@ -20,6 +19,7 @@ public class PlayerMovement
 
     public Vector3 CamRot;
     private MainUI _mainUI;
+    private bool _fRun, _isSprinting, _sprintActive;
     
     public static event Action OnRun, OnRunEnd;
 
@@ -94,7 +94,7 @@ public class PlayerMovement
         {
             if (!_fRun)
             {
-                _struct.Anim.SetFloat(Forward, 1);
+                _struct.Anim.SetFloat("Forward", 1);
                 _fRun = true;
             }
 
@@ -117,11 +117,10 @@ public class PlayerMovement
         }
         else
         {
-            _struct.Anim.SetFloat(Forward, 0);
+            _struct.Anim.SetFloat("Forward", 0);
             _fRun = false;
         }
         
-v
         var direction = new Vector3(delta.x, 0, delta.y); // Вектор ввода
         direction = Quaternion.Euler(0, _playerTransform.eulerAngles.y, 0) * direction; // Учет поворота игрока
         _newPos = _playerTransform.position + direction.normalized * (_speed * Time.fixedDeltaTime);
