@@ -166,15 +166,22 @@ public class ModManager : MonoBehaviour
         if (Directory.Exists(texturesPath))
         {
             var textureFiles = Directory.GetFiles(texturesPath, "*.png");
+            Debug.Log($"Найдено {textureFiles.Length} файлов текстур в {texturesPath}");
             foreach (var file in textureFiles)
             {
                 var textureName = Path.GetFileNameWithoutExtension(file);
+                Debug.Log($"Загрузка текстуры {textureName} из {file}");
                 var texture = LoadTextureFromFile(file);
                 if (texture != null)
                 {
+                    Debug.Log($"Замена текстуры {textureName}");
                     ReplaceGameTexture(textureName, texture);
                 }
             }
+        }
+        else
+        {
+            Debug.LogWarning($"Папка с текстурами не найдена: {texturesPath}");
         }
     }
 
@@ -188,19 +195,32 @@ public class ModManager : MonoBehaviour
         }
         else
         {
-            Debug.LogError($"Не удалось загрузить текстуру из {filePath}");
+            Debug.LogError($"Не удалось загрузить текстуру из {filePath}. Проверьте формат файла (должен быть PNG) и его целостность.");
             return null;
         }
     }
-    
+
     private void ReplaceGameTexture(string textureName, Texture2D newTexture)
     {
-        var materials = Resources.LoadAll<Material>("");
+        bool textureReplaced = false;
 
-        foreach (var material in materials)
+        var renderers = FindObjectsOfType<Renderer>();
+        foreach (var renderer in renderers)
         {
-            if (material.mainTexture.name == textureName)
-                material.mainTexture = newTexture;
+            foreach (var material in renderer.materials)
+            {
+                if (material.mainTexture != null && material.mainTexture.name == textureName)
+                {
+                    material.mainTexture = newTexture;
+                    textureReplaced = true;
+                    Debug.Log($"Текстура {textureName} заменена в материале {material.name} объекта {renderer.gameObject.name}");
+                }
+            }
+        }
+
+        if (!textureReplaced)
+        {
+            Debug.LogWarning($"Не удалось найти материал с текстурой {textureName} в сцене.");
         }
     }
 

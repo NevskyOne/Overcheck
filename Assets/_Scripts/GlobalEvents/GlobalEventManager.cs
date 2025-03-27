@@ -2,13 +2,21 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Zenject;
 
 public class GlobalEventManager : MonoBehaviour
 {
     private float _updateInterval = 120f; // 2 минуты
+    private MainUI _mainUI;
     private List<GlobalEventResponse> _cachedEvents = new();
     [SerializeField] private GlobalEventStarter _starter;
 
+    [Inject]
+    private void Construct(MainUI mainUI)
+    {
+        _mainUI = mainUI;
+    }
+    
     private void Start()
     {
         LoadCachedEvents();
@@ -117,14 +125,15 @@ public class GlobalEventManager : MonoBehaviour
         {
             if (timeUntilEvent.TotalMinutes <= 15 && timeUntilEvent.TotalMinutes > 0)
             {
-                ShowNotification(eventResponse, "Ивент начнется через 15 минут!");
+                ShowNotification(eventResponse, "Скоро начнется");
             }
         }
     }
 
     private void ShowNotification(GlobalEventResponse eventResponse, string message)
     {
-        string notificationText = $"{message} Ивент: {eventResponse.name} - {eventResponse.text}";
+        string notificationText = $"{message} {eventResponse.name}";
+        _mainUI.ShowPopup(notificationText);
         Debug.Log(notificationText);
     }
 

@@ -16,11 +16,11 @@ public class GlobalEventStarter : MonoBehaviour
 
     public void StartFoodEvent()
     {
-        
+        ShopBase.ChangePrices(5, 10, 15);
     }
 
     public void StopFoodEvent()
     {
-        
+        ShopBase.ChangePrices(2, 5, 10);
     }
 }
