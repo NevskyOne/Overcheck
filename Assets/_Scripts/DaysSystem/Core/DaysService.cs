@@ -63,7 +63,7 @@ public class DaysService : MonoBehaviour
     public void StartNewDay(int day)
     {
         CurrentDay = day;
-        _dayCounter.text = $"{CurrentDay} ИЮНЯ";
+        _dayCounter.text = $"{CurrentDay+1} ИЮНЯ";
         var currentDayData = _days[CurrentDay];
         _eventBus.Invoke(new NewDayStartedEvent(currentDayData));
         _saver.Save(_days, SavePathConstants.DaysDataSavePath);

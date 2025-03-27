@@ -19,15 +19,17 @@ public class PlayerMovement
     private bool enabled = true, _isSprinting, _sprintActive, _fRun;
 
     public Vector3 CamRot;
+    private MainUI _mainUI;
     
     public static event Action OnRun, OnRunEnd;
 
-    public PlayerMovement(MovementStruct movementStruct, VisualEffects effects, Camera cam, Transform transform)
+    public PlayerMovement(MovementStruct movementStruct, VisualEffects effects, Camera cam, Transform transform, MainUI mainUI)
     {
         _struct = movementStruct;
         _visualFX = effects;
         _cam = cam;
         _playerTransform = transform;
+        _mainUI = mainUI;
         
         _speed = _struct.MaxSpeed;
     }
@@ -88,6 +90,7 @@ public class PlayerMovement
                 _sfx.PlayBreath();
                 _visualFX.ChangeChromatic(0.5f);
                 _sprintActive = true;
+                _mainUI.DrainRun();
             }
             else if(!_isSprinting)
             {
@@ -95,6 +98,7 @@ public class PlayerMovement
                 _sfx.PlayBreath(false);
                 _visualFX.ChangeChromatic(0.05f);
                 _sprintActive = false;
+                _mainUI.FillRun();
             }
         }
         else

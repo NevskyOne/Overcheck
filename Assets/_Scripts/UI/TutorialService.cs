@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
 
@@ -10,15 +11,19 @@ public class TutorialService : MonoBehaviour
     [SerializeField] private GameObject _usable;
     [SerializeField] private GameObject _holding;
     [SerializeField] private List<GameObject> _markers = new List<GameObject>();
+    [SerializeField] private GameObject _intro;
 
     private MainUI _mainUI;
     
     [Inject]
-    private void Initialize(MainUI ui)
+    private async void Initialize(MainUI ui)
     {
         _mainUI = ui;
-        if (PlayerPrefs.GetInt("IsTutored") == 1)
+        if (PlayerPrefs.GetInt("IsTutored") == 0)
         {
+            _intro.SetActive(true);
+            await Task.Delay(2300);
+            _intro.SetActive(false);
             StartCoroutine(TutorRoutine());
             PlayerPrefs.SetInt("IsTutored", 1);
         }

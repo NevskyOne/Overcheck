@@ -100,9 +100,9 @@ public class DialogSystem : MonoBehaviour
         {
             if (action is GiveDocs)
             {
-                if (!_docsGiven)
+                if (_docsGiven) continue;
+                else
                     _docsGiven = true;
-                else continue;
             }
             else if (action is GiveObject giveObject)
             {

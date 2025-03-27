@@ -36,6 +36,7 @@ public class StartButton : MonoBehaviour, IInteractable
 
     public void Interact()
     {
+        if (Enabled) return;
         Enabled = true;
         _docsService.StartProcess();
         _docsService.StartControl();

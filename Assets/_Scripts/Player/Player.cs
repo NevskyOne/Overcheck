@@ -47,7 +47,7 @@ public class Player : MonoBehaviour
         Monologue = new PlayerMonologue(_dialogSystem,_monologueStruct);
         Sfx = new PlayerSFX(_breathSource, _feetSource);
         Coins = new PlayerCoins(_honeyCombsTextes,_dayCombsTextes, eventBus);
-        Movement = new PlayerMovement(_movementStruct,_effects,Cam,transform);
+        Movement = new PlayerMovement(_movementStruct,_effects,Cam,transform, mainUI);
         Interactions = new PlayerInteractions(_clickMask, _docsMask, _docsPlaceMask, Cam, Rotator, mainUI,_dialogSystem);
     }
 

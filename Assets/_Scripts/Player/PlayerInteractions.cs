@@ -191,14 +191,12 @@ public class PlayerInteractions
     {
         if(Player.State != PlayerState.Movement && Player.State != PlayerState.Holding) return;
         Player.Movement.StartSprint();
-        _mainUI.DrainRun();
     }
     
     public void StopSprint(InputAction.CallbackContext _ = new InputAction.CallbackContext())
     {
         if(Player.State != PlayerState.Movement && Player.State != PlayerState.Holding) return;
         Player.Movement.StopSprint();
-        _mainUI.FillRun();
     }
     
     private void Space(InputAction.CallbackContext _)
