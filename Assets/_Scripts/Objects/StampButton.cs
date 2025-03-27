@@ -8,7 +8,7 @@ public class StampButton : MonoBehaviour, IInteractable
     [SerializeField] private Material _passiveMaterial;
     [SerializeField] private StampButton _anotherButton;
 
-    private MeshRenderer _meshRenderer;
+    private MeshRenderer _meshRenderer => GetComponent<MeshRenderer>();
     public int CursorInd { get; set; } = 1;
 
     [Inject]

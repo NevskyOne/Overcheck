@@ -5,6 +5,6 @@ public class TriggerHider : MonoBehaviour
 {
     private void OnTriggerEnter(Collider other)
     {
-        gameObject.SetActive(false);
+        transform.parent.gameObject.SetActive(false);
     }
 }

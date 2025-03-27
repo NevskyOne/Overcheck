@@ -10,7 +10,7 @@ public class StartButton : MonoBehaviour, IInteractable
     private bool enable;
     private DocumentControlService _docsService;
 
-    private MeshRenderer _meshRenderer;
+    private MeshRenderer _meshRenderer => GetComponent<MeshRenderer>();
     public int CursorInd { get; set; } = 5;
     
     public bool Enabled
