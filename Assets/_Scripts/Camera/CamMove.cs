@@ -41,5 +41,6 @@ public class CamMove : MonoBehaviour, IInteractable
     public virtual void Uninteract()
     {
         _cameraMng.ResetCamera();
+        _mainUI.CloseMenus();
     }
 }

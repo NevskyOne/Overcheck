@@ -11,10 +11,4 @@ public class Table : CamMove
         base.Interact();
         _ui.SetActive(true);
     }
-    
-    public override void Uninteract()
-    {
-        base.Uninteract();
-        _ui.SetActive(false);
-    }
 }

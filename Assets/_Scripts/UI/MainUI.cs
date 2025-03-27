@@ -10,6 +10,7 @@ public class MainUI : MonoBehaviour
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _sleepMenu;
     [SerializeField] private GameObject _holdingMenu;
+    [SerializeField] private GameObject _tableMenu;
     [Header("Cursors")] 
     [SerializeField] private GameObject _cursor;
     [SerializeField] private Image _cursorImg;
@@ -42,6 +43,7 @@ public class MainUI : MonoBehaviour
         _sleepMenu.SetActive(false);
         _pauseMenu.SetActive(false);
         _holdingMenu.SetActive(false);
+        _tableMenu.SetActive(false);
     }
 
     public void ChangeCursor(int index) => _cursorImg.sprite = _cursors[index];
