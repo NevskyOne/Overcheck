@@ -150,10 +150,10 @@ public class DialogSystem : MonoBehaviour
         switch (GoAfter)
         {
             case CheckState.Correct:
-                _docControl.Accept();
+                _docControl.Accept(false);
                 break;
             case CheckState.Wrong:
-                _docControl.Reject();
+                _docControl.Reject(false);
                 break;
         }
         GoAfter = CheckState.None;

@@ -61,21 +61,21 @@ public class DocumentControlService : MonoBehaviour
         _isInControl = true;
     }
     
-    public void Accept()
+    public void Accept(bool addCoints = true)
     {
         if (!_isInControl || !_isGameStarted) return;
         DestroyDocs();
 
-        _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, true));
+        _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, true, addCoints));
         StartCoroutine(ProcessRoutine(_continuepoint.position));
     }
 
-    public void Reject()
+    public void Reject(bool addCoints = true)
     {
         if (!_isInControl || !_isGameStarted) return;
         DestroyDocs();
 
-        _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, false));
+        _eventBus.Invoke(new NPCControledEvent(_currentNPC.NPCData, false,addCoints));
         StartCoroutine(ProcessRoutine(_exitpoint.position));
     }
 

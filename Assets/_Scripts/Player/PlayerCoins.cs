@@ -20,7 +20,8 @@ public class PlayerCoins
         
         eventBus.Subscribe((NPCControledEvent e) =>
         {
-            _dayCoins += e.IsApproved != e.NpcData.DocsData.Fake ? 1 : -1;
+            if(e.AddCoints)
+                _dayCoins += e.IsApproved != e.NpcData.DocsData.Fake ? 1 : -1;
         });
         eventBus.Subscribe((AllDayNPCsEndedEvent _) =>
         {
