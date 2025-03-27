@@ -4,7 +4,6 @@ using UnityEngine.InputSystem;
 
 public class PlayerMovement
 {
-    private static readonly int Forward = Animator.StringToHash("Forward");
     private readonly MovementStruct _struct;
     
     private readonly Camera _cam;
@@ -16,24 +15,36 @@ public class PlayerMovement
     private Vector3 _newPos, _newRot;
     private Vector3 _velocity = Vector3.zero;
     private float _speed, _fov = 60, _refTransition, _refZRotate;
-    private bool enabled = true, _isSprinting, _sprintActive, _fRun;
+    private bool enabled = true;
+    private EventBus _eventBus;
 
     public Vector3 CamRot;
     private MainUI _mainUI;
     
     public static event Action OnRun, OnRunEnd;
 
-    public PlayerMovement(MovementStruct movementStruct, VisualEffects effects, Camera cam, Transform transform, MainUI mainUI)
+
+    public PlayerMovement(MovementStruct movementStruct, VisualEffects effects, Camera cam, Transform transform, MainUI mainUI, EventBus eventBus)
     {
         _struct = movementStruct;
         _visualFX = effects;
         _cam = cam;
         _playerTransform = transform;
+
         _mainUI = mainUI;
+
+        _eventBus = eventBus;
+        _eventBus.Subscribe<PlayerModConfigLoaded>(OnPlayerModConfigLoaded);
+
         
         _speed = _struct.MaxSpeed;
     }
 
+    private void OnPlayerModConfigLoaded(PlayerModConfigLoaded e)
+    {
+        _speed = e.PlayerConfig.PlayerRunSpeed;
+    }
+    
     public void Enable()
     {
         _visualFX.ChangeChromatic(0.05f);
@@ -51,16 +62,19 @@ public class PlayerMovement
     public void StartSprint()
     {
         _speed = _struct.MaxSpeed * 1.5f;
-        _isSprinting = true;
+        _fov = 75;
+        _sfx.PlayBreath();
         OnRun?.Invoke();
+        _visualFX.ChangeChromatic(0.5f);
     }
     
     public void StopSprint()
     {
         _speed = _struct.MaxSpeed;
+        _fov = 60;
+        _sfx.PlayBreath(false);
         OnRunEnd?.Invoke();
-        _isSprinting = false;
-        _sprintActive = false;
+        _visualFX.ChangeChromatic(0.05f);
     }
     
     public void Look(Vector2 delta)
@@ -107,6 +121,7 @@ public class PlayerMovement
             _fRun = false;
         }
         
+v
         var direction = new Vector3(delta.x, 0, delta.y); // Вектор ввода
         direction = Quaternion.Euler(0, _playerTransform.eulerAngles.y, 0) * direction; // Учет поворота игрока
         _newPos = _playerTransform.position + direction.normalized * (_speed * Time.fixedDeltaTime);

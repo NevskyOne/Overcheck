@@ -13,7 +13,7 @@ public class APIManager
     private static APIManager _instance;
     public static APIManager Instance => _instance ??= new APIManager();
     
-    private const string UUID = "a035437c-0e73-48c3-9d62-2da4ed3298eb";
+    private const string UUID = "b2f374cc-658e-493d-85a6-0e50e78de8a0";
     private const string COINS = "coins";
     private const string SHOP_NAME = "shop_base";
     
@@ -167,6 +167,27 @@ public class APIManager
         return _currentShop;
     }
 
+    public async void CreateEvent(CreateEventRequest body)
+    {
+        var request = CreateRequest($"https://final.2025.nti-gamedev.ru/api/games/{UUID}/events/", RequestType.POST, body);
+        await SendRequest(request);
+    }
+
+    public async Task<List<GlobalEventResponse>> GetEvents()
+    {
+        var request = CreateRequest($"https://final.2025.nti-gamedev.ru/api/games/{UUID}/events/", RequestType.GET);
+        var rawResponse = await SendRequest(request);
+        var response = JsonConvert.DeserializeObject<GlobalEventResponse[]>(rawResponse.downloadHandler.text);
+        var list = new List<GlobalEventResponse>();
+
+        foreach (var obj in response)
+        {
+            list.Add(obj);
+        }
+        
+        return list;
+    }
+    
     public async void ChangeShop(string playerName, Dictionary<string, int> shop)
     {
         if (_haveInternetConnection)
@@ -234,6 +255,7 @@ public class APIManager
         {
             var jsonBody = JsonConvert.SerializeObject(requestBody);
             var bodyRaw = Encoding.UTF8.GetBytes(jsonBody);
+            Debug.Log(jsonBody);
             request.uploadHandler = new UploadHandlerRaw(bodyRaw);
 
             Debug.Log($"Request Body: {jsonBody}");
