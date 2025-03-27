@@ -92,7 +92,7 @@ public class DialogSystem : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        if(fragment.Buttons.Count > 0)
+        if(fragment.Buttons.Length > 0)
             ShowButtons(new (fragment.Buttons));
 
         if (fragment.Actions == null) return;

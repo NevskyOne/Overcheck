@@ -42,11 +42,9 @@ public class TutorialService : MonoBehaviour
                 case 3:
                     _mainUI.ShowPopup("Замечательно!");
                     _usable.SetActive(false);
-                    _holding.SetActive(true);
                     break;
                 case 4:
                     _mainUI.ShowPopup("Вау!");
-                    _holding.SetActive(false);
                     break;
                 case 5:
                     _mainUI.ShowPopup("Круто.");
