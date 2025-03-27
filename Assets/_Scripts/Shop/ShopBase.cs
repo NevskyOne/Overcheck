@@ -8,6 +8,9 @@ public class ShopBase : MonoBehaviour
      [SerializeField] private Transform _spawnPos;
      
      [Inject] private DiContainer _container;
+     private static int _badPrice = 2;
+     private static int _normalPrice = 5;
+     private static int _exquisitePrice = 10;
      
      public void InitializePlayerShop() {}
 
@@ -19,9 +22,9 @@ public class ShopBase : MonoBehaviour
 
          var price = food.Quality switch
          {
-             FoodQuality.Bad => 2,
-             FoodQuality.Normal => 5,
-             FoodQuality.Exquisite => 15,
+             FoodQuality.Bad => _badPrice,
+             FoodQuality.Normal => _badPrice,
+             FoodQuality.Exquisite => _badPrice,
          };
          
          if (coins >= price)
@@ -30,5 +33,11 @@ public class ShopBase : MonoBehaviour
              PlayerCoins.ChangeCoins(-price);
          }
      }
-    
+
+     public static void ChangePrices(int badPrice, int normalPrice, int exquisitePrice)
+     {
+         _badPrice = badPrice;
+         _normalPrice = normalPrice;
+         _exquisitePrice = exquisitePrice;
+     }
 }

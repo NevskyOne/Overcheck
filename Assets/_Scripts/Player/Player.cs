@@ -85,6 +85,7 @@ public struct MovementStruct
     [Range(0,1f)] public float TransitionTime;
     public float MaxSpeed;
     public Vector2 RotationLimits;
+    [Header("Animation")] public Animator Anim;
 }
 
 [Serializable]
