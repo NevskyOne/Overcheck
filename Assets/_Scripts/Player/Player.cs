@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
     public static PlayerMonologue Monologue { get; private set; }
     public static PlayerInteractions Interactions { get; private set; }
     public static PlayerMovement Movement { get; private set; }
-    public static PlayerCoins Coins { get; private set; }
+    public static Coins Coins { get; private set; }
     
     private VisualEffects _effects;
     private DialogSystem _dialogSystem;
@@ -46,7 +46,7 @@ public class Player : MonoBehaviour
         Input = GetComponent<PlayerInput>();
         Monologue = new PlayerMonologue(_dialogSystem,_monologueStruct);
         Sfx = new PlayerSFX(_breathSource, _feetSource);
-        Coins = new PlayerCoins(_honeyCombsTextes,_dayCombsTextes, eventBus);
+        Coins = new Coins(_honeyCombsTextes,_dayCombsTextes, eventBus);
         Movement = new PlayerMovement(_movementStruct,_effects,Cam,transform);
         Interactions = new PlayerInteractions(_clickMask, _docsMask, _docsPlaceMask, Cam, Rotator, mainUI,_dialogSystem);
     }

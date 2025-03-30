@@ -27,7 +27,7 @@ public class ShopBase : MonoBehaviour
          if (coins >= price)
          {
              _container.InstantiatePrefab(food, _spawnPos.position, Quaternion.identity, null);
-             PlayerCoins.ChangeCoins(-price);
+             Coins.ChangeCoins(-price);
          }
      }
     
