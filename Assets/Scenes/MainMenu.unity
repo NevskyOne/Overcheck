@@ -294,9 +294,9 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 500
-  field of view: 65
+  near clip plane: 0.21
+  far clip plane: 100
+  field of view: 92
   orthographic: 0
   orthographic size: 5
   m_Depth: 0
@@ -1419,7 +1419,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -9.014, y: 1.079, z: -0.299}
-  m_LocalScale: {x: 0.52, y: 0.52, z: 0.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 1321406543826279652}
@@ -1464,7 +1464,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 275.5, y: -96.333336}
+  m_AnchoredPosition: {x: 275.5, y: -96.33334}
   m_SizeDelta: {x: 551, y: 192.66667}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &309932599551911834
@@ -2231,7 +2231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!222 &892061301527124135
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -6623,7 +6623,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 2147483647
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &3993251916383309460
 RectTransform:
   m_ObjectHideFlags: 0
@@ -7018,10 +7018,10 @@ Canvas:
   m_GameObject: {fileID: 4485714142535570604}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
+  m_RenderMode: 1
   m_Camera: {fileID: 738164014}
-  m_PlaneDistance: 100
-  m_PixelPerfect: 0
+  m_PlaneDistance: 1.9
+  m_PixelPerfect: 1
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
   m_OverridePixelPerfect: 0
@@ -12694,7 +12694,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.28, y: 0}
   m_AnchorMax: {x: 0.71869296, y: 0.45100003}
-  m_AnchoredPosition: {x: -0, y: -292}
+  m_AnchoredPosition: {x: 0, y: -292}
   m_SizeDelta: {x: 0, y: 439.00262}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &8144105444328039098
