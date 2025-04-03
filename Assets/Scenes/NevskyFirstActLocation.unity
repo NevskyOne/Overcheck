@@ -2418,6 +2418,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camPos: {fileID: 1624321570}
   HitPos: {x: 0, y: 0, z: 0}
+  _ui: {fileID: 0}
 --- !u!1 &52979111
 GameObject:
   m_ObjectHideFlags: 0
@@ -8547,8 +8548,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _checkState: 1
-  _material: {fileID: 0}
-  _activeColor: {r: 0, g: 0, b: 0, a: 0}
+  _activeMaterial: {fileID: 2100000, guid: a829f5a4346f3b54e9cc28cb2999fbee, type: 2}
+  _passiveMaterial: {fileID: 2100000, guid: fd44de1bb90d3a94387e1630aa17f235, type: 2}
   _anotherButton: {fileID: 1502552218}
 --- !u!1 &214517576
 GameObject:
@@ -14070,6 +14071,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3bcd7918ce284187baa31f2f8c72c245, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _defaultSpawn: {fileID: 0}
   _prefabs:
   - {fileID: -341489016626545301, guid: 260aad0fe85395a43beb3da6f2cb0c35, type: 3}
   - {fileID: -6538311881872904816, guid: 2a829b426356fca4a96e7ad3a99bdd34, type: 3}
@@ -14135,7 +14137,6 @@ MonoBehaviour:
     - {fileID: 2100000, guid: 62963de9ee264924abcf4773e5c1bda5, type: 2}
     - {fileID: 2100000, guid: cdd8b3058de1b884b95c4d7b1696b501, type: 2}
     - {fileID: 2100000, guid: b69553fcd728a54489b81cb9f840cf70, type: 2}
-    BasePrefab: 0
 --- !u!1 &376635128
 GameObject:
   m_ObjectHideFlags: 0
@@ -15465,7 +15466,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0fe1f962849749238349fe2f9880eaba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _material: {fileID: 0}
+  _activeMaterial: {fileID: 2100000, guid: dfc40487fdb7b074eaa8d4951099204d, type: 2}
+  _passiveMaterial: {fileID: 2100000, guid: fd44de1bb90d3a94387e1630aa17f235, type: 2}
 --- !u!23 &400366155
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -16770,6 +16772,7 @@ MonoBehaviour:
   _pauseMenu: {fileID: 555085100}
   _sleepMenu: {fileID: 1701133984}
   _holdingMenu: {fileID: 193723765}
+  _tableMenu: {fileID: 1353534346}
   _cursor: {fileID: 240159747}
   _cursorImg: {fileID: 240159749}
   _cursors:
@@ -16785,7 +16788,7 @@ MonoBehaviour:
   _saturationBack: {fileID: 1213753425}
   _saturationFront: {fileID: 1144174851}
   _eventTimer: {fileID: 905478449}
-  _popupMenu: {fileID: 0}
+  _popupAnim: {fileID: 185123411}
   _popupText: {fileID: 76256466}
 --- !u!1 &448828836
 GameObject:
@@ -42871,6 +42874,14 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: b912c48278946084499465a7430463ab, type: 3}
+      propertyPath: 'm_Materials.Array.data[0]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 944d7be7f6f6a1e40868899ed7a81f64, type: 2}
+    - target: {fileID: -7511558181221131132, guid: b912c48278946084499465a7430463ab, type: 3}
+      propertyPath: 'm_Materials.Array.data[1]'
+      value: 
+      objectReference: {fileID: 2100000, guid: 944d7be7f6f6a1e40868899ed7a81f64, type: 2}
     - target: {fileID: 919132149155446097, guid: b912c48278946084499465a7430463ab, type: 3}
       propertyPath: m_Name
       value: Book 1
@@ -46914,6 +46925,7 @@ MonoBehaviour:
   _quizes:
   - {fileID: 1914623392}
   - {fileID: 985439902}
+  _marks: []
   _quizDatas:
   - rid: 5624657799673020527
   - rid: 5624657799673020528
@@ -51581,35 +51593,35 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _dayCounter: {fileID: 825045060}
   _days:
-  - _messages: []
+  - _stories: []
     _conditionalEvents: []
     _randomNPCCount: 4
     InvokedEvents: []
-  - _messages: []
+  - _stories: []
     _conditionalEvents: []
     _randomNPCCount: 4
     InvokedEvents: []
-  - _messages: []
+  - _stories: []
     _conditionalEvents: []
     _randomNPCCount: 5
     InvokedEvents: []
-  - _messages: []
+  - _stories: []
     _conditionalEvents: []
     _randomNPCCount: 5
     InvokedEvents: []
-  - _messages: []
+  - _stories: []
     _conditionalEvents: []
     _randomNPCCount: 6
     InvokedEvents: []
-  - _messages: []
+  - _stories: []
     _conditionalEvents: []
     _randomNPCCount: 7
     InvokedEvents: []
-  - _messages: []
+  - _stories: []
     _conditionalEvents: []
     _randomNPCCount: 7
     InvokedEvents: []
-  _prefabs: []
+  Data: []
 --- !u!1 &1340849797
 GameObject:
   m_ObjectHideFlags: 0
@@ -57040,8 +57052,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _checkState: 2
-  _material: {fileID: 0}
-  _activeColor: {r: 0, g: 0, b: 0, a: 0}
+  _activeMaterial: {fileID: 2100000, guid: dfc40487fdb7b074eaa8d4951099204d, type: 2}
+  _passiveMaterial: {fileID: 2100000, guid: fd44de1bb90d3a94387e1630aa17f235, type: 2}
   _anotherButton: {fileID: 213396182}
 --- !u!1 &1506322411
 GameObject:
@@ -62096,6 +62108,7 @@ MonoBehaviour:
     TransitionTime: 0.15
     MaxSpeed: 50
     RotationLimits: {x: -60, y: 60}
+    Anim: {fileID: 1066576393}
   _clickMask:
     serializedVersion: 2
     m_Bits: 64
@@ -77456,7 +77469,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228b65ad6fe24c72bb06138428d11ae0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _light: {fileID: 385191624}
 --- !u!114 &2081375387
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77469,7 +77481,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb1d6bda4541c3848877835365fecc25, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _starter: {fileID: 2081375386}
 --- !u!1 &2086100825
 GameObject:
   m_ObjectHideFlags: 0

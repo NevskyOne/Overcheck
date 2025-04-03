@@ -23,7 +23,7 @@ public class PlayerMonologue
     private void PlayMonologue(List<string> list)
     {
         _dialogSystem.FragmentsStack = new(){
-            new DialogFragment { Text = list[_rnd.Next(list.Count)], Buttons = new()}};
+            new DialogFragment { Text = list[_rnd.Next(list.Count)], Buttons = new ButtonSt[0]}};
         _dialogSystem.PlayNext();
         Player.State = PlayerState.Dialog;
     }

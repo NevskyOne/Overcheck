@@ -6,10 +6,11 @@ using Zenject;
 
 public class MainUI : MonoBehaviour
 {
-    [Header("Main menues")] 
+    [Header("Main menus")] 
     [SerializeField] private GameObject _pauseMenu;
     [SerializeField] private GameObject _sleepMenu;
     [SerializeField] private GameObject _holdingMenu;
+    [SerializeField] private GameObject _tableMenu;
     [Header("Cursors")] 
     [SerializeField] private GameObject _cursor;
     [SerializeField] private Image _cursorImg;
@@ -18,14 +19,15 @@ public class MainUI : MonoBehaviour
     [SerializeField] private Slider _runSlider;
     [SerializeField] private Slider _saturationSlider;
     [SerializeField] private Slider _eventSlider;
-
     [Header("Additional UI")] 
     [SerializeField] private Image _saturationBack;
     [SerializeField] private Image _saturationFront;
     [SerializeField] private TMP_Text _eventTimer;
-    [SerializeField] private GameObject _popupMenu;
+    [Header("Popup")] 
+    [SerializeField] private Animator _popupAnim;
     [SerializeField] private TMP_Text _popupText;
-
+    
+    
     private Coroutine _drainRunRoutine, _fillRunRoutine,
         _drainSaturationRoutine, _fillSaturationRoutine,
         _drainEventRoutine, _drainTimerRoutine;
@@ -41,6 +43,7 @@ public class MainUI : MonoBehaviour
         _sleepMenu.SetActive(false);
         _pauseMenu.SetActive(false);
         _holdingMenu.SetActive(false);
+        _tableMenu.SetActive(false);
     }
 
     public void ChangeCursor(int index) => _cursorImg.sprite = _cursors[index];
@@ -64,10 +67,10 @@ public class MainUI : MonoBehaviour
     
     public void ShowPopup(string text)
     {
-        _popupMenu.SetActive(true);
+        _popupAnim.Play("PopupShow");
         _popupText.text = text;
     }
-    public void HidePopup() => _popupMenu.SetActive(false);
+    public void HidePopup() => _popupAnim.Play("PopupHide");
 
     public void DrainRun()
     {

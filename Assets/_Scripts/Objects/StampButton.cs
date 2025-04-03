@@ -1,19 +1,21 @@
-using System;
 using UnityEngine;
+using Zenject;
 
 public class StampButton : MonoBehaviour, IInteractable
 {
     [SerializeField] private CheckState _checkState;
-    [SerializeField] private Material _material;
-    [SerializeField] private Color _activeColor;
+    [SerializeField] private Material _activeMaterial;
+    [SerializeField] private Material _passiveMaterial;
     [SerializeField] private StampButton _anotherButton;
 
-    private Color _defaultColor;
+    private MeshRenderer _meshRenderer => GetComponent<MeshRenderer>();
     public int CursorInd { get; set; } = 1;
 
-    private void Start()
+    [Inject]
+    private void Initialize(EventBus eventBus)
     {
-        _defaultColor = _material.color;
+        _meshRenderer.material = _passiveMaterial;
+        eventBus.Subscribe((NewDayStartedEvent _) => { Uninteract();});
     }
 
     public void Interact()
@@ -24,9 +26,8 @@ public class StampButton : MonoBehaviour, IInteractable
             return;
         }
         _anotherButton.Uninteract();
-
-        ;
-        _material.color = _activeColor;
+        
+        _meshRenderer.material = _activeMaterial;
 
         Player.CheckingState = _checkState;
     }
@@ -34,11 +35,11 @@ public class StampButton : MonoBehaviour, IInteractable
     public void Uninteract()
     {
         Player.CheckingState = CheckState.None;
-        _material.color = _defaultColor;
+        _meshRenderer.material = _passiveMaterial;
     }
 
     private void OnDisable()
     {
-        _material.color = _defaultColor;
+        _meshRenderer.material = _activeMaterial;
     }
 }

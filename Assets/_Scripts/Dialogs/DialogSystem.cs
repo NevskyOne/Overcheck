@@ -40,9 +40,10 @@ public class DialogSystem : MonoBehaviour
     [Inject] private DiContainer _diContainer;
 
     [Inject]
-    private void Initialize(DocumentControlService docControl)
+    private void Initialize(DocumentControlService docControl, EventBus eventBus)
     {
         _docControl = docControl;
+        eventBus.Subscribe((NPCSpawnedEvent e) => _docsGiven = false);
     }
 
     public void SetNPCAnim(NPCAnim npcAnim) => _npcAnim = npcAnim;
@@ -92,7 +93,7 @@ public class DialogSystem : MonoBehaviour
         {
             Destroy(child.gameObject);
         }
-        if(fragment.Buttons.Count > 0)
+        if(fragment.Buttons.Length > 0)
             ShowButtons(new (fragment.Buttons));
 
         if (fragment.Actions == null) return;
@@ -100,8 +101,7 @@ public class DialogSystem : MonoBehaviour
         {
             if (action is GiveDocs)
             {
-                if (!_docsGiven)
-                    _docsGiven = true;
+                if(!_docsGiven) _docsGiven = true;
                 else continue;
             }
             else if (action is GiveObject giveObject)
@@ -132,7 +132,6 @@ public class DialogSystem : MonoBehaviour
         
         _npcAnim.IsTalking = false;
         _npcAnim = null;
-        _docsGiven = false;
         _source.mute = true;
 
         Player.State = PlayerState.Movement;
@@ -150,10 +149,10 @@ public class DialogSystem : MonoBehaviour
         switch (GoAfter)
         {
             case CheckState.Correct:
-                _docControl.Accept();
+                _docControl.Accept(false);
                 break;
             case CheckState.Wrong:
-                _docControl.Reject();
+                _docControl.Reject(false);
                 break;
         }
         GoAfter = CheckState.None;
