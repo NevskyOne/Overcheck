@@ -16,14 +16,14 @@ PlayerSettings:
   productName: Overcheck
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
-  m_SplashScreenBackgroundColor: {r: 0.03529412, g: 0, b: 0.25490198, a: 1}
-  m_ShowUnitySplashScreen: 0
+  m_SplashScreenBackgroundColor: {r: 0.004787733, g: 0, b: 0.2264151, a: 1}
+  m_ShowUnitySplashScreen: 1
   m_ShowUnitySplashLogo: 0
   m_SplashScreenOverlayOpacity: 1
-  m_SplashScreenAnimation: 1
+  m_SplashScreenAnimation: 2
   m_SplashScreenLogoStyle: 1
   m_SplashScreenDrawMode: 0
-  m_SplashScreenBackgroundAnimationZoom: 1
+  m_SplashScreenBackgroundAnimationZoom: 0
   m_SplashScreenLogoAnimationZoom: 1
   m_SplashScreenBackgroundLandscapeAspect: 1
   m_SplashScreenBackgroundPortraitAspect: 1
@@ -40,10 +40,10 @@ PlayerSettings:
     width: 1
     height: 1
   m_SplashScreenLogos:
-  - logo: {fileID: 21300000, guid: 1270f4b90e22ab24386f6c4ec361a128, type: 3}
-    duration: 3
-  - logo: {fileID: 21300000, guid: a5367239ca5a7914280d8950bb153754, type: 3}
+  - logo: {fileID: 21300000, guid: 914a869eb4c2cbc45ac1b657e7bb7048, type: 3}
     duration: 2
+  - logo: {fileID: 21300000, guid: d4926bca5242efd4faf2ceffd6fe3038, type: 3}
+    duration: 3
   m_VirtualRealitySplashScreen: {fileID: 0}
   m_HolographicTrackingLossScreen: {fileID: 0}
   defaultScreenWidth: 1024
