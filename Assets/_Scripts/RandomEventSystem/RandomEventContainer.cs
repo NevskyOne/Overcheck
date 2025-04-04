@@ -21,19 +21,12 @@ public class RandomEventContainer : MonoBehaviour
         _eventBus.Invoke(new EventHasBeenInvoked(MathQuiz));
     }
     
-    public void WiresQuiz()
-    {
-        print("wires");
-        SceneMusic.State = MusicState.Wires;
-        _quizControl.StartQuiz(1);
-        _eventBus.Invoke(new EventHasBeenInvoked(WiresQuiz));
-    }
     
     public void MorseQuiz()
     {
         print("morse");
         SceneMusic.State = MusicState.Morse;
-        _quizControl.StartQuiz(2);
+        _quizControl.StartQuiz(1);
         _eventBus.Invoke(new EventHasBeenInvoked(MorseQuiz));
     }
 }

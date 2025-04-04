@@ -1,10 +1,10 @@
+using System;
 
-using System.Collections.Generic;
+[Serializable]
+public class QuizData { }
 
-public interface IQuizData { }
-
-[System.Serializable]
-public struct MathQuizData : IQuizData
+[Serializable]
+public class MathQuizData : QuizData
 {
     public int Count;
     public int X;
@@ -20,8 +20,8 @@ public struct MathQuizData : IQuizData
     public int Lives;
 }
 
-[System.Serializable]
-public class MorseQuizData : IQuizData
+[Serializable]
+public class MorseQuizData : QuizData
 { 
     public int Count;
     public float BaseTime;             
@@ -32,8 +32,7 @@ public class MorseQuizData : IQuizData
     public int Lives;                  
 }
 
-[System.Serializable]
-public class WiresQuizData : IQuizData
+public class WiresQuizData : QuizData
 {
     
 }

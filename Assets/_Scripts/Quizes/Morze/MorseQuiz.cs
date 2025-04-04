@@ -9,6 +9,7 @@ using Random = UnityEngine.Random;
 
 public class MorseQuiz : MonoBehaviour, IQuiz
 {
+    [SerializeField] private MorseQuizData _currentData;
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI _morseText;
     [SerializeField] private TextMeshProUGUI _shiftInfoText;
@@ -21,9 +22,7 @@ public class MorseQuiz : MonoBehaviour, IQuiz
     [SerializeField] private int _correctAnswersCount;
     [SerializeField] private int _requiredCorrect;
     [SerializeField] private TextMeshProUGUI _progressText;
-
-
-    private MorseQuizData _currentData;
+    
     private NameIDPair _currentPair;
     private float _timeRemaining;
     private int _remainingLives;
@@ -55,11 +54,9 @@ public class MorseQuiz : MonoBehaviour, IQuiz
         _initialized = true;
     }
 
-    public void StartQuiz(IQuizData data)
+    public void StartQuiz()
     {
         if(!_initialized) InitializeDB();
-        
-        _currentData = data as MorseQuizData;
         _requiredCorrect = _currentData.Count;
         ResetQuiz();
     }

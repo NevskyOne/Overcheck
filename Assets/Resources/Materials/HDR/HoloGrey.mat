@@ -147,17 +147,17 @@ Material:
     - _EdgeThickness: 1.29
     - _EnvironmentReflections: 1
     - _Float: -1.58
-    - _FresnelPower: 0.2
+    - _FresnelPower: 0.34
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _HeightCutoff: 1.2
     - _HeightFactor: 1
-    - _LinesBrightness: 0
-    - _LinesSpeed: 0
+    - _LinesBrightness: 1.98
+    - _LinesSpeed: 0.55
     - _Metallic: 0
     - _Noise: 2
-    - _NoiseSpeed: 0.06
+    - _NoiseSpeed: 0.03
     - _OcclusionStrength: 1
     - _Parallax: 0.005
     - _QueueControl: 0
@@ -183,8 +183,8 @@ Material:
     - _Color: {r: 1, g: 1, b: 1, a: 0.0627451}
     - _EdgeColor: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _FresnelColor: {r: 0.00073146453, g: 0.00073146453, b: 0.00073146453, a: 1}
-    - _MainColor: {r: 0, g: 0, b: 0, a: 0.31764707}
+    - _FresnelColor: {r: 0.028301895, g: 0.028301895, b: 0.028301895, a: 1}
+    - _MainColor: {r: 1.8141357, g: 1.8141357, b: 1.8141357, a: 0.31764707}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
     - _WindSpeed: {r: 1, g: 1, b: 1, a: 1}
     - _WorldSize: {r: 1, g: 1, b: 1, a: 1}
