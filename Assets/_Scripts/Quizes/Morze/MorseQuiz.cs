@@ -28,11 +28,14 @@ public class MorseQuiz : MonoBehaviour, IQuiz
     private int _remainingLives;
     private bool _isGameActive;
     private int _currentShift;
+    
     [Inject] private DocumentDataBase _documentDataBase;
+    [Inject] private EventBus _eventBus;
+    
     private List<NameIDPair> _nameIDList = new();
     private bool _initialized;
 
-    private Dictionary<char, string> _morseCodeMap = new Dictionary<char, string>
+    private Dictionary<char, string> _morseCodeMap = new()
     {
         {'А', "·-"}, {'Б', "-···"}, {'В', "·--"}, {'Г', "--·"}, {'Д', "-··"},
         {'Е', "·"}, {'Ё', "·"}, {'Ж', "···-"}, {'З', "--··"}, {'И', "··"},
@@ -66,17 +69,9 @@ public class MorseQuiz : MonoBehaviour, IQuiz
         StopAllCoroutines();
         _correctAnswersCount = 0;
         _remainingLives = _currentData.Lives;
-        _isGameActive = true;
-        UpdateProgress();
-        InitializeUI();
-        GenerateNewPuzzle();
-    }
-
-    private void RestartQuiz()
-    {
-        StopAllCoroutines();
         _resultPanel.SetActive(false);
         _isGameActive = true;
+        UpdateProgress();
         InitializeUI();
         GenerateNewPuzzle();
     }
@@ -197,12 +192,14 @@ public class MorseQuiz : MonoBehaviour, IQuiz
     {
         _isGameActive = false;
         ShowResult("Поражение! Время вышло или неверный ID!");
+        _eventBus.Invoke(new LoseEvent());
     }
 
     public void Win()
     {
         _isGameActive = false;
         ShowResult("Победа! Вы правильно ввели все ID!");
+        _eventBus.Invoke(new WinEvent());
     }
 
     private void ShowResult(string message)

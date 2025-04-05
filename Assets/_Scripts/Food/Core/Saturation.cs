@@ -7,13 +7,15 @@ public class Saturation:MonoBehaviour
     private static uint _saturation = 100;
     private static VisualEffects _fx;
     private static MainUI _mainUI;
+    private static Player _player;
     
     [Inject]
-    private void Initialize(VisualEffects fx, EventBus eventBus, MainUI mainUI)
+    private void Initialize(VisualEffects fx, EventBus eventBus, MainUI mainUI, Player player)
     {
         _fx = fx;
+        _player = player;
         _mainUI = mainUI;
-        eventBus.Subscribe((NPCControledEvent _) => { ChangeSaturation(-20); });
+        eventBus.Subscribe((NPCControledEvent _) => { ChangeSaturation(-15); });
         print("init");
     }
     
@@ -27,7 +29,11 @@ public class Saturation:MonoBehaviour
         else 
             _mainUI.FillSaturation(_saturation);
 
-        if (_saturation < 30)
+        if (_saturation <= 0)
+        {
+            _player.Die();
+        }
+        else if (_saturation < 20)
         {
             _fx.Starve(1, 0.3f, 0.5f, 0.5f);
             _mainUI.ChangeSaturColor(Color.red);

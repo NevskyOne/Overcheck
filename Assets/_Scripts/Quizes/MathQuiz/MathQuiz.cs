@@ -9,6 +9,8 @@ public class MathQuiz : MonoBehaviour, IQuiz
     [Header("Data")]
     [SerializeField] private MathQuizData _currentData;
     [Header("UI Elements")]
+    [SerializeField] private GameObject _startButton;
+    [SerializeField] private GameObject _gamePanel;
     [SerializeField] private TextMeshProUGUI _problemText;
     [SerializeField] private TextMeshProUGUI _timerText;
     [SerializeField] private TextMeshProUGUI _livesText;
@@ -25,8 +27,14 @@ public class MathQuiz : MonoBehaviour, IQuiz
     private int _remainingLives;
     
     [Inject] private EventBus _eventBus;
-    
+
     public void StartQuiz()
+    {
+        _startButton.SetActive(true);
+        _gamePanel.SetActive(false);
+    }
+
+    public void EnableQuiz()
     {
         if (_currentData.MinNumber > _currentData.MaxNumber ||
             _currentData.MinMultiplaier > _currentData.MaxMultiplaier ||

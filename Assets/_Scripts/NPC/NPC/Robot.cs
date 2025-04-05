@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.AI;
 using UnityEngine.InputSystem;
+using Zenject;
 using Random = UnityEngine.Random;
 
 [RequireComponent(typeof(NavMeshAgent))]
@@ -24,10 +25,9 @@ public class Robot : MonoBehaviour
     [SerializeField] private Material _material;
     [SerializeField] private GameObject _creapySounds;
     
-    private DialogSystem _dialogSystem => FindFirstObjectByType<DialogSystem>();
-    private CameraManager _cameraManager => FindFirstObjectByType<CameraManager>();
-    private PlayerInput _input => FindFirstObjectByType<PlayerInput>();
-    private RandomEvents _events => FindFirstObjectByType<RandomEvents>();
+    [Inject]private DialogSystem _dialogSystem;
+    [Inject] private CameraManager _cameraManager;
+    [Inject] private RandomEvents _events;
     private NavMeshAgent _agent => GetComponent<NavMeshAgent>();
     private AudioSource _source => GetComponent<AudioSource>();
     private NPCAnim _animator => GetComponent<NPCAnim>();
@@ -131,16 +131,6 @@ public class Robot : MonoBehaviour
     private void OnDisable()
     {
         _material.SetColor(FresnelColor, _statColor);
-        PlayerMovement.OnRunEnd -= () => _isTargeting = false;
-        PlayerMovement.OnRun -= () =>
-        {
-            _source.pitch = 2f;
-            _animator.SpeedFactor = 2f;
-            _isTargeting = true;
-            _state = RobotState.Hunt;
-            _agent.speed = _huntSpeed;
-            _agent.acceleration = _huntAcceleration;
-        };
         StopAllCoroutines();
     }
 
@@ -154,7 +144,6 @@ public class Robot : MonoBehaviour
             
             transform.LookAt(sbj.transform);
             _cameraManager.MoveToTarget(Vector3.zero, _cameraManager.transform.eulerAngles+transform.eulerAngles, transform.position);
-            _input.enabled = false;
             var fragments = new List<DialogFragment>(RandomParamStruct.RobotsReplics[Random.Range(0, RandomParamStruct.RobotsReplics.Count)].Fragments);
             _dialogSystem.FragmentsStack = fragments;
             _dialogSystem.SetNPCAnim(_animator);
@@ -168,7 +157,6 @@ public class Robot : MonoBehaviour
         _state = RobotState.Normal;
         await Task.Delay(3000);
         _creapySounds.SetActive(false);
-        _input.enabled = true;
     }
 }
 

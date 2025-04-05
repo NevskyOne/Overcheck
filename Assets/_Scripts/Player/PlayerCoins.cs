@@ -7,8 +7,8 @@ public class PlayerCoins
 {
     private static List<TMP_Text> _honeyCombsTextes;
     private static TMP_Text _dayCoinsText;
-    
-    public static int HoneyCombs { get; private set; }
+
+    public static int HoneyCombs { get; private set; } = 50;
     private static int _dayCoins;
     
 
@@ -49,7 +49,7 @@ public class PlayerCoins
         _dayCoinsText.text = _dayCoins.ToString();
         foreach (var text in _honeyCombsTextes)
         {
-            text.text = PlayerCoins.HoneyCombs.ToString();
+            text.text = HoneyCombs.ToString();
         }
     }
 }

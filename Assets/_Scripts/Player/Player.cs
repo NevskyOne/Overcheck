@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -23,6 +24,10 @@ public class Player : MonoBehaviour
     [Header("UI")]
     [SerializeField] private TMP_Text _dayCombsTextes;
     [SerializeField] private List<TMP_Text> _honeyCombsTextes;
+    [SerializeField] private ScreenFade _screenFade;
+
+    [Header("Transforms")] [SerializeField]
+    private Transform _bedTransform;
 
     public static PlayerState State { get; set; } = PlayerState.Movement;
     public static CheckState CheckingState { get; set; } = CheckState.None;
@@ -36,6 +41,10 @@ public class Player : MonoBehaviour
     
     private VisualEffects _effects;
     private DialogSystem _dialogSystem;
+    private Rigidbody _camRb => Cam.GetComponent<Rigidbody>();
+
+    [Inject] private CameraManager _cameraManager;
+    [Inject] private DaysService _daysService;
     
     [Inject]
     public void Initialize(VisualEffects effects, MainUI mainUI, DialogSystem dialogSystem, EventBus eventBus)
@@ -56,6 +65,23 @@ public class Player : MonoBehaviour
     private void FixedUpdate()
     {
         Movement.LocalUpdate(Input.actions["Move"].ReadValue<Vector2>());
+    }
+
+    public async void Die()
+    {
+        _camRb.useGravity = true;
+        _camRb.isKinematic = false;
+        _screenFade.gameObject.SetActive(true);
+        await Task.Delay(3500);
+        
+        _camRb.isKinematic = true;
+        _camRb.useGravity = false;
+        _cameraManager.transform.localEulerAngles = new Vector3(0, 0, 0);
+        _cameraManager.ResetCamera();
+        transform.position = _bedTransform.position;
+        StartCoroutine(_screenFade.EndFade());
+        
+        _daysService.StartNewDay(DaysService.CurrentDay);
     }
 }
 
