@@ -34,16 +34,10 @@ public class PlayerMovement
         _mainUI = mainUI;
 
         _eventBus = eventBus;
-        _eventBus.Subscribe<PlayerModConfigLoaded>(OnPlayerModConfigLoaded);
-
         
         _speed = _struct.MaxSpeed;
     }
 
-    private void OnPlayerModConfigLoaded(PlayerModConfigLoaded e)
-    {
-        _speed = e.PlayerConfig.PlayerRunSpeed;
-    }
     
     public void Enable()
     {

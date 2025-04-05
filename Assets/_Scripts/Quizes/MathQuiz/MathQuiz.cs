@@ -6,6 +6,8 @@ using Zenject;
 
 public class MathQuiz : MonoBehaviour, IQuiz
 {
+    [Header("Data")]
+    [SerializeField] private MathQuizData _currentData;
     [Header("UI Elements")]
     [SerializeField] private TextMeshProUGUI _problemText;
     [SerializeField] private TextMeshProUGUI _timerText;
@@ -15,8 +17,7 @@ public class MathQuiz : MonoBehaviour, IQuiz
     [SerializeField] private GameObject _resultPanel;
     [SerializeField] private TextMeshProUGUI _resultMessage;
     [SerializeField] private TextMeshProUGUI _progressText;
-
-    private MathQuizData _currentData;
+    
     private MathProblem _currentProblem;
     private float _timeRemaining;
     private int _solvedCount;
@@ -25,10 +26,8 @@ public class MathQuiz : MonoBehaviour, IQuiz
     
     [Inject] private EventBus _eventBus;
     
-    public void StartQuiz(IQuizData data)
+    public void StartQuiz()
     {
-        _currentData = (MathQuizData)data;
-
         if (_currentData.MinNumber > _currentData.MaxNumber ||
             _currentData.MinMultiplaier > _currentData.MaxMultiplaier ||
             _currentData.MinSlag > _currentData.MaxSlag)

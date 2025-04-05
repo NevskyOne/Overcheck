@@ -8,9 +8,12 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 47a69aa3248b5d04f8adc1356a1c8b9c
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/FirstActLocation.unity
     guid: 8887024223080004ebff7c1105e45281
+  - enabled: 1
+    path: Assets/Scenes/NevskyFirstActLocation.unity
+    guid: 75d979ec09733e3489b8a584e7b3e68b
   m_configObjects:
     com.unity.input.settings.actions: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
   m_UseUCBPForAssetBundles: 0
