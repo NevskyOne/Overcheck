@@ -121,8 +121,8 @@ public class SettingsUI : MonoBehaviour
     {
         VFXOn = value;
         _player.Cam.cullingMask = value
-            ? LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Doors", "VFX")
-            : LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Doors");
+            ? LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Doors", "VFX", "Save")
+            : LayerMask.GetMask("Default", "UI", "Clickable", "Document", "Doors", "Save");
     }
 }
 

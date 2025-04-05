@@ -21,5 +21,6 @@ public class QuizControl : MonoBehaviour
     public void EndQuiz()
     {
         _quizes[_quizIndex].SetActive(false);
+        _marks[_quizIndex].SetActive(false);
     }
 }

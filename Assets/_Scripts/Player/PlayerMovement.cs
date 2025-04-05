@@ -59,6 +59,7 @@ public class PlayerMovement
         _fov = 75;
         _sfx.PlayBreath();
         OnRun?.Invoke();
+        _isSprinting = true;
         _visualFX.ChangeChromatic(0.5f);
     }
     
@@ -68,6 +69,7 @@ public class PlayerMovement
         _fov = 60;
         _sfx.PlayBreath(false);
         OnRunEnd?.Invoke();
+        _isSprinting = false;
         _visualFX.ChangeChromatic(0.05f);
     }
     

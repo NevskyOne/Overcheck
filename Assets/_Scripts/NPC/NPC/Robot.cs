@@ -143,7 +143,7 @@ public class Robot : MonoBehaviour
             _state = RobotState.Attack;
             
             transform.LookAt(sbj.transform);
-            _cameraManager.MoveToTarget(Vector3.zero, _cameraManager.transform.eulerAngles+transform.eulerAngles, transform.position);
+            _cameraManager.MoveToTarget(Vector3.zero, _cameraManager.transform.eulerAngles-transform.eulerAngles, transform.position);
             var fragments = new List<DialogFragment>(RandomParamStruct.RobotsReplics[Random.Range(0, RandomParamStruct.RobotsReplics.Count)].Fragments);
             _dialogSystem.FragmentsStack = fragments;
             _dialogSystem.SetNPCAnim(_animator);
@@ -157,6 +157,7 @@ public class Robot : MonoBehaviour
         _state = RobotState.Normal;
         await Task.Delay(3000);
         _creapySounds.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
 
