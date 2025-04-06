@@ -122,7 +122,7 @@ public class APIManager
             return response.resources[COINS];
         }
 
-        return 50;
+        return _currentCoins;
     }
     
     public async void ChangeCoins(string playerName, int newCoinsCount)
