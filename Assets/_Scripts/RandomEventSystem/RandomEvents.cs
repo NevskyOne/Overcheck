@@ -48,11 +48,9 @@ public class RandomEvents : MonoBehaviour
     
     public bool ChooseRandomEvent()
     {
-        print("to be chosen");
-        if (Random.Range(0, 100) > _eventChance) return false;
+        if (Random.Range(0, 100) > _eventChance || DaysService.CurrentDay == 0) return false;
         _currentEvent = _events[Random.Range(0, _events.Count)];
         _currentEvent.Invoke();
-        print("chosen");
         if(Random.Range(0,100) < _robotChance)
             _robot.SetActive(true);
         _loseCoroutine = StartCoroutine(AutoLose());
@@ -77,7 +75,7 @@ public class RandomEvents : MonoBehaviour
         if(_loseCoroutine != null) StopCoroutine(_loseCoroutine);
         _loseCoroutine = null;
 
-        _robot.SetActive(true);
+        _robot.SetActive(false);
         
         _mainUI.StopEvent();
         SceneMusic.State = MusicState.Normal;

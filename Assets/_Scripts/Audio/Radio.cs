@@ -7,7 +7,9 @@ public class Radio : MonoBehaviour, IInteractable, IUsable
     [SerializeField] private List<AudioClip> _clips;
     [SerializeField] private AudioSource _source;
     [SerializeField] private int _strangeWave;
-    public Material RadioMat;
+    [SerializeField] private Material RadioMatEn;
+    [SerializeField] private Material RadioMatDis;
+    [SerializeField] private MeshRenderer _mesh;
         
     private int _currentWave;
     public int CursorInd { get; set; } = 4;
@@ -26,6 +28,7 @@ public class Radio : MonoBehaviour, IInteractable, IUsable
     }
     public void Interact()
     {
+        _mesh.material = _source.mute ? RadioMatEn : RadioMatDis;
         _source.mute = !_source.mute;
     }
 

@@ -124,9 +124,9 @@ public class DocumentControlService : MonoBehaviour
 
     private void DestroyDocs()
     {
-        Destroy(PMS?.gameObject);
-        Destroy(IIC?.gameObject);
-        Destroy(PP?.gameObject);
+        if(PMS != null) Destroy(PMS?.gameObject);
+        if(IIC != null) Destroy(IIC?.gameObject);
+        if(PP != null)Destroy(PP?.gameObject);
     }
     
     private void OnNewDayStarted(NewDayStartedEvent e)

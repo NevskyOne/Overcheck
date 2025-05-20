@@ -1,26 +1,28 @@
-﻿using System;
+﻿
 using System.Collections;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using UnityEngine;
 using Zenject;
+using Random = UnityEngine.Random;
 
 public class TutorialService : MonoBehaviour
 {
     [SerializeField] private GameObject _movement;
     [SerializeField] private GameObject _usable;
     [SerializeField] private GameObject _holding;
-    [SerializeField] private List<GameObject> _markers = new List<GameObject>();
+    [SerializeField] private List<GameObject> _markers = new ();
     [SerializeField] private GameObject _intro;
-
+    [SerializeField] private bool _startOnFirst;
     private MainUI _mainUI;
+    private string[] _phrases = {"Отлично!", "Круто.","Умничка!","Вау!","Замечательно!","Великолепно!","Бесподобно."};
     
     [Inject]
     private async void Initialize(MainUI ui)
     {
         _mainUI = ui;
         
-        if (PlayerPrefs.GetInt("IsTutored") == 0)
+        if ((PlayerPrefs.GetInt("IsTutored") == 0 && _startOnFirst) || !_startOnFirst )
         {
             _intro.SetActive(true);
             await Task.Delay(23000);
@@ -41,22 +43,16 @@ public class TutorialService : MonoBehaviour
                     _movement.SetActive(true);
                     break;
                 case 2:
-                    _mainUI.ShowPopup("Отлично!");
+                    _mainUI.ShowPopup(_phrases[Random.Range(0,_phrases.Length)]);
                     _movement.SetActive(false);
                     _usable.SetActive(true);
                     break;
                 case 3:
-                    _mainUI.ShowPopup("Замечательно!");
+                    _mainUI.ShowPopup(_phrases[Random.Range(0,_phrases.Length)]);
                     _usable.SetActive(false);
                     break;
-                case 4:
-                    _mainUI.ShowPopup("Вау!");
-                    break;
-                case 5:
-                    _mainUI.ShowPopup("Круто.");
-                    break;
-                case 6:
-                    _mainUI.ShowPopup("Просто умничка!");
+                default:
+                    _mainUI.ShowPopup(_phrases[Random.Range(0,_phrases.Length)]);
                     break;
             }
             yield return new WaitUntil(() => !marker.activeSelf);

@@ -54,6 +54,6 @@ public class VisualEffects : MonoBehaviour
 
     private void OnDisable()
     {
-        Starve(0.3f, 0, 0, 0);
+        Starve(0f, 0, 0, 0);
     }
 }

@@ -72,15 +72,19 @@ public class Player : MonoBehaviour
         _camRb.useGravity = true;
         _camRb.isKinematic = false;
         _screenFade.gameObject.SetActive(true);
-        await Task.Delay(3500);
+        Model.SetActive(false);
+        State = PlayerState.Block;
+        await Task.Delay(4500);
         
         _camRb.isKinematic = true;
         _camRb.useGravity = false;
         _cameraManager.transform.localEulerAngles = new Vector3(0, 0, 0);
         _cameraManager.ResetCamera();
         transform.position = _bedTransform.position;
+        Model.SetActive(true);
         StartCoroutine(_screenFade.EndFade());
         
+        State = PlayerState.Movement;
         _daysService.StartNewDay(DaysService.CurrentDay);
     }
 }
