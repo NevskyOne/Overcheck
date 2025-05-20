@@ -43,7 +43,6 @@ public class AuthBootstrap : MonoBehaviour
             _playerText.text = _playerName;
             
             _playerShopBase.InitializePlayerShop();
-            PlayerCoins.InitializeCoins();
         }
     }
 
@@ -61,7 +60,6 @@ public class AuthBootstrap : MonoBehaviour
             {
                 await APIManager.Instance.Authorization(playerName);
                 _playerText.text = _playerName;
-                PlayerCoins.InitializeCoins();
             }
         }
         catch (Exception e)

@@ -23,8 +23,8 @@ public class ShopBase : MonoBehaviour
          var price = food.Quality switch
          {
              FoodQuality.Bad => _badPrice,
-             FoodQuality.Normal => _badPrice,
-             FoodQuality.Exquisite => _badPrice,
+             FoodQuality.Normal => _normalPrice,
+             FoodQuality.Exquisite => _exquisitePrice,
          };
          
          if (coins >= price)

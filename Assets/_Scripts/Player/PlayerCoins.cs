@@ -28,19 +28,10 @@ public class PlayerCoins
             ChangeCoins(_dayCoins);
         });
     }
-
-    public static async void InitializeCoins()
+    
+    public static  void ChangeCoins(int value)
     {
-        HoneyCombs = await APIManager.Instance.GetCoins(AuthBootstrap.Instance.PlayerName);
-        UpdateUI();
-    }
-
-    public static async void ChangeCoins(int value)
-    {
-        var _serverValue = await APIManager.Instance.GetCoins(AuthBootstrap.Instance.PlayerName);
-        HoneyCombs = Mathf.Clamp(_serverValue + value, 0, 1000000000);
-        
-        APIManager.Instance.ChangeCoins(AuthBootstrap.Instance.PlayerName, HoneyCombs);
+        HoneyCombs = Mathf.Clamp(HoneyCombs + value, 0, 1000000000);
         UpdateUI();
     }
 
