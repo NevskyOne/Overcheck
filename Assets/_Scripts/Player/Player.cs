@@ -26,8 +26,9 @@ public class Player : MonoBehaviour
     [SerializeField] private List<TMP_Text> _honeyCombsTextes;
     [SerializeField] private ScreenFade _screenFade;
 
-    [Header("Transforms")] [SerializeField]
-    private Transform _bedTransform;
+    [Header("Transforms")] 
+    [SerializeField] private Transform _bedTransform;
+    [SerializeField] private Vector3 _initCamRot;
 
     public static PlayerState State { get; set; } = PlayerState.Movement;
     public static CheckState CheckingState { get; set; } = CheckState.None;
@@ -60,6 +61,13 @@ public class Player : MonoBehaviour
         Movement = new PlayerMovement(_movementStruct,_effects,Cam,transform, mainUI, eventBus);
 
         Interactions = new PlayerInteractions(_clickMask, _docsMask, _docsPlaceMask, Cam, Rotator, mainUI,_dialogSystem);
+    }
+
+    private async void Start()
+    {
+        await Task.Delay(10);
+        transform.rotation = new Quaternion(0,_initCamRot.y,0,-0.1979992836713791f);
+        Cam.transform.rotation = new Quaternion(_initCamRot.x,0,_initCamRot.z,0);
     }
 
     private void FixedUpdate()

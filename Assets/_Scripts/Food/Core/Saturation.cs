@@ -40,7 +40,7 @@ public class Saturation:MonoBehaviour
         }
         else
         {
-            _fx.Starve(0.3f, 0, 0, 0);
+            _fx.Starve(0, 0, 0, 0);
             _mainUI.ChangeSaturColor(Color.white);
         }
     }

@@ -14,17 +14,16 @@ public class ShopBase : MonoBehaviour
      
      public void InitializePlayerShop() {}
 
-     public async void BuyFood(int foodToBuy)
+     public void BuyFood(int foodToBuy)
      {
-         var playerName = AuthBootstrap.Instance.PlayerName;
-         var coins = await APIManager.Instance.GetCoins(playerName);
+         var coins = PlayerCoins.HoneyCombs;
          var food = _shopFood[foodToBuy];
 
          var price = food.Quality switch
          {
              FoodQuality.Bad => _badPrice,
              FoodQuality.Normal => _normalPrice,
-             FoodQuality.Exquisite => _exquisitePrice,
+             FoodQuality.Exquisite => _exquisitePrice
          };
          
          if (coins >= price)

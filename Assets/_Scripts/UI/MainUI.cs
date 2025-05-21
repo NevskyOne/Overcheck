@@ -32,6 +32,11 @@ public class MainUI : MonoBehaviour
         _drainSaturationRoutine, _fillSaturationRoutine,
         _drainEventRoutine, _drainTimerRoutine;
     
+    [Inject]
+    private void Initialize(EventBus eventBus)
+    {
+        eventBus.Subscribe<AllDayNPCsEndedEvent>(_ => ShowPopup("Рабочий день окончен!"));
+    }
     
     public void Pause() => _pauseMenu.SetActive(true);
     public void Unpause() => Player.Interactions.PauseGame();

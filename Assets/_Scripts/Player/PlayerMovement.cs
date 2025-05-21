@@ -115,6 +115,11 @@ public class PlayerMovement
         {
             _struct.Anim.SetFloat("Forward", 0);
             _fRun = false;
+            _fov = 60;
+            _sfx.PlayBreath(false);
+            _visualFX.ChangeChromatic(0.05f);
+            _sprintActive = false;
+            _mainUI.FillRun();
         }
         
         var direction = new Vector3(delta.x, 0, delta.y); // Вектор ввода

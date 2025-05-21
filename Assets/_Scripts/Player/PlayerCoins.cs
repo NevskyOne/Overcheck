@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
@@ -8,7 +7,7 @@ public class PlayerCoins
     private static List<TMP_Text> _honeyCombsTextes;
     private static TMP_Text _dayCoinsText;
 
-    public static int HoneyCombs { get; private set; } = 50;
+    public static int HoneyCombs { get; private set; } = 30;
     private static int _dayCoins;
     
 
@@ -22,6 +21,7 @@ public class PlayerCoins
         {
             if(e.AddCoints)
                 _dayCoins += e.IsApproved != e.NpcData.DocsData.Fake ? 1 : -1;
+            Debug.Log(_dayCoins);
         });
         eventBus.Subscribe((AllDayNPCsEndedEvent _) =>
         {

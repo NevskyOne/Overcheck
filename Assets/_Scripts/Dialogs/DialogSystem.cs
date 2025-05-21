@@ -149,10 +149,10 @@ public class DialogSystem : MonoBehaviour
         switch (GoAfter)
         {
             case CheckState.Correct:
-                _docControl.Accept(false);
+                _docControl.Accept(_docControl.CurrentNPC is RandomNPC);
                 break;
             case CheckState.Wrong:
-                _docControl.Reject(false);
+                _docControl.Reject(_docControl.CurrentNPC is RandomNPC);
                 break;
         }
         GoAfter = CheckState.None;

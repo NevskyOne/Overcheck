@@ -5988,7 +5988,6 @@ GameObject:
   - component: {fileID: 1424219897087428296}
   - component: {fileID: 2520316139476239747}
   - component: {fileID: 6027373849125572900}
-  - component: {fileID: 6892932511787108820}
   m_Layer: 5
   m_Name: MainCanvas
   m_TagString: Untagged
@@ -6121,10 +6120,6 @@ MonoBehaviour:
   _radio: {fileID: 8166517692498235650}
   _sfx: {fileID: 2725252501783893439}
   _mouseSens: {fileID: 4337853170284560316}
-  _endings:
-  - {fileID: 2257776192952756548}
-  - {fileID: 1822664099541362882}
-  - {fileID: 9127619229349991810}
 --- !u!114 &6027373849125572900
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6145,21 +6140,6 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 4651728785911535806}
   - {fileID: 1083222729069742956}
---- !u!114 &6892932511787108820
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4485714143017424538}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9f4fc5684ad54a65959f8f36c0f95ef1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _cam: {fileID: 0}
-  _click: {fileID: 7058283238320374524}
-  _zPos: 0.412828
 --- !u!1 &4531116097849603784
 GameObject:
   m_ObjectHideFlags: 0
@@ -13690,10 +13670,5 @@ PrefabInstance:
 --- !u!4 &3995927739781996145 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 799502233691293181, guid: 15d796cfc873f2647bf0a5cc4c31706f, type: 3}
-  m_PrefabInstance: {fileID: 4353859406687427468}
-  m_PrefabAsset: {fileID: 0}
---- !u!1 &7058283238320374524 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6744152697436821872, guid: 15d796cfc873f2647bf0a5cc4c31706f, type: 3}
   m_PrefabInstance: {fileID: 4353859406687427468}
   m_PrefabAsset: {fileID: 0}

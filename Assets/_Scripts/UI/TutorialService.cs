@@ -18,18 +18,18 @@ public class TutorialService : MonoBehaviour
     private string[] _phrases = {"Отлично!", "Круто.","Умничка!","Вау!","Замечательно!","Великолепно!","Бесподобно."};
     
     [Inject]
-    private async void Initialize(MainUI ui)
+    private void Initialize(MainUI ui)
     {
         _mainUI = ui;
         
-        if ((PlayerPrefs.GetInt("IsTutored") == 0 && _startOnFirst) || !_startOnFirst )
-        {
-            _intro.SetActive(true);
-            await Task.Delay(23000);
-            _intro.SetActive(false);
+        // if ((PlayerPrefs.GetInt("IsTutored") == 0 && _startOnFirst) || !_startOnFirst )
+        // {
+        //     _intro.SetActive(true);
+        //     await Task.Delay(23000);
+        //     _intro.SetActive(false);
             StartCoroutine(TutorRoutine());
             PlayerPrefs.SetInt("IsTutored", 1);
-        }
+        // }
     }
 
     private IEnumerator TutorRoutine()
